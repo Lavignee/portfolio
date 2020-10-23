@@ -10,7 +10,7 @@ const Footprint = () => {
   return (
     <>
       <Layout className='card'>
-        {/* 컨텐츠3(지난 프로젝트들, 볼트러스트추가)<br /> */}
+        {/* 노이즈 추가해보자 */}
         {/* 페럴렉스로(스샷, 밑줄기능샘플) 일반적인 컨텐츠 배치로 확장가능하게, 확장하면 소개말*/}
         <div>Footprint</div>
         {detail ? (
