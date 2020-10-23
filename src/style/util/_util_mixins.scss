@@ -1,0 +1,109 @@
+@import 'pallet';
+
+// images path
+$img-url: '../static/images/';
+
+// font-weights
+$regular: 400 !default;
+$thin: 100;
+$light: 300;
+// $demiLight: 350;
+$medium: 500;
+$bold: 600;
+$fblack: 800;
+$fontSize: 14px;
+
+// bootstrap breakpoints
+// $bp-xSmall: 414px;
+// $bp-xSmall-min: 415px;
+// $bp-small: 575px;
+// $bp-small-min: 576px;
+// $bp-medium: 767px;
+// $bp-medium-min: 768px;
+// $bp-large: 991px;
+// $bp-large-min: 992px;
+// $bp-xLarge: 1199px;
+// $bp-xLarge-min: 1200px;
+
+// response header
+$headerHeight: 6rem;
+$headerHeight-100vh: calc(100vh - 6rem);
+// @media screen and (max-width: $bp-large) {
+//   $headerHeight: 6rem;
+//   $headerHeight-100vh: calc(100vh - 6rem);
+// }
+
+//font-style
+@mixin f-r($color, $size, $lh: 100%, $ls: normal) {
+  color: $color;
+  font-size: $size;
+  font-weight: $regular;
+  line-height: $lh;
+  letter-spacing: $ls;
+}
+
+@mixin f-m($color, $size, $lh: 100%, $ls: normal) {
+  color: $color;
+  font-size: $size;
+  font-weight: $medium;
+  line-height: $lh;
+  letter-spacing: $ls;
+}
+
+@mixin f-b($color, $size, $lh: 100%, $ls: normal) {
+  color: $color;
+  font-size: $size;
+  font-weight: $bold;
+  line-height: $lh;
+  letter-spacing: $ls;
+}
+
+// simple position
+@mixin static-align {
+  position: static !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: translate(0, 0) !important;
+}
+
+@mixin center-align($position: absolute) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin vertical-align($position: absolute) {
+  position: $position;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin horizontal-align($position: absolute) {
+  position: $position;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// simple border
+@mixin border-a($color: $l-g, $weight: 0.1rem, $type: solid) {
+  border: $color $weight $type;
+}
+@mixin border-t($color: $l-g, $weight: 0.1rem, $type: solid) {
+  border-top: $color $weight $type;
+}
+@mixin border-r($color: $l-g, $weight: 0.1rem, $type: solid) {
+  border-right: $color $weight $type;
+}
+@mixin border-b($color: $l-g, $weight: 0.1rem, $type: solid) {
+  border-bottom: $color $weight $type;
+}
+@mixin border-l($color: $l-g, $weight: 0.1rem, $type: solid) {
+  border-left: $color $weight $type;
+}
+
+// simple transition
+$transition: 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+$transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+$transition-test: 600ms cubic-bezier(0.4, 0, 0.2, 1) 600ms;
