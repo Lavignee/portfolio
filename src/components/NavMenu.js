@@ -20,7 +20,7 @@ const menus = [
 
 const NavMenu = () => {
   return (
-    <div>
+    <nav>
       아이콘
       <div>
         {menus.map(menus => (
@@ -29,7 +29,7 @@ const NavMenu = () => {
         ))
         }
       </div>
-    </div>
+    </nav>
   )
 }
 

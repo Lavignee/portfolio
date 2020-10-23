@@ -31,7 +31,7 @@ const App = () => {
   }
 
   return (
-    <div onMouseMove={(e) => moveCircle(e)}>
+    <main onMouseMove={(e) => moveCircle(e)}>
       {/* [정적인 본문 레이아웃] */}
       < hr />
       <div>
@@ -62,7 +62,7 @@ const App = () => {
       {/* 마우스 애니메이션, 폰트? */}
       <Cursor className='cursor-default' ref={cursorRef} />
       <Cursor className='cursor-info' ref={cursorInfoRef} >test</Cursor>
-    </div >
+    </main >
   );
 }
 
