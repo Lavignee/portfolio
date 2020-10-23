@@ -1,4 +1,11 @@
 html,
 button {
   cursor: none;
+
+  &:hover {
+    .cursor-default,
+    .cursor-info {
+      opacity: 1;
+    }
+  }
 }
