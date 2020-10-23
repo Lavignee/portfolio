@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './style/index.scss';
 import Header from './containers/Header';
@@ -8,10 +8,30 @@ import SkillDetail from './components/SkillDetail';
 import FootprintDetail from './components/FootprintDetail';
 import Contact from './containers/Contact';
 import Footer from './containers/Footer';
+import Cursor from './composition/cursor';
+import { gsap } from "gsap";
 
 const App = () => {
+  const cursorRef = useRef(null);
+  const cursorInfoRef = useRef(null);
+
+  function moveCircle(e) {
+    gsap.to(cursorRef.current, 0, {
+      css: {
+        left: e.pageX,
+        top: e.pageY
+      }
+    });
+    gsap.to(cursorInfoRef.current, 0.3, {
+      css: {
+        left: e.pageX,
+        top: e.pageY
+      }
+    });
+  }
+
   return (
-    <div>
+    <div onMouseMove={(e) => moveCircle(e)}>
       {/* [정적인 본문 레이아웃] */}
       < hr />
       <div>
@@ -40,6 +60,8 @@ const App = () => {
         <Footer />
       </div>
       {/* 마우스 애니메이션, 폰트? */}
+      <Cursor className='default' ref={cursorRef} />
+      <Cursor className='info' ref={cursorInfoRef} >test</Cursor>
     </div >
   );
 }
