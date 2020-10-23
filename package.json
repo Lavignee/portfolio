@@ -1,0 +1,26 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "rimraf dist && parcel index.html"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "autoprefixer": "9.8.6",
+    "postcss-modules": "^3.2.2",
+    "posthtml-img-autosize": "^0.1.5",
+    "react": "^16.8.3",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "redux": "^2.0.0 || ^3.0.0 || ^4.0.0-0",
+    "sass": "^1.26.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/preset-react": "^7.12.1",
+    "parcel-bundler": "^1.12.4"
+  }
+}
