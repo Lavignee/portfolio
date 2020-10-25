@@ -9,7 +9,7 @@ import SkillDetail from './components/SkillDetail';
 import FootprintDetail from './components/FootprintDetail';
 import Contact from './containers/Contact';
 import Footer from './containers/Footer';
-import Cursor from './composition/cursor';
+import Cursor from './compositions/cursor';
 
 const App = () => {
   const cursorRef = useRef(null);

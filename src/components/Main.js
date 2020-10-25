@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../composition/layout';
+import Layout from '../compositions/layout';
 import { Trans, withTranslation } from 'react-i18next';
 
 const Main = () => {

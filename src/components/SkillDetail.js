@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import InnerLayout from '../composition/innerlayout';
+import InnerLayout from '../compositions/innerlayout';
 
 const SkillDetail = () => {
   let history = useHistory();

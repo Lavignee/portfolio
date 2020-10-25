@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import LanguageSelectors from '../components/LanguageSelectors';
 
 const menus = [
   {
@@ -33,7 +32,6 @@ const NavMenu = () => {
           // 분할후 메뉴등장?, 원형드래그로 등장?
         ))
         }
-        <LanguageSelectors />
       </div>
     </nav>
   )

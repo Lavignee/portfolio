@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Layout from '../composition/layout';
-import InnerLayout from '../composition/innerLayout';
+import Layout from '../compositions/layout';
+import InnerLayout from '../compositions/innerLayout';
 
 const Skill = () => {
 
