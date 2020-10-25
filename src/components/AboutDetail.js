@@ -1,10 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import InnerLayout from '../composition/innerlayout';
 
-const AboutDetail = ({ onToggle }) => {
+const AboutDetail = () => {
+  let history = useHistory();
+  const back = () => {
+    history.goBack();
+  }
   return (
     <InnerLayout className='inner-card'>
-      <button onClick={onToggle}>뒤로가기</button>
+      <button onClick={back}>뒤로가기</button>
       <div>학생시절</div>
       <p>8살부터 사용해온 컴퓨터는 제게는 너무 신기하고 배울 것이 참 많은 기기였습니다. 학교에서 배우는 국어, 영어, 수학보다 컴퓨터의 탐색기를 하나하나 열어보고 각종 윈도우의 기능과 타자 연습, 다양한 게임들을 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 <b>아버지의 책 출간을 돕기도 했습니다.</b> 이후 미대 교수였던 아버지의 영향을 받아 미술 전공을 준비했었지만, 입시 미술이 적성에 맞지 않아 고등학교를 졸업한 20살에 곧바로 입대하였습니다.</p>
 

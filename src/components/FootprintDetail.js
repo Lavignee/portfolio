@@ -1,10 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import InnerLayout from '../composition/innerlayout';
 
-const FootprintDetail = ({ onToggle }) => {
+const FootprintDetail = () => {
+  let history = useHistory();
+  const back = () => {
+    history.goBack();
+  }
   return (
     <InnerLayout className='inner-card'>
-      <button onClick={onToggle}>뒤로가기</button>
+      <button onClick={back}>뒤로가기</button>
       <div>경력사항</div>
       <ul>
         <li>2019.12 ~ 2020.04 볼트러스트 (상주 프리랜서)</li>
