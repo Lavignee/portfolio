@@ -1,9 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
 import { NavLink } from 'react-router-dom';
-=======
 import LanguageSelectors from '../components/LanguageSelectors';
->>>>>>> Feature/i18n
 
 const menus = [
   {
