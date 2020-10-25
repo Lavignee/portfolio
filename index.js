@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'; // * BrowserRouter 불러오기
-import App from './src/App.js';
+import { BrowserRouter } from 'react-router-dom';
+import './i18n';
+import App from './src/App';
 
 ReactDOM.render(
   <BrowserRouter>
