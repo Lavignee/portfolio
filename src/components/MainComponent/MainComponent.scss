@@ -1,0 +1,20 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.main {
+  height: 100vh;
+
+  .main-text-frame {
+    @include vertical-align(relative);
+
+    span {
+      display: block;
+      margin-bottom: 2rem;
+      @include f-b(12rem, $wh);
+    }
+
+    p {
+      @include f-m(4rem, $wh);
+    }
+  }
+}

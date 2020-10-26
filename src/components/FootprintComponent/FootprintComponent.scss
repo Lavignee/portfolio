@@ -1,0 +1,14 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.footprint {
+  height: 100vh;
+
+  button {
+    padding: 2rem;
+    margin: 2rem;
+    display: block;
+    @include border-a($wh);
+    @include f-b(3rem);
+  }
+}

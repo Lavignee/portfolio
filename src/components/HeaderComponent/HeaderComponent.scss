@@ -1,0 +1,16 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+header {
+  position: fixed;
+  width: 100%;
+  height: $headerHeight;
+
+  a {
+    @include f-b(4rem, $lh: $headerHeight);
+  }
+
+  .right-area {
+    display: inline-flex;
+  }
+}

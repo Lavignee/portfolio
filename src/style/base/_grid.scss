@@ -1,0 +1,243 @@
+@import '../../Style/Util/util_mixins';
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.start {
+    display: flex;
+    justify-content: flex-start;
+  }
+  &.center {
+    display: flex;
+    justify-content: center;
+  }
+  &.end {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &.around {
+    display: flex;
+    justify-content: space-around;
+  }
+  &.between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (min-width: $bp-xs-min) {
+    max-width: 320px;
+  }
+  @media (min-width: $bp-s-min) {
+    max-width: 576px;
+  }
+  @media (min-width: $bp-m-min) {
+    max-width: 768px;
+  }
+  @media (min-width: $bp-l-min) {
+    max-width: 984px;
+  }
+  @media (min-width: $bp-xl-min) {
+    max-width: 1200px;
+  }
+  @media (min-width: $bp-w-min) {
+    max-width: 1596px;
+  }
+  @media (min-width: $bp-fw-min) {
+    max-width: 1920px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+
+  &.start {
+    justify-content: flex-start;
+  }
+  &.center {
+    justify-content: center;
+  }
+  &.end {
+    justify-content: flex-end;
+  }
+  &.around {
+    justify-content: space-around;
+  }
+  &.between {
+    justify-content: space-between;
+  }
+}
+
+@mixin gutter($gutter) {
+  @for $i from 1 through 12 {
+    .col-xs-#{$i},
+    .col-s-#{$i},
+    .col-m-#{$i},
+    .col-l-#{$i},
+    .col-xl-#{$i},
+    .col-w-#{$i},
+    .col-fw-#{$i} {
+      position: relative;
+      width: 100%;
+      padding-left: $gutter / 2 * 0.1 + rem;
+      padding-right: $gutter / 2 * 0.1 + rem;
+    }
+  }
+  .col-xs-auto,
+  .col-s-auto,
+  .col-m-auto,
+  .col-l-auto,
+  .col-xl-auto,
+  .col-w-auto,
+  .col-fw-auto {
+    position: relative;
+    padding-left: $gutter / 2 * 0.1 + rem;
+    padding-right: $gutter / 2 * 0.1 + rem;
+  }
+}
+
+@include gutter(30);
+
+@mixin grid($size) {
+  @for $i from 1 through 13 {
+    @if ($i == 1) {
+      $percent: 8.33333333%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 2) {
+      $percent: 16.66666667%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 3) {
+      $percent: 25%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 4) {
+      $percent: 33.33333333%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 5) {
+      $percent: 41.66666667%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 6) {
+      $percent: 50%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 7) {
+      $percent: 58.33333333%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 8) {
+      $percent: 66.66666667%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 9) {
+      $percent: 75%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 10) {
+      $percent: 83.33333333%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 11) {
+      $percent: 91.66666667%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else if($i == 12) {
+      $percent: 100%;
+      .col-#{$size}-#{$i} {
+        flex: 0 0 #{$percent};
+        max-width: #{$percent};
+      }
+      .off-#{$size}-#{$i} {
+        margin: #{$percent};
+      }
+    } @else {
+      .col-#{$size}-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@media (min-width: $bp-xs-min) {
+  @include grid(xs);
+}
+@media (min-width: $bp-s-min) {
+  @include grid(s);
+}
+@media (min-width: $bp-m-min) {
+  @include grid(m);
+}
+@media (min-width: $bp-l-min) {
+  @include grid(l);
+}
+@media (min-width: $bp-xl-min) {
+  @include grid(xl);
+}
+@media (min-width: $bp-w-min) {
+  @include grid(w);
+}
+@media (min-width: $bp-fw-min) {
+  @include grid(fw);
+}

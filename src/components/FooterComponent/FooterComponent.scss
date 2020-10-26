@@ -1,0 +1,13 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+
+  span {
+    @include f-m(3rem);
+  }
+}

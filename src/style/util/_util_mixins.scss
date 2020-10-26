@@ -1,7 +1,7 @@
 @import 'pallet';
 
 // images path
-$img-url: '../static/images/';
+$img-url: '../Static/images/';
 
 // font-weights
 $regular: 400 !default;
@@ -11,19 +11,7 @@ $light: 300;
 $medium: 500;
 $bold: 600;
 $fblack: 800;
-$fontSize: 14px;
-
-// bootstrap breakpoints
-// $bp-xSmall: 414px;
-// $bp-xSmall-min: 415px;
-// $bp-small: 575px;
-// $bp-small-min: 576px;
-// $bp-medium: 767px;
-// $bp-medium-min: 768px;
-// $bp-large: 991px;
-// $bp-large-min: 992px;
-// $bp-xLarge: 1199px;
-// $bp-xLarge-min: 1200px;
+$fontSize: 1.4rem;
 
 // response header
 $headerHeight: 6rem;
@@ -33,8 +21,24 @@ $headerHeight-100vh: calc(100vh - 6rem);
 //   $headerHeight-100vh: calc(100vh - 6rem);
 // }
 
+// breakpoints
+$bp-xs: 319px;
+$bp-xs-min: 320px;
+$bp-s: 575px;
+$bp-s-min: 576px;
+$bp-m: 767px;
+$bp-m-min: 768px;
+$bp-l: 983px;
+$bp-l-min: 984px;
+$bp-xl: 1199px;
+$bp-xl-min: 1200px;
+$bp-w: 1595px;
+$bp-w-min: 1596px;
+$bp-fw: 1919px;
+$bp-fw-min: 1920px;
+
 //font-style
-@mixin f-r($color, $size, $lh: 100%, $ls: normal) {
+@mixin f-r($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $regular;
@@ -42,7 +46,7 @@ $headerHeight-100vh: calc(100vh - 6rem);
   letter-spacing: $ls;
 }
 
-@mixin f-m($color, $size, $lh: 100%, $ls: normal) {
+@mixin f-m($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $medium;
@@ -50,7 +54,7 @@ $headerHeight-100vh: calc(100vh - 6rem);
   letter-spacing: $ls;
 }
 
-@mixin f-b($color, $size, $lh: 100%, $ls: normal) {
+@mixin f-b($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $bold;

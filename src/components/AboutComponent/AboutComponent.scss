@@ -1,0 +1,28 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.about {
+  height: 100vh;
+
+  div {
+    display: flex;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    justify-content: space-between;
+
+    h2 {
+      white-space: nowrap;
+    }
+
+    p {
+      @include f-m(2rem);
+    }
+  }
+
+  button {
+    @include f-b(2rem);
+    padding: 1rem;
+    border-radius: 5px;
+    @include border-a($wh);
+  }
+}

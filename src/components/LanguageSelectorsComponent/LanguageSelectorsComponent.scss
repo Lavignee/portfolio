@@ -1,0 +1,25 @@
+@import '../../Style/util/pallet';
+@import '../../Style/util/util_mixins';
+
+.language-selectors-frame {
+  position: relative;
+  height: $headerHeight;
+
+  .language-selectors {
+    @include vertical-align(relative);
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      background-color: transparent;
+      border: none;
+      @include f-m;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+
+      &.active {
+        text-decoration: underline;
+      }
+    }
+  }
+}

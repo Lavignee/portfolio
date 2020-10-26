@@ -1,0 +1,14 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+nav {
+  position: relative;
+  height: $headerHeight;
+
+  span {
+    @include vertical-align(relative);
+    display: flex;
+    justify-content: space-between;
+    @include f-b(3rem);
+  }
+}

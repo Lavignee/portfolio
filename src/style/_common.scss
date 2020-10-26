@@ -1,0 +1,58 @@
+@import '../Style/Util/pallet';
+@import '../Style/Util/util_mixins';
+
+html,
+body {
+  @media (min-width: $bp-xs-min) {
+    overflow-x: hidden;
+  }
+
+  &:hover {
+    .custom-cursor-default,
+    .custom-cursor-info {
+      opacity: 1;
+    }
+  }
+}
+
+html,
+button,
+a {
+  cursor: none;
+}
+
+header {
+  display: flex;
+}
+
+main {
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: $s-l;
+}
+
+h1 {
+  @include f-b(8rem);
+}
+h2 {
+  @include f-b(4rem);
+}
+h3 {
+  @include f-b(3rem);
+}
+
+.t-left {
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+
+.t-center {
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+.t-right {
+  text-align: right !important;
+  justify-content: flex-end !important;
+}

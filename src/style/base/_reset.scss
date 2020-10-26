@@ -7,6 +7,7 @@ audio,
 b,
 blockquote,
 body,
+button,
 canvas,
 caption,
 cite,
@@ -76,20 +77,6 @@ video {
   outline: 0;
   background: transparent;
   font-family: 'Roboto', 'Noto Sans', sans-serif !important;
-}
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
 }
 
 html,

@@ -1,0 +1,22 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.skill {
+  height: 100vh;
+
+  .row {
+    div {
+      width: 46%;
+      margin: 2%;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+      text-align: center;
+      border-radius: 5px;
+      @include border-a($wh);
+
+      button {
+        @include f-m(3rem);
+      }
+    }
+  }
+}

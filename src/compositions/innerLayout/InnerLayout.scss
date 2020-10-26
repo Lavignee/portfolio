@@ -1,9 +1,0 @@
-@import '../../style/util/pallet';
-@import '../../style/util/util_mixins';
-
-.inner-card {
-  width: 100%;
-  padding: 10rem 1.5rem;
-  @include f-m(#000, 1.6rem);
-  @include border-a(red);
-}

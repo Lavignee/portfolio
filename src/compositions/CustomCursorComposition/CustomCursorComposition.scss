@@ -1,0 +1,29 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+%default {
+  @include center-align;
+  top: 0;
+  left: 0;
+  border-radius: 100%;
+  opacity: 0;
+  transition: opacity $transition-slow;
+  pointer-events: none;
+  user-select: none;
+  // mix-blend-mode: difference;
+  z-index: 1000;
+}
+
+.custom-cursor-default {
+  @extend %default;
+  width: 1rem;
+  height: 1rem;
+  background-color: #000;
+}
+
+.custom-cursor-info {
+  @extend %default;
+  width: 5rem;
+  height: 5rem;
+  @include border-a(0.1rem, #000);
+}

@@ -1,49 +1,27 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { gsap } from "gsap";
 import './style/index.scss';
-import Header from './containers/Header';
-import Home from './containers/Home';
-import AboutDetail from './components/AboutDetail';
-import SkillDetail from './components/SkillDetail';
-import FootprintDetail from './components/FootprintDetail';
-import Contact from './containers/Contact';
-import Footer from './containers/Footer';
-import Cursor from './compositions/cursor';
+import CustomCursorAreaContainer from './Containers/CustomCursorAreaContainer'
+import HeaderContainer from './Containers/HeaderContainer';
+import HomeContainer from './Containers/HomeContainer';
+import AboutDetailContainer from './Containers/AboutDetailContainer';
+import SkillDetailContainer from './Containers/SkillDetailContainer';
+import FootprintDetailContainer from './Containers/FootprintDetailContainer';
+import ContactComponent from './Components/ContactComponent';
+import FooterContainer from './Containers/FooterContainer';
 
 const App = () => {
-  const cursorRef = useRef(null);
-  const cursorInfoRef = useRef(null);
-
-  function moveCircle(e) {
-    gsap.to(cursorRef.current, 0, {
-      css: {
-        left: e.pageX,
-        top: e.pageY
-      }
-    });
-    gsap.to(cursorInfoRef.current, 0.3, {
-      css: {
-        left: e.pageX,
-        top: e.pageY
-      }
-    });
-  }
-
   return (
-    <main onMouseMove={(e) => moveCircle(e)}>
+    <CustomCursorAreaContainer>
       {/* [정적인 본문 레이아웃] */}
-      < hr />
       <div>
         {/* [동적인 본문 레이아웃] */}
-        <hr />
-        <Header />
-        <hr />
+        <HeaderContainer />
         <Switch>
-          <Route path="/" exact={true} component={Home} />
-          <Route path="/about" component={AboutDetail} />
-          <Route path="/skill" component={SkillDetail} />
-          <Route path="/footprint" component={FootprintDetail} />
+          <Route path="/" exact={true} component={HomeContainer} />
+          <Route path="/about" component={AboutDetailContainer} />
+          <Route path="/skill" component={SkillDetailContainer} />
+          <Route path="/footprint" component={FootprintDetailContainer} />
           <Route
             // path 를 따로 정의하지 않으면 모든 상황에 렌더링됨
             render={({ location }) => (
@@ -54,15 +32,10 @@ const App = () => {
             )}
           />
         </Switch>
-        <hr />
-        <Contact />
-        <hr />
-        <Footer />
+        <ContactComponent />
+        <FooterContainer />
       </div>
-      {/* 마우스 애니메이션, 폰트? */}
-      <Cursor className='cursor-default' ref={cursorRef} />
-      <Cursor className='cursor-info' ref={cursorInfoRef} >test</Cursor>
-    </main >
+    </CustomCursorAreaContainer>
   );
 }
 

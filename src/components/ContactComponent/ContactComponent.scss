@@ -1,0 +1,9 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.contact {
+  @include vertical-align(fixed);
+  right: 0;
+  writing-mode: vertical-rl;
+  @include f-b(3rem);
+}
