@@ -21,7 +21,7 @@ const FootprintDetailContainer = () => {
         <div>회사 운영 및 인사 관리.</div>
       </ul>
 
-      <div>암호화폐 관련 웹 서비스</div>
+      <div>프로젝트</div>
       <ul>
         <li>2019.12 ~ 2020.04 커스터디 서비스 기획 및 개발</li>
         <div>Next.js(SSR) 프로젝트</div>

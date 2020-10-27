@@ -1,13 +1,21 @@
 import React from 'react';
 import { Trans, withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import './MainComponent.scss';
+import TypingAnimationComponent from '../TypingAnimationComponent';
 
 const MainComponent = () => {
+  const { language } = useSelector(state => ({
+    language: state.LanguageModule.language
+  }));
+
   return (
     <section className='container main'>
       <div className='main-text-frame'>
         <span>FRONT - END</span><span>DEVELOPER</span>
-        <p><Trans i18nKey='greeting'>2016 년부터 프론트 엔드 개발과 <br />기획 업무를 병행해온 4년 차 개발자 <br />"이도영" 입니다.</Trans></p>
+        {/* TODO: 번역텍스트 받아서 동작하는 애니메이션 완성 */}
+        {/* <p><Trans i18nKey='greeting'><TypingAnimationComponent language={language}></TypingAnimationComponent></Trans></p> */}
+        <p><Trans i18nKey='greeting2'></Trans></p>
       </div>
     </section>
   )

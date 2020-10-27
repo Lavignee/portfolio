@@ -5,7 +5,7 @@ import './CustomCursorComponent.scss';
 
 const CustomCursorComponent = ({ children, moveCircle, cursorInfoRef, cursorRef }) => {
   const { text } = useSelector(state => ({
-    text: state.text
+    text: state.CursorModule.text
   }));
 
   return (

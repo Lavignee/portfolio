@@ -1,4 +1,3 @@
-const TEST = 'TEST';
 const CHANGE_TEXT = 'CHANGE_TEXT';
 
 export const changeText = text => ({
