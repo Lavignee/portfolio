@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const FootprintDetailContainer = () => {
+const FootprintDetailComponent = () => {
   let history = useHistory();
   const back = () => {
     history.goBack();
@@ -84,4 +84,4 @@ const FootprintDetailContainer = () => {
   )
 }
 
-export default FootprintDetailContainer;
+export default FootprintDetailComponent;

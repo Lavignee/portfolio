@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans, withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import './MainComponent.scss';
-import TypingAnimationComponent from '../TypingAnimationComponent';
+// import TypingAnimationComponent from '../TypingAnimationComponent';
 
 const MainComponent = () => {
   const { language } = useSelector(state => ({

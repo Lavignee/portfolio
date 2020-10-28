@@ -1,0 +1,17 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.home-background {
+  background-color: #aaa;
+  transition: background-color $transition-test;
+
+  &.now-about {
+    background-color: pink;
+  }
+  &.now-skill {
+    background-color: yellow;
+  }
+  &.now-footprint {
+    background-color: green;
+  }
+}

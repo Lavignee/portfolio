@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const AboutDetailContainer = () => {
+const AboutDetailComponent = () => {
   let history = useHistory();
   const back = () => {
     history.goBack();
@@ -21,4 +21,4 @@ const AboutDetailContainer = () => {
   )
 }
 
-export default AboutDetailContainer;
+export default AboutDetailComponent;

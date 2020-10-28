@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SkillDetailContainer = () => {
+const SkillDetailComponent = () => {
   let history = useHistory();
   const back = () => {
     history.goBack();
@@ -81,4 +81,4 @@ const SkillDetailContainer = () => {
   )
 }
 
-export default SkillDetailContainer;
+export default SkillDetailComponent;

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import './SkillComponent.scss';
 
-const SkillComponent = () => {
-
+const SkillComponent = (props, ref) => {
   return (
     <>
-      <section className='container skill'>
+      <section ref={ref} className='container skill'>
         <h1>Skill</h1>
         <div className='row'>
           <div><Link to='skill'><button>언어</button></Link></div>
@@ -19,4 +18,4 @@ const SkillComponent = () => {
   )
 }
 
-export default SkillComponent;
+export default forwardRef(SkillComponent);
