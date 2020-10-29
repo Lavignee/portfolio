@@ -3,8 +3,27 @@
 
 html,
 body {
-  @media (min-width: $bp-xs-min) {
+  font-size: 4px;
+  @media (min-width: 320px) {
     overflow-x: hidden;
+  }
+  @media (min-width: $bp-s-min) {
+    font-size: 5px;
+  }
+  @media (min-width: $bp-m-min) {
+    font-size: 6px;
+  }
+  @media (min-width: $bp-l-min) {
+    font-size: 7px;
+  }
+  @media (min-width: $bp-xl-min) {
+    font-size: 8px;
+  }
+  @media (min-width: $bp-w-min) {
+    font-size: 9px;
+  }
+  @media (min-width: $bp-fw-min) {
+    font-size: 10px;
   }
 
   &:hover {
@@ -26,7 +45,7 @@ header {
 }
 
 main {
-  min-width: 320px;
+  min-width: 338px;
   min-height: 100vh;
   overflow: hidden;
 }

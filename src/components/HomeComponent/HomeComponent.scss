@@ -2,16 +2,18 @@
 @import '../../Style/Util/util_mixins';
 
 .home-background {
-  background-color: #aaa;
-  transition: background-color $transition-test;
+  position: relative;
+  background-color: #000;
+  transition: background-color $transition;
+  z-index: -100;
 
   &.now-about {
-    background-color: pink;
+    // background-color: pink;
   }
   &.now-skill {
-    background-color: yellow;
+    // background-color: yellow;
   }
   &.now-footprint {
-    background-color: green;
+    // background-color: green;
   }
 }

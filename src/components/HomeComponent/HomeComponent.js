@@ -23,7 +23,7 @@ const HomeComponent = () => {
         start: 'top bottom',
         end: 'bottom bottom',
         toggleClass: { targets: '.home-background', className: 'now-about' },
-        markers: true
+        // markers: true
       }
     });
   }, []);
@@ -34,7 +34,7 @@ const HomeComponent = () => {
         start: 'top bottom',
         end: 'bottom bottom',
         toggleClass: { targets: '.home-background', className: 'now-skill' },
-        markers: true
+        // markers: true
       }
     });
   }, []);

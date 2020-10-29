@@ -22,8 +22,8 @@ $headerHeight-100vh: calc(100vh - 6rem);
 // }
 
 // breakpoints
-$bp-xs: 319px;
-$bp-xs-min: 320px;
+$bp-xs: 359px;
+$bp-xs-min: 360px;
 $bp-s: 575px;
 $bp-s-min: 576px;
 $bp-m: 767px;
@@ -38,7 +38,7 @@ $bp-fw: 1919px;
 $bp-fw-min: 1920px;
 
 //font-style
-@mixin f-r($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
+@mixin f-r($size: $fontSize, $color: $wh, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $regular;
@@ -46,7 +46,7 @@ $bp-fw-min: 1920px;
   letter-spacing: $ls;
 }
 
-@mixin f-m($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
+@mixin f-m($size: $fontSize, $color: $wh, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $medium;
@@ -54,7 +54,7 @@ $bp-fw-min: 1920px;
   letter-spacing: $ls;
 }
 
-@mixin f-b($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
+@mixin f-b($size: $fontSize, $color: $wh, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $bold;

@@ -4,6 +4,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  max-width: 290px;
 
   &.start {
     display: flex;
@@ -27,25 +28,25 @@
   }
 
   @media (min-width: $bp-xs-min) {
-    max-width: 320px;
+    max-width: 330px;
   }
   @media (min-width: $bp-s-min) {
-    max-width: 576px;
+    max-width: 546px;
   }
   @media (min-width: $bp-m-min) {
-    max-width: 768px;
+    max-width: 738px;
   }
   @media (min-width: $bp-l-min) {
-    max-width: 984px;
+    max-width: 937px;
   }
   @media (min-width: $bp-xl-min) {
-    max-width: 1200px;
+    max-width: 1153px;
   }
   @media (min-width: $bp-w-min) {
-    max-width: 1596px;
+    max-width: 1549px;
   }
   @media (min-width: $bp-fw-min) {
-    max-width: 1920px;
+    max-width: 1873px;
   }
 }
 

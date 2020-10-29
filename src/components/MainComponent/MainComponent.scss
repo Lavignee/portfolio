@@ -2,19 +2,199 @@
 @import '../../Style/Util/util_mixins';
 
 .main {
-  height: 100vh;
+  height: 130vh;
+  @media (min-width: $bp-l-min) {
+    height: 150vh;
+  }
+
+  overflow: hidden;
+
+  .canvas-frame {
+    @include horizontal-align;
+    display: inline-block;
+    z-index: -1;
+    overflow: hidden;
+    > div {
+      position: absolute;
+      top: 0;
+      right: -1px;
+      bottom: 3px;
+      left: -1px;
+    }
+
+    &.target1 {
+      width: 60%;
+      top: 20rem;
+      margin-left: -10rem;
+      > div {
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      @media (max-width: $bp-m) {
+        width: 65%;
+      }
+      @media (max-width: $bp-s) {
+        width: 70%;
+      }
+      @media (min-width: $bp-w-min) {
+        width: 55%;
+      }
+      @media (min-width: $bp-fw-min) {
+        width: 50%;
+      }
+    }
+    &.target2 {
+      width: 40%;
+      top: 60rem;
+      margin-left: -45rem;
+      > div {
+        background-color: rgba(0, 0, 0, 0.75);
+      }
+      @media (max-width: $bp-m) {
+        width: 45%;
+        top: 50rem;
+        margin-left: -35rem;
+      }
+      @media (max-width: $bp-s) {
+        width: 55%;
+        top: 45rem;
+        margin-left: -30rem;
+      }
+      @media (min-width: $bp-w-min) {
+        width: 35%;
+      }
+      @media (min-width: $bp-fw-min) {
+        width: 30%;
+      }
+    }
+    &.target3 {
+      width: 30%;
+      top: 75rem;
+      margin-left: 45rem;
+      > div {
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      @media (max-width: $bp-m) {
+        width: 35%;
+        top: 65rem;
+        margin-left: 40rem;
+      }
+      @media (max-width: $bp-s) {
+        width: 40%;
+        top: 55rem;
+        margin-left: 20rem;
+      }
+      @media (min-width: $bp-w-min) {
+        width: 25%;
+      }
+      @media (min-width: $bp-fw-min) {
+        width: 20%;
+      }
+    }
+    &.target4 {
+      width: 40%;
+      top: 50rem;
+      margin-left: 65rem;
+      > div {
+        background-color: rgba(0, 0, 0, 0.45);
+      }
+      @media (max-width: $bp-m) {
+        width: 45%;
+        top: 45rem;
+        margin-left: 55rem;
+      }
+      @media (max-width: $bp-s) {
+        width: 50%;
+        top: 35rem;
+        margin-left: 35rem;
+      }
+      @media (min-width: $bp-w-min) {
+        width: 35%;
+      }
+      @media (min-width: $bp-fw-min) {
+        width: 30%;
+      }
+    }
+    // &.target5 {
+    //   width: 15%;
+    //   top: 125rem;
+    //   margin-left: 25rem;
+    //   > div {
+    //     background-color: rgba(0, 0, 0, 0.4);
+    //   }
+    //   @media (max-width: $bp-m) {
+    //     width: 20%;
+    //     top: 115rem;
+    //     margin-left: 15rem;
+    //   }
+    //   @media (max-width: $bp-s) {
+    //     width: 25%;
+    //     top: 105rem;
+    //     margin-left: 5rem;
+    //   }
+    // }
+    &.target6 {
+      width: 45%;
+      top: 150rem;
+      margin-left: -45rem;
+      > div {
+        background-color: rgba(0, 0, 0, 0.65);
+      }
+      @media (max-width: $bp-m) {
+        width: 50%;
+        top: 130rem;
+        margin-left: -35rem;
+      }
+      @media (max-width: $bp-s) {
+        width: 55%;
+        top: 110rem;
+        margin-left: -25rem;
+      }
+      @media (min-width: $bp-w-min) {
+        width: 40%;
+      }
+      @media (min-width: $bp-fw-min) {
+        width: 35%;
+      }
+    }
+    &.target7 {
+      width: 20%;
+      top: 170rem;
+      margin-left: -15rem;
+      > div {
+        background-color: rgba(0, 0, 0, 0.55);
+      }
+      @media (max-width: $bp-m) {
+        width: 25%;
+        top: 160rem;
+        margin-left: -10rem;
+      }
+      @media (max-width: $bp-s) {
+        width: 30%;
+        top: 130rem;
+        margin-left: -5rem;
+      }
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   .main-text-frame {
+    display: inline-block;
     @include vertical-align(relative);
+    z-index: 2;
+    margin-top: -20rem;
 
     span {
       display: block;
       margin-bottom: 2rem;
-      @include f-b(12rem, $wh);
+      @include f-b(9rem, $wh);
     }
 
     p {
-      @include f-m(4rem, $wh);
+      @include f-m(3.7rem, $wh);
     }
   }
 }
