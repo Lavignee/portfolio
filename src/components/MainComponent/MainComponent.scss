@@ -17,9 +17,19 @@
     > div {
       position: absolute;
       top: 0;
+      // TODO: pc에서 px오차발생, 해상도별 문제인지, 가로세로 비율의 문제인지 확인필요.
+      // 해결방안1 script로 객체 면적 계산해서 적용할지 고려.
+      // 해결방안2 동영상 자체에 그레이필터 씌워 제작.
       right: -1px;
       bottom: 3px;
       left: -1px;
+
+      // TODO: 휴대용기기에서는 정상 출력됨.(xs, sm, m까지 테스트)
+      @media (max-width: $bp-m-min) {
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
     }
 
     &.target1 {
@@ -45,19 +55,19 @@
     &.target2 {
       width: 40%;
       top: 60rem;
-      margin-left: -45rem;
+      margin-left: -58rem;
       > div {
         background-color: rgba(0, 0, 0, 0.75);
       }
       @media (max-width: $bp-m) {
         width: 45%;
         top: 50rem;
-        margin-left: -35rem;
+        margin-left: -50rem;
       }
       @media (max-width: $bp-s) {
         width: 55%;
         top: 45rem;
-        margin-left: -30rem;
+        margin-left: -35rem;
       }
       @media (min-width: $bp-w-min) {
         width: 35%;
@@ -69,14 +79,14 @@
     &.target3 {
       width: 30%;
       top: 75rem;
-      margin-left: 45rem;
+      margin-left: 40rem;
       > div {
         background-color: rgba(0, 0, 0, 0.6);
       }
       @media (max-width: $bp-m) {
         width: 35%;
         top: 65rem;
-        margin-left: 40rem;
+        margin-left: 35rem;
       }
       @media (max-width: $bp-s) {
         width: 40%;
@@ -93,7 +103,7 @@
     &.target4 {
       width: 40%;
       top: 50rem;
-      margin-left: 65rem;
+      margin-left: 60rem;
       > div {
         background-color: rgba(0, 0, 0, 0.45);
       }
@@ -114,40 +124,22 @@
         width: 30%;
       }
     }
-    // &.target5 {
-    //   width: 15%;
-    //   top: 125rem;
-    //   margin-left: 25rem;
-    //   > div {
-    //     background-color: rgba(0, 0, 0, 0.4);
-    //   }
-    //   @media (max-width: $bp-m) {
-    //     width: 20%;
-    //     top: 115rem;
-    //     margin-left: 15rem;
-    //   }
-    //   @media (max-width: $bp-s) {
-    //     width: 25%;
-    //     top: 105rem;
-    //     margin-left: 5rem;
-    //   }
-    // }
-    &.target6 {
+    &.target5 {
       width: 45%;
-      top: 150rem;
-      margin-left: -45rem;
+      top: 140rem;
+      margin-left: -30rem;
       > div {
         background-color: rgba(0, 0, 0, 0.65);
       }
       @media (max-width: $bp-m) {
         width: 50%;
-        top: 130rem;
-        margin-left: -35rem;
+        top: 135rem;
+        margin-left: -20rem;
       }
       @media (max-width: $bp-s) {
         width: 55%;
-        top: 110rem;
-        margin-left: -25rem;
+        top: 120rem;
+        margin-left: -10rem;
       }
       @media (min-width: $bp-w-min) {
         width: 40%;
@@ -156,22 +148,22 @@
         width: 35%;
       }
     }
-    &.target7 {
+    &.target6 {
       width: 20%;
       top: 170rem;
-      margin-left: -15rem;
+      margin-left: 0rem;
       > div {
         background-color: rgba(0, 0, 0, 0.55);
       }
       @media (max-width: $bp-m) {
         width: 25%;
         top: 160rem;
-        margin-left: -10rem;
+        margin-left: 5rem;
       }
       @media (max-width: $bp-s) {
         width: 30%;
-        top: 130rem;
-        margin-left: -5rem;
+        top: 140rem;
+        margin-left: 10rem;
       }
     }
 
@@ -182,19 +174,23 @@
   }
 
   .main-text-frame {
-    display: inline-block;
-    @include vertical-align(relative);
+    position: absolute;
+    height: 100vh;
     z-index: 2;
-    margin-top: -20rem;
 
-    span {
-      display: block;
-      margin-bottom: 2rem;
-      @include f-b(9rem, $wh);
-    }
+    .main-text {
+      display: inline-block;
+      @include vertical-align(relative);
 
-    p {
-      @include f-m(3.7rem, $wh);
+      span {
+        display: block;
+        margin-bottom: 2rem;
+        @include f-b(9rem, $wh);
+      }
+
+      p {
+        @include f-m(3.7rem, $wh);
+      }
     }
   }
 }

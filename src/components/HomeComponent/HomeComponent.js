@@ -18,8 +18,6 @@ const HomeComponent = () => {
     gsap.to(aboutRef.current, {
       scrollTrigger: {
         trigger: '.about',
-        // start: 'top center+=100',
-        // end: 'top center+=50',
         start: 'top bottom',
         end: 'bottom bottom',
         toggleClass: { targets: '.home-background', className: 'now-about' },
