@@ -64,12 +64,12 @@ const MainComponent = () => {
     <section className='container main'>
       {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
       {/* <VideoToCanvasComponent src={src} /> */}
-      { matchMedia("screen and (min-width: 985px)").matches ? (
+      {CallTheVideo(src, 1280, 720)}
+      {/* { matchMedia("screen and (min-width: 985px)").matches ? (
         CallTheVideo(src, 1280, 720)
       ) : (
-          CallTheVideo(src, 1280, 720)
           // CallTheVideo(srcSmall, 640, 480)
-        )}
+        )} */}
       <div className='main-text-frame'>
         <div className='main-text'>
           <span>FRONT - END</span><span>DEVELOPER</span>
