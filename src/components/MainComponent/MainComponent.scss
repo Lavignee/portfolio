@@ -3,11 +3,10 @@
 
 .main {
   height: 130vh;
+  overflow: hidden;
   @media (min-width: $bp-l-min) {
     height: 150vh;
   }
-
-  overflow: hidden;
 
   .canvas-frame {
     @include horizontal-align;
