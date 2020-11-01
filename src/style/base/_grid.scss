@@ -6,6 +6,12 @@
   margin-right: auto;
   max-width: 290px;
 
+  &.fluid {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   &.start {
     display: flex;
     justify-content: flex-start;

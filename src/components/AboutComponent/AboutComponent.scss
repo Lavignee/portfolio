@@ -2,25 +2,50 @@
 @import '../../Style/Util/util_mixins';
 
 .about {
-  div {
-    display: flex;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    justify-content: space-between;
+  .about-frame {
+    position: relative;
 
-    h2 {
-      white-space: nowrap;
+    .about-background {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: -1;
+      background-color: $wh;
     }
 
-    p {
-      @include f-m(2rem);
+    .title-image {
+      width: 100%;
+      height: 50vh;
+      background: center / cover url(#{$img-url}about1920.jpg);
     }
-  }
 
-  button {
-    @include f-b(2rem);
-    padding: 1rem;
-    border-radius: 5px;
-    @include border-a($wh);
+    h1 {
+      width: 100%;
+      color: $bl;
+    }
+
+    .about-contents {
+      > div {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        h2 {
+          color: $bl;
+          white-space: nowrap;
+        }
+
+        p {
+          margin-top: 4rem;
+          margin-bottom: 4rem;
+          @include f-m(2rem, $bl);
+        }
+      }
+    }
+
+    button {
+      @include f-b(2rem, $bl);
+      padding: 1rem;
+      border-radius: 5px;
+      @include border-a($bl);
+    }
   }
 }

@@ -34,7 +34,7 @@ class CanvasVideo extends Component {
     draw = (video, context) => {
         // context.drawImage(video, 마스크x, 마스크y, 해상도x, 해상도y, 캔버스 내부 출력위치x, 캔버스 내부 출력위치y, 출력사이즈x, 출력사이즈y)
         context.drawImage(video, 0, 0, this.props.resolX, this.props.resolY, this.props.maskX, this.props.maskY, this.props.sizeX, this.props.sizeY)
-        setTimeout(this.draw, 1000 / 120, video, context)
+        setTimeout(this.draw, 1000 / 25, video, context)
     }
 
     render() {

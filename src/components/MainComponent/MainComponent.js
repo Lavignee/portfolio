@@ -3,9 +3,9 @@ import { Trans, withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import CanvasVideo from '../../lib/CanvasVideo'
-import src from '../../Static/videos/video1280.mp4'
-// import srcSmall from '../../Static/videos/video640.mp4'
+import CanvasVideo from '../../lib/CanvasVideo';
+import src from '../../Static/videos/video1280.mp4';
+// import srcSmall from '../../Static/videos/video640.mp4';
 import './MainComponent.scss';
 // import VideoToCanvasComponent from '../VideoToCanvasComponent'
 // import TypingAnimationComponent from '../TypingAnimationComponent';
@@ -41,20 +41,44 @@ const MainComponent = () => {
     }
     canvasFrames.forEach(target => {
       gsap.to(target, {
-        scale: 0.8,
+        scaleX: 0.8,
         y: -300,
+        // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
+        // modifiers: {
+        //   y: function (y) {
+        //     y = parseInt(y);
+        //     var newY = y.toFixed(0);
+        //     return newY + 'px';
+        //   }
+        // },
         scrollTrigger: scrollTriggers
       })
     });
     targetToLefts.forEach(target => {
       gsap.to(target, {
         x: -50,
+        // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
+        // modifiers: {
+        //   x: function (x) {
+        //     x = parseInt(x);
+        //     var newX = x.toFixed(0);
+        //     return newX + 'px';
+        //   }
+        // },
         scrollTrigger: scrollTriggers
       });
     });
     targetToRights.forEach(target => {
       gsap.to(target, {
         x: 50,
+        // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
+        // modifiers: {
+        //   x: function (x) {
+        //     x = parseInt(x);
+        //     var newX = x.toFixed(0);
+        //     return newX + 'px';
+        //   }
+        // },
         scrollTrigger: scrollTriggers
       });
     });
@@ -62,13 +86,24 @@ const MainComponent = () => {
 
   return (
     <section className='container main'>
+      <div class='main-background1'>
+        <div class='background-frame'>
+          <div class='background'></div>
+        </div>
+      </div>
+      <div class='main-background2'>
+        <div class='background-frame'>
+          <div class='background'></div>
+        </div>
+      </div>
       {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
       {/* <VideoToCanvasComponent src={src} /> */}
       {CallTheVideo(src, 1280, 720)}
+      {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
       {/* { matchMedia("screen and (min-width: 985px)").matches ? (
         CallTheVideo(src, 1280, 720)
       ) : (
-          // CallTheVideo(srcSmall, 640, 480)
+          CallTheVideo(srcSmall, 640, 480)
         )} */}
       <div className='main-text-frame'>
         <div className='main-text'>
@@ -76,6 +111,12 @@ const MainComponent = () => {
           {/* TODO: 번역텍스트 받아서 동작하는 애니메이션 보완 필요. */}
           {/* <p><Trans i18nKey='greeting'><TypingAnimationComponent language={language}></TypingAnimationComponent></Trans></p> */}
           <p><Trans i18nKey='greeting2'></Trans></p>
+        </div>
+      </div>
+
+      <div className='into-ment-frame'>
+        <div className='intro-ment'>
+          <p>I'm a front-end developer who lives like this.</p>
         </div>
       </div>
     </section>
