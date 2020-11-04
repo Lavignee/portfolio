@@ -38,7 +38,7 @@ $bp-fw: 1920px;
 $bp-fw-min: 1921px;
 
 //font-style
-@mixin f-r($size: $fontSize, $color: $wh, $lh: 100%, $ls: normal) {
+@mixin f-r($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $regular;
@@ -46,7 +46,7 @@ $bp-fw-min: 1921px;
   letter-spacing: $ls;
 }
 
-@mixin f-m($size: $fontSize, $color: $wh, $lh: 100%, $ls: normal) {
+@mixin f-m($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $medium;
@@ -54,7 +54,7 @@ $bp-fw-min: 1921px;
   letter-spacing: $ls;
 }
 
-@mixin f-b($size: $fontSize, $color: $wh, $lh: 100%, $ls: normal) {
+@mixin f-b($size: $fontSize, $color: $bl, $lh: 100%, $ls: normal) {
   color: $color;
   font-size: $size;
   font-weight: $bold;

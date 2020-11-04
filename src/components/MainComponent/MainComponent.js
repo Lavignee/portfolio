@@ -98,7 +98,9 @@ const MainComponent = () => {
       </div>
       {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
       {/* <VideoToCanvasComponent src={src} /> */}
+
       {CallTheVideo(src, 1280, 720)}
+
       {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
       {/* { matchMedia("screen and (min-width: 985px)").matches ? (
         CallTheVideo(src, 1280, 720)

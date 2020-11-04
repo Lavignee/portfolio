@@ -9,44 +9,51 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AboutComponent = (props, ref) => {
   useEffect(() => {
-    // gsap.fromTo('.title-image-frame', {
-    //   width: 100 + 'vw',
-    //   modifiers: {
-    //     width: function (width) {
-    //       width = parseInt(width);
-    //       var newWidth = width.toFixed(0);
-    //       return newWidth + 'vw';
-    //     }
-    //   },
-    //   // y: -200,
-    // }, {
-    //   width: 80 + 'vw',
-    //   modifiers: {
-    //     width: function (width) {
-    //       width = parseInt(width);
-    //       var newWidth = width.toFixed(0);
-    //       return newWidth + 'vw';
-    //     }
-    //   },
-    //   duration: 1,
-    //   scrollTrigger: {
-    //     trigger: '.intro-ment',
-    //     start: 'top',
-    //     end: 'bottom',
-    //     scrub: true,
-    //     markers: true
-    //   }
-    // });
-    // gsap.to('.title-image', {
-    //   autoAlpha: 0,
-    //   scrollTrigger: {
-    //     trigger: '.intro-ment',
-    //     start: 'top',
-    //     end: 'bottom',
-    //     scrub: true,
-    //     markers: true
-    //   }
-    // })
+    gsap.to('.about-background', {
+      x: 0 + '%',
+      autoAlpha: 1,
+      scrollTrigger: {
+        trigger: '.intro-ment',
+        start: 'top+=100 center',
+        end: 'bottom+=100 center',
+        scrub: true,
+        // markers: true
+      }
+    })
+    gsap.fromTo('.title-image', {
+      maxWidth: 200 + '%',
+      autoAlpha: 0,
+    }, {
+      maxWidth: 100 + '%',
+      autoAlpha: 1,
+      // modifiers: {
+      //   width: function (width) {
+      //     width = parseInt(width);
+      //     var newWidth = width.toFixed(0);
+      //     return newWidth + 'vw';
+      //   }
+      // },
+      scrollTrigger: {
+        trigger: '.intro-ment',
+        // duration: 2,
+        start: 'bottom+=100 center',
+        end: 'bottom+=50' + '%',
+        scrub: true,
+        // markers: true
+      }
+    });
+    gsap.to('.title-text', {
+      right: 0,
+      autoAlpha: 1,
+      scrollTrigger: {
+        trigger: '.intro-ment',
+        // duration: 2,
+        start: 'bottom+=100 center',
+        end: 'bottom+=50' + '%',
+        scrub: true,
+        // markers: true
+      }
+    })
   }, []);
 
   return (
@@ -55,15 +62,12 @@ const AboutComponent = (props, ref) => {
         <div className='about-frame'>
           <div className='about-background'></div>
           <div className='container'>
-            <div className='row'>
-              <div className='title-image-frame'>
-                {/* <div className='title-image'></div> */}
-                <div className='image-size-wrap'>
-                  <img className='title-image-background' src={aboutBanner} alt="About Banner background" />
-                  <img className='title-image' src={aboutBanner} alt="About Banner" />
-                </div>
+            <div className='title-frame'>
+              <div className='size-wrap'>
+                <img className='title-image-background' src={aboutBanner} alt="About Banner background" />
+                <img className='title-image' src={aboutBanner} alt="About Banner" />
+                <h1 className='title-text'>About</h1>
               </div>
-              <h1>About</h1>
             </div>
             <div className='row about-contents'>
               <div className='col-m-12 col-xl-6 col-w-4'>
