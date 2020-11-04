@@ -13,10 +13,22 @@
       background-color: $wh;
     }
 
-    .title-image {
-      width: 100%;
-      height: 50vh;
-      background: center / cover url(#{$img-url}about1920.jpg);
+    .title-image-frame {
+      .image-size-wrap {
+        @include horizontal-align(relative);
+        width: 70%;
+
+        .title-image-background {
+          @include horizontal-align(relative);
+          width: 100%;
+          opacity: 0;
+        }
+
+        .title-image {
+          @include horizontal-align(absolute);
+          width: 100%;
+        }
+      }
     }
 
     h1 {

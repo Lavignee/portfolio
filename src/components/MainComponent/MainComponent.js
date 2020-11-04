@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Trans, withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { gsap } from "gsap";
@@ -86,14 +86,14 @@ const MainComponent = () => {
 
   return (
     <section className='container main'>
-      <div class='main-background1'>
-        <div class='background-frame'>
-          <div class='background'></div>
+      <div className='main-background1'>
+        <div className='background-frame'>
+          <div className='background'></div>
         </div>
       </div>
-      <div class='main-background2'>
-        <div class='background-frame'>
-          <div class='background'></div>
+      <div className='main-background2'>
+        <div className='background-frame'>
+          <div className='background'></div>
         </div>
       </div>
       {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}

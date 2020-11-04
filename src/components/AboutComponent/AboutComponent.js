@@ -1,8 +1,54 @@
-import React, { forwardRef } from 'react';
+import React, { useEffect, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
+import { gsap } from "gsap";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import aboutBanner from '../../Static/images/about1920.jpg';
 import './AboutComponent.scss';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const AboutComponent = (props, ref) => {
+  useEffect(() => {
+    // gsap.fromTo('.title-image-frame', {
+    //   width: 100 + 'vw',
+    //   modifiers: {
+    //     width: function (width) {
+    //       width = parseInt(width);
+    //       var newWidth = width.toFixed(0);
+    //       return newWidth + 'vw';
+    //     }
+    //   },
+    //   // y: -200,
+    // }, {
+    //   width: 80 + 'vw',
+    //   modifiers: {
+    //     width: function (width) {
+    //       width = parseInt(width);
+    //       var newWidth = width.toFixed(0);
+    //       return newWidth + 'vw';
+    //     }
+    //   },
+    //   duration: 1,
+    //   scrollTrigger: {
+    //     trigger: '.intro-ment',
+    //     start: 'top',
+    //     end: 'bottom',
+    //     scrub: true,
+    //     markers: true
+    //   }
+    // });
+    // gsap.to('.title-image', {
+    //   autoAlpha: 0,
+    //   scrollTrigger: {
+    //     trigger: '.intro-ment',
+    //     start: 'top',
+    //     end: 'bottom',
+    //     scrub: true,
+    //     markers: true
+    //   }
+    // })
+  }, []);
+
   return (
     <>
       <section ref={ref} className='container fluid about'>
@@ -10,7 +56,13 @@ const AboutComponent = (props, ref) => {
           <div className='about-background'></div>
           <div className='container'>
             <div className='row'>
-              <div className='title-image'></div>
+              <div className='title-image-frame'>
+                {/* <div className='title-image'></div> */}
+                <div className='image-size-wrap'>
+                  <img className='title-image-background' src={aboutBanner} alt="About Banner background" />
+                  <img className='title-image' src={aboutBanner} alt="About Banner" />
+                </div>
+              </div>
               <h1>About</h1>
             </div>
             <div className='row about-contents'>
