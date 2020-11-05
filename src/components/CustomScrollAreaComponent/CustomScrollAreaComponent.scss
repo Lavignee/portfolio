@@ -1,7 +1,6 @@
 @import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
-.home-background {
-  position: relative;
-  z-index: -100;
+.scroll-area {
+  height: 100vh;
 }

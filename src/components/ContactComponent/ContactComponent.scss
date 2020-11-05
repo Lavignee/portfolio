@@ -4,6 +4,7 @@
 .contact {
   @include vertical-align(fixed);
   right: 0;
+  z-index: 100;
   writing-mode: vertical-rl;
   @include f-b(3rem);
 }

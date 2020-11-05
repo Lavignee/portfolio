@@ -1,64 +1,12 @@
-import React, { useEffect, forwardRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { gsap } from "gsap";
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import aboutBanner from '../../Static/images/about1920.jpg';
 import './AboutComponent.scss';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const AboutComponent = (props, ref) => {
-  useEffect(() => {
-    gsap.to('.about-background', {
-      x: 0 + '%',
-      autoAlpha: 1,
-      scrollTrigger: {
-        trigger: '.intro-ment',
-        start: 'top+=100 center',
-        end: 'bottom+=100 center',
-        scrub: true,
-        // markers: true
-      }
-    })
-    gsap.fromTo('.title-image', {
-      maxWidth: 200 + '%',
-      autoAlpha: 0,
-    }, {
-      maxWidth: 100 + '%',
-      autoAlpha: 1,
-      // modifiers: {
-      //   width: function (width) {
-      //     width = parseInt(width);
-      //     var newWidth = width.toFixed(0);
-      //     return newWidth + 'vw';
-      //   }
-      // },
-      scrollTrigger: {
-        trigger: '.intro-ment',
-        // duration: 2,
-        start: 'bottom+=100 center',
-        end: 'bottom+=50' + '%',
-        scrub: true,
-        // markers: true
-      }
-    });
-    gsap.to('.title-text', {
-      right: 0,
-      autoAlpha: 1,
-      scrollTrigger: {
-        trigger: '.intro-ment',
-        // duration: 2,
-        start: 'bottom+=100 center',
-        end: 'bottom+=50' + '%',
-        scrub: true,
-        // markers: true
-      }
-    })
-  }, []);
-
+const AboutComponent = () => {
   return (
     <>
-      <section ref={ref} className='container fluid about'>
+      <section className='container fluid about'>
         <div className='about-frame'>
           <div className='about-background'></div>
           <div className='container'>
@@ -103,4 +51,4 @@ const AboutComponent = (props, ref) => {
   )
 }
 
-export default forwardRef(AboutComponent);
+export default AboutComponent;

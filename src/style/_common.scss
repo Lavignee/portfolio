@@ -3,6 +3,7 @@
 
 html,
 body {
+  overflow: hidden;
   font-size: 6.5px;
   @media (min-width: 320px) {
     overflow-x: hidden;
@@ -45,9 +46,7 @@ header {
 }
 
 main {
-  min-width: 338px;
-  min-height: 100vh;
-  overflow: hidden;
+  // min-width: 338px;
 }
 
 h1 {

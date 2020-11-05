@@ -6,7 +6,7 @@ const CustomCursorAreaContainer = ({ children }) => {
   const cursorRef = useRef(null);
   const cursorInfoRef = useRef(null);
 
-  function moveCircle(e) {
+  const moveCircle = (e) => {
     gsap.to(cursorRef.current, 0, {
       css: {
         left: e.pageX,
