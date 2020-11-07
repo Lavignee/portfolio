@@ -2,6 +2,7 @@
 @import '../../Style/Util/util_mixins';
 
 .skill {
+  position: relative;
   height: 100vh;
 
   .row {

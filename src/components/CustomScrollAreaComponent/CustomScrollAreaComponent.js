@@ -1,6 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useDispatch } from 'react-redux';
+import { ScrollIntro, ScrollAbout, ScrollSkill } from '../../Modules/ScrollValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import './CustomScrollAreaComponent.scss';
 
@@ -8,6 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CustomScrollAreaComponent = ({ children }) => {
   const scrollArea = useRef();
+  const dispatch = useDispatch();
+  const onScrollIntro = () => dispatch(ScrollIntro('intro'));
+  const onScrollAbout = () => dispatch(ScrollAbout('about'));
+  const onScrollSkill = () => dispatch(ScrollSkill('skill'));
 
   useEffect(() => {
     // 스무스마우스 스크롤값 GSAP 트리거에 전달
@@ -37,8 +43,7 @@ const CustomScrollAreaComponent = ({ children }) => {
       trigger: '.main-text-frame',
       start: 'top',
       end: 'bottom',
-      scrub: true,
-      // markers: true
+      scrub: 1,
     }
     canvasFrames.forEach(target => {
       gsap.to(target, {
@@ -83,8 +88,31 @@ const CustomScrollAreaComponent = ({ children }) => {
         scrollTrigger: scrollTriggers
       });
     });
+    gsap.to('.intro-ment', {
+      y: 0 + '%',
+      scrollTrigger: {
+        id: 'intro-ment',
+        trigger: '.intro-ment',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollIntro() : '',
+        end: 'bottom center',
+        scrub: true,
+      }
+    });
 
     // 어바웃 컨텐츠 애니메이션
+    gsap.fromTo('.about-section', {
+      y: -40 + '%',
+    }, {
+      y: 0 + '%',
+      scrollTrigger: {
+        id: 'about-section',
+        trigger: '.about-section',
+        start: 'top+=600 center',
+        end: 'bottom+=100 center',
+        scrub: true,
+      }
+    });
     gsap.to('.about-background', {
       x: 0 + '%',
       autoAlpha: 1,
@@ -94,7 +122,6 @@ const CustomScrollAreaComponent = ({ children }) => {
         start: 'top+=100 center',
         end: 'bottom+=100 center',
         scrub: true,
-        markers: true,
       }
     })
     gsap.fromTo('.title-image', {
@@ -108,8 +135,7 @@ const CustomScrollAreaComponent = ({ children }) => {
         trigger: '.intro-ment',
         start: 'bottom+=100 center',
         end: 'bottom+=50' + '%',
-        scrub: true,
-        // markers: true,
+        scrub: 0.5,
       }
     });
     gsap.to('.title-text', {
@@ -120,13 +146,27 @@ const CustomScrollAreaComponent = ({ children }) => {
         trigger: '.intro-ment',
         start: 'bottom+=100 center',
         end: 'bottom+=50' + '%',
-        scrub: true,
-        // markers: true,
+        scrub: 0.5,
       }
     })
+    gsap.to('.split-frame', {
+      autoAlpha: 1,
+      scrollTrigger: {
+        id: 'split-frame',
+        trigger: '.about-title',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollAbout() : '',
+        end: 'bottom center',
+      }
+    });
   }, []);
 
   return (
+    // <div ref={scrollArea}>
+    //   <div className='scroll-area' ref={scrollArea}>
+    //     {children}
+    //   </div>
+    // </div>
     <div className='scroll-area' ref={scrollArea}>
       {children}
     </div>

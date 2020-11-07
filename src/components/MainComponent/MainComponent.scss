@@ -198,9 +198,14 @@
       padding-top: 15rem;
       padding-bottom: 15rem;
 
-      p {
+      .type-p {
         @include f-b(10rem, $wh);
         text-transform: uppercase;
+        .split-frame {
+          .split-target {
+            min-width: 2rem;
+          }
+        }
       }
     }
   }

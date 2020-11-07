@@ -1,0 +1,44 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.split-frame {
+  position: relative;
+  overflow: hidden;
+  .split-target {
+    position: relative;
+    display: inline-block;
+    min-width: 0.5rem;
+
+    &.default {
+      animation-duration: 0.1s;
+      animation-name: split-default;
+    }
+
+    &.up {
+      animation-duration: 0.5s;
+      animation-name: split-up;
+    }
+  }
+}
+
+@keyframes split-default {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes split-up {
+  from {
+    opacity: 0;
+    bottom: -10rem;
+  }
+
+  to {
+    opacity: 1;
+    bottom: 0;
+  }
+}

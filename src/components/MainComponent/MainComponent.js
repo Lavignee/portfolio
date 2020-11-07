@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import CanvasVideo from '../../lib/CanvasVideo';
+import SplitTextComponent from '../SplitTextComponent';
 import src from '../../Static/videos/video1280.mp4';
 // import srcSmall from '../../Static/videos/video640.mp4';
 import './MainComponent.scss';
@@ -60,7 +61,7 @@ const MainComponent = () => {
 
       <div className='into-ment-frame'>
         <div className='intro-ment'>
-          <p>I'm a front-end developer who lives like this.</p>
+          <div className='type-p'><SplitTextComponent animation={'up'} scroll={'intro'} index={'one'}>I'm a front-end developer who lives like this.</SplitTextComponent></div>
         </div>
       </div>
     </section>

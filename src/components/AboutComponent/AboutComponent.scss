@@ -1,11 +1,7 @@
 @import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
-.about {
-  @media (min-width: $bp-l-min) {
-    transform: translateY(-40%);
-  }
-
+.about-section {
   .about-frame {
     padding-top: 10rem;
     padding-bottom: 10rem;
@@ -61,7 +57,8 @@
           white-space: nowrap;
         }
 
-        p {
+        .type-p {
+          min-height: 8rem;
           margin-top: 4rem;
           margin-bottom: 4rem;
           @include f-m(2rem, $bl);
