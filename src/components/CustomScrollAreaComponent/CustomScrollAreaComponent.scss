@@ -3,4 +3,8 @@
 
 .scroll-area {
   height: 100vh;
+
+  .scroll-content {
+    will-change: transform;
+  }
 }

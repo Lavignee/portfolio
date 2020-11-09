@@ -16,6 +16,7 @@
       opacity: 0;
       background-color: $wh;
       transform: translateX(-100%) matrix(1, 0.1, 0, 1, 0, 0);
+      will-change: transform, opacity;
     }
 
     .title-frame {
@@ -34,7 +35,7 @@
         .title-image {
           @include horizontal-align(absolute);
           width: 100vw;
-          // opacity: 0;
+          will-change: opacity, max-width;
         }
 
         .title-text {
@@ -43,6 +44,7 @@
           right: 40rem;
           display: inline-block;
           @include f-b(40rem, $yl, 28.5rem);
+          will-change: right;
         }
       }
     }

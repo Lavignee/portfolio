@@ -19,6 +19,7 @@
   width: 1rem;
   height: 1rem;
   background-color: #000;
+  will-change: left, top;
 }
 
 .custom-cursor-info {
@@ -26,4 +27,5 @@
   width: 5rem;
   height: 5rem;
   @include border-a(0.1rem, #000);
+  will-change: left, top;
 }

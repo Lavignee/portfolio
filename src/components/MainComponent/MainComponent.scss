@@ -40,6 +40,7 @@
     display: inline-block;
     z-index: -1;
     overflow: hidden;
+    will-change: transform;
 
     &.target1 {
       width: 60%;

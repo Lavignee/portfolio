@@ -5,6 +5,10 @@ html,
 body {
   overflow: hidden;
   font-size: 6.5px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-kerning: auto;
+
   @media (min-width: 320px) {
     overflow-x: hidden;
   }
