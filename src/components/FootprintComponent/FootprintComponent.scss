@@ -1,14 +1,10 @@
 @import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
-.footprint {
+.footprint-section {
   height: 100vh;
 
-  button {
-    padding: 2rem;
-    margin: 2rem;
-    display: block;
-    @include border-a($wh);
-    @include f-b(3rem);
+  .split-frame {
+    @include f-b(20rem, $bl);
   }
 }

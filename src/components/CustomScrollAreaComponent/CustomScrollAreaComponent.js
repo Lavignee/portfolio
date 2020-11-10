@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useDispatch } from 'react-redux';
-import { ScrollIntro, ScrollAbout, ScrollSkill } from '../../Modules/ScrollValueModule';
+import { ScrollIntro, ScrollAbout, ScrollSkill, ScrollFootprint } from '../../Modules/ScrollValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import './CustomScrollAreaComponent.scss';
 
@@ -14,6 +14,7 @@ const CustomScrollAreaComponent = ({ children }) => {
   const onScrollIntro = () => dispatch(ScrollIntro('intro'));
   const onScrollAbout = () => dispatch(ScrollAbout('about'));
   const onScrollSkill = () => dispatch(ScrollSkill('skill'));
+  const onScrollFootprint = () => dispatch(ScrollFootprint('footprint'));
 
   useEffect(() => {
     // 스무스마우스 스크롤값 GSAP 트리거에 전달
@@ -150,12 +151,33 @@ const CustomScrollAreaComponent = ({ children }) => {
       }
     })
     gsap.to('.split-frame', {
-      autoAlpha: 1,
       scrollTrigger: {
         id: 'split-frame',
         trigger: '.about-title',
         start: 'top center',
         onEnter: self => self.isActive ? onScrollAbout() : '',
+        end: 'bottom center',
+      }
+    });
+
+    // 스킬 컨텐츠 애니메이션
+    gsap.to('.split-frame', {
+      scrollTrigger: {
+        id: 'split-frame',
+        trigger: '.skill-title',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollSkill() : '',
+        end: 'bottom center',
+      }
+    });
+
+    // 풋프린트 컨텐츠 애니메이션
+    gsap.to('.split-frame', {
+      scrollTrigger: {
+        id: 'split-frame',
+        trigger: '.footprint-title',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollFootprint() : '',
         end: 'bottom center',
       }
     });

@@ -202,10 +202,9 @@
       .type-p {
         @include f-b(10rem, $wh);
         text-transform: uppercase;
-        .split-frame {
-          .split-target {
-            min-width: 2rem;
-          }
+        .split-depth-frame,
+        .split-target {
+          min-width: 2rem;
         }
       }
     }

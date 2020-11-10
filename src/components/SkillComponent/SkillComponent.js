@@ -13,7 +13,7 @@ const SkillComponent = () => {
         <IconSliderComponent reverse={'reverse'} />
         <div className='container'>
           <div className='skill-frame'>
-            <h1>Skill</h1>
+            <h1 className='title-text skill-title'>Skill</h1>
             <div className='row list-frame'>
               <div className='off-m-2 col-m-10 off-xl-4 col-xl-8 off-w-6 col-w-6 list'><Link to='/skill'>언어</Link></div>
               <div className='off-m-2 col-m-10 off-xl-4 col-xl-8 off-w-6 col-w-6 list'><Link to='/skill'>프레임워크&<br />라이브러리</Link></div>

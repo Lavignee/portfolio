@@ -7,9 +7,12 @@ const CustomCursorComponent = ({ children, moveCircle, cursorInfoRef, cursorRef 
   const { text } = useSelector(state => ({
     text: state.CursorModule.text
   }));
+  const { language } = useSelector(state => ({
+    language: state.LanguageModule.language
+  }));
 
   return (
-    <main onMouseMove={(e) => moveCircle(e)}>
+    <main className={language} onMouseMove={(e) => moveCircle(e)}>
       {children}
       <CustomCursorComposition className='custom-cursor-info' ref={cursorInfoRef} >{text}</CustomCursorComposition>
       <CustomCursorComposition className='custom-cursor-default' ref={cursorRef} />

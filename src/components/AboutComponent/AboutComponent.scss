@@ -51,16 +51,17 @@
 
     .about-contents {
       padding-top: 15rem;
+
       > div {
         margin-top: 4rem;
         margin-bottom: 4rem;
+
         h2 {
           color: $bl;
           white-space: nowrap;
         }
 
         .type-p {
-          min-height: 8rem;
           margin-top: 4rem;
           margin-bottom: 4rem;
           @include f-m(2rem, $bl);
