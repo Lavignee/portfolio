@@ -1,11 +1,11 @@
 @import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
-.main {
+.main-section {
   height: 130vh;
   overflow: hidden;
   @media (min-width: $bp-l-min) {
-    height: 245vh;
+    height: 200vh;
   }
 
   .main-background1,
@@ -13,7 +13,7 @@
     position: absolute;
     left: 0;
     width: 100%;
-    height: 245vh;
+    height: 200vh;
 
     .background {
       position: fixed;

@@ -46,6 +46,7 @@ const CustomScrollAreaComponent = ({ children }) => {
       end: 'bottom',
       scrub: 1,
     }
+
     canvasFrames.forEach(target => {
       gsap.to(target, {
         scaleX: 0.8,
@@ -61,6 +62,7 @@ const CustomScrollAreaComponent = ({ children }) => {
         scrollTrigger: scrollTriggers
       })
     });
+
     targetToLefts.forEach(target => {
       gsap.to(target, {
         x: -50,
@@ -75,6 +77,7 @@ const CustomScrollAreaComponent = ({ children }) => {
         scrollTrigger: scrollTriggers
       });
     });
+
     targetToRights.forEach(target => {
       gsap.to(target, {
         x: 50,
@@ -89,6 +92,7 @@ const CustomScrollAreaComponent = ({ children }) => {
         scrollTrigger: scrollTriggers
       });
     });
+
     gsap.to('.intro-ment', {
       y: 0 + '%',
       scrollTrigger: {
@@ -102,54 +106,33 @@ const CustomScrollAreaComponent = ({ children }) => {
     });
 
     // 어바웃 컨텐츠 애니메이션
-    gsap.fromTo('.about-section', {
-      y: -40 + '%',
-    }, {
-      y: 0 + '%',
-      scrollTrigger: {
-        id: 'about-section',
-        trigger: '.about-section',
-        start: 'top+=600 center',
-        end: 'bottom+=100 center',
-        scrub: true,
-      }
-    });
-    gsap.to('.about-background', {
-      x: 0 + '%',
-      autoAlpha: 1,
-      scrollTrigger: {
-        id: 'about-background',
-        trigger: '.intro-ment',
-        start: 'top+=100 center',
-        end: 'bottom+=100 center',
-        scrub: true,
-      }
-    })
-    gsap.fromTo('.title-image', {
+    gsap.fromTo('.about-title-image', {
       maxWidth: 200 + '%',
       autoAlpha: 0,
     }, {
       maxWidth: 100 + '%',
       autoAlpha: 1,
       scrollTrigger: {
-        id: 'title-image',
+        id: 'about-title-image',
         trigger: '.intro-ment',
         start: 'bottom+=100 center',
         end: 'bottom+=50' + '%',
         scrub: 0.5,
       }
     });
-    gsap.to('.title-text', {
+
+    gsap.to('.about-title', {
       right: 0,
       autoAlpha: 1,
       scrollTrigger: {
-        id: 'title-text',
+        id: 'about-title',
         trigger: '.intro-ment',
         start: 'bottom+=100 center',
         end: 'bottom+=50' + '%',
         scrub: 0.5,
       }
     })
+
     gsap.to('.split-frame', {
       scrollTrigger: {
         id: 'split-frame',
@@ -185,7 +168,7 @@ const CustomScrollAreaComponent = ({ children }) => {
 
   return (
     // <div ref={scrollArea}>
-    //   <div className='scroll-area' ref={scrollArea}>
+    //   <div className='scroll-area'>
     //     {children}
     //   </div>
     // </div>

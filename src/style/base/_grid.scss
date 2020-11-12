@@ -79,6 +79,7 @@
 
 @mixin gutter($gutter) {
   @for $i from 1 through 12 {
+    .col-#{$i},
     .col-xs-#{$i},
     .col-s-#{$i},
     .col-m-#{$i},
@@ -92,6 +93,7 @@
       padding-right: $gutter / 2 * 0.1 + rem;
     }
   }
+  .col-auto,
   .col-xs-auto,
   .col-s-auto,
   .col-m-auto,
@@ -107,7 +109,7 @@
 
 @include gutter(30);
 
-@mixin grid($size) {
+@mixin grid($size: default) {
   @for $i from 1 through 13 {
     @if ($i == 1) {
       $percent: 8.33333333%;
@@ -118,6 +120,12 @@
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
       }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
+      }
     } @else if($i == 2) {
       $percent: 16.66666667%;
       .col-#{$size}-#{$i} {
@@ -126,6 +134,12 @@
       }
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
+      }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
       }
     } @else if($i == 3) {
       $percent: 25%;
@@ -136,6 +150,12 @@
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
       }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
+      }
     } @else if($i == 4) {
       $percent: 33.33333333%;
       .col-#{$size}-#{$i} {
@@ -144,6 +164,12 @@
       }
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
+      }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
       }
     } @else if($i == 5) {
       $percent: 41.66666667%;
@@ -154,6 +180,12 @@
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
       }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
+      }
     } @else if($i == 6) {
       $percent: 50%;
       .col-#{$size}-#{$i} {
@@ -162,6 +194,12 @@
       }
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
+      }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
       }
     } @else if($i == 7) {
       $percent: 58.33333333%;
@@ -172,6 +210,12 @@
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
       }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
+      }
     } @else if($i == 8) {
       $percent: 66.66666667%;
       .col-#{$size}-#{$i} {
@@ -180,6 +224,12 @@
       }
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
+      }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
       }
     } @else if($i == 9) {
       $percent: 75%;
@@ -190,6 +240,12 @@
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
       }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
+      }
     } @else if($i == 10) {
       $percent: 83.33333333%;
       .col-#{$size}-#{$i} {
@@ -198,6 +254,12 @@
       }
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
+      }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
       }
     } @else if($i == 11) {
       $percent: 91.66666667%;
@@ -208,6 +270,12 @@
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
       }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
+      }
     } @else if($i == 12) {
       $percent: 100%;
       .col-#{$size}-#{$i} {
@@ -216,6 +284,12 @@
       }
       .off-#{$size}-#{$i} {
         margin-left: #{$percent};
+      }
+      @if ($size == default) {
+        .col-#{$i} {
+          flex: 0 0 #{$percent};
+          max-width: #{$percent};
+        }
       }
     } @else {
       .col-#{$size}-auto {
@@ -226,6 +300,8 @@
     }
   }
 }
+
+@include grid();
 
 @media (min-width: $bp-xs-min) {
   @include grid(xs);

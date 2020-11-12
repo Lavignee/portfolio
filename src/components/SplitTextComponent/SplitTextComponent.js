@@ -26,7 +26,6 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
   useEffect(() => {
     if (scrollValue === scroll && !happen.includes(scrollValue)) {
       setWillChange(true)
-      console.log(noContainer)
       Splitting()
       setHappen(...happen, [scrollValue])
     }

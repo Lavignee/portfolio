@@ -14,7 +14,7 @@
   }
 
   .skill-frame {
-    @include vertical-align;
+    @include center-align;
 
     h1 {
       display: inline-block;
@@ -34,10 +34,13 @@
           padding-bottom: 3rem;
           text-align: right;
           @include f-b(10rem);
-          -webkit-text-stroke: 0.1rem $bl;
+          -webkit-text-stroke: 0.2rem $bl;
+          text-shadow: 0 0 10px $wh;
           transform: translate3d(0, 0, 0) rotateY(-30deg);
           transform-origin: right center;
           transition: transform $transition, color $transition;
+          // @include border-a($bl);
+          // background-color: rgba(255, 255, 255, 0.5);
         }
 
         &:hover {

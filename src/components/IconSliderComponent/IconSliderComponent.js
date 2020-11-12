@@ -1,14 +1,23 @@
 import React, { useEffect } from 'react';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
+import html5 from '../../static/images/001_HTML5.svg';
+import css from '../../static/images/002_css.svg';
+import javasc from '../../static/images/003_javasc.svg';
+import react from '../../static/images/004_react.svg';
+import webpack from '../../static/images/005_webpack.svg';
+import parcel from '../../static/images/006_parcel.svg';
+import sass from '../../static/images/007_sass.svg';
+import greens from '../../static/images/008_greens.svg';
+import github from '../../static/images/014_github.svg';
 import './IconSliderComponent.scss';
 
 const IconsliderComponent = ({ reverse }) => {
   const colors = ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999", "#aaaaaa"];
-  const icons = [11, 22, 33, 44, 55, 66, 77, 88, 99, 1010]
+  const icons = [html5, css, javasc, react, webpack, parcel, sass, greens, github]
 
   useEffect(() => {
     gsap.set(".content-frame", {
-      backgroundColor: (i) => colors[i % colors.length],
+      // backgroundColor: (i) => colors[i % colors.length],
       x: (i) => i * 100 + '%'
     });
 
@@ -30,7 +39,7 @@ const IconsliderComponent = ({ reverse }) => {
   return (
     <div className={`icon-slider${reverse ? ` ${reverse}` : ''}`}>
       {icons.map(icons => (
-        <div key={icons} className='content-frame'><div className='content'>{icons}</div></div>
+        <div key={icons} className='content-frame'><div className='content'><img src={icons} alt="skill-icon" /></div></div>
       ))
       }
     </div>

@@ -13,15 +13,23 @@
     height: 100%;
     text-align: center;
     @include f-b(5rem, red);
-    opacity: 0.2;
+    opacity: 0.3;
     will-change: transform;
 
     .content {
       @include center-align;
       border-radius: 100%;
-      background-color: blue;
+      background-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1);
       width: 15rem;
       height: 15rem;
+
+      img {
+        @include center-align;
+        width: 13rem;
+        height: 13rem;
+        // width: 100%;
+      }
     }
   }
 

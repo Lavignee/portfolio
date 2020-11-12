@@ -28,7 +28,7 @@ const MainComponent = () => {
   }));
 
   return (
-    <section className='container main'>
+    <section className='container main-section'>
       <div className='main-background1'>
         <div className='background-frame'>
           <div className='background'></div>
