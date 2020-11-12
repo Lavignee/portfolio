@@ -1,10 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { gsap } from "gsap";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useDispatch } from 'react-redux';
+import { ScrollAbout } from '../../Modules/ScrollValueModule';
 import aboutBanner from '../../Static/images/about1920.jpg';
 import SplitTextComponent from '../SplitTextComponent';
 import './AboutComponent.scss';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const AboutComponent = () => {
+  const dispatch = useDispatch();
+  const onScrollAbout = () => dispatch(ScrollAbout('about'));
+
+  useEffect(() => {
+    // 어바웃 컨텐츠 애니메이션
+    gsap.fromTo('.about-title-image', {
+      maxWidth: 200 + '%',
+      autoAlpha: 0,
+    }, {
+      maxWidth: 100 + '%',
+      autoAlpha: 1,
+      scrollTrigger: {
+        id: 'about-title-image',
+        trigger: '.intro-ment',
+        start: 'bottom+=100 center',
+        end: 'bottom+=50' + '%',
+        scrub: 0.5,
+      }
+    });
+
+    gsap.to('.about-title', {
+      right: 0,
+      autoAlpha: 1,
+      scrollTrigger: {
+        id: 'about-title',
+        trigger: '.intro-ment',
+        start: 'bottom+=100 center',
+        end: 'bottom+=50' + '%',
+        scrub: 0.5,
+      }
+    })
+
+    gsap.to('.split-frame', {
+      scrollTrigger: {
+        id: 'split-frame',
+        trigger: '.about-title',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollAbout() : '',
+        end: 'bottom center',
+      }
+    });
+  }, [])
   return (
     <>
       <section className='container fluid about-section'>

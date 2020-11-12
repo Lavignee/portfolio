@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { gsap } from "gsap";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useDispatch } from 'react-redux';
+import { ScrollSkill } from '../../Modules/ScrollValueModule';
 import IconSliderComponent from '../IconSliderComponent';
 import './SkillComponent.scss';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const SkillComponent = () => {
+  const dispatch = useDispatch();
+  const onScrollSkill = () => dispatch(ScrollSkill('skill'));
+
+  useEffect(() => {
+    // 스킬 컨텐츠 애니메이션
+    gsap.to('.split-frame', {
+      scrollTrigger: {
+        id: 'split-frame',
+        trigger: '.skill-title',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollSkill() : '',
+        end: 'bottom center',
+      }
+    });
+  }, [])
+
   return (
     <>
       <section className='container fluid skill-section'>

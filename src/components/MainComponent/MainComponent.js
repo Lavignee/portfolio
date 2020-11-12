@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Trans, withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { ScrollIntro } from '../../Modules/ScrollValueModule';
+import { gsap } from "gsap";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CanvasVideo from '../../lib/CanvasVideo';
 import SplitTextComponent from '../SplitTextComponent';
 import src from '../../Static/videos/video1280.mp4';
@@ -8,6 +12,8 @@ import src from '../../Static/videos/video1280.mp4';
 import './MainComponent.scss';
 // import VideoToCanvasComponent from '../VideoToCanvasComponent'
 // import TypingAnimationComponent from '../TypingAnimationComponent';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CallTheVideo = (VideoSource, resolX, resolY) => {
   return (
@@ -23,9 +29,81 @@ const CallTheVideo = (VideoSource, resolX, resolY) => {
 }
 
 const MainComponent = () => {
+  const dispatch = useDispatch();
+  const onScrollIntro = () => dispatch(ScrollIntro('intro'));
   const { language } = useSelector(state => ({
     language: state.LanguageModule.language
   }));
+
+  useEffect(() => {
+    const canvasFrames = gsap.utils.toArray('.canvas-frame');
+    const targetToLefts = gsap.utils.toArray('.left');
+    const targetToRights = gsap.utils.toArray('.right');
+    const scrollTriggers = {
+      trigger: '.main-text-frame',
+      start: 'top',
+      end: 'bottom',
+      scrub: 1,
+    }
+
+    canvasFrames.forEach(target => {
+      gsap.to(target, {
+        scaleX: 0.8,
+        y: -300,
+        // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
+        modifiers: {
+          y: function (y) {
+            y = parseInt(y);
+            var newY = y.toFixed(0);
+            return newY + 'px';
+          }
+        },
+        scrollTrigger: scrollTriggers
+      })
+    });
+
+    targetToLefts.forEach(target => {
+      gsap.to(target, {
+        x: -50,
+        // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
+        modifiers: {
+          x: function (x) {
+            x = parseInt(x);
+            var newX = x.toFixed(0);
+            return newX + 'px';
+          }
+        },
+        scrollTrigger: scrollTriggers
+      });
+    });
+
+    targetToRights.forEach(target => {
+      gsap.to(target, {
+        x: 50,
+        // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
+        modifiers: {
+          x: function (x) {
+            x = parseInt(x);
+            var newX = x.toFixed(0);
+            return newX + 'px';
+          }
+        },
+        scrollTrigger: scrollTriggers
+      });
+    });
+
+    gsap.to('.intro-ment', {
+      y: 0 + '%',
+      scrollTrigger: {
+        id: 'intro-ment',
+        trigger: '.intro-ment',
+        start: 'top center',
+        onEnter: self => self.isActive ? onScrollIntro() : '',
+        end: 'bottom center',
+        scrub: true,
+      }
+    });
+  }, [])
 
   return (
     <section className='container main-section'>
