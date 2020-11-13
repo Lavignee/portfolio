@@ -3,7 +3,8 @@
 
 .skill-section {
   position: relative;
-  height: 100vh;
+  height: 120vh;
+  overflow: hidden;
 
   &:hover {
     .list {

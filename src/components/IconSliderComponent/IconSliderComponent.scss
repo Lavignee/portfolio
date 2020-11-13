@@ -3,14 +3,37 @@
 
 .icon-slider {
   position: relative;
-  left: -10.5%;
+  left: -21.12rem;
   width: 100%;
-  height: 25vh;
+  min-width: 160rem;
+  transform: translateY(-50%);
+
+  &.four {
+    height: 33.33333333vh;
+  }
+  &.five {
+    height: 25vh;
+  }
+  &.six {
+    height: 20vh;
+  }
+  &.seven {
+    height: 16.66666666vh;
+  }
+  &.eight {
+    height: 14.28571428vh;
+  }
+  &.nine {
+    height: 12.5vh;
+  }
+  &.ten {
+    height: 11.11111111vh;
+  }
 
   .content-frame {
     position: absolute;
     width: 11%;
-    height: 100%;
+    height: 21.12rem;
     text-align: center;
     @include f-b(5rem, red);
     opacity: 0.3;
@@ -21,20 +44,20 @@
       border-radius: 100%;
       background-color: rgba(0, 0, 0, 0.1);
       box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1);
-      width: 15rem;
-      height: 15rem;
+      width: 14rem;
+      height: 14rem;
 
       svg {
         @include center-align;
-        width: 13rem;
-        height: 13rem;
+        width: 12rem;
+        height: 12rem;
       }
     }
   }
 
   &.reverse {
-    left: 10.5%;
-    transform: rotateY(180deg);
+    left: 21.12rem;
+    transform: rotateY(180deg) translateY(-50%);
 
     .content {
       position: absolute;

@@ -30,9 +30,6 @@ const SkillComponent = () => {
     <>
       <section className='container fluid skill-section'>
         <IconSliderComponent />
-        <IconSliderComponent reverse={'reverse'} />
-        <IconSliderComponent />
-        <IconSliderComponent reverse={'reverse'} />
         <div className='container skill-frame'>
           <h1 className='title-text skill-title'>Skill</h1>
           <div className='row list-frame'>
