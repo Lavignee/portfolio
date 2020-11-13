@@ -24,11 +24,10 @@
       width: 15rem;
       height: 15rem;
 
-      img {
+      svg {
         @include center-align;
         width: 13rem;
         height: 13rem;
-        // width: 100%;
       }
     }
   }
