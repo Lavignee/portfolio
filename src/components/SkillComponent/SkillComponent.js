@@ -28,7 +28,7 @@ const SkillComponent = () => {
 
   return (
     <>
-      <section className='container fluid skill-section'>
+      <section className='container skill-section fluid'>
         <IconSliderComponent />
         <div className='container skill-frame'>
           <h1 className='title-text skill-title'>Skill</h1>

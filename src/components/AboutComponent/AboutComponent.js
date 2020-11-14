@@ -55,7 +55,7 @@ const AboutComponent = () => {
   }, [])
   return (
     <>
-      <section className='container fluid about-section'>
+      <section className='container about-section fluid'>
         <div className='container about-frame'>
           <div className='title-frame'>
             <div className='size-wrap'>
