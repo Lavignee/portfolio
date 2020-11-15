@@ -37,8 +37,8 @@ const MainComponent = () => {
 
   useEffect(() => {
     const canvasFrames = gsap.utils.toArray('.canvas-frame');
-    const targetToLefts = gsap.utils.toArray('.left');
-    const targetToRights = gsap.utils.toArray('.right');
+    const targetToLefts = gsap.utils.toArray('.main-section .left');
+    const targetToRights = gsap.utils.toArray('.main-section .right');
     const scrollTriggers = {
       trigger: '.main-text-frame',
       start: 'top',

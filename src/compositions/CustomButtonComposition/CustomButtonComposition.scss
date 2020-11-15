@@ -1,0 +1,20 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.button-frame {
+  &.left {
+    text-align: left;
+  }
+  &.center {
+    text-align: center;
+  }
+  &.right {
+    text-align: right;
+  }
+  button {
+    display: inline-block;
+    padding: 1rem 1.5rem;
+    background-color: $bl;
+    color: $wh;
+  }
+}

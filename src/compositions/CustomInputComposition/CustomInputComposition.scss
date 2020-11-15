@@ -1,0 +1,18 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.input-frame {
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  input {
+    width: 100%;
+    border: none;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+    box-sizing: border-box;
+    @include border-a($bl);
+  }
+}

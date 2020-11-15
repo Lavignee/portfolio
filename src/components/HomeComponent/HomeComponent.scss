@@ -3,46 +3,4 @@
 
 .home-background {
   position: relative;
-  // z-index: -100;
-
-  .grid-container {
-    @include horizontal-align;
-    height: 100%;
-
-    span {
-      position: absolute;
-      top: 0;
-      width: 1px;
-      height: 100%;
-      // background-color: $bl;
-
-      &:first-child {
-        left: 0;
-      }
-
-      &:nth-child(2) {
-        left: 25%;
-      }
-
-      &:nth-child(3) {
-        left: 50%;
-      }
-
-      &:nth-child(4) {
-        left: 75%;
-      }
-
-      // &:nth-child(2) {
-      //   left: 33%;
-      // }
-
-      // &:nth-child(3) {
-      //   left: 66%;
-      // }
-
-      &:last-child {
-        left: 100%;
-      }
-    }
-  }
 }

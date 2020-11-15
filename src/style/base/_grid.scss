@@ -324,3 +324,24 @@
 @media (min-width: $bp-fw-min) {
   @include grid(fw);
 }
+
+.pl-none {
+  padding-left: 0 !important;
+}
+.pr-none {
+  padding-right: 0 !important;
+}
+.pl-pr-none {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.ml-none {
+  margin-left: 0 !important;
+}
+.mr-none {
+  margin-right: 0 !important;
+}
+.ml-mr-none {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

@@ -1,10 +1,205 @@
 @import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
-.contact {
+.contact-button {
   @include vertical-align(fixed);
   right: 0;
   z-index: 100;
   writing-mode: vertical-rl;
   @include f-b(3rem);
+
+  &.delay {
+    pointer-events: none;
+  }
+}
+
+.contact-frame {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  transform: translateX(100%);
+
+  .contact-grid-frame {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .contact-grid {
+      position: relative;
+      width: 12.5%;
+      height: 100%;
+      overflow: hidden;
+
+      &:not(:last-child) {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 1px;
+          height: 100%;
+          background-color: $bl;
+          animation-duration: 1s;
+          animation-fill-mode: forwards;
+          z-index: 1;
+        }
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $wh;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        z-index: 0;
+      }
+    }
+  }
+
+  &.open {
+    transform: translateX(0);
+
+    .contact-grid {
+      &:before {
+        animation-name: down-line;
+      }
+      &:after {
+        animation-name: fill-div;
+      }
+    }
+  }
+
+  &.close {
+    transform: translateX(100%);
+    transition-delay: 1.5s;
+
+    .contact-grid {
+      &:before {
+        animation-name: back-line;
+        animation-delay: 0.5s;
+      }
+      &:after {
+        animation-name: back-div;
+        animation-delay: 0.5s;
+      }
+    }
+  }
+
+  .contact-content-frame {
+    position: relative;
+    z-index: 3;
+    box-sizing: content-box;
+    @media (min-width: $bp-s-min) {
+      padding-top: 45vh;
+      height: 40vh;
+      padding-bottom: 15vh;
+    }
+    @media (max-width: $bp-s) {
+      padding-top: $headerHeight;
+    }
+
+    .contact-content {
+      box-sizing: border-box;
+
+      .email-form-frame {
+        width: 100%;
+        height: 100%;
+        padding: 1.5rem;
+        background-color: $wh;
+        box-shadow: 0 0 10px $bl;
+        opacity: 0;
+        animation-duration: 1s;
+
+        &.open {
+          animation-name: down-line;
+          animation-fill-mode: forwards;
+          animation-delay: 0.5s;
+        }
+
+        &.close {
+          animation-name: back-line;
+        }
+      }
+
+      .info-frame {
+        width: 100%;
+        height: 100%;
+        padding: 1.5rem;
+        background-color: $wh;
+        box-shadow: 0 0 10px $bl;
+        opacity: 0;
+        animation-duration: 1s;
+        @media (max-width: $bp-s) {
+          margin-top: 2rem;
+        }
+
+        span {
+          display: block;
+          padding-top: 1.5rem;
+          padding-bottom: 1.5rem;
+          @include f-m(2rem, $bl);
+        }
+
+        &.open {
+          animation-name: down-line;
+          animation-fill-mode: forwards;
+          animation-delay: 0.5s;
+        }
+
+        &.close {
+          animation-name: back-line;
+        }
+      }
+    }
+  }
+}
+
+@keyframes down-line {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fill-div {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes back-line {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes back-div {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
 }
