@@ -29,7 +29,10 @@
       perspective: 80rem;
 
       .list {
+        z-index: 0;
+
         a {
+          position: relative;
           display: block;
           padding-top: 3rem;
           padding-bottom: 3rem;
@@ -40,8 +43,7 @@
           transform: translate3d(0, 0, 0) rotateY(-30deg);
           transform-origin: right center;
           transition: transform $transition, color $transition;
-          // @include border-a($bl);
-          // background-color: rgba(255, 255, 255, 0.5);
+          z-index: 4;
         }
 
         &:hover {

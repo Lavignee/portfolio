@@ -1,0 +1,76 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.skill-detail {
+  height: 100vh;
+
+  .skill-common {
+    padding: $headerHeight 1.5rem 1rem 1.5rem;
+    height: 40vh;
+
+    li {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      @include f-b(3rem, $bl);
+    }
+  }
+
+  .skill-list {
+    padding: 1rem 1.5rem;
+    height: 60vh;
+    background-color: $bl;
+    background-color: rgba(0, 0, 0, 0.8);
+
+    li {
+      position: relative;
+      padding-left: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      @include f-m(3rem, #ddd);
+
+      &.active {
+        text-decoration: underline;
+      }
+
+      span {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(180deg);
+        @include f-m(2rem, #ddd, 1rem);
+        writing-mode: vertical-lr;
+      }
+    }
+  }
+
+  .null-area {
+  }
+
+  .skill-detail-content {
+    padding: $headerHeight 1.5rem 1rem 1.5rem;
+    height: 80vh;
+    background-color: $bl;
+    background-color: rgba(0, 0, 0, 0.8);
+
+    p {
+      display: none;
+      @include f-m(2rem, #ddd);
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
+
+.color-icon-background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+
+  svg {
+    @include center-align;
+    width: 70vw;
+    height: 70vh;
+  }
+}

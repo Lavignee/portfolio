@@ -7,7 +7,7 @@ import './HomeComponent.scss';
 
 const HomeComponent = () => {
   return (
-    <div className='home-background'>
+    <div className='home'>
       <MainComponent />
       <AboutComponent />
       <SkillComponent />

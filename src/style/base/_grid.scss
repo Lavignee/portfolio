@@ -297,8 +297,18 @@
         width: auto;
         max-width: 100%;
       }
+      .d-#{$size}-none {
+        display: none !important;
+      }
+      .d-#{$size}-block {
+        display: block !important;
+      }
     }
   }
+}
+
+.d-none {
+  display: none !important;
 }
 
 @include grid();
