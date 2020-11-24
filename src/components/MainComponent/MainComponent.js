@@ -99,6 +99,7 @@ const MainComponent = () => {
         trigger: '.intro-ment',
         start: 'top center',
         onEnter: self => self.isActive ? onScrollIntro() : '',
+        onEnterBack: self => self.isActive ? onScrollIntro() : '',
         end: 'bottom center',
         scrub: true,
       }

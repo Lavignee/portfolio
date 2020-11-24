@@ -1,0 +1,326 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.footprint-detail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .first {
+    .time-line,
+    .line-frame {
+      padding-top: $headerHeight;
+
+      .content-frame {
+        top: $headerHeight;
+      }
+    }
+  }
+
+  .time-line {
+    height: 100%;
+    background-color: $bl;
+    @media (max-width: $bp-l) {
+      display: none;
+    }
+
+    .line {
+      @include horizontal-align;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background-color: $wh;
+    }
+
+    .point-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      .year-point {
+        @include horizontal-align(relative);
+        width: 100%;
+        text-align: center;
+
+        &.year-2020 {
+          &.left-no1 {
+            div {
+              &:nth-child(n + 1):nth-child(-n + 3) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+            .oct,
+            .nov,
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.career-no1,
+          &.left-no2 {
+            div {
+              &:nth-child(n + 9):nth-child(-n + 11) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+            .jan,
+            .feb,
+            .mar,
+            .apr {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+        }
+
+        &.year-2019 {
+          &.career-no1 {
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.career-no2 {
+            div {
+              &:nth-child(n + 3):nth-child(-n + 5) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+            .jan,
+            .feb,
+            .mar,
+            .apr,
+            .may,
+            .jun,
+            .jul,
+            .aug,
+            .sep,
+            .oct {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.left-no2 {
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.left-no3,
+          &.left-no4 {
+            div {
+              &:nth-child(n + 3):nth-child(-n + 5) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+            .jun,
+            .jul,
+            .aug,
+            .sep,
+            .oct {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.left-no5 {
+            div {
+              &:nth-child(n + 6):nth-child(-n + 9) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+            .mar,
+            .apr,
+            .may,
+            .jun {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.left-no6 {
+            div {
+              &:nth-child(n + 10):nth-child(-n + 12) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+            .jan,
+            .feb,
+            .mar {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+        }
+
+        &.year-2018 {
+          &.left-no6,
+          &.career-no2 {
+            .jan,
+            .feb,
+            .mar,
+            .apr,
+            .may,
+            .jun,
+            .jul,
+            .aug,
+            .sep,
+            .oct,
+            .nov,
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+        }
+
+        &.year-2017 {
+          &.career-no2,
+          &.left-no6,
+          &.right-no1 {
+            .jan,
+            .feb,
+            .mar,
+            .apr,
+            .may,
+            .jun,
+            .jul,
+            .aug,
+            .sep,
+            .oct,
+            .nov,
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.right-no1 {
+            div {
+              &:nth-child(n + 1):nth-child(-n + 3) {
+                span {
+                  height: 7rem;
+                }
+              }
+            }
+          }
+        }
+
+        &.year-2016 {
+          &.career-no2 {
+            .jul,
+            .aug,
+            .sep,
+            .oct,
+            .nov,
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+          &.right-no7 {
+            .feb,
+            .mar,
+            .apr,
+            .may,
+            .jun,
+            .jul,
+            .aug,
+            .sep,
+            .oct,
+            .nov,
+            .dec {
+              @include f-m(1.4rem, $wh, 3.5rem);
+            }
+          }
+        }
+
+        div {
+          @include horizontal-align(relative);
+          width: 100%;
+          text-align: right;
+
+          &:last-child {
+            display: flex;
+            justify-content: space-between;
+          }
+
+          span {
+            display: inline-block;
+            text-align: center;
+            width: 50%;
+            height: 3.5rem;
+            @include f-m(1.4rem, #333, 3.5rem);
+
+            &.year {
+              @include f-m(1.4rem, $wh, 3.5rem);
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .line-frame {
+    position: relative;
+    height: 100%;
+  }
+
+  .content-frame {
+    position: absolute;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    @include border-a($bl);
+    background-color: $wh;
+
+    li {
+      padding-bottom: 2rem;
+      @include f-b(2rem, $bl);
+    }
+
+    span {
+      display: block;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      @include f-m(1.5rem, $bl);
+    }
+
+    p {
+      padding-top: 1rem;
+      @include f-r(1.4rem, $bl);
+    }
+  }
+
+  .career-line {
+    .career-no1 {
+      transform: translateY(28rem);
+    }
+
+    .career-no2 {
+      transform: translateY(7rem);
+    }
+  }
+
+  .left-line {
+    .left-no2 {
+      transform: translateY(28rem);
+    }
+
+    .left-no4 {
+      transform: translateY(7rem);
+    }
+
+    .left-no5 {
+      transform: translateY(21rem);
+    }
+
+    .left-no6 {
+      transform: translateY(31.5rem);
+    }
+  }
+
+  .right-line {
+    .right-no3 {
+      transform: translateY(7rem);
+    }
+  }
+}

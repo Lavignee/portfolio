@@ -303,6 +303,9 @@
       .d-#{$size}-block {
         display: block !important;
       }
+      .off-#{$size}-none {
+        margin-left: 0 !important;
+      }
     }
   }
 }

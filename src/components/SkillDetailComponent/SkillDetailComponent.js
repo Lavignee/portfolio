@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import svgColor from '../../static/images/icon-svg-color.json';
 import './SkillDetailComponent.scss';
 const analytics = svgColor.analytics
@@ -74,11 +73,6 @@ const SkillDetailComponent = ({ match }) => {
   const [currentTarget, setCurrentTarget] = useState('');
   const [defaultTarget, setDefaultTarget] = useState(true);
   const [svg, setSvg] = useState('');
-  let history = useHistory();
-
-  const back = () => {
-    history.goBack();
-  }
 
   const changeList = (e) => {
     setDefaultTarget(true);
@@ -146,7 +140,6 @@ const SkillDetailComponent = ({ match }) => {
   }
 
   useEffect(() => {
-    console.log(currentTarget)
     changeSvg();
   }, [currentTarget])
 
@@ -157,7 +150,6 @@ const SkillDetailComponent = ({ match }) => {
         <div className='row'>
           <div className='col-5 col-m-4 pl-none'>
             <ul className='skill-common'>
-              <button onClick={back}>뒤로가기</button>
               <li onClick={changeList} data-list='language'>언어</li>
               <li onClick={changeList} data-list='lib'>프레임워크&라이브러리</li>
               <li onClick={changeList} data-list='tool'>개발 도구</li>
