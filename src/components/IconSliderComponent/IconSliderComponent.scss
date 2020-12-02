@@ -30,12 +30,11 @@
     height: 11.11111111vh;
   }
 
-  .content-frame {
+  .icon-content-frame {
     position: absolute;
     width: 11%;
     height: 21.12rem;
     text-align: center;
-    @include f-b(5rem, red);
     opacity: 0.3;
     will-change: transform;
 

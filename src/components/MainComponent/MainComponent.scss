@@ -43,39 +43,59 @@
     will-change: transform;
 
     &.target1 {
-      width: 60%;
-      top: 5%;
+      width: 50%;
+      top: 2.5%;
       margin-left: -5%;
       @media (max-width: $bp-l) {
-        width: 65%;
-        top: 4%;
+        width: 55%;
+        top: 2%;
         margin-left: -6%;
       }
       @media (max-width: $bp-s) {
-        width: 70%;
-        top: 3%;
+        width: 60%;
+        top: 1.5%;
         margin-left: -7%;
       }
       @media (min-width: $bp-w-min) {
-        width: 55%;
+        width: 45%;
       }
       @media (min-width: $bp-fw-min) {
-        width: 50%;
+        width: 40%;
       }
     }
     &.target2 {
-      width: 40%;
-      top: 14%;
-      margin-left: -30%;
+      top: 7%;
+      margin-left: -33%;
       @media (max-width: $bp-l) {
-        width: 45%;
-        top: 9%;
-        margin-left: -32%;
+        width: 40%;
+        top: 5%;
+        margin-left: -35%;
       }
       @media (max-width: $bp-s) {
-        width: 55%;
-        top: 6%;
-        margin-left: -34%;
+        width: 50%;
+        top: 4%;
+        margin-left: -37%;
+      }
+      @media (min-width: $bp-w-min) {
+        width: 30%;
+      }
+      @media (min-width: $bp-fw-min) {
+        width: 25%;
+      }
+    }
+    &.target3 {
+      width: 40%;
+      top: 7%;
+      margin-left: 30%;
+      @media (max-width: $bp-l) {
+        width: 45%;
+        top: 5%;
+        margin-left: 33%;
+      }
+      @media (max-width: $bp-s) {
+        width: 50%;
+        top: 3%;
+        margin-left: 36%;
       }
       @media (min-width: $bp-w-min) {
         width: 35%;
@@ -84,13 +104,13 @@
         width: 30%;
       }
     }
-    &.target3 {
-      width: 30%;
+    &.target4 {
       top: 18%;
+      top: 11%;
       margin-left: 18%;
       @media (max-width: $bp-l) {
         width: 35%;
-        top: 12%;
+        top: 10%;
         margin-left: 20%;
       }
       @media (max-width: $bp-s) {
@@ -103,27 +123,6 @@
       }
       @media (min-width: $bp-fw-min) {
         width: 20%;
-      }
-    }
-    &.target4 {
-      width: 40%;
-      top: 12%;
-      margin-left: 33%;
-      @media (max-width: $bp-l) {
-        width: 45%;
-        top: 9%;
-        margin-left: 36%;
-      }
-      @media (max-width: $bp-s) {
-        width: 50%;
-        top: 6%;
-        margin-left: 39%;
-      }
-      @media (min-width: $bp-w-min) {
-        width: 35%;
-      }
-      @media (min-width: $bp-fw-min) {
-        width: 30%;
       }
     }
     &.target5 {
@@ -167,7 +166,8 @@
   }
 
   .main-text-frame {
-    position: absolute;
+    text-align: center;
+    position: relative;
     height: 100vh;
     z-index: 2;
 
@@ -178,26 +178,25 @@
       span {
         display: block;
         margin-bottom: 2rem;
-        @include f-b(9rem, $wh);
+        font-family: Syncopate;
+        @include f-r(3.6rem, $wh, $ls: 3.5px);
       }
 
       p {
-        @include f-m(3.7rem, $wh);
+        font-family: Syncopate;
+        @include f-b(9.6rem, $wh);
       }
     }
   }
 
   .into-ment-frame {
     position: relative;
-    height: 130vh;
-    @media (min-width: $bp-l-min) {
-      height: 200vh;
-    }
+    height: 100vh;
+    // @media (min-width: $bp-l-min) {
+    //   height: 200vh;
+    // }
     .intro-ment {
-      position: absolute;
-      bottom: 15rem;
-      padding-top: 15rem;
-      padding-bottom: 15rem;
+      @include vertical-align;
 
       .type-p {
         @include f-b(10rem, $wh);

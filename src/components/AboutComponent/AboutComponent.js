@@ -50,7 +50,6 @@ const AboutComponent = () => {
         start: 'top center',
         onEnter: self => self.isActive ? onScrollAbout() : '',
         end: 'bottom center',
-        markers: true
       }
     });
   }, [])
