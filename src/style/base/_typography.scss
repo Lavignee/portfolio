@@ -48,32 +48,52 @@
 // }
 
 // NanumSquare
+// @font-face {
+//   font-family: 'NanumSquare';
+//   font-style: normal;
+//   font-weight: 300;
+//   src: url('../static/fonts/NanumSquareL.woff') format('woff');
+// }
+
+// @font-face {
+//   font-family: 'NanumSquare';
+//   font-style: normal;
+//   font-weight: 400;
+//   src: url('../static/fonts/NanumSquareR.woff') format('woff');
+// }
+
+// @font-face {
+//   font-family: 'NanumSquare';
+//   font-style: normal;
+//   font-weight: 700;
+//   src: url('../static/fonts/NanumSquareB.woff') format('woff');
+// }
+
+// @font-face {
+//   font-family: 'NanumSquare';
+//   font-style: normal;
+//   font-weight: 800;
+//   src: url('../static/fonts/NanumSquareEB.woff') format('woff');
+// }
+
+// 'NEXON Lv2 Gothic'
 @font-face {
-  font-family: 'NanumSquare';
+  font-family: 'NEXON Lv2 Gothic Light';
   font-style: normal;
   font-weight: 300;
-  src: url('../static/fonts/NanumSquareL.woff') format('woff');
+  src: url('../static/fonts/NEXON-Lv2-Gothic-light.woff') format('woff');
 }
-
 @font-face {
-  font-family: 'NanumSquare';
+  font-family: 'NEXON Lv2 Gothic';
   font-style: normal;
   font-weight: 400;
-  src: url('../static/fonts/NanumSquareR.woff') format('woff');
+  src: url('../static/fonts/NEXON-Lv2-Gothic.woff') format('woff');
 }
-
 @font-face {
-  font-family: 'NanumSquare';
+  font-family: 'NEXON Lv2 Gothic Bold';
   font-style: normal;
   font-weight: 700;
-  src: url('../static/fonts/NanumSquareB.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'NanumSquare';
-  font-style: normal;
-  font-weight: 800;
-  src: url('../static/fonts/NanumSquareEB.woff') format('woff');
+  src: url('../static/fonts/NEXON-Lv2-Gothic-Bold.woff') format('woff');
 }
 
 // Roboto
@@ -130,13 +150,11 @@
   font-family: 'Syncopate';
   font-style: normal;
   font-weight: 400;
-  src: url('../static/fonts/Syncopate-Regular.woff2') format('woff2'),
-    url('../static/fonts/Syncopate-Regular.woff') format('woff');
+  src: url('../static/fonts/Syncopate-Regular.woff') format('woff');
 }
 @font-face {
   font-family: 'Syncopate';
   font-style: normal;
   font-weight: 700;
-  src: url('../static/fonts/Syncopate-Bold.woff2') format('woff2'),
-    url('../static/fonts/Syncopate-Bold.woff') format('woff');
+  src: url('../static/fonts/Syncopate-Bold.woff') format('woff');
 }

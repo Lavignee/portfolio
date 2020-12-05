@@ -5,7 +5,7 @@
   height: 130vh;
   overflow: hidden;
   @media (min-width: $bp-l-min) {
-    height: 200vh;
+    height: 180vh;
   }
 
   .main-background1,
@@ -13,26 +13,80 @@
     position: absolute;
     left: 0;
     width: 100%;
-    height: 200vh;
+    height: 180vh;
 
-    .background {
-      position: fixed;
+    .background-frame {
+      clip: rect(0, auto, auto, 0);
+      position: absolute;
       top: 0;
       left: 0;
-      z-index: -1;
       width: 100%;
       height: 100%;
-      background: center / cover url(#{$img-url}main1920.jpg);
+
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        background: center / cover url(#{$img-url}main1920.jpg);
+      }
     }
   }
 
-  .background-frame {
-    clip: rect(0, auto, auto, 0);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  .main-content-frame {
+    position: relative;
+
+    .main-text-frame {
+      text-align: center;
+      position: relative;
+      height: 100vh;
+      z-index: 2;
+
+      .main-text {
+        display: inline-block;
+        @include vertical-align(relative);
+
+        span {
+          display: block;
+          margin-bottom: 2rem;
+          font-family: Syncopate;
+          @include f-r(3.6rem, $wh, $ls: 3.5px);
+        }
+
+        p {
+          font-family: Syncopate;
+          @include f-b(9.6rem, $wh);
+        }
+      }
+    }
+
+    .into-ment-frame {
+      position: relative;
+      height: 80vh;
+      // @media (min-width: $bp-l-min) {
+      //   height: 200vh;
+      // }
+      .intro-ment {
+        @include vertical-align;
+        margin-top: -20rem;
+
+        .type-p {
+          @include f-r(7.2rem, $wh);
+          text-transform: uppercase;
+          .split-depth-frame,
+          .split-target {
+            font-family: Syncopate;
+            min-width: 2rem;
+
+            span {
+              font-family: Syncopate;
+            }
+          }
+        }
+      }
+    }
   }
 
   .canvas-frame {
@@ -41,19 +95,20 @@
     z-index: -1;
     overflow: hidden;
     will-change: transform;
+    box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.3);
 
     &.target1 {
       width: 50%;
-      top: 2.5%;
+      top: 10%;
       margin-left: -5%;
       @media (max-width: $bp-l) {
         width: 55%;
-        top: 2%;
+        top: 8%;
         margin-left: -6%;
       }
       @media (max-width: $bp-s) {
         width: 60%;
-        top: 1.5%;
+        top: 6%;
         margin-left: -7%;
       }
       @media (min-width: $bp-w-min) {
@@ -64,16 +119,16 @@
       }
     }
     &.target2 {
-      top: 7%;
+      top: 23%;
       margin-left: -33%;
       @media (max-width: $bp-l) {
         width: 40%;
-        top: 5%;
+        top: 15%;
         margin-left: -35%;
       }
       @media (max-width: $bp-s) {
         width: 50%;
-        top: 4%;
+        top: 11%;
         margin-left: -37%;
       }
       @media (min-width: $bp-w-min) {
@@ -85,17 +140,17 @@
     }
     &.target3 {
       width: 40%;
-      top: 7%;
-      margin-left: 30%;
+      top: 20%;
+      margin-left: 25%;
       @media (max-width: $bp-l) {
         width: 45%;
-        top: 5%;
-        margin-left: 33%;
+        top: 12%;
+        margin-left: 28%;
       }
       @media (max-width: $bp-s) {
         width: 50%;
-        top: 3%;
-        margin-left: 36%;
+        top: 4%;
+        margin-left: 31%;
       }
       @media (min-width: $bp-w-min) {
         width: 35%;
@@ -105,18 +160,17 @@
       }
     }
     &.target4 {
-      top: 18%;
-      top: 11%;
-      margin-left: 18%;
+      top: 32%;
+      margin-left: 15%;
       @media (max-width: $bp-l) {
         width: 35%;
-        top: 10%;
-        margin-left: 20%;
+        top: 29%;
+        margin-left: 17%;
       }
       @media (max-width: $bp-s) {
         width: 40%;
-        top: 9%;
-        margin-left: 22%;
+        top: 24%;
+        margin-left: 19%;
       }
       @media (min-width: $bp-w-min) {
         width: 25%;
@@ -127,16 +181,16 @@
     }
     &.target5 {
       width: 45%;
-      top: 25%;
+      top: 71%;
       margin-left: -20%;
       @media (max-width: $bp-l) {
         width: 50%;
-        top: 21%;
+        top: 63%;
         margin-left: -23%;
       }
       @media (max-width: $bp-s) {
         width: 55%;
-        top: 18%;
+        top: 51%;
         margin-left: -26%;
       }
       @media (min-width: $bp-w-min) {
@@ -148,64 +202,20 @@
     }
     &.target6 {
       width: 20%;
-      top: 31%;
+      top: 89%;
       @media (max-width: $bp-l) {
         width: 25%;
-        top: 24%;
+        top: 61%;
       }
       @media (max-width: $bp-s) {
         width: 30%;
-        top: 21%;
+        top: 49%;
       }
     }
 
     canvas {
       width: 100%;
       height: 100%;
-    }
-  }
-
-  .main-text-frame {
-    text-align: center;
-    position: relative;
-    height: 100vh;
-    z-index: 2;
-
-    .main-text {
-      display: inline-block;
-      @include vertical-align(relative);
-
-      span {
-        display: block;
-        margin-bottom: 2rem;
-        font-family: Syncopate;
-        @include f-r(3.6rem, $wh, $ls: 3.5px);
-      }
-
-      p {
-        font-family: Syncopate;
-        @include f-b(9.6rem, $wh);
-      }
-    }
-  }
-
-  .into-ment-frame {
-    position: relative;
-    height: 100vh;
-    // @media (min-width: $bp-l-min) {
-    //   height: 200vh;
-    // }
-    .intro-ment {
-      @include vertical-align;
-
-      .type-p {
-        @include f-b(10rem, $wh);
-        text-transform: uppercase;
-        .split-depth-frame,
-        .split-target {
-          min-width: 2rem;
-        }
-      }
     }
   }
 }

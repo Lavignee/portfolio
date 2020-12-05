@@ -4,33 +4,93 @@
 .about-section {
   .about-frame {
     position: relative;
+    padding-top: 20rem;
+    padding-bottom: 20rem;
 
     .title-frame {
-      padding-top: 20rem;
+      margin: 0 auto;
+      text-align: center;
 
-      .size-wrap {
-        @include horizontal-align(relative);
-        width: 70%;
+      .about-title {
+        position: relative;
+        z-index: 1;
+        transform: translateY(50%);
+        font-family: Syncopate;
+        @include f-b(18rem, $bl);
+      }
 
-        .about-title-image-background {
-          @include horizontal-align(relative);
+      .picture-frame {
+        position: relative;
+
+        img {
           width: 100%;
-          opacity: 0;
+          vertical-align: bottom;
         }
 
-        .about-title-image {
-          @include horizontal-align(absolute);
-          width: 100vw;
-          will-change: opacity, max-width;
+        .one, .two,
+        .three {
+          position: relative;
+          overflow: hidden;
+
+          &:before, &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            transition: transform $transition-slow;
+          }
+
+          &:hover {
+            &:before, &:after {
+              transform: translateX(0)
+            }
+          }
         }
 
-        .about-title {
-          position: absolute;
-          bottom: -2rem;
-          right: 40rem;
-          display: inline-block;
-          @include f-b(40rem, $yl, 28.5rem);
-          will-change: right;
+        .one,
+        .three {
+          @include vertical-align(relative);
+        }
+
+        .one {
+          &:before, &:after {
+            background: center / cover url(#{$img-url}about-one-opacity.png);
+          }
+          &:before {
+            transform: translateX(-16%);
+          }
+          
+          &:after {
+            transform: translateX(13%);
+          }
+        }
+
+        .two {
+          &:before, &:after {
+            background: center / cover url(#{$img-url}about-two-opacity.png);
+          }
+          &:before {
+            transform: translateX(-15%);
+          }
+
+          &:after {
+            transform: translateX(15%);
+          }
+        }
+
+        .three {
+          &:before, &:after {
+            background: center / cover url(#{$img-url}about-three-opacity.png);
+          }
+          &:before {
+            transform: translateX(-13%);
+          }
+
+          &:after {
+            transform: translateX(16%);
+          }
         }
       }
     }
@@ -38,9 +98,10 @@
     .about-contents {
       padding-top: 15rem;
 
-      > div {
-        margin-top: 4rem;
-        margin-bottom: 4rem;
+      .keyword-frame {
+        position: relative;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
 
         h2 {
           color: $bl;
@@ -50,7 +111,23 @@
         .type-p {
           margin-top: 4rem;
           margin-bottom: 4rem;
-          @include f-m(2rem, $bl);
+          @include f-l(2rem, $bl);
+        }
+
+        .back-keyword {
+          @include vertical-align;
+          z-index: -1;
+          span {
+            font-family: 'Syncopate';
+            @include f-b(14rem, #F6F6F6);
+          }
+
+          &.left {
+            right: 0;
+          }
+          &.right {
+            left: 0;
+          }
         }
       }
     }

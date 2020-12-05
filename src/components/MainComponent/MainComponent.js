@@ -118,10 +118,28 @@ const MainComponent = () => {
           <div className='background'></div>
         </div>
       </div>
-      {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
-      {/* <VideoToCanvasComponent src={src} /> */}
 
-      {CallTheVideo(src, 1280, 720)}
+      <div className='main-content-frame'>
+        <div className='main-text-frame'>
+          <div className='main-text'>
+            <span>FRONT - END DEVELOPER</span>
+            {/* TODO: 번역텍스트 받아서 동작하는 애니메이션 보완 필요. */}
+            {/* <p><Trans i18nKey='greeting'><TypingAnimationComponent language={language}></TypingAnimationComponent></Trans></p> */}
+            <p>LEE DO YOUNG</p>
+            {/* <p><Trans i18nKey='greeting2'></Trans></p> */}
+          </div>
+        </div>
+
+        <div className='into-ment-frame'>
+          <div className='intro-ment'>
+            <div className='type-p'><SplitTextComponent animation={'up'} scroll={'intro'} depth>I'm a front-end developer who lives like this.</SplitTextComponent></div>
+          </div>
+        </div>
+
+        {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
+        {/* <VideoToCanvasComponent src={src} /> */}
+        {CallTheVideo(src, 1280, 720)}
+      </div>
 
       {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
       {/* { matchMedia("screen and (min-width: 985px)").matches ? (
@@ -129,21 +147,6 @@ const MainComponent = () => {
       ) : (
           CallTheVideo(srcSmall, 640, 480)
         )} */}
-      <div className='main-text-frame'>
-        <div className='main-text'>
-          <span>FRONT - END DEVELOPER</span>
-          {/* TODO: 번역텍스트 받아서 동작하는 애니메이션 보완 필요. */}
-          {/* <p><Trans i18nKey='greeting'><TypingAnimationComponent language={language}></TypingAnimationComponent></Trans></p> */}
-          <p>LEE DO YOUNG</p>
-          {/* <p><Trans i18nKey='greeting2'></Trans></p> */}
-        </div>
-      </div>
-
-      <div className='into-ment-frame'>
-        <div className='intro-ment'>
-          <div className='type-p'><SplitTextComponent animation={'up'} scroll={'intro'} depth>I'm a front-end developer who lives like this.</SplitTextComponent></div>
-        </div>
-      </div>
     </section>
   )
 }
