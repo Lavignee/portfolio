@@ -17,7 +17,7 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
     if (childrenLength < children.length + 1) {
       setTimeout(() => {
         Splitting();
-      }, setTime ? setTime : 50)
+      }, setTime ? setTime : 30)
     } else {
       setWillChange(null)
     }

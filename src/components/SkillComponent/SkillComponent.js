@@ -20,7 +20,7 @@ const SkillComponent = () => {
         id: 'split-frame',
         trigger: '.skill-title',
         start: 'top center',
-        onEnter: self => self.isActive ? onScrollSkill() : '',
+        onEnter: () => onScrollSkill(),
         end: 'bottom center',
       }
     });

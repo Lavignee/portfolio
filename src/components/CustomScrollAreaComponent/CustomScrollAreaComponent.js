@@ -97,7 +97,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     //     id: 'intro-ment',
     //     trigger: '.intro-ment',
     //     start: 'top center',
-    //     onEnter: self => self.isActive ? onScrollIntro() : '',
+    //     onEnter: () => onScrollIntro(),
     //     end: 'bottom center',
     //     scrub: true,
     //   }
@@ -136,7 +136,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     //     id: 'split-frame',
     //     trigger: '.about-title',
     //     start: 'top center',
-    //     onEnter: self => self.isActive ? onScrollAbout() : '',
+    //     onEnter: () => onScrollAbout(),
     //     end: 'bottom center',
     //   }
     // });
@@ -147,7 +147,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     //     id: 'split-frame',
     //     trigger: '.skill-title',
     //     start: 'top center',
-    //     onEnter: self => self.isActive ? onScrollSkill() : '',
+    //     onEnter: () => onScrollSkill(),
     //     end: 'bottom center',
     //   }
     // });
@@ -158,7 +158,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     //     id: 'split-frame',
     //     trigger: '.footprint-title',
     //     start: 'top center',
-    //     onEnter: self => self.isActive ? onScrollFootprint() : '',
+    //     onEnter: () => onScrollFootprint(),
     //     end: 'bottom center',
     //   }
     // });

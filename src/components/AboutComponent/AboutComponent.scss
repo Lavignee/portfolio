@@ -96,7 +96,15 @@
     }
 
     .about-contents {
+      position: relative;
       padding-top: 15rem;
+
+      .second-content-area {
+        position: absolute;
+        top: 15rem;
+        width: 100%;
+        opacity: 0;
+      }
 
       .keyword-frame {
         position: relative;
@@ -109,12 +117,12 @@
         }
 
         .type-p {
-          margin-top: 4rem;
-          margin-bottom: 4rem;
+          margin-top: 2rem;
+          margin-bottom: 6rem;
           @include f-l(2rem, $bl);
         }
 
-        .back-keyword {
+        .back-keyword, .back-keyword-second {
           @include vertical-align;
           z-index: -1;
           span {
