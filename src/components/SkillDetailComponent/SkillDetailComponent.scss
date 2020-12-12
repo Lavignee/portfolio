@@ -2,75 +2,207 @@
 @import '../../Style/Util/util_mixins';
 
 .skill-detail {
-  height: 100vh;
+  position: relative;
+  padding-top: $headerHeight;
 
-  .skill-common {
-    padding: $headerHeight 1.5rem 1rem 1.5rem;
-    height: 40vh;
-
-    li {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      @include f-b(3rem, $bl);
-    }
+  >.container {
+    position: relative;
   }
 
-  .skill-list {
-    padding: 1rem 1.5rem;
-    height: 60vh;
-    background-color: $bl;
-    background-color: rgba(0, 0, 0, 0.8);
+  .skill-tab {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 1;
 
-    li {
-      position: relative;
-      padding-left: 2rem;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      @include f-m(3rem, #ddd);
-
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #ddd;
+      z-index: -1;
+    }
+    
+    a {
+      display: inline-block;
+      padding: 1.6rem 3rem;
+      @include f-r(1.6rem, #6a6a6a);
+      
       &.active {
-        text-decoration: underline;
-      }
-
-      span {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%) rotate(180deg);
-        @include f-m(2rem, #ddd, 1rem);
-        writing-mode: vertical-lr;
+        background-color: #f9f9f9;
+        @include f-b(1.6rem, #181818);
+        @include border-b(#181818, 0.2rem);
       }
     }
   }
 
-  .null-area {
-  }
+  .content-frame {
+    position: relative;
+    padding-top: 5.2rem;
+    height: $headerHeight-100vh;
 
-  .skill-detail-content {
-    padding: $headerHeight 1.5rem 1rem 1.5rem;
-    height: 80vh;
-    background-color: $bl;
-    background-color: rgba(0, 0, 0, 0.8);
+    &:before {
+      content: '';
+      width: 0;
+      height: 0;
+      margin-top: 2.6rem;
+      @include border-a(transparent, 3rem);
+      border-right-color: #181818;
+      @include vertical-align;
+      left: calc(25% - 6rem);
+      z-index: 1;
+    }
 
-    p {
-      display: none;
-      @include f-m(2rem, #ddd);
+    .skill-list-frame {
+      overflow: hidden;
+      height: 100%;
 
-      &.active {
-        display: block;
+      .skill-list {
+        height: 100%;
+        overflow: auto;
+
+        .default-list, .list {
+          box-sizing: content-box;
+          width: 25%;
+          height: 33.33333333%;
+          
+          li {
+            height: 100%;
+            position: relative;
+
+            div {
+              @include center-align;
+
+              svg {
+                opacity: 0.3;
+              }
+            }
+          }
+
+          &.active {
+            background-color: #ddd;
+            svg {
+              opacity: 1;
+            }
+          }
+        }
       }
     }
-  }
-}
+    
+    .skill-detail-content-frame {
+      position: absolute;
+      height: calc(100% - 5.2rem);
+      margin-left: 25%;
+      left: 0;
+      z-index: -1;
 
-.color-icon-background {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+      .skill-detail-content {
+        position: relative;
+        height: 100%;
+        text-align: center;
+        overflow: hidden;
+        background-color: #181818;
 
-  svg {
-    @include center-align;
-    width: 70vw;
-    height: 70vh;
+        .pagenation {
+          @include vertical-align;
+          left: 1.2rem;
+          font-family: 'Syncopate';
+            @include f-b(2rem, $wh);
+
+            span {
+              display: inline-block;
+              min-width: 3rem;
+            }
+        }
+
+        .content {
+          @include center-align;
+          width: 100%;
+          height: 100%;
+
+          >div {
+            height: 50%;
+            display: flex;
+            flex-direction: column-reverse;
+
+            h2 {
+              position: relative;
+              bottom:0;
+              font-family: 'Syncopate';
+              @include f-b(4rem, $wh);
+            }
+    
+            .levels {
+              position: relative;
+              bottom:0;
+              padding-top: 4rem;
+              padding-bottom: 7rem;
+              span {
+                display: inline-block;
+                width: 4rem;
+                height: .8rem;
+                background-color: #323232;
+    
+                &:not(:last-child) {
+                  margin-right: 1.8rem;
+                }
+              }
+    
+              &.level-1 {
+                span {
+                  &:first-child {
+                    background-color: $wh;
+                  }
+                }
+                }
+              &.level-2 {
+                span {
+                  &:first-child, &:nth-child(2)  {
+                    background-color: $wh;
+                  }
+                }
+                }
+              &.level-3 {
+                span {
+                  &:first-child,&:nth-child(2),&:nth-child(3) {
+                    background-color: $wh;
+                  }
+                }
+              }
+              &.level-4 {
+                span {
+                  &:first-child,&:nth-child(2),&:nth-child(3),&:nth-child(4) {
+                    background-color: $wh;
+                  }
+                }
+              }
+              &.level-5 {
+                span {
+                  background-color: $wh;
+                }
+              }
+            }
+          }
+  
+          p {
+            width: 50%;
+            height: 50%;
+            margin: 0 auto;
+            @include f-l(1.8rem, $wh, 1.6rem);
+          }
+        }
+
+        .back-text {
+          @include horizontal-align;
+          margin-left: 30%;
+          bottom: 5rem;
+          white-space: nowrap;
+          font-family: 'Syncopate';
+          @include f-b(15rem, #343434);
+        }
+      }
+    }
   }
 }
