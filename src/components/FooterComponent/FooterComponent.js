@@ -4,9 +4,7 @@ import './FooterComponent.scss';
 const FooterComponent = () => {
   return (
     <footer>
-      <span>SCROLL DOWN</span>
-      <br />
-      {/* copy right 2020 */}
+      copy right 2020
     </footer>
   );
 }

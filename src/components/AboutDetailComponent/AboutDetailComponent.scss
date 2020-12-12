@@ -1,0 +1,47 @@
+@import '../../Style/Util/pallet';
+@import '../../Style/Util/util_mixins';
+
+.about-contents {
+  position: relative;
+  padding-top: 15rem;
+
+  .second-content-area {
+    position: absolute;
+    top: 15rem;
+    width: 100%;
+    opacity: 0;
+  }
+
+  .keyword-frame {
+    position: relative;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    h2 {
+      color: $bl;
+      white-space: nowrap;
+    }
+
+    .type-p {
+      margin-top: 2rem;
+      margin-bottom: 6rem;
+      @include f-l(2rem, $bl);
+    }
+
+    .back-keyword, .back-keyword-second {
+      @include vertical-align;
+      z-index: -1;
+      span {
+        font-family: 'Syncopate';
+        @include f-b(14rem, #F6F6F6);
+      }
+
+      &.left {
+        right: 0;
+      }
+      &.right {
+        left: 0;
+      }
+    }
+  }
+}

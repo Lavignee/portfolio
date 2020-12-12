@@ -2,11 +2,8 @@
 @import '../../Style/Util/util_mixins';
 
 footer {
-  position: fixed;
-  bottom: 0;
-  z-index: 100;
   width: 100%;
-  text-align: center;
+  text-align: right;
 
   span {
     @include f-m(3rem);

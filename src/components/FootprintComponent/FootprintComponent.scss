@@ -3,7 +3,11 @@
 
 .footprint-section {
   position: relative;
-  height: 100vh;
+  height: 20vh;
+
+  .footprint-title {
+    text-align: center;
+  }
 
   .split-frame {
     @include f-b(20rem, $bl);

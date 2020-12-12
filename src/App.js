@@ -7,7 +7,6 @@ import AboutDetailComponent from './Components/AboutDetailComponent';
 import SkillDetailComponent from './Components/SkillDetailComponent';
 import FootprintDetailComponent from './Components/FootprintDetailComponent';
 import ContactComponent from './Components/ContactComponent';
-import FooterContainer from './Containers/FooterContainer';
 import ScrollToTop from './utils/ScrollToTop'
 import './style/index.scss';
 
@@ -33,7 +32,6 @@ const App = () => {
         </Switch>
       </ScrollToTop>
       <ContactComponent />
-      <FooterContainer />
     </CustomCursorAreaContainer>
   );
 }
