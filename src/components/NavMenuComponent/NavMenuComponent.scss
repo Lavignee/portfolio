@@ -1,14 +1,30 @@
 @import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
-nav {
-  position: relative;
-  height: $headerHeight;
+.right-area {
+  display: inline-flex;
 
-  span {
+  .gnb-button {
     @include vertical-align(relative);
     display: flex;
     justify-content: space-between;
     @include f-b(3rem);
+
+    &.delay {
+      pointer-events: none;
+    }
+  }
+
+  nav {
+    position: relative;
+    height: $headerHeight;
+
+    a {
+      display: inline-block;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      font-family: 'Syncopate';
+      @include f-r(1.3rem, $wh, $headerHeight);
+    }
   }
 }

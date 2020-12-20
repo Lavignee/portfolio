@@ -2,10 +2,13 @@
 @import '../../Style/Util/util_mixins';
 
 footer {
+  position: absolute;
+  bottom: 1.5rem;
   width: 100%;
   text-align: right;
+  z-index: 100;
 
   span {
-    @include f-m(3rem);
+    @include f-l(1.8rem, #656565);
   }
 }

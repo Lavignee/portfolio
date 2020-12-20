@@ -39,6 +39,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     // const targetToLefts = gsap.utils.toArray('.left');
     // const targetToRights = gsap.utils.toArray('.right');
     // const scrollTriggers = {
+    //   scroller: '#root',
     //   trigger: '.main-text-frame',
     //   start: 'top',
     //   end: 'bottom',
@@ -94,6 +95,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     // gsap.to('.intro-ment', {
     //   y: 0 + '%',
     //   scrollTrigger: {
+    //     scroller: '#root',
     //     id: 'intro-ment',
     //     trigger: '.intro-ment',
     //     start: 'top center',
@@ -111,6 +113,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     //   maxWidth: 100 + '%',
     //   autoAlpha: 1,
     //   scrollTrigger: {
+    //     scroller: '#root',
     //     id: 'about-title-image',
     //     trigger: '.intro-ment',
     //     start: 'bottom+=100 center',
@@ -123,6 +126,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     //   right: 0,
     //   autoAlpha: 1,
     //   scrollTrigger: {
+    //     scroller: '#root',
     //     id: 'about-title',
     //     trigger: '.intro-ment',
     //     start: 'bottom+=100 center',
@@ -133,6 +137,7 @@ const CustomScrollAreaComponent = ({ children }) => {
 
     // gsap.to('.split-frame', {
     //   scrollTrigger: {
+    //     scroller: '#root',
     //     id: 'split-frame',
     //     trigger: '.about-title',
     //     start: 'top center',
@@ -144,6 +149,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     // // 스킬 컨텐츠 애니메이션
     // gsap.to('.split-frame', {
     //   scrollTrigger: {
+    //     scroller: '#root', 
     //     id: 'split-frame',
     //     trigger: '.skill-title',
     //     start: 'top center',
@@ -155,6 +161,7 @@ const CustomScrollAreaComponent = ({ children }) => {
     // // 풋프린트 컨텐츠 애니메이션
     // gsap.to('.split-frame', {
     //   scrollTrigger: {
+    //     scroller: '#root',
     //     id: 'split-frame',
     //     trigger: '.footprint-title',
     //     start: 'top center',

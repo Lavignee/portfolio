@@ -8,10 +8,8 @@ body {
   -webkit-font-smoothing: antialiased;
   font-kerning: auto;
   min-width: 320px;
+  overflow: hidden !important;
 
-  @media (min-width: 320px) {
-    overflow-x: hidden;
-  }
   @media (min-width: $bp-s-min) {
     font-size: 7px;
   }
@@ -47,6 +45,17 @@ a {
 
 header {
   display: flex;
+}
+
+#root {
+  width: 100vw;
+  min-width: 320px;
+  height: 100vh;
+  overflow-y: auto;
+
+  @media (min-width: 320px) {
+    overflow-x: hidden;
+  }
 }
 
 main {

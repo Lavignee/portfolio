@@ -1,32 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import CustomInputComposition from '../../compositions/CustomInputComposition';
 import CustomTextareaComposition from '../../compositions/CustomTextareaComposition';
 import CustomButtonComposition from '../../compositions/CustomButtonComposition';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeContactState, changeContactDelay } from '../../Modules/CommonValueModule';
 import './ContactComponent.scss';
 
 const ContactComponent = () => {
-  const [contactToggle, setContactToggle] = useState('');
-  const [contactDelay, setContactDelay] = useState('');
+  const dispatch = useDispatch();
+  const onChangeContactState = () => dispatch(changeContactState());
+  const onChangeContactDelay = (value) => dispatch(changeContactDelay(value));
+  const { currentContactState } = useSelector(state => ({
+    currentContactState: state.CommonValueModule.currentContactState
+  }));
+  const { currentContactDelay } = useSelector(state => ({
+    currentContactDelay: state.CommonValueModule.currentContactDelay
+  }));
 
-  const contactClick = () => {
-    setContactToggle(contactToggle !== ' open' ? ' open' : ' close');
-    setContactDelay(' delay')
+  useEffect(() => {
+    onChangeContactDelay(true);
     setTimeout(() => {
-      setContactDelay('')
+      onChangeContactDelay(false);
     }, 1000)
-  }
+  }, [currentContactState]);
 
   return (
     <>
-      <div className={`contact-button${contactDelay}`} onClick={contactClick}>
-        {contactToggle !== ' open' ? (
-          <>Contact</>
+      <div className={`contact-button${currentContactDelay ? ' delay' : ''}`} onClick={onChangeContactState}>
+        {currentContactState ? (
+          <>x</>
         ) : (
-            <>x</>
+            <>Contact</>
           )}
       </div>
 
-      <div className={`contact-frame${contactToggle}`}>
+      <div className={`contact-frame${currentContactState ? ' open' : ' close'}`}>
         <div className='contact-grid-frame'>
           <div className='contact-grid'></div>
           <div className='contact-grid'></div>
@@ -42,7 +50,7 @@ const ContactComponent = () => {
           <div className='container'>
             <div className='row contact-content'>
               <div className='col-12 col-s-6 col-l-4'>
-                <div className={`email-form-frame${contactToggle}`}>
+                <div className={`email-form-frame${currentContactState ? ' open' : ' close'}`}>
                   <CustomInputComposition type={'text'} placeholder={'Name'} />
                   <CustomInputComposition type={'text'} placeholder={'Phone'} />
                   <CustomInputComposition type={'email'} placeholder={'Email'} />
@@ -53,7 +61,7 @@ const ContactComponent = () => {
               </div>
 
               <div className='col-12 col-s-6 col-l-4'>
-                <div className={`info-frame${contactToggle}`}>
+                <div className={`info-frame${currentContactState ? ' open' : ' close'}`}>
                   <span>phone: +82 010-2690-9243</span>
                   <span>kakao: Lavignee</span>
                   <span>email: doyoung9243@naver.com</span>

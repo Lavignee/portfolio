@@ -199,9 +199,15 @@
       text-align: right;
 
       button {
+        position: relative;
         padding-top:10rem;
         padding-bottom:10rem;
         @include f-b(5rem, #000);
+      }
+
+      svg {
+        @include vertical-align;
+        width: 30%
       }
     }
   }

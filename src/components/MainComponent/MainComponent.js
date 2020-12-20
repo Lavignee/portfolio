@@ -40,10 +40,11 @@ const MainComponent = () => {
     const targetToLefts = gsap.utils.toArray('.main-section .left');
     const targetToRights = gsap.utils.toArray('.main-section .right');
     const scrollTriggers = {
+      scroller: '#root',
       trigger: '.main-text-frame',
       start: 'top',
       end: 'bottom',
-      scrub: 1,
+      scrub: 1
     }
 
     canvasFrames.forEach(target => {
@@ -95,6 +96,7 @@ const MainComponent = () => {
     gsap.to('.intro-ment', {
       y: 0 + '%',
       scrollTrigger: {
+        scroller: '#root',
         id: 'intro-ment',
         trigger: '.intro-ment',
         start: 'top center',
@@ -107,7 +109,7 @@ const MainComponent = () => {
   }, [])
 
   return (
-    <section className='container main-section'>
+    <section id='main' className='container main-section'>
       <div className='main-background1'>
         <div className='background-frame'>
           <div className='background'></div>

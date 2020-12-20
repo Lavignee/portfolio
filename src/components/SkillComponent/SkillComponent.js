@@ -17,6 +17,7 @@ const SkillComponent = () => {
     // 스킬 컨텐츠 애니메이션
     gsap.to('.split-frame', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'split-frame',
         trigger: '.skill-title',
         start: 'top center',
@@ -26,9 +27,26 @@ const SkillComponent = () => {
     });
   }, [])
 
+  useEffect(() => {
+    gsap.fromTo('.skill-section', {
+      opacity: 1,
+    }, {
+      opacity: 0.3,
+      scrollTrigger: {
+        scroller: '#root',
+        id: 'skill-section',
+        trigger: '.skill-section',
+        pin: true,
+        start: 'bottom bottom',
+        end: 'bottom+=1080 bottom',
+        scrub: true
+      }
+    });
+  }, []);
+
   return (
     <>
-      <section className='container skill-section fluid'>
+      <section id='skill' className='container skill-section fluid'>
         <IconSliderComponent />
         <div className='container skill-frame'>
           <h1 className='title-text skill-title'>Skill</h1>

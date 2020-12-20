@@ -3,7 +3,6 @@ const SCROLL_ABOUT_FIRST = 'SCROLL_ABOUT_FIRST';
 const SCROLL_ABOUT_SECOND = 'SCROLL_ABOUT_SECOND';
 const SCROLL_ABOUT_THIRD = 'SCROLL_ABOUT_THIRD';
 const SCROLL_SKILL = 'SCROLL_SKILL';
-const SCROLL_FOOTPRINT = 'SCROLL_FOOTPRINT';
 
 export const ScrollIntro = scrollValue => ({
   type: SCROLL_INTRO,
@@ -23,10 +22,6 @@ export const ScrollAboutThird = scrollValue => ({
 });
 export const ScrollSkill = scrollValue => ({
   type: SCROLL_SKILL,
-  scrollValue
-});
-export const ScrollFootprint = scrollValue => ({
-  type: SCROLL_FOOTPRINT,
   scrollValue
 });
 
@@ -58,11 +53,6 @@ const ScrollValueModule = (state = initialState, action) => {
         scrollValue: action.scrollValue
       };
     case SCROLL_SKILL:
-      return {
-        ...state,
-        scrollValue: action.scrollValue
-      };
-    case SCROLL_FOOTPRINT:
       return {
         ...state,
         scrollValue: action.scrollValue

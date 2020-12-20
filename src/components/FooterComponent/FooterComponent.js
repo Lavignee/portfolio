@@ -4,7 +4,9 @@ import './FooterComponent.scss';
 const FooterComponent = () => {
   return (
     <footer>
-      copy right 2020
+      <div className='container'>
+        <span>Copyright 2020. doyoung Lee. All rights reserved.</span>
+      </div>
     </footer>
   );
 }
