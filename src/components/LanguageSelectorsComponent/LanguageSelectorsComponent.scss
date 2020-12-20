@@ -3,22 +3,47 @@
 
 .language-selectors-frame {
   position: relative;
-  height: $headerHeight;
 
   .language-selectors {
     @include vertical-align(relative);
-    display: flex;
-    justify-content: space-between;
 
-    button {
-      background-color: transparent;
-      border: none;
-      @include f-m;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+    .default-lang {
+      position: relative;
+      min-width: 11rem;
+      padding: 0.8rem 2.2rem 0.8rem 1rem;
+      text-align: center;
+      font-family: 'Syncopate';
+      @include f-r(1.3rem, $wh);
 
-      &.active {
-        text-decoration: underline;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%) rotate(-45deg);
+        right: 1rem;
+        width: 0.6rem;
+        height: 0.6rem;
+        @include border-b($wh);
+        @include border-l($wh);
+      }
+    }
+
+    .lang-list {
+      @include horizontal-align;
+      bottom: -100%;
+
+      button {
+        display: inline-block;
+        width: 100%;
+        min-width: 11rem;
+        padding: 0.8rem 2.2rem 0.8rem 1rem;
+        text-align: center;
+        font-family: 'Syncopate';
+        @include f-r(1.3rem, $wh);
+  
+        &.hide {
+          display: none;
+        }
       }
     }
   }
