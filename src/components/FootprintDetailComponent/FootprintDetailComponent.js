@@ -105,6 +105,7 @@ const FootprintDetailComponent = () => {
   useEffect(() => {
     gsap.to('.career-no1', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'career-no1',
         trigger: '.career-no1',
         start: 'top center+=200',
@@ -118,6 +119,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.career-no2', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'career-no2',
         trigger: '.career-no2',
         start: 'top+=150 center+=200',
@@ -131,6 +133,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.left-no1', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'left-no1',
         trigger: '.left-no1',
         start: 'top bottom',
@@ -144,6 +147,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.left-no2', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'left-no2',
         trigger: '.left-no2',
         start: 'top center+=200',
@@ -157,6 +161,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.right-no1', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'right-no1',
         trigger: '.right-no1',
         start: 'top+=150 center+=200',
@@ -170,6 +175,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.left-no3', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'left-no3',
         trigger: '.left-no3',
         start: 'top+=150 center+=200',
@@ -183,6 +189,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.left-no4', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'left-no4',
         trigger: '.left-no4',
         start: 'top+=300 center+=200',
@@ -196,6 +203,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.right-no2', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'right-no2',
         trigger: '.right-no2',
         start: 'top+=300 center+=200',
@@ -209,6 +217,7 @@ const FootprintDetailComponent = () => {
     });
     gsap.to('.left-no5', {
       scrollTrigger: {
+        scroller: '#root',
         id: 'left-no5',
         trigger: '.left-no5',
         start: 'top center+=200',

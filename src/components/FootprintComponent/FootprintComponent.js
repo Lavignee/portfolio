@@ -1,38 +1,33 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { gsap } from "gsap";
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import { useDispatch } from 'react-redux';
-// import { ScrollFootprint } from '../../Modules/ScrollValueModule';
-// import SplitTextComponent from '../SplitTextComponent';
+import footprintCircle from '../../Static/images/footprint-circle.svg';
+import footprintArrow from '../../Static/images/footprint-arrow.svg';
+import FooterContainer from '../../Containers/FooterContainer';
+
 import './FootprintComponent.scss';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const FootprintComponent = () => {
-  // const dispatch = useDispatch();
-  // const onScrollFootprint = () => dispatch(ScrollFootprint('footprint'));
-
-  // useEffect(() => {
-  //   gsap.to('.split-frame', {
-  //     scrollTrigger: {
-  //       id: 'split-frame',
-  //       trigger: '.footprint-title',
-  //       start: 'top center',
-  //       onEnter: () => onScrollFootprint(),
-  //       end: 'bottom center',
-  //     }
-  //   });
-  // }, [])
-
   return (
-    <section className='container footprint-section'>
-      <h1 className='title-text footprint-title'>Footprint</h1>
-      {/* <SplitTextComponent animation={'right'} scroll={'footprint'} setTime={200} depth noContainer>경력사항</SplitTextComponent>
-      <SplitTextComponent animation={'right'} scroll={'footprint'} setTime={200} delay={5} depth noContainer>프로젝트</SplitTextComponent>
-      <SplitTextComponent animation={'right'} scroll={'footprint'} setTime={200} delay={10} depth noContainer>외부수주</SplitTextComponent> */}
-      <Link to='footprint'></Link>
-    </section>
+    <>
+      <section id='footprint' className='container-fluid footprint-section'>
+        <div className='container footprint-title-area'>
+          <div className='footprint-content'>
+            <div className='footprint-circle-area'>
+              <img src={footprintCircle} alt="footprint design circle" />
+            </div>
+            <h2>Footprint</h2>
+            <span>프로젝트 / 경력사항 / 외부수주</span>
+            <div className='footprint-arrow-area'>
+              <img src={footprintArrow} alt="footprint design arrow" />
+            </div>
+          </div>
+          <Link to='footprint'></Link>
+        </div>
+        <div className='footprint-back-text'>FOOTPRINT</div>
+      </section>
+      <FooterContainer />
+    </>
   )
 }
 

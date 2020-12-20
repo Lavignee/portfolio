@@ -2,23 +2,80 @@
 @import '../../Style/Util/util_mixins';
 
 .footprint-section {
-  position: relative;
-  height: 20vh;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 13rem 0 55rem 0;
+  background-color: #181818;
 
-  .footprint-title {
-    text-align: center;
+  .footprint-title-area {
+    padding-left: 33.33333333%;
+
+    .footprint-content {
+      position: relative;
+
+      .footprint-circle-area {
+        position: absolute;
+        display: inline-block;
+        
+        img {
+          position: relative;
+          left: -100%;
+          margin-right: 6rem;
+          animation: rotate 25s linear infinite;
+        }
+      }
+
+      .footprint-arrow-area {
+        position: absolute;
+        display: inline-block;
+        right: 0;
+        top: 35rem;
+
+        img {
+          position: relative;
+        }
+      }
+    }
+    
+
+    h2 {
+      padding-bottom: 3.2rem;
+      @include border-b($wh);
+      font-family: 'Syncopate';
+      @include f-b(6rem, $wh);
+    }
+
+    span {
+      display: inline-block;
+      padding-top: 3rem;
+      @include f-r(2.4rem, $wh);
+    }
   }
 
-  .split-frame {
-    @include f-b(20rem, $bl);
+  .footprint-back-text {
+    @include horizontal-align;
+    bottom: 5rem;
+    font-family: 'Syncopate';
+    @include f-b(25rem, transparent);
+    -webkit-text-stroke: 0.1rem #656565;
   }
 
   a {
     position: absolute;
-    display: block;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
