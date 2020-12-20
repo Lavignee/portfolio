@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LanguageSelectorsComponent from '../languageSelectorsComponent';
 import { HashLink } from 'react-router-hash-link';
+import { gsap } from "gsap";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import logo from '../../Static/images/logo.svg';
+import menuIcon from '../../Static/images/menu.svg';
 import './NavmenuComponent.scss';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const menus = [
   {
@@ -21,7 +26,8 @@ const menus = [
     path: '/#footprint',
   },
 ]
-const NavmenuComponent = ({ gnbToggle, onHover, onLeave }) => {
+
+const NavmenuComponent = ({ gnbToggle, onHover, onLeave, currentGnbState }) => {
   const reactRoot = document.getElementById('root')
   const scrollWidthOffset = (el) => {
     if (el.getAttributeNode('id').value === 'skill' && el.getBoundingClientRect().top < 0) {
@@ -37,6 +43,22 @@ const NavmenuComponent = ({ gnbToggle, onHover, onLeave }) => {
     }
   }
 
+  useEffect(() => {
+    gsap.fromTo('.gnb-button', {
+      rotate: 0
+    }, {
+      rotate: 360,
+      scrollTrigger: {
+        scroller: '#root',
+        id: 'gnb-button',
+        trigger: '.main-content',
+        start: 'top center',
+        end: 'bottom center',
+        scrub: true,
+      }
+    });
+  }, []);
+
   return (
     <>
       <HashLink to='/#main' scroll={el => scrollWidthOffset(el)}><img src={logo} alt="logo" /></HashLink>
@@ -48,7 +70,7 @@ const NavmenuComponent = ({ gnbToggle, onHover, onLeave }) => {
           }
         </nav>
         <LanguageSelectorsComponent />
-        <div className='gnb-button' onClick={gnbToggle} onMouseEnter={onHover} onMouseLeave={onLeave}>아이콘</div>
+        <div className='gnb-button' onClick={gnbToggle} onMouseEnter={onHover} onMouseLeave={onLeave}><img src={menuIcon} alt="menu icon" /></div>
       </div>
     </>
   )

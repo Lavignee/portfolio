@@ -2,13 +2,13 @@
 @import '../../Style/Util/util_mixins';
 
 .right-area {
+  position: relative;
   display: inline-flex;
 
   .gnb-button {
-    @include vertical-align(relative);
-    display: flex;
-    justify-content: space-between;
-    @include f-b(3rem);
+    position: absolute;
+    top: $headerHeight + 3rem;
+    right: 0;
 
     &.delay {
       pointer-events: none;

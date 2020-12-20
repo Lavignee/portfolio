@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 function ScrollToTop({ history, children }) {
+  const reactRoot = document.getElementById('root')
   useEffect(() => {
     const unlisten = history.listen(() => {
-      history.location.hash === '' && window.scrollTo(0, 0);
+      history.location.hash === '' && reactRoot.scrollTo(0, 0);
     });
     return () => {
       unlisten();

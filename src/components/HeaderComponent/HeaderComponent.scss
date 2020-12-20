@@ -10,8 +10,124 @@ header {
   a {
     @include f-b(4rem, $lh: $headerHeight);
   }
+}
 
-  .right-area {
-    display: inline-flex;
+.gnb-background {
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
+  height: 150vh;
+  background-color: #181818;
+  border-radius: 10%;
+  transform: rotate(-60deg) translate(200%, -40%) scale(2);
+  transition: border-radius $transition-slow, transform $transition-slow;
+
+  &.active {
+    border-radius: 0%;
+    transform: rotate(25deg) translate(10%, 0%) scale(1.5);
+  }
+}
+
+.fixed-frame {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 102;
+  opacity: 0;
+  transition: opacity $transition-slow;
+  pointer-events: none;
+    
+  .gnb-container {
+    position: relative;
+  
+    .gnb-close-button {
+      position: absolute;
+      z-index: 103;
+      top: $headerHeight + 3rem;
+      right: 0;
+      pointer-events: initial;
+    }
+  }
+
+  &.view {
+    opacity: 1;
+  }
+}
+
+.menu-frame {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 101;
+  opacity: 0;
+  transition: opacity $transition-slow;
+  pointer-events: none;
+
+  .menu-content {
+    @include vertical-align;
+    width: 100%;
+    display: block;
+
+      li {
+        position: relative;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        font-family: 'Syncopate';
+        @include f-b(7.2rem, $wh);
+  
+        a {
+          font-family: 'Syncopate';
+        @include f-b(7.2rem, $wh);
+        }
+      }
+
+      .first-content {
+        padding-left: 20%;
+      }
+
+    .center-content {
+      display: inline-block;
+      @include horizontal-align(relative);
+      li {
+        &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+          position: relative;
+          padding-left: 10rem;
+          
+          &:before {
+            position: absolute;
+            left: 0;
+            display: inline-block;
+            -webkit-text-stroke: 0.1rem #707070;
+            @include f-b(3rem, transparent);
+          }
+        }
+        &:nth-child(1) {
+          &:before {
+            content:'01';
+          }
+        }
+        &:nth-child(2) {
+          &:before {
+            content:'02';
+  
+          }
+        }
+        &:nth-child(3) {
+          &:before {
+            content:'03';
+          }
+        }
+      }
+    }
+
+    .last-content {
+      text-align: right;
+      padding-right: 20%;
+    }
+  }
+
+  &.view {
+    opacity: 1;
+    pointer-events: initial;
   }
 }
