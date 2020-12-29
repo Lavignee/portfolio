@@ -54,7 +54,24 @@ const IconsliderComponent = () => {
       }
     </div>
   )
-  useEffect(() => {
+
+  const iconSliderSetting = () => {
+    gsap.set('.icon-content-frame', {
+      x: (i) => i * 100 + '%'
+    });
+
+    gsap.to('.icon-content-frame', {
+      duration: 80,
+      ease: 'none',
+      x: '+=1000' + '%',
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % 1000)
+      },
+      repeat: -1
+    });
+  }
+
+  const autoHeightContent = () => {
     if (height < 739.2) {
       setRow('four')
     } else if (height < 950.4) {
@@ -70,21 +87,16 @@ const IconsliderComponent = () => {
     } else if (height < 2006.4) {
       setRow('ten')
     }
+  }
 
-    gsap.set('.icon-content-frame', {
-      x: (i) => i * 100 + '%'
-    });
-
-    gsap.to('.icon-content-frame', {
-      duration: 80,
-      ease: 'none',
-      x: '+=1000' + '%',
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % 1000)
-      },
-      repeat: -1
-    });
+  useEffect(() => {
+    autoHeightContent();
   }, [height])
+
+  useEffect(() => {
+    iconSliderSetting();
+    return () => iconSliderSetting();
+  }, []);
 
   return (
     <>

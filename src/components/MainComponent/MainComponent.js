@@ -35,7 +35,7 @@ const MainComponent = () => {
     language: state.LanguageModule.language
   }));
 
-  useEffect(() => {
+  const mainVideoGsap = () => {
     const canvasFrames = gsap.utils.toArray('.canvas-frame');
     const targetToLefts = gsap.utils.toArray('.main-section .left');
     const targetToRights = gsap.utils.toArray('.main-section .right');
@@ -106,7 +106,55 @@ const MainComponent = () => {
         scrub: true,
       }
     });
+  }
+
+  const headerInvert = () => {
+    gsap.to('header', {
+      scrollTrigger: {
+        id: 'header',
+        trigger: '.main-section',
+        scroller: '#root',
+        start: 'top-=1 top',
+        toggleClass: { targets: 'header', className: 'invert' },
+        end: 'bottom top',
+      }
+    });
+  }
+
+  const gnbMenu = () => {
+    gsap.to('.gnb-button', {
+      scrollTrigger: {
+        id: 'gnb-button',
+        trigger: '.main-section',
+        scroller: '#root',
+        start: 'top top+=72',
+        toggleClass: { targets: '.menu-img', className: 'invert' },
+        end: 'bottom top+=72',
+      }
+    });
+  }
+
+  useEffect(() => {
+    let triggers = ScrollTrigger.getAll();
+    triggers.forEach(trigger => {
+      trigger.kill();
+    });
+  }, []);
+
+  useEffect(() => {
+    mainVideoGsap();
+    return () => mainVideoGsap();
   }, [])
+
+  useEffect(() => {
+    headerInvert();
+    return () => headerInvert();
+  }, []);
+
+  useEffect(() => {
+    gnbMenu();
+    return () => gnbMenu();
+  }, []);
 
   return (
     <section id='main' className='container main-section'>
@@ -127,7 +175,7 @@ const MainComponent = () => {
             <span>FRONT - END DEVELOPER</span>
             {/* TODO: 번역텍스트 받아서 동작하는 애니메이션 보완 필요. */}
             {/* <p><Trans i18nKey='greeting'><TypingAnimationComponent language={language}></TypingAnimationComponent></Trans></p> */}
-            <p>LEE DO YOUNG</p>
+            <p>Doyoung Lee</p>
             {/* <p><Trans i18nKey='greeting2'></Trans></p> */}
           </div>
         </div>

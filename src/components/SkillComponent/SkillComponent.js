@@ -2,32 +2,13 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useDispatch } from 'react-redux';
-import { ScrollSkill } from '../../Modules/ScrollValueModule';
 import IconSliderComponent from '../IconSliderComponent';
 import './SkillComponent.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const SkillComponent = () => {
-  const dispatch = useDispatch();
-  const onScrollSkill = () => dispatch(ScrollSkill('skill'));
-
-  useEffect(() => {
-    // 스킬 컨텐츠 애니메이션
-    gsap.to('.split-frame', {
-      scrollTrigger: {
-        scroller: '#root',
-        id: 'split-frame',
-        trigger: '.skill-title',
-        start: 'top center',
-        onEnter: () => onScrollSkill(),
-        end: 'bottom center',
-      }
-    });
-  }, [])
-
-  useEffect(() => {
+  const forFootprintPin = () => {
     gsap.fromTo('.skill-section', {
       opacity: 1,
     }, {
@@ -42,6 +23,11 @@ const SkillComponent = () => {
         scrub: true
       }
     });
+  }
+
+  useEffect(() => {
+    forFootprintPin();
+    return () => forFootprintPin();
   }, []);
 
   return (

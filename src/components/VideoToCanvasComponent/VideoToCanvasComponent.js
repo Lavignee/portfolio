@@ -6,10 +6,13 @@ const VideoToCanvasComponent = (src) => {
   let content = '';
 
   useEffect(() => {
-    makeVirtualVideoElement(src)
-    startPlayingInCanvas(content, canvasRef)
-    return () => {
-    }
+    makeVirtualVideoElement(src);
+    return () => makeVirtualVideoElement(src);
+  }, [])
+
+  useEffect(() => {
+    startPlayingInCanvas(content, canvasRef);
+    return () => startPlayingInCanvas(content, canvasRef);
   }, [])
 
   const makeVirtualVideoElement = (src) => {

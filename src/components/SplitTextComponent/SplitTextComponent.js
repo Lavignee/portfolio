@@ -23,12 +23,16 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
     }
   }
 
-  useEffect(() => {
-    if (scrollValue === scroll && !happen.includes(scrollValue)) {
+  const SplittingReady = () => {
+    if (scrollValue === scroll && !happen.includes(scrollValue) || scroll === 'all') {
       setWillChange(true)
       Splitting()
       setHappen(...happen, [scrollValue])
     }
+  }
+
+  useEffect(() => {
+    SplittingReady();
   }, [scrollValue])
 
   return (
@@ -36,7 +40,7 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
       {noContainer ? (
         depth ? (
           split.map(split => (
-            <div key={split.index} className={`split-depth-frame${index ? ` ${split.index}` : ''}`}><span>{split.text}</span><div key={split.index} className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div></div>
+            <div key={split.index} className={`split-depth-frame${index ? ` ${split.index}` : ''}`}><span>{split.text}</span><div className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div></div>
           ))
         ) : (
             split.map(split => (
@@ -49,7 +53,7 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
             <div className={`animation-container${willChange && !noContainer ? ' will-change' : ''}`}>
               {depth ? (
                 split.map(split => (
-                  <div key={split.index} className={`split-depth-frame${index ? ` ${split.index}` : ''}`}><span>{split.text}</span><div key={split.index} className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div></div>
+                  <div key={split.index} className={`split-depth-frame${index ? ` ${split.index}` : ''}`}><span>{split.text}</span><div className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div></div>
                 ))
               ) : (
                   split.map(split => (
@@ -59,7 +63,6 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
             </div>
           </>
         )}
-
     </div>
   )
 }
