@@ -1,708 +1,178 @@
-@import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
 .footprint-detail {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
-  .time-line {
+  .swiper-container {
+    height: $headerHeight-100vh;
+  }
+
+  .carrer-frame, .project-frame {
+    padding-top: $headerHeight;
+  }
+
+  .division-frame {
     height: 100%;
     background-color: $bl;
     @media (max-width: $bp-l) {
       display: none;
     }
 
-    .line {
+    .division-line {
       @include horizontal-align;
       top: 0;
       width: 1px;
-      height: 100%;
+      height: 100vh;
       background-color: $wh;
     }
 
     .point-frame {
       position: relative;
       width: 100%;
+      height: 100vh;
+
+      .left-area, .right-area {
+        display: inline-block;
+        width: 50%;
+        height: 100%;
+        
+        .left-text, .right-text {
+          position: absolute;
+          display: inline-block;
+          padding-top: 3rem;
+          font-family: 'Syncopate';
+          writing-mode: vertical-rl;
+          @include f-b(3.6rem, #7d7d7d);
+        }
+
+        .left-text {
+          transform: translateX(50%);
+        }
+        
+        .right-text {
+          bottom: 0;
+          transform: translateX(50%) rotateX(180deg) rotateY(180deg);
+        }
+      }
+    }
+  }
+
+  .swiper-wrapper {
+    .content-frame {
+      width: 100%;
       height: 100%;
+      box-sizing: border-box;
+      opacity: 0;
+      padding: 2.5rem 5rem;
+      
+      &.active {
+        opacity: 1;
 
-      .year-point {
-        @include horizontal-align(relative);
-        width: 100%;
-        text-align: center;
+        .content {
+          height: 100%;
+          padding: 2.5rem;
+          background-color: rgba(255, 255, 255, 0.7);
 
-        div {
-          @include horizontal-align(relative);
-          width: 100%;
-          text-align: right;
-
-          &:first-child {
-            display: flex;
-            justify-content: space-between;
-          }
-
-          span {
+          .keyword {
             display: inline-block;
-            text-align: center;
-            width: 50%;
-            height: 3.5rem;
-            @include f-m(1.4rem, $bl, 3.5rem);
-            transition: color $transition-slow, height $transition-slow;
-
-            &.year {
-              @include f-m(1.6rem, $wh, 3.5rem);
-              text-decoration: underline;
-            }
+            padding: 1rem;
+            margin-bottom: 2rem;
+            background-color: #c4c4c4;
+            @include f-m(1.8rem, #222222);
           }
-        }
-      }
-    }
-  }
-
-  .line-frame {
-    position: relative;
-    height: 100%;
-  }
-
-  .content-frame {
-    position: absolute;
-    z-index: 4;
-    width: 100%;
-    max-height: 5rem;
-    overflow: hidden;
-    padding: 1rem 1.5rem;
-    background-color: rgba(255, 255, 255, 0.8);
-    transition: transform $transition-slow, max-height $transition-slow;
-
-    li {
-      padding-bottom: 2rem;
-      @include f-b(2rem, $bl);
-      pointer-events: none;
-    }
-
-    span {
-      display: block;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      @include f-m(1.5rem, $bl);
-    }
-
-    p {
-      padding-top: 1rem;
-      @include f-r(1.4rem, $bl);
-    }
-  }
-
-  .career-line {
-    .career-no1 {
-      transform: translateY(28rem);
-    }
-    .career-no2 {
-      transform: translateY(7rem);
-    }
-  }
-
-  .left-line {
-    .left-no2 {
-      transform: translateY(28rem);
-    }
-    .left-no3 {
-      transform: translateY(7rem);
-    }
-    .left-no4 {
-      transform: translateY(21rem);
-    }
-  }
-
-  .right-line {
-    .right-no1 {
-      transform: translateY(7rem);
-    }
-    .right-no2 {
-      transform: translateY(31.5rem);
-    }
-  }
-
-  .year2021 {
-    .time-line,
-    .line-frame {
-      padding-top: $headerHeight;
-
-      .content-frame {
-        top: $headerHeight;
-      }
-    }
-
-    .time-line {
-      .point-frame {
-        div {
-          span {
-            &.year {
-              color: $bl;
-            }
+    
+          .title {
+            padding-bottom: 1rem;
+            @include f-b(3.6rem, #181818);
           }
-        }
-      }
-    }
-  }
-
-  .year2020 {
-    &.left-no1 {
-      .year-point {
-        div {
-          &:nth-child(n + 1):nth-child(-n + 3) {
+          
+          .date {
+            padding-bottom: 3.5rem;
+            @include f-m(2rem, #a6a6a6);
+          }
+          
+          .summarys {
+            position: relative;
+            
+            .line {
+              @include center-align;
+              width: 1px;
+              height: 80%;
+              background-color: #e0e0e0;
+            }
+            
             span {
-              height: 10rem;
+              display: inline-block;
+              vertical-align: top;
+              padding-top: 1rem;
+              padding-bottom: 1rem;
+              @include f-r(2rem, $bl);
+            }
+            
+            &.division {
+              padding-top: 3.5rem;
+              padding-bottom: 3.5rem;
+              background-color: #f0f0f0;
+  
+              span {
+                width: 50%;
+                padding-left: 3.5rem ;
+                padding-right: 3.5rem ;
+              }
             }
           }
-          span {
-            &.oct,
-            &.nov,
-            &.dec {
-              @include f-m(1.4rem, $wh, 3.5rem);
-            }
+    
+          p {
+            width: 100%;
+            padding-top: 4rem;
+            @include f-l(1.8rem, $bl, 4rem);
           }
         }
-      }
-
-      .left-no1 {
-        max-height: 100%;
-      }
-
-      .career-no1,
-      .left-no2 {
-        transform: translateY(47.5rem);
-      }
-    }
-
-    &.career-no1,
-    &.left-no2 {
-      .year-point {
-        div {
-          &:nth-child(n + 9):nth-child(-n + 12) {
-            span {
-              height: 10rem;
-            }
-          }
-          .jan,
-          .feb,
-          .mar,
-          .apr {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .career-no1,
-      .left-no2 {
-        max-height: 100%;
-      }
-    }
-
-    &.left-no1-active {
-      .year-point {
-        div {
-          span {
-            &.oct,
-            &.nov,
-            &.dec {
-              @include f-m(1.4rem, $wh, 3.5rem);
-            }
-          }
-        }
-      }
-      .left-no1 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-
-    &.career-no1-active,
-    &.left-no2-active {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar,
-          .apr {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-    }
-
-    &.career-no1-active {
-      .career-no1 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.left-no2-active {
-      .left-no2 {
-        max-height: 100%;
-        z-index: 5;
       }
     }
   }
 
-  .year2019 {
-    &.career-no1,
-    &.left-no2 {
-      .year-point {
-        div {
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .career-no1,
-      .left-no2 {
-        max-height: 100%;
-      }
-    }
-    &.career-no2 {
-      .year-point {
-        div {
-          &:nth-child(n + 3):nth-child(-n + 6) {
-            span {
-              height: 10rem;
-            }
-          }
-          .jan,
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
+  .swiper-button-prev, .swiper-button-next {
+    width: 50%;
+    height: calc(100% - 5rem);
+    top: 5rem;
+    color: #181818;
 
-      .career-no2 {
-        max-height: 100%;
-      }
-
-      .left-no4 {
-        transform: translateY(47rem);
-      }
-      .right-no2 {
-        transform: translateY(61rem);
-      }
-    }
-    &.right-no1,
-    &.left-no3 {
-      .year-point {
-        div {
-          &:nth-child(n + 3):nth-child(-n + 6) {
-            span {
-              height: 10rem;
-            }
-          }
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .right-no1,
-      .left-no3 {
-        max-height: 100%;
-      }
-    }
-    &.left-no4 {
-      .year-point {
-        div {
-          &:nth-child(n + 7):nth-child(-n + 10) {
-            span {
-              height: 10rem;
-            }
-          }
-          .mar,
-          .apr,
-          .may,
-          .jun {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .left-no4 {
-        max-height: 100%;
-      }
-
-      .right-no2 {
-        transform: translateY(51rem);
-      }
-    }
-    &.right-no2 {
-      .year-point {
-        div {
-          &:nth-child(n + 10):nth-child(-n + 13) {
-            span {
-              height: 10rem;
-            }
-          }
-          .jan,
-          .feb,
-          .mar {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .right-no2 {
-        max-height: 100%;
-      }
-    }
-    &.career-no1-active {
-      .year-point {
-        div {
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .career-no1 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.career-no2-active {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .career-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.left-no2-active {
-      .year-point {
-        div {
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .left-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.right-no1-active,
-    &.left-no3-active {
-      .year-point {
-        div {
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-    }
-    &.right-no1-active {
-      .right-no1 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.left-no3-active {
-      .left-no3 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.left-no4-active {
-      .year-point {
-        div {
-          .mar,
-          .apr,
-          .may,
-          .jun {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .left-no4 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.right-no2-active {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .right-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
+    &:after {
+      position: absolute;
     }
   }
 
-  .year2018 {
-    &.right-no2,
-    &.career-no2 {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
+  .swiper-button-prev {
+    left: 0;
 
-      .right-no2,
-      .career-no2 {
-        max-height: 100%;
-      }
-    }
-
-    &.right-no2-active,
-    &.career-no2-active {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-    }
-
-    &.right-no2-active {
-      .right-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.career-no2-active {
-      .career-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
+    &:after {
+      left: 0;
     }
   }
 
-  .year2017 {
-    &.career-no2,
-    &.right-no2,
-    &.left-no5 {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-      .career-no2 {
-        max-height: 100%;
-      }
-    }
-    &.left-no5 {
-      .year-point {
-        div {
-          &:nth-child(n + 1):nth-child(-n + 4) {
-            span {
-              height: 10rem;
-            }
-          }
-        }
-      }
-      .left-no5 {
-        max-height: 100%;
-      }
-    }
-    &.career-no2-active,
-    &.right-no2-active,
-    &.left-no5-active {
-      .year-point {
-        div {
-          .jan,
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-    }
+  .swiper-button-next {
+    right: 0;
 
-    &.career-no2-active {
-      .career-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.right-no2-active {
-      .right-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-    &.left-no5-active {
-      .left-no5 {
-        max-height: 100%;
-        z-index: 5;
-      }
+    &:after {
+      right: 0;
     }
   }
 
-  .year2016 {
-    &.career-no2 {
-      .year-point {
-        div {
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
+  .swiper-pagination {
+    bottom: 3rem;
 
-      .career-no2 {
-        max-height: 100%;
-      }
-    }
-
-    &.left-no5 {
-      .year-point {
-        div {
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .left-no5 {
-        max-height: 100%;
-      }
-    }
-
-    &.career-no2-active {
-      .year-point {
-        div {
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .career-no2 {
-        max-height: 100%;
-        z-index: 5;
-      }
-    }
-
-    &.left-no5-active {
-      .year-point {
-        div {
-          .feb,
-          .mar,
-          .apr,
-          .may,
-          .jun,
-          .jul,
-          .aug,
-          .sep,
-          .oct,
-          .nov,
-          .dec {
-            @include f-m(1.4rem, $wh, 3.5rem);
-          }
-        }
-      }
-
-      .left-no5 {
-        max-height: 100%;
-        z-index: 5;
+    .swiper-pagination-bullet {
+      width: 4rem;
+      height: .5rem;
+      border-radius: 0;
+      opacity: 1;
+      background-color: #c4c4c4;
+      
+      &.swiper-pagination-bullet-active {
+        background-color: #181818;
       }
     }
   }

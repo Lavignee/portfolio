@@ -82,29 +82,6 @@ const SkillDetailComponent = ({ match }) => {
   const [currentList, setCurrentList] = useState(list);
   const [currentTarget, setCurrentTarget] = useState(0);
 
-  const changeList = (e) => {
-    setCurrentTarget(0);
-    scrollPosition.current.scrollTo(0, 0);
-    if (e.target.dataset.list !== currentList) {
-      lists.current = [];
-      let triggers = ScrollTrigger.getAll();
-      triggers.forEach(trigger => {
-        trigger.kill();
-      });
-      setCurrentList(e.target.dataset.list);
-    }
-  }
-
-  const changeTarget = (id) => {
-    setCurrentTarget(id);
-  }
-
-  const addToRefs = el => {
-    if (el && !lists.current.includes(el)) {
-      lists.current.push(el);
-    }
-  };
-
   const workmanships = (level) => {
     return (
       <div className={`levels level-${level}`}>
@@ -161,7 +138,41 @@ const SkillDetailComponent = ({ match }) => {
     }
   }
 
-  useEffect(() => {
+  const changeList = (e) => {
+    setCurrentTarget(0);
+    scrollPosition.current.scrollTo(0, 0);
+    if (e.target.dataset.list !== currentList) {
+      lists.current = [];
+      let triggers = ScrollTrigger.getAll();
+      triggers.forEach(trigger => {
+        trigger.kill();
+      });
+      setCurrentList(e.target.dataset.list);
+    }
+  }
+
+  const changeHistoryList = () => {
+    setCurrentTarget(0);
+    scrollPosition.current.scrollTo(0, 0);
+    lists.current = [];
+    let triggers = ScrollTrigger.getAll();
+    triggers.forEach(trigger => {
+      trigger.kill();
+    });
+    setCurrentList(location.pathname.split('/skill/')[1]);
+  }
+
+  const changeTarget = (id) => {
+    setCurrentTarget(id);
+  }
+
+  const addToRefs = el => {
+    if (el && !lists.current.includes(el)) {
+      lists.current.push(el);
+    }
+  };
+
+  const listScroller = () => {
     lists.current.forEach((el, index) => {
       gsap.to(el, {
         scrollTrigger: {
@@ -176,7 +187,24 @@ const SkillDetailComponent = ({ match }) => {
         }
       });
     });
+  }
+
+  useEffect(() => {
+    let triggers = ScrollTrigger.getAll();
+    triggers.forEach(trigger => {
+      trigger.kill();
+    });
+  }, []);
+
+  useEffect(() => {
+    listScroller();
   }, [currentList])
+
+  useEffect(() => {
+    if (location.pathname.split('/skill/')[1] !== currentList) {
+      changeHistoryList();
+    }
+  }, [location.pathname])
 
   return (
     <div className='skill-detail'>
