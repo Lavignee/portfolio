@@ -11,7 +11,9 @@
     margin-left: 0;
     margin-right: 0;
   }
-
+  &.relative {
+    position: relative;
+  }
   &.start {
     display: flex;
     justify-content: flex-start;
