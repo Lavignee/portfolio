@@ -1,19 +1,20 @@
-@import '../../Style/util/pallet';
 @import '../../Style/util/util_mixins';
 
 .language-selectors-frame {
   position: relative;
+  display: inline-block;
+  padding-right: 3rem;
 
   .language-selectors {
-    @include vertical-align(relative);
+    position: relative;
 
     .default-lang {
       position: relative;
       min-width: 11rem;
       padding: 0.8rem 2.2rem 0.8rem 1rem;
-      text-align: center;
+      text-align: right;
       font-family: 'Syncopate';
-      @include f-r(1.3rem, $wh);
+      @include f-r(1.3rem, #656565);
 
       &:before {
         content: '';
@@ -23,23 +24,24 @@
         right: 1rem;
         width: 0.6rem;
         height: 0.6rem;
-        @include border-b($wh);
-        @include border-l($wh);
+        @include border-b(#656565);
+        @include border-l(#656565);
       }
     }
 
     .lang-list {
       @include horizontal-align;
-      bottom: -100%;
+      top: -100%;
+      animation: opacity 0.5s forwards;
 
       button {
         display: inline-block;
         width: 100%;
         min-width: 11rem;
         padding: 0.8rem 2.2rem 0.8rem 1rem;
-        text-align: center;
+        text-align: right;
         font-family: 'Syncopate';
-        @include f-r(1.3rem, $wh);
+        @include f-r(1.3rem, #656565);
   
         &.hide {
           display: none;

@@ -47,7 +47,7 @@ const LanguageSelectorsComponent = () => {
   }
 
   useEffect(() => {
-    currentLangCheck(language)
+    currentLangCheck(language);
   }, [language]);
 
   return (

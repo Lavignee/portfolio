@@ -1,14 +1,16 @@
-@import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
 footer {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0;
+  padding-bottom: 1.5rem !important;
   width: 100%;
   text-align: right;
   z-index: 100;
 
   span {
+    @include vertical-align;
+    right: 0;
     @include f-l(1.8rem, #656565);
   }
 }
