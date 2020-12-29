@@ -1,10 +1,10 @@
-@import '../../Style/Util/pallet';
 @import '../../Style/Util/util_mixins';
 
 .about-section {
   .about-frame {
     position: relative;
     padding-top: 20rem;
+    padding-bottom: 10rem;
 
     .title-frame {
       margin: 0 auto;
@@ -35,9 +35,10 @@
         &:before, &:after {
           content: '';
           position: absolute;
-          left: 0;
+          left: 10rem;
+          opacity: 0.8;
           z-index: 1;
-          width: 100%;
+          width: calc(100% - 20rem);
           height: 100%;
           transition: transform $transition-slow;
         }
@@ -52,6 +53,8 @@
       .one,
       .three {
         @include vertical-align(relative);
+        padding-left: 10rem;
+        padding-right: 10rem;
       }
 
       .one {
@@ -59,25 +62,25 @@
           background: center / cover url(#{$img-url}about-one-opacity.png);
         }
         &:before {
-          transform: translateX(-16%);
+          transform: translateX(-11%);
         }
         
         &:after {
-          transform: translateX(13%);
+          transform: translateX(8%);
         }
       }
 
       .two {
-        &:before, &:after {
-          background: center / cover url(#{$img-url}about-two-opacity.png);
-        }
-        &:before {
-          transform: translateX(-15%);
-        }
+        // &:before, &:after {
+        //   background: center / cover url(#{$img-url}about-two-opacity.png);
+        // }
+        // &:before {
+        //   transform: translateX(-10%);
+        // }
 
-        &:after {
-          transform: translateX(15%);
-        }
+        // &:after {
+        //   transform: translateX(10%);
+        // }
       }
 
       .three {
@@ -85,17 +88,18 @@
           background: center / cover url(#{$img-url}about-three-opacity.png);
         }
         &:before {
-          transform: translateX(-13%);
+          transform: translateX(-8%);
         }
 
         &:after {
-          transform: translateX(16%);
+          transform: translateX(11%);
         }
       }
     }
 
     .text-animation-frame {
       margin-top: 10rem;
+      padding-bottom: 5rem;
       
       > div {
         padding-top: 4rem;
@@ -111,14 +115,12 @@
       .first-line {
         &.first {
           div {
-            // text-shadow: -15px 0 0 #777;
             animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
           }
         }
         &.second {
           text-align: right;
           div {
-            // text-shadow: 15px 0 0 #777;
             animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
           }
         }
@@ -126,14 +128,12 @@
       .second-line {
         &.first {
           div {
-            // text-shadow: -15px 0 0 #777;
             animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
           }
         }
         &.second {
           text-align: right;
           div {
-            // text-shadow: 15px 0 0 #777;
             animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
           }
         }
@@ -141,73 +141,42 @@
       .third-line {
         &.first {
           div {
-            // text-shadow: -15px 0 0 #777;
             animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
           }
         }
         &.second {
           text-align: right;
           div {
-            // text-shadow: 15px 0 0 #777;
             animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
           }
-        }
-      }
-
-      @keyframes moving-right {
-        0% {
-          opacity: 0;
-          transform: translateX(-25%);
-        }
-      
-        5% {
-          opacity: 1;
-        }
-
-        95% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0;
-          transform: translateX(25%);
-        }
-      }
-
-      @keyframes moving-left {
-        0% {
-          opacity: 0;
-          transform: translateX(25%);
-        }
-      
-        5% {
-          opacity: 1;
-        }
-
-        95% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0;
-          transform: translateX(-25%);
         }
       }
     }
 
     .about-detail-button {
       text-align: right;
+      padding-bottom:10rem;
+      padding-top:10rem;
 
-      button {
-        position: relative;
-        padding-top:10rem;
-        padding-bottom:10rem;
-        @include f-b(5rem, #000);
-      }
+      a {
+        display: inline-block;
 
-      svg {
-        @include vertical-align;
-        width: 30%
+        button {
+          position: relative;
+          font-family: 'Syncopate';
+          @include f-r(5rem, #000);
+
+          &:before {
+            content: '';
+            @include vertical-align;
+            width: 6.4rem;
+            height: 6.4rem;
+            right: calc(100% + 3rem);
+            background-color: #181818;
+            border-radius: 100%;
+            background: left / 80% url(#{$img-url}footprint-arrow.svg) no-repeat, #181818;
+          }
+        }
       }
     }
   }
