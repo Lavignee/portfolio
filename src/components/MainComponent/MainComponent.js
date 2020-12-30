@@ -182,7 +182,9 @@ const MainComponent = () => {
 
         <div className='into-ment-frame'>
           <div className='intro-ment'>
-            <div className='type-p'><SplitTextComponent animation={'up'} scroll={'intro'} depth>I'm a front-end developer who lives like this.</SplitTextComponent></div>
+            <div className='type-p'>
+              <SplitTextComponent animation={'up'} scroll={'intro'} index={'int'} depth>I'm a front-end developer who lives like this.</SplitTextComponent>
+            </div>
           </div>
         </div>
 

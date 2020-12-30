@@ -3,12 +3,25 @@
 .contact-button {
   @include vertical-align(fixed);
   right: 0;
+  // right: 1.7rem;
   z-index: 110;
+  padding: 1.5rem 1rem;
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
   writing-mode: vertical-rl;
-  @include f-b(3rem);
+  transition: background-color $transition-slow, color $transition-slow;
+  box-shadow: 0 0 1rem #181818;
+  font-family: 'Syncopate';
+  @include f-b(1.8rem);
+  background-color: $wh;
 
   &.delay {
     pointer-events: none;
+  }
+
+  &.open {
+    background-color: #181818;
+    color: $wh;
   }
 }
 

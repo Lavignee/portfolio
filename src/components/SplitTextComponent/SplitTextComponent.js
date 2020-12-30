@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './SplitTextComponent.scss';
-
 const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay, depth, noContainer }) => {
   const { scrollValue } = useSelector(state => ({
     scrollValue: state.ScrollValueModule.scrollValue
@@ -9,11 +8,25 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
 
   let childrenLength = 1;
   const [willChange, setWillChange] = useState(null);
-  const [split, setSplit] = useState([]);
   const [happen, setHappen] = useState([]);
+  const [split, setSplit] = useState([])
 
   const Splitting = () => {
-    setSplit(split => [...split, { text: children.substring(childrenLength - 1, childrenLength++), index: `${index ? index : ''}-${childrenLength - 1}` }]);
+    {
+      noContainer ? (
+        depth ? (
+          setSplit(split => [...split, <div key={index + (childrenLength - 1)} className='split-depth-frame'><span>{children.substring(childrenLength - 1, childrenLength)}</span><div className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div></div>])
+        ) : (
+            setSplit(split => [...split, <div key={index + (childrenLength - 1)} className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div>])
+          )
+      ) : (
+          depth ? (
+            setSplit(split => [...split, <div key={index + (childrenLength - 1)} className='split-depth-frame'><span>{children.substring(childrenLength - 1, childrenLength)}</span><div className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div></div>])
+          ) : (
+              setSplit(split => [...split, <div key={index + (childrenLength - 1)} className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div>])
+            )
+        )
+    }
     if (childrenLength < children.length + 1) {
       setTimeout(() => {
         Splitting();
@@ -25,8 +38,8 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
 
   const SplittingReady = () => {
     if (scrollValue === scroll && !happen.includes(scrollValue) || scroll === 'all') {
-      setWillChange(true)
-      Splitting()
+      setWillChange(true);
+      Splitting();
       setHappen(...happen, [scrollValue])
     }
   }
@@ -38,32 +51,17 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
   return (
     <div className={`split-frame${willChange && noContainer ? ' will-change' : ''}${delay ? ` delay-${delay}` : ''}`}>
       {noContainer ? (
-        depth ? (
-          split.map(split => (
-            <div key={split.index} className={`split-depth-frame${index ? ` ${split.index}` : ''}`}><span>{split.text}</span><div className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div></div>
-          ))
-        ) : (
-            split.map(split => (
-              <div key={split.index} className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div>
-            ))
-          )
+        { split }
       ) : (
           <>
             <div className='origin-size-container'>{children}</div>
             <div className={`animation-container${willChange && !noContainer ? ' will-change' : ''}`}>
-              {depth ? (
-                split.map(split => (
-                  <div key={split.index} className={`split-depth-frame${index ? ` ${split.index}` : ''}`}><span>{split.text}</span><div className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div></div>
-                ))
-              ) : (
-                  split.map(split => (
-                    <div key={split.index} className={`split-target ${animation ? animation : 'default'}${index ? ` ${split.index}` : ''}`}>{split.text}</div>
-                  ))
-                )}
+              {split}
             </div>
           </>
-        )}
-    </div>
+        )
+      }
+    </div >
   )
 }
 

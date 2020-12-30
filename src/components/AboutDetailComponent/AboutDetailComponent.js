@@ -138,8 +138,12 @@ const AboutDetailComponent = () => {
     return (
       <>
         <div className='col-12 col-xs-10 col-s-8 col-m-6 col-xl-4 about-first'>
-          <h2 className='about-tag'><SplitTextComponent animation={'up'} scroll={'aboutFirst'} setTime={100} depth>{title}</SplitTextComponent></h2>
-          <div className='type-p'><SplitTextComponent scroll={'aboutFirst'}>{text}</SplitTextComponent></div>
+          <h2 className='about-tag'>
+            <SplitTextComponent animation={'up'} scroll={'aboutFirst'} setTime={100} index={'abl1'} depth>{title}</SplitTextComponent>
+          </h2>
+          <div className='type-p'>
+            <SplitTextComponent scroll={'aboutFirst'} index={'abl2'}>{text}</SplitTextComponent>
+          </div>
         </div>
         <div className='back-keyword left'><span>{back}</span></div>
       </>
@@ -150,8 +154,12 @@ const AboutDetailComponent = () => {
     return (
       <>
         <div className='col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 col-xl-4 off-xl-4 about-second'>
-          <h2 className='about-tag'><SplitTextComponent animation={'up'} scroll={'aboutSecond'} setTime={100} depth>{title}</SplitTextComponent></h2>
-          <div className='type-p'><SplitTextComponent scroll={'aboutSecond'}>{text}</SplitTextComponent></div>
+          <h2 className='about-tag'>
+            <SplitTextComponent animation={'up'} scroll={'aboutSecond'} setTime={100} index={'abc1'} depth>{title}</SplitTextComponent>
+          </h2>
+          <div className='type-p'>
+            <SplitTextComponent scroll={'aboutSecond'} index={'abc2'}>{text}</SplitTextComponent>
+          </div>
         </div>
         <div className='back-keyword'><span>{back}</span></div>
       </>
@@ -162,8 +170,12 @@ const AboutDetailComponent = () => {
     return (
       <>
         <div className='col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 col-xl-4 off-xl-8 about-third'>
-          <h2 className='about-tag'><SplitTextComponent animation={'up'} scroll={'aboutThird'} setTime={100} depth>{title}</SplitTextComponent></h2>
-          <div className='type-p'><SplitTextComponent scroll={'aboutThird'}>{text}</SplitTextComponent></div>
+          <h2 className='about-tag'>
+            <SplitTextComponent animation={'up'} scroll={'aboutThird'} setTime={100} index={'abr1'} depth>{title}</SplitTextComponent>
+          </h2>
+          <div className='type-p'>
+            <SplitTextComponent scroll={'aboutThird'} index={'abr2'}>{text}</SplitTextComponent>
+          </div>
         </div>
         <div className='back-keyword right'><span>{back}</span></div>
       </>

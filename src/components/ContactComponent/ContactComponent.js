@@ -21,7 +21,7 @@ const ContactComponent = () => {
   const { currentContactDelay } = useSelector(state => ({
     currentContactDelay: state.CommonValueModule.currentContactDelay
   }));
-  const [qnumber, setQnumber] = useState(0);
+  const [qnumber, setQnumber] = useState(1);
   const qnumberRef = useRef(qnumber);
   qnumberRef.current = qnumber;
 
@@ -33,11 +33,14 @@ const ContactComponent = () => {
   }
 
   const contactAnimation = () => {
-    setQnumber(1)
-    for (let i = 2; i < 4; i++) {
-      setTimeout(() => {
-        setQnumber(i)
-      }, 7000 * (i - 1));
+    if (currentContactState) {
+      if (qnumberRef.current === 1) {
+        setQnumber(2)
+      } else if (qnumberRef.current === 2) {
+        setQnumber(3)
+      } else if (qnumberRef.current === 3) {
+        setQnumber(1)
+      }
     }
   }
 
@@ -45,26 +48,21 @@ const ContactComponent = () => {
     contactButtonDelay();
   }, [currentContactState]);
 
-  useEffect(() => {
-    contactAnimation();
-  }, []);
-
   useInterval(() => {
     contactAnimation();
-  }, 21000);
+  }, currentContactState === true ? 6000 : null);
 
   return (
     <>
-      <div className={`contact-button${currentContactDelay ? ' delay' : ''}`} onClick={onChangeContactState}>
+      <div className={`contact-button${currentContactDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
         {currentContactState ? (
-          <>x</>
+          <>Close</>
         ) : (
             <>Contact</>
           )}
       </div>
 
       <div className={`contact-frame${currentContactState ? ' open' : ' close'}`}>
-        {/* {currentContactState && ( */}
         <>
           <div className='contact-grid-frame'>
             <div className='contact-grid'></div>
@@ -79,14 +77,14 @@ const ContactComponent = () => {
 
           <div className='container'>
             <div className={`back-text${currentContactState ? ' open' : ' close'}`}>
-              {qnumberRef.current === 1 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} depth>What should I do for you?</SplitTextComponent>
+              {currentContactState && qnumberRef.current === 1 && (
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con1'} depth>What should I do for you?</SplitTextComponent>
               )}
-              {qnumberRef.current === 2 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} depth>Could you tell me about the project?</SplitTextComponent>
+              {currentContactState && qnumberRef.current === 2 && (
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con2'} depth>Could you tell me about the project?</SplitTextComponent>
               )}
-              {qnumberRef.current === 3 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} depth>I will reply by email as soon as possible.</SplitTextComponent>
+              {currentContactState && qnumberRef.current === 3 && (
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con3'} depth>I will reply by email as soon as possible.</SplitTextComponent>
               )}
             </div>
           </div>
@@ -116,7 +114,6 @@ const ContactComponent = () => {
             </div>
           </div>
         </>
-        // )}
       </div>
     </>
   )
