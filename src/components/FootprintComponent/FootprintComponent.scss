@@ -6,6 +6,17 @@
   width: 100%;
   padding: 13rem 0 55rem 0;
   background-color: #181818;
+  transition: padding $transition-slow;
+
+  @media (max-width: $bp-l) {
+    padding: 13rem 0 52rem 0;
+  }
+  @media (max-width: $bp-m) {
+    padding: 13rem 0 49rem 0;
+  }
+  @media (max-width: $bp-s) {
+    padding: 13rem 0 46rem 0;
+  }
 
   .footprint-title-area {
     padding-left: 33.33333333%;
@@ -19,20 +30,52 @@
         
         img {
           position: relative;
-          left: -100%;
-          margin-right: 6rem;
+          width: 100%;
+          left: -150%;
           animation: rotate 25s linear infinite;
+          transition: width $transition-slow, left $transition-slow;
+
+          @media (max-width: $bp-l) {
+            width: 90%;
+            left: -100%;
+          }
+          @media (max-width: $bp-m) {
+            width: 80%;
+            left: -90%;
+          }
+          @media (max-width: $bp-s) {
+            width: 70%;
+            left: -80%;
+          }
         }
       }
 
       .footprint-arrow-area {
         position: absolute;
         display: inline-block;
+        text-align: right;
         right: 0;
         top: 35rem;
 
         img {
           position: relative;
+          transition: width $transition-slow;
+
+          @media (max-width: $bp-xl) {
+            width: 95%;
+          }
+          @media (max-width: $bp-l) {
+            width: 90%;
+          }
+          @media (max-width: $bp-m) {
+            width: 85%;
+          }
+          @media (max-width: $bp-s) {
+            width: 80%;
+          }
+          @media (max-width: $bp-xs) {
+            width: 75%;
+          }
         }
       }
     }
@@ -42,12 +85,32 @@
       @include border-b($wh);
       font-family: 'Syncopate';
       @include f-b(6rem, $wh);
+      transition: padding $transition-slow, font-size $transition-slow;
+
+      @media (max-width: $bp-m) {
+        padding-bottom: 3rem;
+        font-size: 5rem;
+      }
+      @media (max-width: $bp-s) {
+        padding-bottom: 2.8rem;
+        font-size: 4rem;
+      }
     }
 
     span {
       display: inline-block;
       padding-top: 3rem;
       @include f-r(2.4rem, $wh);
+      transition: padding $transition-slow, font-size $transition-slow;
+
+      @media (max-width: $bp-m) {
+        padding-top: 2.8rem;
+        font-size: 2.2rem;
+      }
+      @media (max-width: $bp-s) {
+        padding-top: 2.6rem;
+        font-size: 2rem;
+      }
     }
   }
 
@@ -55,8 +118,25 @@
     @include horizontal-align;
     bottom: 5rem;
     font-family: 'Syncopate';
-    @include f-b(25rem, transparent);
+    @include f-b(24rem, transparent);
     -webkit-text-stroke: 0.1rem #656565;
+    transition: font-size $transition-slow;
+
+    @media (max-width: $bp-xl) {
+      font-size: 20rem;
+    }
+    @media (max-width: $bp-l) {
+      font-size: 16rem;
+    }
+    @media (max-width: $bp-m) {
+      font-size: 12rem;
+    }
+    @media (max-width: $bp-s) {
+      font-size: 8rem;
+    }
+    @media (max-width: $bp-xs) {
+      font-size: 6.5rem;
+    }
   }
 
   a {

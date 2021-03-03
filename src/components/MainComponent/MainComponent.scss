@@ -1,36 +1,26 @@
 @import '../../Style/Util/util_mixins';
 
 .main-section {
-  height: 130vh;
+  height: 150vh;
   overflow: hidden;
   @media (min-width: $bp-l-min) {
     height: 180vh;
   }
 
-  .main-background1,
-  .main-background2 {
+  .main-background {
     position: absolute;
     left: 0;
     width: 100%;
     height: 180vh;
-
-    .background-frame {
-      clip: rect(0, auto, auto, 0);
-      position: absolute;
+    
+    .background {
+      position: fixed;
       top: 0;
       left: 0;
+      z-index: -1;
       width: 100%;
       height: 100%;
-
-      .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        background: center / cover url(#{$img-url}main1920.jpg);
-      }
+      background: center / cover url(#{$img-url}main1920.jpg);
     }
   }
 
@@ -46,38 +36,92 @@
       .main-text {
         display: inline-block;
         @include vertical-align(relative);
-
+        
         span {
           display: block;
           margin-bottom: 2rem;
           font-family: Syncopate;
           @include f-r(3.6rem, $wh, $ls: 3.5px);
+          transition: font-size $transition-slow;
+          
+          @media (max-width: $bp-l) {
+            @include f-r(3.1rem, $wh, $ls: 3px);
+          }
+          @media (max-width: $bp-m) {
+            @include f-r(2.6rem, $wh, $ls: 2.5px);
+          }
+          @media (max-width: $bp-s) {
+            @include f-r(2.1rem, $wh, $ls: 2px);
+          }
         }
-
+        
         p {
           font-family: Syncopate;
           @include f-b(9.6rem, $wh);
+          transition: font-size $transition-slow;
+          
+          @media (max-width: $bp-l) {
+            @include f-b(8.1rem, $wh);
+          }
+          @media (max-width: $bp-m) {
+            @include f-b(6.6rem, $wh);
+          }
+          @media (max-width: $bp-s) {
+            @include f-b(4.1rem, $wh);
+          }
         }
       }
     }
 
     .into-ment-frame {
       position: relative;
-      height: 80vh;
-      // @media (min-width: $bp-l-min) {
-      //   height: 200vh;
-      // }
+      height: 100vh;
+
       .intro-ment {
         @include vertical-align;
-        margin-top: -20rem;
+        padding-top: 40rem;
+        margin-top: -30rem;
+
+        @media (max-width: $bp-s) {
+          padding-top: 15rem;
+          margin-top: -35rem;
+        }
+        
+        @media (max-width: $bp-m) {
+          padding-top: 35rem;
+          margin-top: -45rem;
+        }
+
+        @media (max-width: $bp-l) {
+          padding-top: 40rem;
+          margin-top: -55rem;
+        }
 
         .type-p {
-          @include f-r(7.2rem, $wh);
-          text-transform: uppercase;
+          @include f-r(6.2rem, $wh);
+          // text-transform: uppercase;
+          
+          @media (max-width: $bp-l) {
+            @include f-r(5.2rem, $wh);
+          }
+          @media (max-width: $bp-m) {
+            @include f-r(4.2rem, $wh);
+          }
+          @media (max-width: $bp-s) {
+            @include f-r(3.2rem, $wh);
+          }
+
+          .split-frame {
+            margin: 5rem auto;
+          }
+          .origin-size-container {
+            font-family: Syncopate;
+          }
+
           .split-depth-frame,
           .split-target {
             font-family: Syncopate;
-            min-width: 2rem;
+            min-width: 0.8rem;
 
             span {
               font-family: Syncopate;

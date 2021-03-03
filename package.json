@@ -11,6 +11,7 @@
     "autoprefixer": "9.8.6",
     "gsap": "^3.5.1",
     "i18next": "^19.8.2",
+    "moment": "^2.29.1",
     "postcss-modules": "^3.2.2",
     "posthtml-img-autosize": "^0.1.5",
     "react": ">=15",

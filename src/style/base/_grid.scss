@@ -2,9 +2,11 @@
 
 .container {
   width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 290px;
+  transition: width $transition-slow, max-width $transition-slow;
 
   &.fluid {
     max-width: 100%;
@@ -35,26 +37,26 @@
     justify-content: space-between;
   }
 
-  @media (min-width: $bp-xs-min) {
-    max-width: 330px;
-  }
-  @media (min-width: $bp-s-min) {
-    max-width: 546px;
-  }
-  @media (min-width: $bp-m-min) {
-    max-width: 738px;
-  }
+  // @media (min-width: $bp-xs-min) {
+  //   max-width: 300px;
+  // }
+  // @media (min-width: $bp-s-min) {
+  //   max-width: 556px;
+  // }
+  // @media (min-width: $bp-m-min) {
+  //   max-width: 748px;
+  // }
   @media (min-width: $bp-l-min) {
-    max-width: 937px;
+    max-width: 964px;
   }
   @media (min-width: $bp-xl-min) {
-    max-width: 1153px;
+    max-width: 1180px;
   }
   @media (min-width: $bp-w-min) {
-    max-width: 1549px;
+    max-width: 1576px;
   }
   @media (min-width: $bp-fw-min) {
-    max-width: 1873px;
+    max-width: 1900px;
   }
 }
 
@@ -93,6 +95,7 @@
       width: 100%;
       padding-left: $gutter / 2 * 0.1 + rem;
       padding-right: $gutter / 2 * 0.1 + rem;
+      transition: width $transition-slow, max-width $transition-slow;
     }
   }
   .col-auto,

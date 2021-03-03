@@ -1,4 +1,5 @@
 const SCROLL_INTRO = 'SCROLL_INTRO';
+const SCROLL_INTRO2 = 'SCROLL_INTRO2';
 const SCROLL_ABOUT_FIRST = 'SCROLL_ABOUT_FIRST';
 const SCROLL_ABOUT_SECOND = 'SCROLL_ABOUT_SECOND';
 const SCROLL_ABOUT_THIRD = 'SCROLL_ABOUT_THIRD';
@@ -6,6 +7,10 @@ const SCROLL_SKILL = 'SCROLL_SKILL';
 
 export const ScrollIntro = scrollValue => ({
   type: SCROLL_INTRO,
+  scrollValue
+});
+export const ScrollIntro2 = scrollValue => ({
+  type: SCROLL_INTRO2,
   scrollValue
 });
 export const ScrollAboutFirst = scrollValue => ({
@@ -33,6 +38,11 @@ const initialState = {
 const ScrollValueModule = (state = initialState, action) => {
   switch (action.type) {
     case SCROLL_INTRO:
+      return {
+        ...state,
+        scrollValue: action.scrollValue
+      };
+    case SCROLL_INTRO2:
       return {
         ...state,
         scrollValue: action.scrollValue

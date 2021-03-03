@@ -1,24 +1,41 @@
 @import '../../Style/Util/util_mixins';
 
 .right-area {
-  position: relative;
+  position: absolute;
+  top: 1.5rem;
+  right: 10px;
   display: inline-flex;
+  justify-content: flex-end;
+  transition: top $transition-slow;
 
   .gnb-button {
-    position: relative;
-    top: 3rem;
+    width: 90%;
+    transition: width $transition-slow;
+
+    @media (max-width: $bp-l) {
+      width: 80%;
+    }
+    @media (max-width: $bp-m) {
+      width: 70%;
+    }
+    @media (max-width: $bp-s) {
+      width: 60%;
+    }
 
     &.delay {
       pointer-events: none;
     }
 
     .menu-img {
+      width: 100%;
+      height: 100%;
+      animation: rotate 25s linear infinite;
+
       &.invert {
         path {
           fill: #f9f9f9;
         }
       }
-      animation: rotate 25s linear infinite;
     }
   }
 }

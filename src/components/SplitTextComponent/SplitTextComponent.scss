@@ -11,6 +11,7 @@
     display: inline-block;
     opacity: 0;
     overflow: hidden;
+    word-break: break-all;
   }
 
   .animation-container {
@@ -54,6 +55,7 @@
     overflow: hidden;
     min-width: 0.5rem;
     animation-fill-mode: forwards;
+    transition: font-size $transition-slow;
 
     &.default {
       opacity: 0;

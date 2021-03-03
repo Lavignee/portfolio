@@ -4,10 +4,30 @@ header {
   position: fixed;
   z-index: 100;
   width: 100%;
+  min-width: 320px;
   height: $headerHeight;
 
   a {
-    @include f-b(4rem, $lh: $headerHeight);
+    display: inline-flex;
+    
+    
+    svg {
+      display: inline;
+      width: 100%;
+      max-width: 58px;
+      @include vertical-align(relative);
+      transition: width $transition-slow;
+
+      @media (max-width: $bp-l) {
+        width: 95%;
+      }
+      @media (max-width: $bp-m) {
+        width: 90%;
+      }
+      @media (max-width: $bp-s) {
+        width: 85%;
+      }
+    }
   }
 
   &.invert {
@@ -45,151 +65,229 @@ header {
   }
 }
 
-.gnb-background {
-  position: fixed;
-  z-index: 100;
-  width: 100vw;
-  height: 150vh;
-  background-color: #181818;
-  border-radius: 10%;
-  transform: rotate(-60deg) translate(220%, -40%) scale(2);
-  transition: border-radius $transition-slow, transform $transition-slow;
+.gnb-area {
+  display: flex;
 
-  @media (max-width: $bp-m) {
-    transform: rotate(-60deg) translate(250%, -40%) scale(2);
-  }
-
-  @media (max-width: $bp-s) {
-    transform: rotate(-60deg) translate(300%, -40%) scale(1.1);
-  }
-
-  &.active {
-    border-radius: 0%;
-    transform: rotate(25deg) translate(10%, 0%) scale(1.7);
-
-    @media (max-width: $bp-xl) {
-      transform: rotate(25deg) translate(10%, 0%) scale(1.8);
-    }
-    @media (max-width: $bp-l) {
-      transform: rotate(25deg) translate(10%, 0%) scale(2);
-    }
-    @media (max-width: $bp-m) {
-      transform: rotate(25deg) translate(10%, 0%) scale(2.3);
-    }
-    @media (max-width: $bp-s) {
-      transform: rotate(25deg) translate(10%, 0%) scale(3.3);
-    }
-  }
-}
-
-.fixed-frame {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 102;
-  opacity: 0;
-  transition: opacity $transition-slow;
-  pointer-events: none;
-    
-  .gnb-container {
-    position: relative;
+  .gnb-background {
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    height: 150vh;
+    background-color: #181818;
+    border-radius: 10%;
+    transform: rotate(-60deg) translate(220%, -40%) scale(2);
+    transition: border-radius $transition-slow, transform $transition-slow;
   
-    .gnb-close-button {
-      position: absolute;
-      z-index: 103;
-      top: 3rem;
-      right: 0;
-      pointer-events: initial;
-
-      img {
-        animation: rotate 25s linear infinite;
+    @media (max-width: $bp-m) {
+      transform: rotate(-60deg) translate(250%, -40%) scale(2);
+    }
+  
+    @media (max-width: $bp-s) {
+      transform: rotate(-60deg) translate(300%, -40%) scale(1.1);
+    }
+  
+    &.active {
+      border-radius: 0%;
+      transform: rotate(25deg) translate(10%, 0%) scale(1.7);
+  
+      @media (max-width: $bp-xl) {
+        transform: rotate(25deg) translate(10%, 0%) scale(1.8);
+      }
+      @media (max-width: $bp-l) {
+        transform: rotate(25deg) translate(10%, 0%) scale(2);
+      }
+      @media (max-width: $bp-m) {
+        transform: rotate(25deg) translate(10%, 0%) scale(2.3);
+      }
+      @media (max-width: $bp-s) {
+        transform: rotate(25deg) translate(10%, 0%) scale(3.3);
       }
     }
   }
-
-  &.view {
-    opacity: 1;
-  }
-}
-
-.menu-frame {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  z-index: 101;
-  opacity: 0;
-  transition: opacity $transition-slow;
-  pointer-events: none;
-
-  .menu-content {
-    @include vertical-align;
-    width: 100%;
-    display: block;
-
-      li {
+  
+  .fixed-frame {
+    position: absolute;
+    width: 100vw;
+    min-width: 320px;
+    height: 100vh;
+    z-index: 102;
+    opacity: 0;
+    transition: opacity $transition-slow;
+    pointer-events: none;
+      
+    .gnb-container {
+      .gnb-close-button {
         position: relative;
-        font-family: 'Syncopate';
-        @include f-b(7.2rem, $wh);
+        z-index: 103;
+        top: 0;
+        right: 0;
+        pointer-events: initial;
+        display: flex;
+        justify-content: flex-end;
         
-        a {
-          display: block;
-          padding-top: 2rem;
-          padding-bottom: 2rem;
-          font-family: 'Syncopate';
-          @include f-b(7.2rem, $wh);
+        img {
+          width: 90%;
+          transition: width $transition-slow;
+          animation: rotate 25s linear infinite;
+  
+          @media (max-width: $bp-l) {
+            width: 80%;
+          }
+          @media (max-width: $bp-m) {
+            width: 70%;
+          }
+          @media (max-width: $bp-s) {
+            width: 60%;
+          }
         }
       }
-
-      .first-content {
-        padding-left: 20%;
+    }
+  
+    &.view {
+      opacity: 1;
+    }
+  }
+  
+  .menu-frame {
+    position: fixed;
+    width: 100vw;
+    min-width: 320px;
+    height: 100vh;
+    z-index: 101;
+    opacity: 0;
+    transition: opacity $transition-slow;
+    pointer-events: none;
+  
+    .menu-content {
+      @include vertical-align;
+      width: 100%;
+      display: block;
+  
+      div {
+        transition: padding $transition-slow;
       }
-
-    .center-content {
-      display: inline-block;
-      @include horizontal-align(relative);
-      li {
-        &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+  
+        li {
           position: relative;
-          
-          &:before {
-            position: absolute;
-            left: 0;
-            display: inline-block;
-            -webkit-text-stroke: 0.1rem #707070;
-            @include f-b(3rem, transparent);
+          font-family: 'Syncopate';
+          @include f-b(7.2rem, $wh);
+          transition: padding $transition-slow, font-size $transition-slow;
+  
+          @media (max-width: $bp-s) {
+            @include f-b(6.2rem, $wh);
+          }
+          @media (max-width: $bp-xs) {
+            @include f-b(5.2rem, $wh);
           }
           
           a {
-            padding-left: 10rem;
-          }
-        }
-        &:nth-child(1) {
-          &:before {
-            content:'01';
-          }
-        }
-        &:nth-child(2) {
-          &:before {
-            content:'02';
+            display: block;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            font-family: 'Syncopate';
+            @include f-b(7.2rem, $wh);
+            transition: padding $transition-slow, font-size $transition-slow;
   
+            @media (max-width: $bp-s) {
+              @include f-b(6.2rem, $wh);
+            }
+            @media (max-width: $bp-xs) {
+              @include f-b(5.2rem, $wh);
+            }
           }
         }
-        &:nth-child(3) {
-          &:before {
-            content:'03';
+  
+        .first-content {
+          padding-left: 20%;
+  
+          @media (max-width: $bp-xl) {
+            padding-left: 15%;
+          }
+          @media (max-width: $bp-l) {
+            padding-left: 10%;
+          }
+          @media (max-width: $bp-m) {
+            padding-left: 5%;
+          }
+          @media (max-width: $bp-s) {
+            padding-left: 10px;
+          }
+        }
+  
+      .center-content {
+        display: inline-block;
+        @include horizontal-align(relative);
+        li {
+          &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+            position: relative;
+            
+            &:before {
+              position: absolute;
+              left: 0;
+              display: inline-block;
+              -webkit-text-stroke: 0.1rem #707070;
+              @include f-b(3rem, transparent);
+            }
+            
+            a {
+              padding-left: 10rem;
+  
+              @media (max-width: $bp-xl) {
+                padding-left: 8rem;
+              }
+              @media (max-width: $bp-l) {
+                padding-left: 6rem;
+              }
+              @media (max-width: $bp-m) {
+                padding-left: 4rem;
+              }
+              @media (max-width: $bp-s) {
+                padding-left: 2rem;
+              }
+            }
+          }
+          &:nth-child(1) {
+            &:before {
+              content:'01';
+            }
+          }
+          &:nth-child(2) {
+            &:before {
+              content:'02';
+    
+            }
+          }
+          &:nth-child(3) {
+            &:before {
+              content:'03';
+            }
           }
         }
       }
+  
+      .last-content {
+        text-align: right;
+        padding-right: 20%;
+  
+        @media (max-width: $bp-xl) {
+          padding-right: 15%;
+        }
+        @media (max-width: $bp-l) {
+          padding-right: 10%;
+        }
+        @media (max-width: $bp-m) {
+          padding-right: 5%;
+        }
+        @media (max-width: $bp-s) {
+          padding-right: 10px;
+        }
+      }
     }
-
-    .last-content {
-      text-align: right;
-      padding-right: 20%;
+  
+    &.view {
+      opacity: 1;
+      pointer-events: initial;
     }
   }
-
-  &.view {
-    opacity: 1;
-    pointer-events: initial;
-  }
+  
 }

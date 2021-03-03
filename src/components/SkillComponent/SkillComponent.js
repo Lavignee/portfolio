@@ -31,8 +31,8 @@ const SkillComponent = () => {
   }, []);
 
   return (
-    <>
-      <section id='skill' className='container skill-section fluid'>
+    <section id='skill'>
+      <div className='container skill-section fluid'>
         <IconSliderComponent />
         <div className='container skill-frame'>
           <h1 className='title-text skill-title'>Skill</h1>
@@ -43,8 +43,8 @@ const SkillComponent = () => {
             <div className='off-m-2 col-m-10 off-xl-4 col-xl-8 off-w-6 col-w-6 list'><Link to='/skill/interest'>최근 관심 기술</Link></div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
 

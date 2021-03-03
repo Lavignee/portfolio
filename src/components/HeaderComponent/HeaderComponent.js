@@ -58,35 +58,39 @@ const HeaderComponent = () => {
   return (
     <>
       <header>
-        <section className='container between'>
+        <section className='container relative between'>
           <NavMenuComponent gnbToggle={gnbToggle} onHover={onHover} onLeave={onLeave} currentGnbState={currentGnbState} />
         </section>
       </header>
 
-      <div className={`gnb-background${currentGnbState ? ' active' : ''}`}></div>
+      <div className='gnb-area'>
+        <div className={`gnb-background${currentGnbState ? ' active' : ''}`}></div>
 
-      <div className={`fixed-frame${currentGnbState ? ' view' : ''}`}>
-        <div className='container gnb-container'>
-          <div className={`gnb-close-button${currentGnbDelay ? ' delay' : ''}`} onClick={gnbToggle} onMouseEnter={onHover} onMouseLeave={onLeave}>
-            <img src={menuCloseIcon} alt='menu close icon' />
+        <div className={`fixed-frame${currentGnbState ? ' view' : ''}`}>
+          <div className='container relative gnb-container'>
+            <div className='right-area'>
+              <div className={`gnb-close-button${currentGnbDelay ? ' delay' : ''}`} onClick={gnbToggle} onMouseEnter={onHover} onMouseLeave={onLeave}>
+                <img src={menuCloseIcon} alt='menu close icon' />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className={`menu-frame${currentGnbState ? ' view' : ''}`}>
-        <div className='menu-content'>
-          <div className='first-content'>
-            <li onClick={gnbToggle}><Link to="/">HOME</Link></li>
-          </div>
+        <div className={`menu-frame${currentGnbState ? ' view' : ''}`}>
+          <div className='menu-content'>
+            <div className='first-content'>
+              <li onClick={gnbToggle}><Link to="/">HOME</Link></li>
+            </div>
 
-          <div className='center-content'>
-            <li onClick={gnbToggle}><Link to='/about'>ABOUT</Link></li>
-            <li onClick={gnbToggle}><Link to="/skill/language">SKILL</Link></li>
-            <li onClick={gnbToggle}><Link to="/footprint">FOOTPRINT</Link></li>
-          </div>
+            <div className='center-content'>
+              <li onClick={gnbToggle}><Link to='/about'>ABOUT</Link></li>
+              <li onClick={gnbToggle}><Link to="/skill/language">SKILL</Link></li>
+              <li onClick={gnbToggle}><Link to="/footprint">FOOTPRINT</Link></li>
+            </div>
 
-          <div className='last-content'>
+            {/* <div className='last-content'>
             <li onClick={gnbContact}>CONTACT</li>
+          </div> */}
           </div>
         </div>
       </div>

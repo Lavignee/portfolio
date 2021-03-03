@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Trans, withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { ScrollIntro } from '../../Modules/ScrollValueModule';
+import { ScrollIntro, ScrollIntro2 } from '../../Modules/ScrollValueModule';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CanvasVideo from '../../lib/CanvasVideo';
@@ -31,6 +31,7 @@ const CallTheVideo = (VideoSource, resolX, resolY) => {
 const MainComponent = () => {
   const dispatch = useDispatch();
   const onScrollIntro = () => dispatch(ScrollIntro('intro'));
+  const onScrollIntro2 = () => dispatch(ScrollIntro2('intro2'));
   const { language } = useSelector(state => ({
     language: state.LanguageModule.language
   }));
@@ -94,7 +95,6 @@ const MainComponent = () => {
     });
 
     gsap.to('.intro-ment', {
-      y: 0 + '%',
       scrollTrigger: {
         scroller: '#root',
         id: 'intro-ment',
@@ -103,7 +103,19 @@ const MainComponent = () => {
         onEnter: () => onScrollIntro(),
         onEnterBack: () => onScrollIntro(),
         end: 'bottom center',
-        scrub: true,
+        scrub: true
+      }
+    });
+    gsap.to('.intro-ment', {
+      scrollTrigger: {
+        scroller: '#root',
+        id: 'intro-ment2',
+        trigger: '.intro-ment',
+        start: 'top center-=400',
+        onEnter: () => onScrollIntro2(),
+        onEnterBack: () => onScrollIntro2(),
+        end: 'bottom center-=400',
+        scrub: true
       }
     });
   }
@@ -158,15 +170,8 @@ const MainComponent = () => {
 
   return (
     <section id='main' className='container main-section'>
-      <div className='main-background1'>
-        <div className='background-frame'>
-          <div className='background'></div>
-        </div>
-      </div>
-      <div className='main-background2'>
-        <div className='background-frame'>
-          <div className='background'></div>
-        </div>
+      <div className='main-background'>
+        <div className='background'></div>
       </div>
 
       <div className='main-content-frame'>
@@ -183,7 +188,9 @@ const MainComponent = () => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitTextComponent animation={'up'} scroll={'intro'} index={'int'} depth>I'm a front-end developer who lives like this.</SplitTextComponent>
+              <SplitTextComponent animation={'up'} scroll={'intro'} index={'int'} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitTextComponent>
+
+              <SplitTextComponent animation={'up'} scroll={'intro2'} index={'int2'} depth>It  was  produced  focusing  on  simple  but  delicate  details  without  any  additional  design.</SplitTextComponent>
             </div>
           </div>
         </div>

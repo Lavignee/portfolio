@@ -1,9 +1,17 @@
 @import '../../Style/Util/util_mixins';
 
+#skill {
+  background-color: $wh;
+}
+
 .skill-section {
   position: relative;
   height: 120vh;
   overflow: hidden;
+
+  @media (max-width: $bp-m) {
+    height: 100vh;
+  }
 
   &:hover {
     .list {
@@ -15,13 +23,29 @@
 
   .skill-frame {
     @include center-align;
+    transition: padding $transition-slow;
+
+    @media (max-width: $bp-m) {
+      padding-top: 10rem;
+    }
 
     h1 {
       font-family: 'Syncopate';
       display: inline-block;
       position: absolute;
       top: 0;
-      left: 0;
+      left: 10px;
+      transition: font-size $transition-slow;
+
+      @media (max-width: $bp-m) {
+        font-size: 7.5rem;
+      }
+      @media (max-width: $bp-s) {
+        font-size: 7rem;
+      }
+      @media (max-width: $bp-xs) {
+        font-size: 6.5rem;
+      }
     }
 
     .list-frame {
@@ -39,11 +63,22 @@
           text-align: right;
           font-family: 'NEXON Lv2 Gothic';
           @include f-b(10rem);
+          white-space: nowrap;
           -webkit-text-stroke: 0.01rem $bl;
           transform: translate3d(0, 0, 0) rotateY(-30deg);
           transform-origin: right center;
-          transition: transform $transition, color $transition;
+          transition: transform $transition, color $transition, font-size $transition-slow;
           z-index: 4;
+
+          @media (max-width: $bp-m) {
+            font-size: 9rem;
+          }
+          @media (max-width: $bp-s) {
+            font-size: 8rem;
+          }
+          @media (max-width: $bp-xs) {
+            font-size: 7rem;
+          }
         }
 
         &:hover {

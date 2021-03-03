@@ -9,21 +9,39 @@
 
   &.four {
     height: 33.33333333vh;
+    @media (max-width: $bp-m) {
+      height: 25vh;
+    }
   }
   &.five {
     height: 25vh;
+    @media (max-width: $bp-m) {
+      height: 20vh;
+    }
   }
   &.six {
     height: 20vh;
+    @media (max-width: $bp-m) {
+      height: 16.66666666vh;
+    }
   }
   &.seven {
     height: 16.66666666vh;
+    @media (max-width: $bp-m) {
+      height: 14.28571428vh;
+    }
   }
   &.eight {
     height: 14.28571428vh;
+    @media (max-width: $bp-m) {
+      height: 12.5vh;
+    }
   }
   &.nine {
     height: 12.5vh;
+    @media (max-width: $bp-m) {
+      height: 11.11111111vh;
+    }
   }
   &.ten {
     height: 11.11111111vh;

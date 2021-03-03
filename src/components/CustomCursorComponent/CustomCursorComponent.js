@@ -12,11 +12,13 @@ const CustomCursorComponent = ({ children, moveCircle, cursorInfoRef, cursorRef 
   }));
 
   return (
-    <main className={`main-content ${language}`} onMouseMove={(e) => moveCircle(e)}>
+    <div className={`${language}`} onMouseMove={(e) => moveCircle(e)}>
       {children}
-      <CustomCursorComposition className='custom-cursor-info' ref={cursorInfoRef} >{text}</CustomCursorComposition>
-      <CustomCursorComposition className='custom-cursor-default' ref={cursorRef} />
-    </main >
+      <div className='cursor-area'>
+        <CustomCursorComposition className='custom-cursor-info' ref={cursorInfoRef} >{text}</CustomCursorComposition>
+        <CustomCursorComposition className='custom-cursor-default' ref={cursorRef} />
+      </div>
+    </div >
   )
 }
 

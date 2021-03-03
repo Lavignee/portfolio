@@ -13,18 +13,20 @@
   z-index: 1000;
 }
 
-.custom-cursor-default {
-  @extend %default;
-  width: 1rem;
-  height: 1rem;
-  background-color: #000;
-  will-change: left, top;
-}
-
-.custom-cursor-info {
-  @extend %default;
-  width: 5rem;
-  height: 5rem;
-  @include border-a(0.1rem, #000);
-  will-change: left, top;
+.cursor-area {
+  .custom-cursor-default {
+    @extend %default;
+    width: 1rem;
+    height: 1rem;
+    background-color: #000;
+    will-change: left, top;
+  }
+  
+  .custom-cursor-info {
+    @extend %default;
+    width: 5rem;
+    height: 5rem;
+    @include border-a(0.1rem, #000);
+    will-change: left, top;
+  }
 }

@@ -53,7 +53,7 @@ const ContactComponent = () => {
   }, currentContactState === true ? 6000 : null);
 
   return (
-    <>
+    <div className='contact-area'>
       <div className={`contact-button${currentContactDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
         {currentContactState ? (
           <>Close</>
@@ -78,28 +78,30 @@ const ContactComponent = () => {
           <div className='container'>
             <div className={`back-text${currentContactState ? ' open' : ' close'}`}>
               {currentContactState && qnumberRef.current === 1 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} index={'con1'} depth>What should I do for you?</SplitTextComponent>
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con1'} depth>What  should  I  do  for  you?</SplitTextComponent>
               )}
               {currentContactState && qnumberRef.current === 2 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} index={'con2'} depth>Could you tell me about the project?</SplitTextComponent>
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con2'} depth>Could  you  tell  me  about  the  project?</SplitTextComponent>
               )}
               {currentContactState && qnumberRef.current === 3 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} index={'con3'} depth>I will reply by email as soon as possible.</SplitTextComponent>
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con3'} depth>I  will  reply  by  email  as  soon  as  possible.</SplitTextComponent>
               )}
             </div>
           </div>
 
           <div className='contact-content-frame'>
-            <div className='container'>
+            <div className='container pl-pr-none'>
               <div className='row contact-content'>
                 <div className='col-12 col-s-6 col-l-4'>
                   <div className={`email-form-frame${currentContactState ? ' open' : ' close'}`}>
-                    <CustomInputComposition type={'text'} placeholder={'Name'} />
-                    <CustomInputComposition type={'text'} placeholder={'Phone'} />
-                    <CustomInputComposition type={'email'} placeholder={'Email'} />
-                    <CustomInputComposition type={'text'} placeholder={'Title'} />
-                    <CustomTextareaComposition placeholder={'Content'} />
-                    <CustomButtonComposition text={'보내기'} align={'right'} />
+                    <div>
+                      <CustomInputComposition type={'text'} placeholder={'Name'} />
+                      <CustomInputComposition type={'text'} placeholder={'Phone'} />
+                      <CustomInputComposition type={'email'} placeholder={'Email'} />
+                      <CustomInputComposition type={'text'} placeholder={'Title'} />
+                    </div>
+                    <CustomTextareaComposition placeholder={'Inquiry'} />
+                    <CustomButtonComposition text={'Send'} align={'right'} />
                   </div>
                 </div>
 
@@ -115,7 +117,7 @@ const ContactComponent = () => {
           </div>
         </>
       </div>
-    </>
+    </div>
   )
 }
 
