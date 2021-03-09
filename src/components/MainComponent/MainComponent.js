@@ -188,9 +188,9 @@ const MainComponent = () => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitTextComponent animation={'up'} scroll={'intro'} index={'int'} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitTextComponent>
+              <SplitTextComponent animation={'up'} scroll={'intro'} index={'int'}>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitTextComponent>
 
-              <SplitTextComponent animation={'up'} scroll={'intro2'} index={'int2'} depth>It  was  produced  focusing  on  simple  but  delicate  details  without  any  additional  design.</SplitTextComponent>
+              <SplitTextComponent animation={'up'} scroll={'intro2'} index={'int2'}>It  was  produced  focusing  on  simple  but  delicate  details  without  any  additional  design.</SplitTextComponent>
             </div>
           </div>
         </div>

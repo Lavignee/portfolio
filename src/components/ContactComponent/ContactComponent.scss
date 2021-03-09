@@ -64,6 +64,12 @@
         
         @media (max-width: $bp-m) {
           width: 16.66666667%;
+          
+          &:nth-child(6) {
+            &:before {
+              width: 0 !important;
+            }
+          }
           &:nth-child(7), &:nth-child(8) {
             display: none;
           }
