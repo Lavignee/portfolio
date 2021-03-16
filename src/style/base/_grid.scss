@@ -130,6 +130,9 @@
           flex: 0 0 #{$percent};
           max-width: #{$percent};
         }
+        .off-#{$i} {
+          margin-left: #{$percent};
+        }
       }
     } @else if($i == 2) {
       $percent: 16.66666667%;
@@ -144,6 +147,9 @@
         .col-#{$i} {
           flex: 0 0 #{$percent};
           max-width: #{$percent};
+        }
+        .off-#{$i} {
+          margin-left: #{$percent};
         }
       }
     } @else if($i == 3) {
@@ -160,6 +166,9 @@
           flex: 0 0 #{$percent};
           max-width: #{$percent};
         }
+        .off-#{$i} {
+          margin-left: #{$percent};
+        }
       }
     } @else if($i == 4) {
       $percent: 33.33333333%;
@@ -174,6 +183,9 @@
         .col-#{$i} {
           flex: 0 0 #{$percent};
           max-width: #{$percent};
+        }
+        .off-#{$i} {
+          margin-left: #{$percent};
         }
       }
     } @else if($i == 5) {
@@ -190,6 +202,9 @@
           flex: 0 0 #{$percent};
           max-width: #{$percent};
         }
+        .off-#{$i} {
+          margin-left: #{$percent};
+        }
       }
     } @else if($i == 6) {
       $percent: 50%;
@@ -204,6 +219,9 @@
         .col-#{$i} {
           flex: 0 0 #{$percent};
           max-width: #{$percent};
+        }
+        .off-#{$i} {
+          margin-left: #{$percent};
         }
       }
     } @else if($i == 7) {
@@ -220,6 +238,9 @@
           flex: 0 0 #{$percent};
           max-width: #{$percent};
         }
+        .off-#{$i} {
+          margin-left: #{$percent};
+        }
       }
     } @else if($i == 8) {
       $percent: 66.66666667%;
@@ -234,6 +255,9 @@
         .col-#{$i} {
           flex: 0 0 #{$percent};
           max-width: #{$percent};
+        }
+        .off-#{$i} {
+          margin-left: #{$percent};
         }
       }
     } @else if($i == 9) {
@@ -250,6 +274,9 @@
           flex: 0 0 #{$percent};
           max-width: #{$percent};
         }
+        .off-#{$i} {
+          margin-left: #{$percent};
+        }
       }
     } @else if($i == 10) {
       $percent: 83.33333333%;
@@ -264,6 +291,9 @@
         .col-#{$i} {
           flex: 0 0 #{$percent};
           max-width: #{$percent};
+        }
+        .off-#{$i} {
+          margin-left: #{$percent};
         }
       }
     } @else if($i == 11) {
@@ -280,6 +310,9 @@
           flex: 0 0 #{$percent};
           max-width: #{$percent};
         }
+        .off-#{$i} {
+          margin-left: #{$percent};
+        }
       }
     } @else if($i == 12) {
       $percent: 100%;
@@ -294,6 +327,9 @@
         .col-#{$i} {
           flex: 0 0 #{$percent};
           max-width: #{$percent};
+        }
+        .off-#{$i} {
+          margin-left: #{$percent};
         }
       }
     } @else {

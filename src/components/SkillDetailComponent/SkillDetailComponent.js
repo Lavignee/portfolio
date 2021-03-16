@@ -81,10 +81,11 @@ const SkillDetailComponent = ({ match }) => {
   const scrollPosition = useRef();
   const [currentList, setCurrentList] = useState(list);
   const [currentTarget, setCurrentTarget] = useState(0);
+  const [opacity, setOpacity] = useState('opacity');
 
   const workmanships = (level) => {
     return (
-      <div className={`levels level-${level}`}>
+      <div className={`levels level-${level} ${opacity}`}>
         <span></span>
         <span></span>
         <span></span>
@@ -98,25 +99,25 @@ const SkillDetailComponent = ({ match }) => {
     switch (target) {
       case 'language':
         return language.map(language => (
-          <div key={language.number} className='list' ref={addToRefs}>
+          <div key={language.number} className='list col-4 col-l-3' ref={addToRefs}>
             <li>{language.svg === '' ? language.name : <div dangerouslySetInnerHTML={{ __html: language.svg }}></div>}</li>
           </div>
         ))
       case 'lib':
         return lib.map(lib => (
-          <div key={lib.number} className='list' ref={addToRefs}>
+          <div key={lib.number} className='list col-4 col-l-3' ref={addToRefs}>
             <li>{lib.svg === '' ? lib.name : <div dangerouslySetInnerHTML={{ __html: lib.svg }}></div>}</li>
           </div>
         ))
       case 'tool':
         return tool.map(tool => (
-          <div key={tool.number} className='list' ref={addToRefs}>
+          <div key={tool.number} className='list col-4 col-l-3' ref={addToRefs}>
             <li>{tool.svg === '' ? tool.name : <div dangerouslySetInnerHTML={{ __html: tool.svg }}></div>}</li>
           </div>
         ))
       case 'interest':
         return interest.map(interest => (
-          <div key={interest.number} className='list' ref={addToRefs}>
+          <div key={interest.number} className='list col-4 col-l-3' ref={addToRefs}>
             <li>{interest.svg === '' ? interest.name : <div dangerouslySetInnerHTML={{ __html: interest.svg }}></div>}</li>
           </div>
         ))
@@ -127,13 +128,13 @@ const SkillDetailComponent = ({ match }) => {
   const targetDetail = (target) => {
     switch (target) {
       case 'language':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{language.length}</span></div><div className='content'><div>{workmanships(language[currentTarget].workmanship)}<h2>{language[currentTarget].name}</h2></div><p>{language[currentTarget].summary}</p></div><span className='back-text'>{language[currentTarget].name}</span></>
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{language.length}</span></div><div className='content'><div>{workmanships(language[currentTarget].workmanship)}<h2 className={opacity}>{language[currentTarget].name}</h2></div><p className={`${opacity}${language[currentTarget].workmanship}`}>{language[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{language[currentTarget].name}</span></>
       case 'lib':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{lib.length}</span></div><div className='content'><div>{workmanships(lib[currentTarget].workmanship)}<h2>{lib[currentTarget].name}</h2></div><p>{lib[currentTarget].summary}</p></div><span className='back-text'>{lib[currentTarget].name}</span></>
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{lib.length}</span></div><div className='content'><div>{workmanships(lib[currentTarget].workmanship)}<h2 className={opacity}>{lib[currentTarget].name}</h2></div><p className={`${opacity}${lib[currentTarget].workmanship}`}>{lib[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{lib[currentTarget].name}</span></>
       case 'tool':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{tool.length}</span></div><div className='content'><div>{workmanships(tool[currentTarget].workmanship)}<h2>{tool[currentTarget].name}</h2></div><p>{tool[currentTarget].summary}</p></div><span className='back-text'>{tool[currentTarget].name}</span></>
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{tool.length}</span></div><div className='content'><div>{workmanships(tool[currentTarget].workmanship)}<h2 className={opacity}>{tool[currentTarget].name}</h2></div><p className={`${opacity}${tool[currentTarget].workmanship}`}>{tool[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{tool[currentTarget].name}</span></>
       case 'interest':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{interest.length}</span></div><div className='content'><div>{workmanships(interest[currentTarget].workmanship)}<h2>{interest[currentTarget].name}</h2></div><p>{interest[currentTarget].summary}</p></div><span className='back-text'>{interest[currentTarget].name}</span></>
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{interest.length}</span></div><div className='content'><div>{workmanships(interest[currentTarget].workmanship)}<h2 className={opacity}>{interest[currentTarget].name}</h2></div><p className={`${opacity}${interest[currentTarget].workmanship}`}>{interest[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{interest[currentTarget].name}</span></>
       default: ''
     }
   }
@@ -164,6 +165,10 @@ const SkillDetailComponent = ({ match }) => {
 
   const changeTarget = (id) => {
     setCurrentTarget(id);
+    setOpacity('')
+    setTimeout(() => {
+      setOpacity('opacity')
+    }, 100)
   }
 
   const addToRefs = el => {
@@ -187,6 +192,10 @@ const SkillDetailComponent = ({ match }) => {
         }
       });
     });
+    setOpacity('')
+    setTimeout(() => {
+      setOpacity('opacity')
+    }, 100)
   }
 
   useEffect(() => {
@@ -208,7 +217,7 @@ const SkillDetailComponent = ({ match }) => {
 
   return (
     <div className='skill-detail'>
-      <div className='container'>
+      <div className='container fluid pl-pr-none'>
         <ul className='skill-tab'>
           <NavLink to='/skill/language' onClick={changeList} data-list='language'>언 어</NavLink>
           <NavLink to='/skill/lib' onClick={changeList} data-list='lib'>프레임워크&라이브러리</NavLink>
@@ -219,13 +228,13 @@ const SkillDetailComponent = ({ match }) => {
         <div className='row content-frame'>
           <div className='col-12 pl-pr-none skill-list-frame'>
             <ul className='skill-list' ref={scrollPosition}>
-              <div className='default-list'></div>
+              <div className='default-list col-4 col-l-3'></div>
               {listDetail(currentList)}
-              <div className='default-list'></div>
+              <div className='default-list col-4 col-l-3'></div>
             </ul>
           </div>
 
-          <div className='col-9 pl-pr-none skill-detail-content-frame'>
+          <div className='col-8 off-4 col-l-9 off-l-3 pl-pr-none skill-detail-content-frame'>
             <div className='skill-detail-content'>
               {targetDetail(currentList)}
             </div>

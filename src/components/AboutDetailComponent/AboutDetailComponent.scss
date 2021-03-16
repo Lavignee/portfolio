@@ -30,7 +30,7 @@
       .type-p {
         margin-top: 2rem;
         margin-bottom: 6rem;
-        @include f-l(2rem, $bl);
+        @include f-l(2rem, $bl, 3rem);
       }
 
       .position-frame {

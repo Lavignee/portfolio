@@ -7,8 +7,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CanvasVideo from '../../lib/CanvasVideo';
 import SplitTextComponent from '../SplitTextComponent';
-import src from '../../Static/videos/video1280.mp4';
-// import srcSmall from '../../Static/videos/video640.mp4';
+import src1920 from '../../Static/videos/video1920.mp4';
+import src1280 from '../../Static/videos/video1280.mp4';
+import src640 from '../../Static/videos/video640.mp4';
 import './MainComponent.scss';
 // import VideoToCanvasComponent from '../VideoToCanvasComponent'
 // import TypingAnimationComponent from '../TypingAnimationComponent';
@@ -18,12 +19,30 @@ gsap.registerPlugin(ScrollTrigger);
 const CallTheVideo = (VideoSource, resolX, resolY) => {
   return (
     <>
-      <CanvasVideo src={VideoSource} target={'targets target1 right'} maskX={-10} maskY={0} resolX={resolX} resolY={resolY} sizeX={500} sizeY={250} />
-      <CanvasVideo src={VideoSource} target={'targets target2 right'} maskX={0} maskY={-200} resolX={resolX} resolY={resolY} sizeX={800} sizeY={400} />
-      <CanvasVideo src={VideoSource} target={'targets target3 left'} maskX={-350} maskY={-100} resolX={resolX} resolY={resolY} sizeX={700} sizeY={350} />
-      <CanvasVideo src={VideoSource} target={'targets target4 left'} maskX={-200} maskY={-150} resolX={resolX} resolY={resolY} sizeX={600} sizeY={300} />
-      <CanvasVideo src={VideoSource} target={'targets target5 right'} maskX={0} maskY={-100} resolX={resolX} resolY={resolY} sizeX={600} sizeY={300} />
-      <CanvasVideo src={VideoSource} target={'targets target6 right'} maskX={0} maskY={0} resolX={resolX} resolY={resolY} sizeX={300} sizeY={150} />
+      <CanvasVideo src={VideoSource} target={'targets target1 right'} maskX={-(resolX / 2)} maskY={0} resolX={resolX} resolY={resolY} sizeX={resolX * 3} sizeY={resolY * 3} />
+
+      <CanvasVideo src={VideoSource} target={'targets target2 right'} maskX={0} maskY={-(resolY / 3)} resolX={resolX} resolY={resolY} sizeX={resolX * 3} sizeY={resolY * 3} />
+
+      <CanvasVideo src={VideoSource} target={'targets target3 left'} maskX={-(resolX * 1.7)} maskY={-(resolY * 0.4)} resolX={resolX} resolY={resolY} sizeX={resolX * 3.2} sizeY={resolY * 3.2} />
+
+      <CanvasVideo src={VideoSource} target={'targets target4 left'} maskX={-(resolX * 1.2)} maskY={-(resolY / 0.8)} resolX={resolX} resolY={resolY} sizeX={resolX * 3} sizeY={resolY * 3} />
+
+      <CanvasVideo src={VideoSource} target={'targets target5 right'} maskX={-(resolX / 4)} maskY={-(resolY / 1.5)} resolX={resolX} resolY={resolY} sizeX={resolX * 2} sizeY={resolY * 2} />
+
+      {matchMedia("screen and (min-width: 985px)").matches ? (
+        <>
+          <CanvasVideo src={VideoSource} target={'targets target6 right'} maskX={-(resolX / 6)} maskY={-(resolY)} resolX={resolX} resolY={resolY} sizeX={resolX * 2} sizeY={resolY * 2} />
+
+          <CanvasVideo src={VideoSource} target={'targets target8 left'} maskX={-(resolX * 0.25)} maskY={-(resolY)} resolX={resolX} resolY={resolY} sizeX={resolX * 2} sizeY={resolY * 2} />
+        </>
+      ) : (
+        ''
+      )}
+
+
+      <CanvasVideo src={VideoSource} target={'targets target7 left'} maskX={-(resolX * 0.5)} maskY={-(resolY)} resolX={resolX} resolY={resolY} sizeX={resolX * 2} sizeY={resolY * 2} />
+
+
     </>
   )
 }
@@ -50,7 +69,7 @@ const MainComponent = () => {
 
     canvasFrames.forEach(target => {
       gsap.to(target, {
-        scaleX: 0.8,
+        scale: 0.8,
         y: -300,
         // TODO: 상하좌우 애니메이션 소수점 제거, 성능테스트 후 적용
         modifiers: {
@@ -106,6 +125,7 @@ const MainComponent = () => {
         scrub: true
       }
     });
+
     gsap.to('.intro-ment', {
       scrollTrigger: {
         scroller: '#root',
@@ -172,6 +192,18 @@ const MainComponent = () => {
     <section id='main' className='container main-section'>
       <div className='main-background'>
         <div className='background'></div>
+        <div className='video-area'>
+          {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
+          {/* <VideoToCanvasComponent src={src} /> */}
+
+          {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
+          {matchMedia("screen and (min-width: 985px)").matches ? (
+            // CallTheVideo(src1920, 1920, 1080)
+            CallTheVideo(src1280, 1280, 720)
+          ) : (
+            CallTheVideo(src640, 640, 480)
+          )}
+        </div>
       </div>
 
       <div className='main-content-frame'>
@@ -194,18 +226,7 @@ const MainComponent = () => {
             </div>
           </div>
         </div>
-
-        {/* TODO: Hooks로 코드 더 간결하게 작성해보자. */}
-        {/* <VideoToCanvasComponent src={src} /> */}
-        {CallTheVideo(src, 1280, 720)}
       </div>
-
-      {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
-      {/* { matchMedia("screen and (min-width: 985px)").matches ? (
-        CallTheVideo(src, 1280, 720)
-      ) : (
-          CallTheVideo(srcSmall, 640, 480)
-        )} */}
     </section>
   )
 }

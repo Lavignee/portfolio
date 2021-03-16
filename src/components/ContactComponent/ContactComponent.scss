@@ -2,7 +2,10 @@
 
 .contact-area {
   .contact-button {
-    @include vertical-align(fixed);
+    // @include vertical-align(fixed);
+    position: fixed;
+    top: 75%;
+    transform: translateY(-75%);
     right: 0;
     // right: 1.7rem;
     z-index: 110;
@@ -110,10 +113,10 @@
   
       .contact-grid {
         &:before {
-          animation-name: from-opacity-0;
+          animation-name: show;
         }
         &:after {
-          animation-name: from-translateX-1;
+          animation-name: move-left;
         }
       }
     }
@@ -124,11 +127,11 @@
   
       .contact-grid {
         &:before {
-          animation-name: from-opacity-1;
+          animation-name: hide;
           animation-delay: 0.5s;
         }
         &:after {
-          animation-name: from-translateX-0;
+          animation-name: move-right;
           animation-delay: 0.5s;
         }
       }
@@ -173,13 +176,13 @@
       }
   
       &.open {
-        animation-name: from-opacity-0;
+        animation-name: show;
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
       }
   
       &.close {
-        animation-name: from-opacity-1;
+        animation-name: hide;
       }
     }
   
@@ -216,13 +219,13 @@
             flex-direction: column;
     
             &.open {
-              animation-name: from-opacity-0;
+              animation-name: show;
               animation-fill-mode: forwards;
               animation-delay: 0.5s;
             }
     
             &.close {
-              animation-name: from-opacity-1;
+              animation-name: hide;
             }
   
             .input-frame {
@@ -302,13 +305,13 @@
             }
     
             &.open {
-              animation-name: from-opacity-0;
+              animation-name: show;
               animation-fill-mode: forwards;
               animation-delay: 0.5s;
             }
     
             &.close {
-              animation-name: from-opacity-1;
+              animation-name: hide;
             }
           }
         }

@@ -217,16 +217,14 @@ const AboutDetailComponent = () => {
             scroller: '#root',
             id: 'third-image-trigger',
             trigger: '.third-image-trigger',
-            start: 'top-=35% center',
+            start: 'top-=30% center',
             toggleClass: { targets: '.third-image', className: 'view' },
-            end: 'bottom-=35% center',
+            end: 'bottom-=30% center',
             scrub: true
           }
         });
       }
     });
-
-
   }
 
   const aboutDetailSlideText = () => {

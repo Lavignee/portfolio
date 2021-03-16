@@ -50,7 +50,7 @@ const CareerContent = ({ isActive, idx, id, keyword, title, date, summary, text 
   const summarys = []
   summary.forEach((item, i) => summarys.push(<span key={item + i}>{item}</span>))
   return (
-    <div key={idx} className={`content-frame ${isActive ? ' active' : ''}`}>
+    <div key={idx} className={`content-frame${isActive ? ' active' : ''}`}>
       <ul className='content'>
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
@@ -68,7 +68,7 @@ const ProjectContent = ({ isActive, idx, id, keyword, title, date, summary, text
   const summarys = []
   summary.forEach((item, i) => summarys.push(<span key={item + i}>{item}</span>))
   return (
-    <div key={idx} className={`content-frame ${isActive ? ' active' : ''}`}>
+    <div key={idx} className={`content-frame${isActive ? ' active' : ''}`}>
       <ul className='content'>
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
@@ -88,23 +88,57 @@ const FootprintDetailComponent = () => {
     triggers.forEach(trigger => {
       trigger.kill();
     });
+
+    ScrollTrigger.matchMedia({
+      "(max-width: 984px)": function () {
+        gsap.fromTo('.text-slider-left-area', {
+          opacity: 1
+        }, {
+          opacity: 0,
+          scrollTrigger: {
+            scroller: '#root',
+            id: 'text-slider-left',
+            trigger: '.text-slider-left-area',
+            start: 'top+=50% center',
+            end: 'bottom-=5% center',
+            scrub: true
+          }
+        });
+        gsap.fromTo('.text-slider-right-area', {
+          opacity: 0
+        }, {
+          opacity: 1,
+          scrollTrigger: {
+            scroller: '#root',
+            id: 'text-slider-right',
+            trigger: '.text-slider-right-area',
+            start: 'top+=100% center',
+            end: 'bottom+=50% center',
+            scrub: true
+          }
+        });
+      }
+    });
   }, []);
 
   return (
     <div className='footprint-detail'>
-      <div className='container fluid'>
-        <TextSliderComponent text={'career'} type={'left'} />
-        <TextSliderComponent text={'project&subcontract'} type={'right'} />
+      <div className='container fluid pl-pr-none'>
+        <div className='text-slider-left-area'>
+          <TextSliderComponent text={'career'} type={'left'} />
+        </div>
+        <div className='text-slider-right-area'>
+          <TextSliderComponent text={'project&subcontract'} type={'right'} />
+        </div>
+
         <div className='row'>
-          <div className='col-12 off-xs-1 off-l-none col-l-5 carrer-frame'>
+          <div className='col-12 off-l-none col-l-5 carrer-frame'>
             <Swiper
               spaceBetween={50}
               slidesPerView={1}
               effect='fade'
-              navigation
+              updateOnWindowResize
               pagination={{ clickable: true }}
-              // onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={(swiper) => console.log(swiper.activeIndex)}
             >
               {career.map((career, idx) => (
                 <SwiperSlide key={idx}>
@@ -129,10 +163,8 @@ const FootprintDetailComponent = () => {
               spaceBetween={50}
               slidesPerView={1}
               effect='fade'
-              navigation
+              updateOnWindowResize
               pagination={{ clickable: true }}
-              // onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={(swiper) => console.log(swiper.activeIndex)}
             >
               {project.map((project, idx) => (
                 <SwiperSlide key={idx}>

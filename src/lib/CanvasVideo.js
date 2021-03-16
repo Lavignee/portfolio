@@ -40,7 +40,7 @@ class CanvasVideo extends Component {
     render() {
         return (
             <div className={`canvas-frame ${this.props.target}`}>
-                <canvas className='canvas-target' ref={canvasRef => this.canvasRef = canvasRef} ></canvas>
+                <canvas width={this.props.resolX} height={this.props.resolY} className='canvas-target' ref={canvasRef => this.canvasRef = canvasRef} ></canvas>
             </div>
         );
     }

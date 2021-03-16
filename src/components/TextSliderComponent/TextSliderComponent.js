@@ -9,7 +9,7 @@ const TextSliderComponent = ({ text, type }) => {
     });
 
     gsap.to('.left-content', {
-      duration: 130,
+      duration: 70,
       ease: 'none',
       x: '+=400' + '%',
       modifiers: {
@@ -121,31 +121,31 @@ const TextSliderComponent = ({ text, type }) => {
         </div>
       </div >
     ) : (
-        <div className={`text-slider-frame ${type}`}>
-          <div className='rotate-frame'>
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-            {typeRight}
-            {typeRight2}
-          </div>
+      <div className={`text-slider-frame ${type}`}>
+        <div className='rotate-frame'>
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
+          {typeRight}
+          {typeRight2}
         </div>
-      )
+      </div>
+    )
   )
 }
 

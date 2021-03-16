@@ -22,6 +22,240 @@
       height: 100%;
       background: center / cover url(#{$img-url}main1920.jpg);
     }
+
+    .video-area {
+      .canvas-frame {
+        @include center-align;
+        display: inline-block;
+        z-index: -1;
+        overflow: hidden;
+        will-change: transform;
+        box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.3);
+        filter: grayscale(1);
+    
+        &.target1 {
+          width: 50%;
+          margin-top: -20%;
+          margin-left: -10%;
+          @media (max-width: $bp-fw) {
+            margin-top: -30%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: -40%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: -60%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: -80%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -110%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -140%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -120%;
+          }
+        }
+        
+        &.target2 {
+          width: 35%;
+          margin-top: -10%;
+          margin-left: -30%;
+          @media (max-width: $bp-fw) {
+            margin-top: -20%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: -30%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: -50%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: -70%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -100%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -130%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -110%;
+          }
+        }
+        
+        &.target3 {
+          width: 25%;
+          margin-top: -13%;
+          margin-left: 30%;
+          @media (max-width: $bp-fw) {
+            margin-top: -23%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: -33%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: -53%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: -73%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -103%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -133%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -113%;
+          }
+        }
+        
+        &.target4 {
+          width: 40%;
+          margin-top: 5%;
+          margin-left: 20%;
+          @media (max-width: $bp-fw) {
+            margin-top: -5%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: -15%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: -35%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: -55%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -85%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -115%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -95%;
+          }
+        }
+        
+        &.target5 {
+          width: 30%;
+          margin-top: 15%;
+          margin-left: -20%;
+          @media (max-width: $bp-fw) {
+            margin-top: 5%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: -5%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: -15%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: -25%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -35%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -45%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -35%;
+          }
+        }
+        
+        &.target6 {
+          width: 25%;
+          margin-top: 25%;
+          margin-left: -30%;
+          @media (max-width: $bp-fw) {
+            margin-top: 15%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: 5%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: -5%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: -15%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -25%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -35%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -25%;
+          }
+        }
+    
+        &.target7 {
+          width: 20%;
+          margin-top: 50%;
+          margin-left: 25%;
+          @media (max-width: $bp-fw) {
+            margin-top: 40%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: 30%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: 20%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: 10%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: 0%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -10%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: 0%;
+          }
+        }
+        
+        &.target8 {
+          width: 15%;
+          margin-top: 40%;
+          margin-left: 10%;
+          @media (max-width: $bp-fw) {
+            margin-top: 30%;
+          }
+          @media (max-width: $bp-w) {
+            margin-top: 20%;
+          }
+          @media (max-width: $bp-xl) {
+            margin-top: 10%;
+          }
+          @media (max-width: $bp-l) {
+            margin-top: 0%;
+          }
+          @media (max-width: $bp-m) {
+            margin-top: -10%;
+          }
+          @media (max-width: $bp-s) {
+            margin-top: -20%;
+          }
+          @media (max-width: $bp-xs) {
+            margin-top: -10%;
+          }
+        }
+    
+        canvas {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+    }
   }
 
   .main-content-frame {
@@ -75,7 +309,7 @@
 
     .into-ment-frame {
       position: relative;
-      height: 100vh;
+      height: 80vh;
 
       .intro-ment {
         @include vertical-align;
@@ -98,17 +332,24 @@
         }
 
         .type-p {
-          @include f-r(6.2rem, $wh);
+          @include f-r(6.2rem, $wh, 6rem);
           // text-transform: uppercase;
           
           @media (max-width: $bp-l) {
-            @include f-r(5.2rem, $wh);
+            font-size: 5.2rem;
+            line-height: 5rem;
           }
           @media (max-width: $bp-m) {
-            @include f-r(4.2rem, $wh);
+            font-size: 4.2rem;
+            line-height: 4rem;
           }
           @media (max-width: $bp-s) {
-            @include f-r(3.2rem, $wh);
+            font-size: 3.2rem;
+            line-height: 3rem;
+          }
+          @media (max-width: $bp-xs) {
+            font-size: 2.2rem;
+            line-height: 2rem;
           }
 
           .split-frame {
@@ -129,136 +370,6 @@
           }
         }
       }
-    }
-  }
-
-  .canvas-frame {
-    @include horizontal-align;
-    display: inline-block;
-    z-index: -1;
-    overflow: hidden;
-    will-change: transform;
-    box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.3);
-
-    &.target1 {
-      width: 50%;
-      top: 10%;
-      margin-left: -5%;
-      @media (max-width: $bp-l) {
-        width: 55%;
-        top: 8%;
-        margin-left: -6%;
-      }
-      @media (max-width: $bp-s) {
-        width: 60%;
-        top: 6%;
-        margin-left: -7%;
-      }
-      @media (min-width: $bp-w-min) {
-        width: 45%;
-      }
-      @media (min-width: $bp-fw-min) {
-        width: 40%;
-      }
-    }
-    &.target2 {
-      top: 23%;
-      margin-left: -33%;
-      @media (max-width: $bp-l) {
-        width: 40%;
-        top: 15%;
-        margin-left: -35%;
-      }
-      @media (max-width: $bp-s) {
-        width: 50%;
-        top: 11%;
-        margin-left: -37%;
-      }
-      @media (min-width: $bp-w-min) {
-        width: 30%;
-      }
-      @media (min-width: $bp-fw-min) {
-        width: 25%;
-      }
-    }
-    &.target3 {
-      width: 40%;
-      top: 20%;
-      margin-left: 25%;
-      @media (max-width: $bp-l) {
-        width: 45%;
-        top: 12%;
-        margin-left: 28%;
-      }
-      @media (max-width: $bp-s) {
-        width: 50%;
-        top: 4%;
-        margin-left: 31%;
-      }
-      @media (min-width: $bp-w-min) {
-        width: 35%;
-      }
-      @media (min-width: $bp-fw-min) {
-        width: 30%;
-      }
-    }
-    &.target4 {
-      top: 32%;
-      margin-left: 15%;
-      @media (max-width: $bp-l) {
-        width: 35%;
-        top: 29%;
-        margin-left: 17%;
-      }
-      @media (max-width: $bp-s) {
-        width: 40%;
-        top: 24%;
-        margin-left: 19%;
-      }
-      @media (min-width: $bp-w-min) {
-        width: 25%;
-      }
-      @media (min-width: $bp-fw-min) {
-        width: 20%;
-      }
-    }
-    &.target5 {
-      width: 45%;
-      top: 71%;
-      margin-left: -20%;
-      @media (max-width: $bp-l) {
-        width: 50%;
-        top: 63%;
-        margin-left: -23%;
-      }
-      @media (max-width: $bp-s) {
-        width: 55%;
-        top: 51%;
-        margin-left: -26%;
-      }
-      @media (min-width: $bp-w-min) {
-        width: 40%;
-      }
-      @media (min-width: $bp-fw-min) {
-        width: 35%;
-      }
-    }
-    &.target6 {
-      width: 20%;
-      top: 89%;
-      @media (max-width: $bp-l) {
-        width: 25%;
-        top: 61%;
-      }
-      @media (max-width: $bp-s) {
-        width: 30%;
-        top: 49%;
-      }
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%;
     }
   }
 }
