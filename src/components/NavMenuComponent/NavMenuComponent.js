@@ -5,8 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './NavmenuComponent.scss';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const NavmenuComponent = ({ gnbToggle, onHover, onLeave, currentGnbState }) => {
+const NavmenuComponent = ({ onlogoHover, onlogoClick, onGnbButtonClick, onGnbButtonHover, onLeave, onDown, onUp, currentGnbState }) => {
   const reactRoot = document.getElementById('root')
   const scrollWidthOffset = (el) => {
     if (el.getAttributeNode('id').value === 'skill' && el.getBoundingClientRect().top < 0) {
@@ -45,7 +44,7 @@ const NavmenuComponent = ({ gnbToggle, onHover, onLeave, currentGnbState }) => {
 
   return (
     <>
-      <HashLink to='/#main' scroll={el => scrollWidthOffset(el)}>
+      <HashLink to='/#main' scroll={el => scrollWidthOffset(el)} onClick={onlogoClick} onMouseEnter={onlogoHover} onMouseLeave={onLeave} onMouseDown={onDown} onMouseUp={onUp}>
         <svg className='header-logo' width="58" height="36" viewBox="0 0 58 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d="M1 29.5V7L7 1V29.5H9.25H15.25H16.75C22.9632 29.5 28 24.4632 28 18.25C28 12.0368 22.9632 7 16.75 7H15.25V7.09913V27.25H9.25V26.6354V9.8646V2.71137V1H14.5H15.25H16.75C26.2769 1 34 8.72309 34 18.25C34 27.7769 26.2769 35.5 16.75 35.5H15.25H14.5H9.25H7H1V29.5Z" fill="#181818" />
           <path fillRule="evenodd" clipRule="evenodd" d="M29 1H35L43.25 14.2L51.5 1H57.5L46.25 19V29.5L40.25 35.5V19L29 1Z" fill="#181818" />
@@ -53,7 +52,7 @@ const NavmenuComponent = ({ gnbToggle, onHover, onLeave, currentGnbState }) => {
       </HashLink>
 
       <div className='right-area'>
-        <div className='gnb-button' onClick={gnbToggle} onMouseEnter={onHover} onMouseLeave={onLeave}>
+        <div className='gnb-button' onClick={onGnbButtonClick} onMouseEnter={onGnbButtonHover} onMouseLeave={onLeave} onMouseDown={onDown} onMouseUp={onUp}>
           <svg className='menu-img' width="133" height="132" viewBox="0 0 133 132" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M61.1004 17.3L59.7004 10.9L57.7004 18.1L55.3004 18.6L50.5004 12.9L51.9004 19.3L49.4004 19.8L47.4004 10.6L50.7004 9.99998L55.9004 16.1L58.1004 8.29998L61.5004 7.59998L63.5004 16.8L61.1004 17.3Z" fill="#181818" />
             <path d="M66.1992 17L66.8992 7.59998L76.3992 8.29998L76.1992 10.3L69.2992 9.79998L69.1992 11.3L75.6992 11.8L75.4992 13.8L68.9992 13.3V15.2L75.9992 15.7L75.7992 17.7L66.1992 17Z" fill="#181818" />

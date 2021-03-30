@@ -33,7 +33,7 @@ body {
   }
 
   &:hover {
-    .custom-cursor-default,
+    .custom-cursor-back,
     .custom-cursor-info {
       opacity: 1;
     }
@@ -76,6 +76,18 @@ main {
   //   .split-target {
   //     min-width: 0.5rem;
   //   }
+  }
+}
+
+.transition-group {
+  position: relative;
+  width: 100vw;
+  min-width: 320px;
+  height: 100vh;
+
+  > div {
+    position: absolute;
+    width: 100%;
   }
 }
 

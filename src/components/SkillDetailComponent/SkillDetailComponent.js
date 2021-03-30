@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { changeClassName, changeSecondClassName } from '../../Modules/CursorModule';
 import svg from '../../static/images/icon-svg.json';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -40,6 +42,7 @@ const language = [
   { number: '2', id: 'css', name: 'CSS', workmanship: 4, summary: 'CSS 속성은 눈을 감았다 뜨면 새로운 게 보이고, 또 다양하게 사용되고 있습니다. 브라우저마다 해석의 기준의 순위도 다릅니다. 많은 속성을 자유롭게 응용할 수 있지만, 아직도 공부는 끝이 없습니다.', svg: cssSvg },
   { number: '3', id: 'javascript', name: 'JavaScript', workmanship: 3, summary: '오랜 시간 실무 환경(ie 8 지원)으로 인해 es5나 더 낮은 Javascript를 많이 사용해왔습니다. 현재에는 Babel이라는 듬직한 컴파일러도 있고 React를 주로 사용하다 보니 완전한 es8 유저가 되기 위해 노력 중입니다. 해석은 되지만 자유로운 응용은 아직도 갈 길이 멀다고 생각합니다.', svg: javascriptSvg }
 ];
+
 const lib = [
   { number: '1', id: 'react', name: 'React', workmanship: 3, summary: 'React를 배우는 시간은 꽤 많은 시간이 필요했습니다. 초기부터 계속 관심 있게 살펴보고 간단한 학습용 코드는 작성해 보았지만, 제가 참여한 프로젝트에서는 사용되지 않다 보니 시간이 한참 흘러 Hooks 기능이 도입된 이후에 제대로 접해보았습니다. 그래서 익혀둔 것도 결국 다시 보고 변경되거나 새로운 사항도 추가로 배워야 했습니다.', svg: reactSvg },
   { number: '2', id: 'redux', name: 'Redux', workmanship: 2, summary: '이번 포트폴리오 사이트에서 처음 사용해 보았습니다.', svg: reduxSvg },
@@ -52,6 +55,7 @@ const lib = [
   { number: '9', id: 'bootstrap', name: 'Bootstrap', workmanship: 4, summary: '처음 style의 덩어리로 테마라는 개념을 익히고 반응형 웹의 걸음마를 배운 프레임워크입니다. 꽤 오랜 시간 프런트 개발에 서비스의 기호에 맞게 커스텀 한 부트스트랩을 사용했습니다.', svg: bootstrapSvg },
   { number: '10', id: 'materialui', name: 'Material-UI', workmanship: 3, summary: '프리랜서로 일하는 중 접하게 되었습니다. 부트스트랩처럼 React에서 사용되는 프레임워크로 사용이나 커스텀의 방식도 꽤 익숙했다고 생각합니다.', svg: materialuiSvg }
 ];
+
 const tool = [
   { number: '1', id: 'git', name: 'Git', workmanship: '3', summary: '다른 개발자와 프로젝트 협력을 위해 처음 Git을 배웠습니다. 현재는 버전 관리와 기능 분리로도 사용합니다. 개발 경력이 많아질수록 없어서는 안되는 도구 같습니다.', svg: gitSvg },
   { number: '2', id: 'github', name: 'Github', workmanship: 3, summary: 'Git 하면 GIthub라고 생각할 정도로 대표적인 웹서비스지만, 다른 개발자와 함께 사용하려면 기본이 Public 환경이라는 점에서 사용빈도가 낮았습니다. 언제나 다시 보면 손볼 것투성이인 코드를 공개하기도 물론 용기가 나지 않았습니다.', svg: githubSvg },
@@ -61,6 +65,7 @@ const tool = [
   { number: '6', id: 'figma', name: 'Figma', workmanship: 3, summary: '알게 된 이후 줄곧 사용하고 있는 개발 협업 도구입니다. 개발 초기에는 PSD나 AI 확장자를 직접 열어 작업하던 때도 있지만 Figma를 사용하고 안 하고는 의사소통이나 작업 속도에서 너무 큰 차이가 납니다.', svg: figmaSvg },
   { number: '7', id: 'zeplin', name: 'Zeplin', workmanship: 2, summary: 'PSD나 AI 파일을 받아서 작업할 때는 꼭 필요한 도구입니다. 다만 해당 파일들을 직접 받아서 작업한 경우가 손에 꼽을 정도라 최신의 기능까지 숙지하고 있지는 않습니다.', svg: zeplinSvg }
 ];
+
 const interest = [
   { number: '1', id: 'typescript', name: 'TypeScript', workmanship: 1, summary: '어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다.', svg: typescriptSvg },
   { number: '2', id: 'contextapi', name: 'context API', workmanship: 1, summary: '어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다.', svg: '' },
@@ -80,8 +85,31 @@ const SkillDetailComponent = ({ match }) => {
   const lists = useRef([]);
   const scrollPosition = useRef();
   const [currentList, setCurrentList] = useState(list);
+  const [listHoverMotion, setListHoverMotion] = useState('');
   const [currentTarget, setCurrentTarget] = useState(0);
   const [opacity, setOpacity] = useState('opacity');
+  const dispatch = useDispatch();
+  const cursorClass = (className) => dispatch(changeClassName(className));
+  const cursorSecondClass = (secondClassName) => dispatch(changeSecondClassName(secondClassName));
+
+  const tabHover = () => {
+    cursorClass(' focus-cursor');
+  }
+
+  const listHover = (number) => {
+    cursorClass(' focus-cursor');
+    if (currentTarget + 1 > number) {
+      setListHoverMotion('top')
+    } else if (currentTarget + 1 < number) {
+      setListHoverMotion('bottom')
+    }
+  }
+
+  const onLeave = () => {
+    cursorClass('');
+    cursorSecondClass('');
+    setListHoverMotion('');
+  };
 
   const workmanships = (level) => {
     return (
@@ -99,26 +127,26 @@ const SkillDetailComponent = ({ match }) => {
     switch (target) {
       case 'language':
         return language.map(language => (
-          <div key={language.number} className='list col-4 col-l-3' ref={addToRefs}>
-            <li>{language.svg === '' ? language.name : <div dangerouslySetInnerHTML={{ __html: language.svg }}></div>}</li>
-          </div>
+          <div key={language.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(language)} onMouseEnter={() => listHover(language.number)} onMouseLeave={onLeave}>
+            <li className={listHoverMotion}>{language.svg === '' ? <div>{language.name}</div> : <div dangerouslySetInnerHTML={{ __html: language.svg }}></div>}</li>
+          </div >
         ))
       case 'lib':
         return lib.map(lib => (
-          <div key={lib.number} className='list col-4 col-l-3' ref={addToRefs}>
-            <li>{lib.svg === '' ? lib.name : <div dangerouslySetInnerHTML={{ __html: lib.svg }}></div>}</li>
+          <div key={lib.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(lib)} onMouseEnter={() => listHover(lib.number)} onMouseLeave={onLeave}>
+            <li className={listHoverMotion}>{lib.svg === '' ? <div>{lib.name}</div> : <div dangerouslySetInnerHTML={{ __html: lib.svg }}></div>}</li>
           </div>
         ))
       case 'tool':
         return tool.map(tool => (
-          <div key={tool.number} className='list col-4 col-l-3' ref={addToRefs}>
-            <li>{tool.svg === '' ? tool.name : <div dangerouslySetInnerHTML={{ __html: tool.svg }}></div>}</li>
+          <div key={tool.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(tool)} onMouseEnter={() => listHover(tool.number)} onMouseLeave={onLeave}>
+            <li className={listHoverMotion}>{tool.svg === '' ? <div>{tool.name}</div> : <div dangerouslySetInnerHTML={{ __html: tool.svg }}></div>}</li>
           </div>
         ))
       case 'interest':
         return interest.map(interest => (
-          <div key={interest.number} className='list col-4 col-l-3' ref={addToRefs}>
-            <li>{interest.svg === '' ? interest.name : <div dangerouslySetInnerHTML={{ __html: interest.svg }}></div>}</li>
+          <div key={interest.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(interest)} onMouseEnter={() => listHover(interest.number)} onMouseLeave={onLeave}>
+            <li className={listHoverMotion}>{interest.svg === '' ? <div>{interest.name}</div> : <div dangerouslySetInnerHTML={{ __html: interest.svg }}></div>}</li>
           </div>
         ))
       default: ''
@@ -181,6 +209,17 @@ const SkillDetailComponent = ({ match }) => {
     lists.current.forEach((el, index) => {
       gsap.to(el, {
         scrollTrigger: {
+          id: `list-prev-${index + 1}`,
+          trigger: el,
+          scroller: '.skill-list',
+          start: 'top+=100% center',
+          toggleClass: { targets: el, className: 'prev' },
+          end: 'bottom+=100% center'
+        }
+      });
+
+      gsap.to(el, {
+        scrollTrigger: {
           id: `list-${index + 1}`,
           trigger: el,
           scroller: '.skill-list',
@@ -188,7 +227,18 @@ const SkillDetailComponent = ({ match }) => {
           toggleClass: { targets: el, className: 'active' },
           onEnter: () => changeTarget(index),
           onEnterBack: () => changeTarget(index),
-          end: 'bottom center',
+          end: 'bottom center'
+        }
+      });
+
+      gsap.to(el, {
+        scrollTrigger: {
+          id: `list-next-${index + 1}`,
+          trigger: el,
+          scroller: '.skill-list',
+          start: 'top-=100% center',
+          toggleClass: { targets: el, className: 'next' },
+          end: 'bottom-=100% center'
         }
       });
     });
@@ -196,6 +246,31 @@ const SkillDetailComponent = ({ match }) => {
     setTimeout(() => {
       setOpacity('opacity')
     }, 100)
+  }
+
+  const scrollSkew = () => {
+    let proxy = { skew: 0 },
+      skewSetter = gsap.quickSetter(".list", "skewY", "deg"),
+      clamp = gsap.utils.clamp(-20, 20);
+
+    ScrollTrigger.create({
+      scroller: ".skill-list",
+
+      onUpdate: (self) => {
+        let skew = clamp(self.getVelocity() / -300);
+        if (Math.abs(skew) > Math.abs(proxy.skew)) {
+          proxy.skew = skew;
+          gsap.to(proxy, { skew: 0, duration: 0.3, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
+        }
+      }
+    });
+  }
+
+  const clickList = (target) => {
+    const listHeight = scrollPosition.current.clientHeight / 3
+    scrollPosition.current.scrollTo({
+      left: 0, top: listHeight * (target.number - 1), behavior: 'smooth'
+    });
   }
 
   useEffect(() => {
@@ -207,6 +282,7 @@ const SkillDetailComponent = ({ match }) => {
 
   useEffect(() => {
     listScroller();
+    scrollSkew();
   }, [currentList])
 
   useEffect(() => {
@@ -219,10 +295,10 @@ const SkillDetailComponent = ({ match }) => {
     <div className='skill-detail'>
       <div className='container fluid pl-pr-none'>
         <ul className='skill-tab'>
-          <NavLink to='/skill/language' onClick={changeList} data-list='language'>언 어</NavLink>
-          <NavLink to='/skill/lib' onClick={changeList} data-list='lib'>프레임워크&라이브러리</NavLink>
-          <NavLink to='/skill/tool' onClick={changeList} data-list='tool'>개발 도구</NavLink>
-          <NavLink to='/skill/interest' onClick={changeList} data-list='interest'>최근 관심 기술</NavLink>
+          <li><NavLink to='/skill/language' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='language'>언 어</NavLink></li>
+          <li><NavLink to='/skill/lib' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='lib'>프레임워크&라이브러리</NavLink></li>
+          <li><NavLink to='/skill/tool' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='tool'>개발 도구</NavLink></li>
+          <li><NavLink to='/skill/interest' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='interest'>최근 관심 기술</NavLink></li>
         </ul>
 
         <div className='row content-frame'>

@@ -32,7 +32,7 @@
     .lang-list {
       @include horizontal-align;
       top: -100%;
-      animation: opacity 0.5s forwards;
+      animation: hide 0.5s forwards;
 
       button {
         display: inline-block;

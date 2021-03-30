@@ -2,6 +2,7 @@
 
 #skill {
   background-color: $wh;
+  box-shadow: inset 0 0 1rem $bl;
 }
 
 .skill-section {
@@ -50,7 +51,7 @@
 
     .list-frame {
       transform-style: preserve-3d;
-      perspective: 70rem;
+      perspective: 50rem;
 
       .list {
         z-index: 0;
@@ -58,16 +59,15 @@
         a {
           position: relative;
           display: block;
-          padding-top: 3rem;
-          padding-bottom: 3rem;
+          padding: 3rem 1.5rem;
           text-align: right;
           font-family: 'NEXON Lv2 Gothic';
-          @include f-b(10rem);
+          @include f-b(10rem, $ls: -0.5rem);
+          @include border-a($bl);
           white-space: nowrap;
-          -webkit-text-stroke: 0.01rem $bl;
           transform: translate3d(0, 0, 0) rotateY(-30deg);
           transform-origin: right center;
-          transition: transform $transition, color $transition, font-size $transition-slow;
+          transition: transform $transition, color $transition, font-size $transition-slow, background-color $transition, letter-spacing $transition;
           z-index: 4;
 
           @media (max-width: $bp-m) {
@@ -79,12 +79,12 @@
           @media (max-width: $bp-xs) {
             font-size: 7rem;
           }
-        }
 
-        &:hover {
-          a {
-            color: transparent;
-            transform: translate3d(0, 0, 0) rotateY(-15deg);
+          &:hover {
+              transform: translate3d(0, 0, 0) rotateY(0deg);
+              background-color: #181818;
+              color: $wh;
+              letter-spacing: 0rem;
           }
         }
       }

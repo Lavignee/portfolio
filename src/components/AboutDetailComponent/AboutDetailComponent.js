@@ -115,8 +115,6 @@ const AboutDetailComponent = () => {
       }
     });
 
-
-
     gsap.to('.about-keywords', {
       scrollTrigger: {
         scroller: '#root',
@@ -125,6 +123,20 @@ const AboutDetailComponent = () => {
         pin: true,
         start: 'top top',
         end: 'bottom+=800 top',
+      }
+    });
+
+    gsap.fromTo('.fill-black', {
+      maxWidth: 0 + '%',
+    }, {
+      maxWidth: 100 + '%',
+      scrollTrigger: {
+        scroller: '#root',
+        id: 'fill-black',
+        trigger: '.background-title-frame',
+        start: 'bottom center',
+        end: 'bottom center',
+        scrub: true
       }
     });
 
@@ -351,8 +363,9 @@ const AboutDetailComponent = () => {
       <div className='container fluid about-background'>
         <div className='container relative pl-pr-none'>
           <div className='background-title-frame'>
-            <div className='col-6 off-6 col-m-7 off-m-5'>
+            <div className='col-12 col-m-7 off-m-5'>
               <h2>GROWTH<br />BACKGROUND</h2>
+              <h2 className='fill-black'>GROWTH<br />BACKGROUND</h2>
             </div>
           </div>
 

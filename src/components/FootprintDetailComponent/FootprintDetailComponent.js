@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { gsap } from "gsap";
+import { useDispatch } from 'react-redux';
+import { changeText, changeClassName } from '../../Modules/CursorModule';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -83,6 +85,10 @@ const ProjectContent = ({ isActive, idx, id, keyword, title, date, summary, text
 }
 
 const FootprintDetailComponent = () => {
+  const dispatch = useDispatch();
+  const cursorText = (text) => dispatch(changeText(text));
+  const cursorClass = (className) => dispatch(changeClassName(className));
+
   useEffect(() => {
     let triggers = ScrollTrigger.getAll();
     triggers.forEach(trigger => {
@@ -90,6 +96,13 @@ const FootprintDetailComponent = () => {
     });
 
     ScrollTrigger.matchMedia({
+      "(min-width: 985px)": function () {
+        gsap.fromTo('.mobile-division', {
+          opacity: 0
+        }, {
+          opacity: 0,
+        });
+      },
       "(max-width: 984px)": function () {
         gsap.fromTo('.text-slider-left-area', {
           opacity: 1
@@ -104,6 +117,7 @@ const FootprintDetailComponent = () => {
             scrub: true
           }
         });
+
         gsap.fromTo('.text-slider-right-area', {
           opacity: 0
         }, {
@@ -117,9 +131,42 @@ const FootprintDetailComponent = () => {
             scrub: true
           }
         });
+
+        gsap.fromTo('.mobile-division', {
+          opacity: 1
+        }, {
+          opacity: 0,
+          scrollTrigger: {
+            scroller: '#root',
+            id: 'mobile-division',
+            trigger: '.carrer-frame',
+            start: 'bottom center',
+            end: 'bottom+=50% center',
+            scrub: true
+          }
+        });
       }
     });
   }, []);
+
+  const prevCursor = () => {
+    cursorText('more recent');
+    cursorClass(' bl-cursor');
+  }
+
+  const nextCursor = () => {
+    cursorText('more past');
+    cursorClass(' bl-cursor');
+  }
+
+  const paginationCursor = () => {
+    cursorClass(' pagination-cursor');
+  }
+
+  const leaveCursor = () => {
+    cursorText('');
+    cursorClass('');
+  }
 
   return (
     <div className='footprint-detail'>
@@ -138,7 +185,8 @@ const FootprintDetailComponent = () => {
               slidesPerView={1}
               effect='fade'
               updateOnWindowResize
-              pagination={{ clickable: true }}
+              navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
+              pagination={{ clickable: true, el: '.swiper-pagination' }}
             >
               {career.map((career, idx) => (
                 <SwiperSlide key={idx}>
@@ -147,8 +195,13 @@ const FootprintDetailComponent = () => {
                   )}
                 </SwiperSlide>
               ))}
+              <div className='swiper-pagination left-pagination' onMouseEnter={paginationCursor} onMouseLeave={leaveCursor}></div>
+              <div className='swiper-button-next' onMouseEnter={nextCursor} onMouseLeave={leaveCursor}></div>
+              <div className='swiper-button-prev' onMouseEnter={prevCursor} onMouseLeave={leaveCursor}></div>
             </Swiper>
           </div>
+
+          <div className='mobile-division'>Project<br />&Subcontract<span></span></div>
 
           <div className='col-1 pl-pr-none division-frame'>
             <div className='division-line'></div>
@@ -164,7 +217,8 @@ const FootprintDetailComponent = () => {
               slidesPerView={1}
               effect='fade'
               updateOnWindowResize
-              pagination={{ clickable: true }}
+              navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
+              pagination={{ clickable: true, el: '.swiper-pagination' }}
             >
               {project.map((project, idx) => (
                 <SwiperSlide key={idx}>
@@ -173,6 +227,9 @@ const FootprintDetailComponent = () => {
                   )}
                 </SwiperSlide>
               ))}
+              <div className='swiper-pagination right-pagination' onMouseEnter={paginationCursor} onMouseLeave={leaveCursor}></div>
+              <div className='swiper-button-next' onMouseEnter={nextCursor} onMouseLeave={leaveCursor}></div>
+              <div className='swiper-button-prev' onMouseEnter={prevCursor} onMouseLeave={leaveCursor}></div>
             </Swiper>
           </div>
         </div>

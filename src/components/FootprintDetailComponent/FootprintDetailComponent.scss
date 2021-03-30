@@ -26,10 +26,15 @@
 
     .swiper-button-prev, .swiper-button-next {
       width: 50%;
-      height: calc(100% - 5rem);
+      height: calc(100% - 10rem);
       top: 5rem;
       color: #181818;
       cursor: none;
+      transition: opacity $transition;
+
+      &.swiper-button-disabled {
+        opacity: 0;
+      }
   
       &:after {
         position: absolute;
@@ -53,16 +58,105 @@
     }
   
     .swiper-pagination {
-      bottom: 3rem;
-  
+      bottom: 1rem;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      z-index: 11;
+
+      &:hover {
+        .swiper-pagination-bullet {
+          width: 6rem;
+          height: 1rem;
+        }
+      }
+      &.left-pagination, &.right-pagination {
+        span {
+          &:before {
+            position: absolute;
+            top: -2rem;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            @include f-r(1.4rem);
+          }
+        }
+      }
+
+      &.left-pagination {
+        &:hover {
+          span {
+            &:first-child {
+              &:before {
+                content: '2019.12';
+              }
+            }
+            &:nth-child(2) {
+              &:before {
+                content: '2016.07';
+              }
+            }
+          }
+        }
+      }
+      
+      &.right-pagination {
+        &:hover {
+          span {
+            &:first-child {
+              &:before {
+                content: '2020.10';
+              }
+            }
+            &:nth-child(2) {
+              &:before {
+                content: '2019.12';
+              }
+            }
+            &:nth-child(3) {
+              &:before {
+                content: '2019.06';
+              }
+            }
+            &:nth-child(4) {
+              &:before {
+                content: '2019.06';
+              }
+            }
+            &:nth-child(5) {
+              &:before {
+                content: '2019.03';
+              }
+            }
+            &:nth-child(6) {
+              &:before {
+                content: '2017';
+              }
+            }
+            &:nth-child(7) {
+              &:before {
+                content: '2016.02';
+              }
+            }
+          }
+        }
+      }
+      
       .swiper-pagination-bullet {
+        position: relative;
         width: 4rem;
         height: .5rem;
         border-radius: 0;
         opacity: 1;
         background-color: #c4c4c4;
+        cursor: none;
+        transition: transform $transition, width $transition, height $transition;
+
+        &:hover {
+          transform: scale(1.5);
+        }
         
         &.swiper-pagination-bullet-active {
+          z-index: 2;
           background-color: #181818;
         }
       }
@@ -190,6 +284,32 @@
     padding-top: $headerHeight;
   }
 
+  .mobile-division {
+    position: absolute;
+    top: calc(100% - 10rem);
+    right: 2rem;
+    z-index: 2;
+    @include f-b(2rem);
+    font-family: 'Syncopate';
+    opacity: 0;
+    transition: opacity $transition-slow;
+    pointer-events: none;
+
+    span {
+      @include horizontal-align;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      @include border-a(transparent, 1rem);
+      border-top-color: $bl;
+      bottom: -3rem;
+    }
+
+    @media (max-width: $bp-l) {
+      opacity: 1;
+    }
+  }
+
   .division-frame {
     height: 100%;
     background-color: $bl;
@@ -212,11 +332,13 @@
 
       .left-area, .right-area {
         display: inline-block;
+        position: relative;
         width: 50%;
         height: 100%;
         
         .left-text, .right-text {
           position: absolute;
+          left: 50%;
           display: inline-block;
           padding-top: 3rem;
           font-family: 'Syncopate';
@@ -225,12 +347,12 @@
         }
 
         .left-text {
-          transform: translateX(50%);
+          transform: translateX(-50%);
         }
         
         .right-text {
           bottom: 0;
-          transform: translateX(50%) rotateX(180deg) rotateY(180deg);
+          transform: translateX(-50%) rotateX(180deg) rotateY(180deg);
         }
       }
     }

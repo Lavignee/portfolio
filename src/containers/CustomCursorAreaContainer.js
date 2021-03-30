@@ -13,6 +13,7 @@ const CustomCursorAreaContainer = ({ children }) => {
         top: e.pageY
       }
     });
+
     gsap.to(cursorInfoRef.current, 0.3, {
       css: {
         left: e.pageX,

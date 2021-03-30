@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CanvasVideo from '../../lib/CanvasVideo';
 import SplitTextComponent from '../SplitTextComponent';
-import src1920 from '../../Static/videos/video1920.mp4';
+// import src1920 from '../../Static/videos/video1920.mp4';
 import src1280 from '../../Static/videos/video1280.mp4';
 import src640 from '../../Static/videos/video640.mp4';
 import './MainComponent.scss';
@@ -220,9 +220,9 @@ const MainComponent = () => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitTextComponent animation={'up'} scroll={'intro'} index={'int'}>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitTextComponent>
+              <SplitTextComponent animation={'up'} setTime={5} scroll={'intro'} index={'int'} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitTextComponent>
 
-              <SplitTextComponent animation={'up'} scroll={'intro2'} index={'int2'}>It  was  produced  focusing  on  simple  but  delicate  details  without  any  additional  design.</SplitTextComponent>
+              <SplitTextComponent animation={'up'} setTime={5} scroll={'intro2'} index={'int2'} depth>It  was  produced  focusing  on  simple  but  delicate  details  without  any  additional  design.</SplitTextComponent>
             </div>
           </div>
         </div>

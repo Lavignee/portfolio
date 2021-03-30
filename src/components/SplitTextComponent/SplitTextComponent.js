@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './SplitTextComponent.scss';
+
 const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay, depth, noContainer }) => {
   const { scrollValue } = useSelector(state => ({
     scrollValue: state.ScrollValueModule.scrollValue
@@ -17,15 +18,15 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
         depth ? (
           setSplit(split => [...split, <div key={index + (childrenLength - 1)} className='split-depth-frame'><span>{children.substring(childrenLength - 1, childrenLength)}</span><div className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div></div>])
         ) : (
-            setSplit(split => [...split, <div key={index + (childrenLength - 1)} className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div>])
-          )
-      ) : (
-          depth ? (
-            setSplit(split => [...split, <div key={index + (childrenLength - 1)} className='split-depth-frame'><span>{children.substring(childrenLength - 1, childrenLength)}</span><div className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div></div>])
-          ) : (
-              setSplit(split => [...split, <div key={index + (childrenLength - 1)} className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div>])
-            )
+          setSplit(split => [...split, <div key={index + (childrenLength - 1)} className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div>])
         )
+      ) : (
+        depth ? (
+          setSplit(split => [...split, <div key={index + (childrenLength - 1)} className='split-depth-frame'><span>{children.substring(childrenLength - 1, childrenLength)}</span><div className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div></div>])
+        ) : (
+          setSplit(split => [...split, <div key={index + (childrenLength - 1)} className={`split-target ${animation ? animation : 'default'}`}>{children.substring(childrenLength - 1, childrenLength++)}</div>])
+        )
+      )
     }
     if (childrenLength < children.length + 1) {
       setTimeout(() => {
@@ -53,13 +54,13 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
       {noContainer ? (
         { split }
       ) : (
-          <>
-            <div className='origin-size-container'>{children}</div>
-            <div className={`animation-container${willChange && !noContainer ? ' will-change' : ''}`}>
-              {split}
-            </div>
-          </>
-        )
+        <>
+          <div className='origin-size-container'>{children}</div>
+          <div className={`animation-container${willChange && !noContainer ? ' will-change' : ''}`}>
+            {split}
+          </div>
+        </>
+      )
       }
     </div >
   )

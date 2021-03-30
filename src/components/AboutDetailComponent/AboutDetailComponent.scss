@@ -234,7 +234,21 @@
 
       h2 {
         font-family: 'Syncopate';
-        @include f-b(6.4rem, #ececec)
+        @include f-b(6.4rem, #ececec);
+
+        @media (max-width: $bp-m) {
+          font-size: 5.4rem;
+        }
+
+        &.fill-black {
+          position: absolute;
+          width: 100%;
+          max-width: 0%;
+          top: 0;
+          color: #181818;
+          overflow: hidden;
+          transition: max-width $transition-vSlow;
+        }
       }
     }
 

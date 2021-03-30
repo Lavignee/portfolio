@@ -16,17 +16,18 @@
         z-index: 1;
         transform: translateY(50%);
         font-family: Syncopate;
-        @include f-b(18rem, $bl);
+        @include f-b(18rem, $wh);
+        -webkit-text-stroke: 0.1rem $bl;
         transition: font-size $transition-slow;
 
         @media (max-width: $bp-m) {
-          @include f-b(15rem, $bl);
+          font-size: 15rem;
         }
         @media (max-width: $bp-s) {
-          @include f-b(10rem, $bl);
+          font-size: 10rem;
         }
         @media (max-width: $bp-xs) {
-          @include f-b(8rem, $bl);
+          font-size: 8rem;
         }
       }
     }
@@ -39,8 +40,7 @@
         vertical-align: bottom;
       }
 
-      .one, .two,
-      .three {
+      .about-image {
         position: relative;
         overflow: hidden;
 
@@ -65,16 +65,16 @@
       .one,
       .three {
         @include vertical-align(relative);
-        padding-left: 10rem;
-        padding-right: 10rem;
+        margin-left: 10rem;
+        margin-right: 10rem;
 
         @media (max-width: $bp-m) {
-          padding-left: 8rem;
-          padding-right: 8rem;
+          margin-left: 8rem;
+          margin-right: 8rem;
         }
         @media (max-width: $bp-s) {
-          padding-left: 2rem;
-          padding-right: 2rem;
+          margin-left: 2rem;
+          margin-right: 2rem;
         }
       }
 
@@ -102,6 +102,10 @@
         // &:after {
         //   transform: translateX(10%);
         // }
+
+        img {
+          transform: scale(1.1);
+        }
       }
 
       .three {
@@ -125,13 +129,15 @@
       > div {
         padding-top: 4rem;
         padding-bottom: 4rem;
+        
         > div {
           display: inline-block;
           font-family: 'Syncopate';
           opacity: 0;
-          @include f-b(12rem, $bl);
+          @include f-b(12rem, $wh);
           white-space: nowrap;
           transition: font-size $transition-slow;
+          -webkit-text-stroke: 0.1rem $bl;
 
           @media (max-width: $bp-xl) {
             font-size: 10rem;
@@ -148,45 +154,102 @@
           @media (max-width: $bp-xs) {
             font-size: 5rem;
           }
+
+          span {
+            position: absolute;
+            left: 0;
+            z-index: -1;
+            font-family: 'Syncopate';
+            color: transparent;
+            -webkit-text-stroke: 0.1rem transparent;
+          }
         }
       }
       
       .first-line {
         &.first {
           div {
+            transform: translateX(-100%);
             animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+
+            span {
+              animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+              @media (max-width: $bp-m) {
+                animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+              }
+            }
           }
         }
         &.second {
           text-align: right;
           div {
+            transform: translateX(100%);
             animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+
+            span {
+              animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+              @media (max-width: $bp-m) {
+                animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+              }
+            }
           }
         }
       }
       .second-line {
         &.first {
           div {
+            transform: translateX(-100%);
             animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+
+            span {
+              animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+              @media (max-width: $bp-m) {
+                animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+              }
+            }
           }
         }
         &.second {
           text-align: right;
           div {
+            transform: translateX(100%);
             animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+
+            span {
+              animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+              @media (max-width: $bp-m) {
+                animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+              }
+            }
           }
         }
       }
       .third-line {
         &.first {
           div {
+            transform: translateX(-100%);
             animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+
+            span {
+              animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+              @media (max-width: $bp-m) {
+                animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+              }
+            }
           }
         }
         &.second {
           text-align: right;
           div {
+            transform: translateX(100%);
             animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+
+            span {
+              animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+              @media (max-width: $bp-m) {
+                animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+              }
+            }
           }
         }
       }
@@ -194,17 +257,17 @@
 
     .about-detail-button {
       text-align: right;
-      padding-bottom: 10rem;
       padding-top: 10rem;
+      padding-bottom: 10rem;
       transition: padding $transition-slow;
 
       @media (max-width: $bp-m) {
-        padding-bottom: 8rem;
         padding-top: 8rem;
+        padding-bottom: 8rem;
       }
       @media (max-width: $bp-s) {
-        padding-bottom: 6rem;
         padding-top: 6rem;
+        padding-bottom: 6rem;
       }
 
       a {
@@ -212,10 +275,13 @@
 
         button {
           position: relative;
+          padding: 3rem 3rem 3rem 12.4rem;
           font-family: 'Syncopate';
           @include f-r(5rem, $bl);
+          border-radius: 5rem;
           transition: font-size $transition-slow;
-
+          z-index: 2;
+          
           @media (max-width: $bp-m) {
             font-size: 4rem;
           }
@@ -226,16 +292,16 @@
             font-size: 2rem;
           }
 
-          &:before {
+          &:after {
             content: '';
             @include vertical-align;
             width: 6.4rem;
             height: 6.4rem;
-            right: calc(100% + 3rem);
-            background-color: #181818;
+            right: calc(100% - 9.4rem);
             border-radius: 100%;
             background: left / 80% url(#{$img-url}footprint-arrow.svg) no-repeat, #181818;
-            transition: width $transition-slow, height $transition-slow;
+            transition: opacity $transition, width $transition, height $transition;
+            z-index: 1;
 
             @media (max-width: $bp-m) {
               width: 5.9rem;
@@ -249,6 +315,62 @@
               width: 4.9rem;
               height: 4.9rem;
             }
+          }
+
+          &:before {
+            content: '';
+            @include vertical-align;
+            width: 6.4rem;
+            height: 6.4rem;
+            right: calc(100% - 9.4rem);
+            border-radius: 100%;
+            background-color: #181818;
+            transition: border-radius $transition, right $transition, width $transition, height $transition;
+            mix-blend-mode: difference;
+            z-index: -1;
+
+            @media (max-width: $bp-m) {
+              width: 5.9rem;
+              height: 5.9rem;
+            }
+            @media (max-width: $bp-s) {
+              width: 5.4rem;
+              height: 5.4rem;
+            }
+            @media (max-width: $bp-xs) {
+              width: 4.9rem;
+              height: 4.9rem;
+            }
+          }
+          
+          &:hover {
+            color: $wh;
+
+            &:before {
+              width: 100%;
+              height: 100%;
+              right: calc(0%);
+              border-radius: 5rem;
+            }
+            
+            .shadow-inset, .shadow-inset-deep, .shadow-inset-deep2 {
+              box-shadow: inset 0 0rem 0rem rgba(0, 0, 0, 0) !important;
+            }
+
+            .shadow, .shadow-deep, .shadow-deep2 {
+              box-shadow: 0 0rem 0rem rgba(0, 0, 0, 0) !important;
+            }
+          }
+
+          .shadow-inset, .shadow, .shadow-inset-deep, .shadow-deep, .shadow-inset-deep2, .shadow-deep2 {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 5rem;
+            transition: box-shadow $transition;
           }
         }
       }

@@ -11,9 +11,9 @@ const TextSliderComponent = ({ text, type }) => {
     gsap.to('.left-content', {
       duration: 70,
       ease: 'none',
-      x: '+=400' + '%',
+      x: '+=500' + '%',
       modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % 400)
+        x: gsap.utils.unitize(x => parseFloat(x) % 500)
       },
       repeat: -1
     });
@@ -21,9 +21,9 @@ const TextSliderComponent = ({ text, type }) => {
     gsap.to('.right-content', {
       duration: 130,
       ease: 'none',
-      x: '+=400' + '%',
+      x: '+=500' + '%',
       modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % 400)
+        x: gsap.utils.unitize(x => parseFloat(x) % 500)
       },
       repeat: -1
     });
@@ -35,6 +35,9 @@ const TextSliderComponent = ({ text, type }) => {
   }, [])
 
   const typeLeft = <div className='text-slider'>
+    <div className='text-content-frame left-content'>
+      <div className='content'>{text}</div>
+    </div>
     <div className='text-content-frame left-content'>
       <div className='content'>{text}</div>
     </div>
@@ -62,6 +65,9 @@ const TextSliderComponent = ({ text, type }) => {
     <div className='text-content-frame left-content'>
       <div className='content'>{text}</div>
     </div>
+    <div className='text-content-frame left-content'>
+      <div className='content'>{text}</div>
+    </div>
   </div>
 
   const typeRight = <div className='text-slider'>
@@ -77,9 +83,15 @@ const TextSliderComponent = ({ text, type }) => {
     <div className='text-content-frame right-content'>
       <div className='content'>{text}</div>
     </div>
+    <div className='text-content-frame right-content'>
+      <div className='content'>{text}</div>
+    </div>
   </div>
 
   const typeRight2 = <div className='text-slider second-line'>
+    <div className='text-content-frame right-content'>
+      <div className='content'>{text}</div>
+    </div>
     <div className='text-content-frame right-content'>
       <div className='content'>{text}</div>
     </div>

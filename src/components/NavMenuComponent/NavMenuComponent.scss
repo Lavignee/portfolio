@@ -12,17 +12,25 @@ header, .gnb-area {
     transition: top $transition-slow;
   
     .gnb-button {
+      width: 100%;
       transition: width $transition-slow;
-  
+      mix-blend-mode: difference;
+
       &.delay {
         pointer-events: none;
+      }
+
+      svg {
+        position: absolute;
+        left: 0;
       }
   
       .menu-img {
         width: 100%;
         height: 100%;
+        transition: width $transition-slow;
         animation: rotate 25s linear infinite;
-  
+        
         &.invert {
           path {
             fill: #f9f9f9;

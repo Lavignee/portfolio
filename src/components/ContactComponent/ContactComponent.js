@@ -54,13 +54,13 @@ const ContactComponent = () => {
 
   return (
     <div className='contact-area'>
-      <div className={`contact-button${currentContactDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
+      {/* <div className={`contact-button${currentContactDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
         {currentContactState ? (
           <>Close</>
         ) : (
             <>Contact</>
           )}
-      </div>
+      </div> */}
 
       <div className={`contact-frame${currentContactState ? ' open' : ' close'}`}>
         <>

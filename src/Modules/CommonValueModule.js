@@ -3,6 +3,7 @@ const CONTACT_STATE_FALSE = 'CONTACT_STATE_FALSE';
 const CONTACT_DELAY = 'CONTACT_DELAY';
 const GNB_STATE = 'GNB_STATE';
 const GNB_DELAY = 'GNB_DELAY';
+const SWITCH_ANIMATION = 'SWITCH_ANIMATION';
 
 export const changeContactState = currentContactState => ({
   type: CONTACT_STATE,
@@ -24,13 +25,18 @@ export const changeGnbDelay = currentGnbDelay => ({
   type: GNB_DELAY,
   currentGnbDelay
 });
+export const changeSwitchAnimation = currentSwitchAnimation => ({
+  type: SWITCH_ANIMATION,
+  currentSwitchAnimation
+});
 
 /* 리덕스에서 관리 할 상태 정의 */
 const initialState = {
   currentContactState: false,
   currentContactDelay: false,
   currentGnbState: false,
-  currentGnbDelay: false
+  currentGnbDelay: false,
+  currentSwitchAnimation: false
 };
 
 const CommonValueModule = (state = initialState, action) => {
@@ -59,6 +65,11 @@ const CommonValueModule = (state = initialState, action) => {
       return {
         ...state,
         currentGnbDelay: action.currentGnbDelay
+      };
+    case SWITCH_ANIMATION:
+      return {
+        ...state,
+        currentSwitchAnimation: !state.currentSwitchAnimation
       };
     default:
       return state;

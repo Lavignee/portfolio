@@ -4,22 +4,51 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 13rem 0 55rem 0;
+  height: 50vh;
   background-color: #181818;
   transition: padding $transition-slow;
+  box-shadow: 0 0 1rem black;
 
-  @media (max-width: $bp-l) {
-    padding: 13rem 0 52rem 0;
+  .footprint-image-mask {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity $transition-slow;
+    clip-path: circle(0% at 0px 0px);
+    
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      filter: grayscale(1)
+    }
   }
-  @media (max-width: $bp-m) {
-    padding: 13rem 0 49rem 0;
-  }
-  @media (max-width: $bp-s) {
-    padding: 13rem 0 46rem 0;
+
+  &:hover {
+    .footprint-image-mask {
+      opacity: 1;
+    }
   }
 
   .footprint-title-area {
     padding-left: 33.33333333%;
+    padding-top: 6rem;
+      
+    @media (max-width: $bp-l) {
+      padding-top: 8rem;
+    }
+    @media (max-width: $bp-m) {
+      padding-top: 10rem;
+    }
+    @media (max-width: $bp-s) {
+      padding-top: 12rem;
+    }
+    @media (max-width: $bp-s) {
+      padding-top: 10rem;
+    }
 
     .footprint-content {
       position: relative;
@@ -55,26 +84,39 @@
         display: inline-block;
         text-align: right;
         right: 0;
-        top: 35rem;
+        top: 12rem;
+
+        @media (max-width: $bp-l) {
+          top: 14rem;
+        }
+        @media (max-width: $bp-m) {
+          top: 16rem;
+        }
+        @media (max-width: $bp-s) {
+          top: 18rem;
+        }
+        @media (max-width: $bp-s) {
+          top: 14rem;
+        }
 
         img {
           position: relative;
           transition: width $transition-slow;
 
           @media (max-width: $bp-xl) {
-            width: 95%;
-          }
-          @media (max-width: $bp-l) {
             width: 90%;
           }
-          @media (max-width: $bp-m) {
-            width: 85%;
-          }
-          @media (max-width: $bp-s) {
+          @media (max-width: $bp-l) {
             width: 80%;
           }
+          @media (max-width: $bp-m) {
+            width: 70%;
+          }
+          @media (max-width: $bp-s) {
+            width: 60%;
+          }
           @media (max-width: $bp-xs) {
-            width: 75%;
+            width: 50%;
           }
         }
       }
@@ -121,6 +163,7 @@
     @include f-b(24rem, transparent);
     -webkit-text-stroke: 0.1rem #656565;
     transition: font-size $transition-slow;
+    z-index: 1;
 
     @media (max-width: $bp-xl) {
       font-size: 20rem;
@@ -145,5 +188,6 @@
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 2;
   }
 }

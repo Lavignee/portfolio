@@ -1,5 +1,165 @@
 @import '../../Style/Util/util_mixins';
 
-.main-content {
-  min-width: 320px;
+%default {
+  @include center-align;
+  top: 0;
+  left: 0;
+  border-radius: 100%;
+  opacity: 0;
+  transition: opacity $transition-slow;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: difference;
+
+  &.down-cursor {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+.cursor-area {
+  .custom-cursor-back {
+    @extend %default;
+    z-index: 900;
+    width: 5rem;
+    height: 5rem;
+    @include border-a(0.1rem, $bl);
+    will-change: left, top;
+    transition: opacity $transition-slow, width $transition-fast, height $transition-fast, background-color $transition, transform $transition-fast;
+    text-align: center;
+
+    &:before {
+      content:'';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      pointer-events: none;
+      user-select: none;
+      @include border-a(0.1rem, white);
+    }
+
+    &.bl-cursor, &.wh-cursor {
+      mix-blend-mode: inherit;
+      
+      &:before {
+        opacity: 0;
+      }
+    }
+
+    &.bl-cursor, &.wh-cursor {
+      width: 10.5rem;
+      height: 10.5rem;
+      border-color: transparent;
+    }
+
+    &.bl-cursor {
+      background-color: rgba(0, 0, 0, 0.8);
+      
+      &.down-cursor {
+        background-color: $bl;
+      }
+    }
+    
+    &.wh-cursor {
+      background-color: rgba(255,255,255, 0.8);
+      
+      &.down-cursor {
+        background-color: $wh;
+      }
+    }
+
+    &.go-cursor {
+      width: 8rem;
+      height: 8rem;
+      background-color: rgba(255,255,255, 0.8);
+    }
+
+    &.pagination-cursor {
+      opacity: 0;
+    }
+  }
+  
+  .custom-cursor-info {
+    @extend %default;
+    z-index: 1000;
+    width: 1rem;
+    height: 1rem;
+    background-color: $bl;
+    will-change: left, top;
+
+    &:before {
+      content:'';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      pointer-events: none;
+      user-select: none;
+      background-color: white;
+    }
+
+    span {
+      @include center-align;
+      @include f-m(2rem, transparent);
+      font-family: 'Syncopate';
+      -webkit-text-stroke: 1px transparent;
+      transition: color $transition;
+    }
+
+    &.bl-cursor, &.wh-cursor {
+      mix-blend-mode: inherit;
+
+      &:before {
+        opacity: 0;
+      }
+    }
+
+    &.bl-cursor, &.wh-cursor {
+      background-color: transparent;
+    }
+
+    &.bl-cursor {
+      span {
+        color: $wh;
+        -webkit-text-stroke: 1px $wh;
+      }
+    }
+
+    &.wh-cursor {
+      span {
+        color: $bl;
+        -webkit-text-stroke: 1px $bl;
+      }
+    }
+
+    &.go-cursor {
+      border-style: solid;
+      border-right: none;
+      border-radius: 0;
+      border-color: $wh;
+      border-left-width: 1rem;
+      border-top-width: 1rem;
+      border-bottom-width: 1rem;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      margin-left: 0.25rem;
+      width: 0;
+      height: 0;
+      transition: width $transition, height $transition, border-width $transition;
+    }
+
+    &.focus-cursor {
+      mix-blend-mode: inherit;
+
+      &:before {
+        opacity: 0;
+      }
+    }
+  }
 }
