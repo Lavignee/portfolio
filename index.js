@@ -4,9 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import RootReducer from 'modules';
+import RootReducer from './src/modules';
 import 'i18n';
-import App from 'App';
+import App from './src/App';
 
 const store = createStore(RootReducer, composeWithDevTools());
 
