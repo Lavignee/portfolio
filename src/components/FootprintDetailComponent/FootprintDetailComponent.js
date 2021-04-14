@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import './FootprintDetailComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from '../../Modules/CommonValueModule';
+import { changeGsapState, makeSmoothScroll } from 'modules/CommonValueModule';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/effect-fade/effect-fade.scss';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
-import TextSliderComponent from '../TextSliderComponent';
+import TextSliderComponent from 'components/TextSliderComponent';
 
 SwiperCore.use([Navigation, Pagination, EffectFade]);
 
@@ -107,7 +107,7 @@ const FootprintDetailComponent = ({ onHover, onLeave }) => {
   useEffect(() => {
     if (currentGsapState) {
       ScrollTrigger.matchMedia({
-        "(max-width: 984px)": () => {
+        '(max-width: 984px)': () => {
           gsap.fromTo('.text-slider-left-area', {
             opacity: 1
           }, {

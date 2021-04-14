@@ -1,10 +1,10 @@
 import React, { memo, useEffect, useState } from 'react';
 import './SkillComponent.scss';
 import { useSelector, shallowEqual } from 'react-redux';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
-import IconSliderComponent from '../IconSliderComponent';
+import IconSliderComponent from 'components/IconSliderComponent';
 
 const SkillComponent = ({ onHover, onClick, onLeave }) => {
   const [currentGsapState, currentButtonDelay] = useSelector(state => [state.CommonValueModule.currentGsapState, state.CommonValueModule.currentButtonDelay], shallowEqual);

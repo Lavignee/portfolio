@@ -87,7 +87,7 @@ const VideoToCanvasComponent = ({ src, resolX, resolY, canvasReady }) => {
       // console.log('pauseVid 2.video.paused = ' + video.paused)
       // console.log('pauseVid 2.test2Ref.current = ' + test2Ref.current)
       // if (!video.paused && test2Ref.current) {
-      //   console.log("pause!!")
+      //   console.log('pause!!')
       //   video.removeEventListener('play', () => draw(video, context, numbers), false)
       //   video.pause();
       //   test2Ref.current = false;

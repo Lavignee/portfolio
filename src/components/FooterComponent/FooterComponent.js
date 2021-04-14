@@ -1,6 +1,6 @@
 import React from 'react';
 import './FooterComponent.scss';
-// import LanguageSelectorsComponent from '../languageSelectorsComponent';
+// import LanguageSelectorsComponent from 'components/languageSelectorsComponent';
 
 const FooterComponent = () => {
   return (

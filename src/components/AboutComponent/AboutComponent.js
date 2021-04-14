@@ -1,11 +1,11 @@
 import React, { memo, useState, useRef, useEffect } from 'react';
-import aboutOne from '../../Static/images/about-one.jpg';
-import aboutTwo from '../../Static/images/about-two.jpg';
-import aboutThree from '../../Static/images/about-three.jpg';
+import aboutOne from 'static/images/about-one.jpg';
+import aboutTwo from 'static/images/about-two.jpg';
+import aboutThree from 'static/images/about-three.jpg';
 import './AboutComponent.scss';
 import { useSelector, shallowEqual } from 'react-redux';
 import { isDesktop, isMobile } from 'react-device-detect';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -205,7 +205,7 @@ const AboutComponent = ({ onHover, onClick, onLeaves }) => {
     }
 
     ScrollTrigger.matchMedia({
-      "(min-width: 769px)": () => {
+      '(min-width: 769px)': () => {
         gsap.fromTo('.about-title', {
           yPercent: -250,
           textShadow: '0 5rem 1rem rgba(0,0,0,0.3)'
@@ -241,7 +241,7 @@ const AboutComponent = ({ onHover, onClick, onLeaves }) => {
         });
       },
 
-      "(max-width: 768px)": () => {
+      '(max-width: 768px)': () => {
         gsap.fromTo('.about-title', {
           yPercent: -350,
           textShadow: '0 2.5rem 1rem rgba(0,0,0,0.3)'

@@ -1,16 +1,16 @@
 import React, { memo, useEffect, useState } from 'react';
-// import src1920 from '../../Static/videos/video1920.mp4';
-import src1280 from '../../Static/videos/video1280.mp4';
-import src640 from '../../Static/videos/video640.mp4';
+// import src1920 from 'static/videos/video1920.mp4';
+import src1280 from 'static/videos/video1280.mp4';
+import src640 from 'static/videos/video640.mp4';
 import './MainComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart } from '../../Modules/CommonValueModule';
+import { splitTextStart } from 'modules/CommonValueModule';
 import { Trans, withTranslation } from 'react-i18next';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
-import VideoToCanvasComponent from '../VideoToCanvasComponent';
-import SplitTextComponent from '../SplitTextComponent';
+import VideoToCanvasComponent from 'components/VideoToCanvasComponent';
+import SplitTextComponent from 'components/SplitTextComponent';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -141,7 +141,7 @@ const MainComponent = () => {
       <div className='main-background'>
         <div className='background'></div>
         {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
-        {matchMedia("screen and (min-width: 985px)").matches ? (
+        {matchMedia('screen and (min-width: 985px)').matches ? (
           // <VideoToCanvasComponent VideoSource={src1920} resolX={1920} resolY={1080} />
           <VideoToCanvasComponent src={src1280} resolX={1280} resolY={720} canvasReady={canvasReady} />
         ) : (
@@ -171,4 +171,4 @@ const MainComponent = () => {
   )
 }
 
-export default memo(withTranslation("translations")(MainComponent));
+export default memo(withTranslation('translations')(MainComponent));

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import svg from '../../static/images/icon-svg.json';
+import svg from 'static/images/icon-svg.json';
 import './IconSliderComponent.scss';
 import { gsap } from 'gsap';
-import useWindowSize from "../../utils/useWindowSize";
+import useWindowSize from 'utils/useWindowSize';
 
 const IconsliderComponent = ({ sliderTrigger }) => {
   const { height } = useWindowSize();

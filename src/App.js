@@ -1,20 +1,20 @@
 import React from 'react';
-import './style/index.scss';
+import 'style/index.scss';
 import { useDispatch } from 'react-redux';
-import { changeSwitchAnimation, changeButtonDelay, smoothTop, changeSmoothScrollState } from './Modules/CommonValueModule';
-import { changeClassName, changeSecondClassName, changeText } from './Modules/CursorModule';
+import { changeSwitchAnimation, changeButtonDelay, smoothTop, changeSmoothScrollState } from 'modules/CommonValueModule';
+import { changeClassName, changeSecondClassName, changeText } from 'modules/CursorModule';
 import { useHistory } from 'react-router-dom';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
-import CustomCursorComponent from './Components/CustomCursorComponent'
-import HeaderComponent from './Components/HeaderComponent';
-import SmoothScrollComponent from './Components/SmoothScrollComponent';
-import ContentSwitcherComponent from './Components/ContentSwitcherComponent';
-import ContactComponent from './Components/ContactComponent';
-import SwitchAnimationComponent from './Components/SwitchAnimationComponent';
-// import ScrollValueAnimationComponent from './Components/ScrollValueAnimationComponent';
-import FilmEffectComponent from './components/FilmEffectComponent';
+import CustomCursorComponent from 'components/CustomCursorComponent'
+import HeaderComponent from 'components/HeaderComponent';
+import SmoothScrollComponent from 'components/SmoothScrollComponent';
+import ContentSwitcherComponent from 'components/ContentSwitcherComponent';
+import ContactComponent from 'components/ContactComponent';
+import SwitchAnimationComponent from 'components/SwitchAnimationComponent';
+// import ScrollValueAnimationComponent from 'components/ScrollValueAnimationComponent';
+import FilmEffectComponent from 'components/FilmEffectComponent';
 
 const App = () => {
   const dispatch = useDispatch();

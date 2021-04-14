@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import svg from '../../static/images/icon-svg.json';
+import svg from 'static/images/icon-svg.json';
 import './SkillDetailComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeGsapState } from '../../Modules/CommonValueModule';
+import { changeGsapState } from 'modules/CommonValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import { isDesktop } from 'react-device-detect';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -231,17 +231,17 @@ const SkillDetailComponent = ({ match, onHover, onLeave, pageTimer }) => {
 
   const scrollSkew = () => {
     let proxy = { skew: 0 },
-      skewSetter = gsap.quickSetter(".list", "skewY", "deg"),
+      skewSetter = gsap.quickSetter('.list', 'skewY', 'deg'),
       clamp = gsap.utils.clamp(-20, 20);
 
     ScrollTrigger.create({
-      scroller: ".skill-list",
+      scroller: '.skill-list',
 
       onUpdate: (self) => {
         let skew = clamp(self.getVelocity() / -200);
         if (Math.abs(skew) > Math.abs(proxy.skew)) {
           proxy.skew = skew;
-          gsap.to(proxy, { skew: 0, duration: 0.3, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
+          gsap.to(proxy, { skew: 0, duration: 0.3, ease: 'power3', overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
         }
       }
     });

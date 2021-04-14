@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import './CustomCursorComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeSecondClassName } from '../../Modules/CursorModule';
+import { changeSecondClassName } from 'modules/CursorModule';
 import { isDesktop } from 'react-device-detect';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 
 const CustomCursorComponent = ({ children }) => {
   const dispatch = useDispatch();

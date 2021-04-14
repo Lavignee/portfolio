@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import kakaoIcon from '../../Static/images/kakao-icon.svg';
-import mobileIcon from '../../Static/images/mobile-icon.svg';
-import mailIcon from '../../Static/images/mail-icon.svg';
+import kakaoIcon from 'static/images/kakao-icon.svg';
+import mobileIcon from 'static/images/mobile-icon.svg';
+import mailIcon from 'static/images/mail-icon.svg';
 import './ContactComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-// import { changeContactState, changeContactButtonDelay } from '../../Modules/CommonValueModule';
-import CustomInputComposition from '../../compositions/CustomInputComposition';
-import CustomTextareaComposition from '../../compositions/CustomTextareaComposition';
-import CustomButtonComposition from '../../compositions/CustomButtonComposition';
-import SplitTextComponent from '../SplitTextComponent';
-import useInterval from "../../utils/useInterval";
+// import { changeContactState, changeContactButtonDelay } from 'modules/CommonValueModule';
+import CustomInputComposition from 'compositions/CustomInputComposition';
+import CustomTextareaComposition from 'compositions/CustomTextareaComposition';
+import CustomButtonComposition from 'compositions/CustomButtonComposition';
+import SplitTextComponent from 'components/SplitTextComponent';
+import useInterval from 'utils/useInterval';
 
 const ContactComponent = () => {
   // const dispatch = useDispatch();

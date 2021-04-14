@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './SmoothScrollComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeGsapState, smoothTop, makeSmoothScroll, changeSmoothScrollState, changeSmoothScrollStateFast, changeContactStateFalse, changeGnbState, checkScrollValue, checkScrollLimit } from '../../Modules/CommonValueModule';
+import { changeGsapState, smoothTop, makeSmoothScroll, changeSmoothScrollState, changeSmoothScrollStateFast, changeContactStateFalse, changeGnbState, checkScrollValue, checkScrollLimit } from 'modules/CommonValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import { isDesktop } from 'react-device-detect';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 

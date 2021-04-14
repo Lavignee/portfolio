@@ -1,15 +1,15 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
-import child from '../../Static/images/child.jpg';
-import shop1 from '../../Static/images/shop1.jpg';
-import shop2 from '../../Static/images/shop2.jpg';
-import shop3 from '../../Static/images/shop3.jpg';
-import shop4 from '../../Static/images/shop4.jpg';
-import current from '../../Static/images/about-one.jpg';
+import child from 'static/images/child.jpg';
+import shop1 from 'static/images/shop1.jpg';
+import shop2 from 'static/images/shop2.jpg';
+import shop3 from 'static/images/shop3.jpg';
+import shop4 from 'static/images/shop4.jpg';
+import current from 'static/images/about-one.jpg';
 import './AboutDetailComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { makeSmoothScroll, changeGsapState, splitTextStart } from '../../Modules/CommonValueModule';
+import { makeSmoothScroll, changeGsapState, splitTextStart } from 'modules/CommonValueModule';
 import Scrollbar from 'smooth-scrollbar';
-import useWindowSize from "../../utils/useWindowSize";
+import useWindowSize from 'utils/useWindowSize';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 SwiperCore.use([Navigation, Pagination, EffectFade]);
@@ -17,10 +17,10 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/effect-fade/effect-fade.scss';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
-import SplitTextComponent from '../SplitTextComponent';
+import SplitTextComponent from 'components/SplitTextComponent';
 
 const aboutContent = [
   {
@@ -141,7 +141,7 @@ const AboutDetailComponent = ({ onHover, onLeave }) => {
     });
 
     ScrollTrigger.matchMedia({
-      "(min-width: 769px)": () => {
+      '(min-width: 769px)': () => {
         gsap.to('.photo-area', {
           scrollTrigger: {
             trigger: '.photo-area',

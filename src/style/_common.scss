@@ -1,5 +1,5 @@
-@import '../Style/Util/pallet';
-@import '../Style/Util/util_mixins';
+@import 'pallet';
+@import 'util_mixins';
 
 html,
 body {
@@ -96,7 +96,7 @@ header {
     mix-blend-mode: difference;
 
     // &:before{
-    //   content: "";
+    //   content: '';
     //   position: absolute;
     //   top: 0;
     //   left: 0;
@@ -116,7 +116,7 @@ header {
       background-color: $bl;
 
       &:before{
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         left: 0;

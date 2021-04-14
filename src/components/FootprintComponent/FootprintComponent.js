@@ -1,12 +1,12 @@
 import React, { memo, useState, useRef } from 'react';
-import footprintCircle from '../../Static/images/footprint-circle.svg';
-import footprintArrow from '../../Static/images/footprint-arrow.svg';
-import footprint from '../../Static/images/footprint.jpg';
+import footprintCircle from 'static/images/footprint-circle.svg';
+import footprintArrow from 'static/images/footprint-arrow.svg';
+import footprint from 'static/images/footprint.jpg';
 import './FootprintComponent.scss';
 import { useSelector, shallowEqual } from 'react-redux';
 import { isDesktop } from 'react-device-detect';
-import { gsap } from "gsap";
-import FooterComponent from '../FooterComponent';
+import { gsap } from 'gsap';
+import FooterComponent from 'components/FooterComponent';
 
 const FootprintComponent = ({ onHover, onClick, onLeave }) => {
   const [currentButtonDelay] = useSelector(state => [state.CommonValueModule.currentButtonDelay], shallowEqual);
@@ -26,7 +26,7 @@ const FootprintComponent = ({ onHover, onClick, onLeave }) => {
     <>
       <section id='footprint' className='container-fluid footprint-section' onMouseEnter={() => setClipPathReady(true)} onMouseMove={(e) => footprintMoveCircle(e)} onMouseLeave={() => setClipPathReady(false)}>
         <div className={`footprint-image-mask${clipPathReady ? ' will-change' : ''}`} ref={footprintCursorRef} >
-          <img src={footprint} alt="footprint" />
+          <img src={footprint} alt='footprint' />
         </div>
 
         <div className='container footprint-title-area'>

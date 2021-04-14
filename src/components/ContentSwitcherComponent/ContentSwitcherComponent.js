@@ -1,11 +1,11 @@
 import React from 'react';
 import './ContentSwitcherComponent.scss';
 import { Switch, Route } from 'react-router-dom';
-import HomeComponent from '../../Components/HomeComponent';
-import AboutDetailComponent from '../../Components/AboutDetailComponent';
-import SkillDetailComponent from '../../Components/SkillDetailComponent';
-import FootprintDetailComponent from '../../Components/FootprintDetailComponent';
-import NotFoundComponent from '../../Components/NotFoundComponent';
+import HomeComponent from 'components/HomeComponent';
+import AboutDetailComponent from 'components/AboutDetailComponent';
+import SkillDetailComponent from 'components/SkillDetailComponent';
+import FootprintDetailComponent from 'components/FootprintDetailComponent';
+import NotFoundComponent from 'components/NotFoundComponent';
 
 const ContentSwitcherComponent = ({ onHover, onClick, onLeave, pageTimer }) => {
   return (
