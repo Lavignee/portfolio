@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './HeaderComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeContactState, changeContactStateFalse, changeGnbState, changeSmoothScrollStateFast } from './modules/CommonValueModule';
+import { changeContactState, changeContactStateFalse, changeGnbState, changeSmoothScrollStateFast } from '../../modules/CommonValueModule';
 import { useHistory } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

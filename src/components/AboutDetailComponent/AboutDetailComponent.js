@@ -7,7 +7,7 @@ import shop4 from 'static/images/shop4.jpg';
 import current from 'static/images/about-one.jpg';
 import './AboutDetailComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { makeSmoothScroll, changeGsapState, splitTextStart } from './modules/CommonValueModule';
+import { makeSmoothScroll, changeGsapState, splitTextStart } from '../../modules/CommonValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import useWindowSize from 'utils/useWindowSize';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';

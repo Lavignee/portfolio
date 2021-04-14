@@ -13,7 +13,7 @@
           "@compositions": "./compositions",
           "@static": "./static",
           "@style": "./style",
-          "@modules": "./modules",
+          "@modules": "../../modules",
           "@utils": "./utils"
         }
       }

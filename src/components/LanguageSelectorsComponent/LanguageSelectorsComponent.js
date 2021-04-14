@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './LanguageSelectorsComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeLanguage } from './modules/CommonValueModule';
+import { changeLanguage } from '../../modules/CommonValueModule';
 import i18n from 'i18next';
 
 const languages = [

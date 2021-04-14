@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './HomeComponent.scss';
 import { useDispatch } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from './modules/CommonValueModule';
+import { changeGsapState, makeSmoothScroll } from '../../modules/CommonValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import MainComponent from 'components/MainComponent';
 import AboutComponent from 'components/AboutComponent';

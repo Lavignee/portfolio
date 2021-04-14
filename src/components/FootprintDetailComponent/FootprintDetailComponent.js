@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './FootprintDetailComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from './modules/CommonValueModule';
+import { changeGsapState, makeSmoothScroll } from '../../modules/CommonValueModule';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
