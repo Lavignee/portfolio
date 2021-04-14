@@ -24,6 +24,10 @@
 
     &.will-change {
       will-change: contents;
+      
+      .split-target {
+        will-change: transform;
+      }
     }
   }
 
@@ -95,8 +99,4 @@
   //     }
   //   }
   // }
-
-  &.will-change {
-    will-change: contents;
-  }
 }

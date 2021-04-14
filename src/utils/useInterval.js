@@ -8,13 +8,11 @@ const useInterval = (callback, delay) => {
   });
 
   useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-
     if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      const tick = setInterval(() => {
+        savedCallback.current();
+      }, delay)
+      return () => clearInterval(tick);
     }
   }, [delay]);
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeLanguage } from '../../Modules/LanguageModule';
-import i18n from "i18next";
 import './LanguageSelectorsComponent.scss';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { changeLanguage } from '../../Modules/CommonValueModule';
+import i18n from "i18next";
 
 const languages = [
   {
@@ -20,9 +20,7 @@ const languages = [
 const LanguageSelectorsComponent = () => {
   const dispatch = useDispatch();
   const onChangeLanguage = (lang) => dispatch(changeLanguage(lang));
-  const { language } = useSelector(state => ({
-    language: state.LanguageModule.language
-  }));
+  const [language] = useSelector(state => [state.CommonValueModule.language], shallowEqual);
 
   const [currentLang, setCurrentLang] = useState('');
   const [LangList, setLangList] = useState(false);

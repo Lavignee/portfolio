@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
 import './SplitTextComponent.scss';
+import { useSelector, shallowEqual } from 'react-redux';
 
-const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay, depth, noContainer }) => {
-  const { scrollValue } = useSelector(state => ({
-    scrollValue: state.ScrollValueModule.scrollValue
-  }));
+const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay, ready, depth, noContainer }) => {
+  const [currentSplitText] = useSelector(state => [state.CommonValueModule.currentSplitText], shallowEqual);
 
   let childrenLength = 1;
-  const [willChange, setWillChange] = useState(null);
+  const [willChange, setWillChange] = useState(false);
   const [happen, setHappen] = useState([]);
   const [split, setSplit] = useState([])
+  const splittingTimer = useRef(null)
 
   const Splitting = () => {
     {
@@ -29,34 +28,52 @@ const SplitTextComponent = ({ children, scroll, index, animation, setTime, delay
       )
     }
     if (childrenLength < children.length + 1) {
-      setTimeout(() => {
+      splittingTimer.current = setTimeout(() => {
         Splitting();
-      }, setTime ? setTime : 30)
-    } else {
-      setWillChange(null)
+      }, setTime ? setTime : 30);
+      return () => {
+        clearTimeout(splittingTimer.current);
+        splittingTimer.current = null;
+      }
     }
   }
 
   const SplittingReady = () => {
-    if (scrollValue === scroll && !happen.includes(scrollValue) || scroll === 'all') {
-      setWillChange(true);
+    if (currentSplitText === scroll && !happen.includes(currentSplitText) || scroll === 'all') {
       Splitting();
-      setHappen(...happen, [scrollValue])
+      setHappen(...happen, [currentSplitText])
     }
   }
 
   useEffect(() => {
+    return () => {
+      clearTimeout(splittingTimer.current);
+      splittingTimer.current = null;
+    }
+  }, [])
+
+  useEffect(() => {
+    splittingTimer.current = null;
     SplittingReady();
-  }, [scrollValue])
+
+    return () => splittingTimer.current = null;
+  }, [currentSplitText])
+
+  useEffect(() => {
+    if (ready) {
+      setWillChange(true)
+    }
+    return () => setWillChange(false)
+  }, [ready])
 
   return (
-    <div className={`split-frame${willChange && noContainer ? ' will-change' : ''}${delay ? ` delay-${delay}` : ''}`}>
+    <div className={`split-frame${delay ? ` delay-${delay}` : ''}`}>
       {noContainer ? (
         { split }
       ) : (
         <>
           <div className='origin-size-container'>{children}</div>
-          <div className={`animation-container${willChange && !noContainer ? ' will-change' : ''}`}>
+          <div className={`animation-container${willChange ? ' will-change' : ''}`}>
             {split}
           </div>
         </>

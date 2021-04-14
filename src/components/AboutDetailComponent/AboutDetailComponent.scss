@@ -1,6 +1,9 @@
 @import '../../Style/Util/util_mixins';
 
 .about-detail {
+  background-color: $wh;
+  overflow-x: hidden;
+  
   .about-keywords {
     position: relative;
     height: 100vh;
@@ -21,16 +24,53 @@
       width: 100%;
       padding-top: 4rem;
       padding-bottom: 4rem;
+
+      @media (max-width: $bp-m) {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+      @media (max-width: $bp-s) {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+      @media (max-width: $bp-xs) {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
   
       h2 {
         color: $bl;
         white-space: nowrap;
+        @media (max-width: $bp-m) {
+          font-size: 3.5rem;
+        }
+        @media (max-width: $bp-s) {
+          font-size: 3rem;
+        }
+        @media (max-width: $bp-xs) {
+          font-size: 2.5rem;
+        }
       }
   
       .type-p {
         margin-top: 2rem;
         margin-bottom: 6rem;
         @include f-l(2rem, $bl, 3rem);
+
+        @media (max-width: $bp-m) {
+          font-size: 1.8rem;
+          margin-bottom: 4rem;
+        }
+        @media (max-width: $bp-s) {
+          font-size: 1.6rem;
+          margin-top: 1.5rem;
+          margin-bottom: 2rem;
+        }
+        @media (max-width: $bp-xs) {
+          font-size: 1.4rem;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
       }
 
       .position-frame {
@@ -43,7 +83,7 @@
 
         span {
           font-family: 'Syncopate';
-          @include f-b(14rem, #ddd);
+          @include f-b(14rem, $s-l);
 
           @media (max-width: $bp-w) {
             font-size: 13rem;
@@ -58,16 +98,23 @@
             font-size: 10rem;
           }
           @media (max-width: $bp-s) {
-            font-size: 9rem;
+            font-size: 8rem;
           }
           @media (max-width: $bp-xs) {
-            font-size: 8rem;
+            font-size: 7rem;
           }
         }
   
         &.left {
           right: 0;
         }
+
+        &.center {
+          @include center-align;
+          width: 100%;
+          text-align: center;
+        }
+
         &.right {
           left: 0;
         }
@@ -76,145 +123,113 @@
   }
 
   .about-background {
-    padding-bottom: 25rem;
-    background-color: #f6f6f6;
+    padding-bottom: 35rem;
+    background-color: $s-l;
+    overflow: hidden;
 
-      .mobile-trigger {
-        @media (max-width: $bp-m) {
-          // padding-top: 50vh;
-        }
+    .photo-area {
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      width: 41.66666667%;
+      height: 33%;
+      margin-top: 20rem;
 
-        &.fixed {
-          padding-top: 40vh;
-          
-          .photo-area {
-            @include horizontal-align(fixed);
-            top: 0;
-            z-index: 1;
-            background-color: #f6f6f6;
-          }
+      > img {
+        width: 70%;
+      }
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: -72px;
+        right: 50%;
+        z-index: -1;
+        width: 100%;
+        height: calc(100vh - 72px);
+        background-color: $wh;
+      }
+
+      .swiper-container {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        padding-bottom: 4rem;
+      }
+
+      .first-image, .second-images, .third-image {
+        transition: opacity $transition;
+        @include horizontal-align;
+      }
+      
+      .second-images, .third-image {
+        opacity: 0;
+        pointer-events: none;
+        margin-top: $headerHeight;
+
+        &.view {
+          opacity: 1;
+          pointer-events: initial;
         }
       }
 
-      .photo-area {
-        @media (min-width: $bp-m-min) {
+      .third-image {
+        margin-top: $headerHeight * 2 ;
+      }
+    }
+
+    .swiper-container {
+      .swiper-button-prev, .swiper-button-next {
+        width: 50%;
+        height: calc(100% - 5rem);
+        top: 5rem;
+        color: $p-d;
+        cursor: none;
+    
+        &:after {
           position: absolute;
-          z-index: 1;
-          width: 41.66666667%;
-          height: 33%;
-          margin-top: -20rem;
-
-          > img {
-            width: 70%;
-          }
-        }
-
-        @media (max-width: $bp-m) {
-          position: relative;
-          width: 100%;
-          height: 40vh;
-          margin: 0 auto;
-
-          > img {
-            width: 29rem;
-          }
-        }
-
-        &:before {
-          @media (min-width: $bp-m-min) {
-            content: '';
-            position: absolute;
-            top: -72px;
-            right: 50%;
-            z-index: -1;
-            width: 100%;
-            height: calc(100vh - 72px);
-            background-color: $wh;
-          }
-        }
-
-        .swiper-container {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            padding-bottom: 4rem;
-          
-            .swiper-button-prev, .swiper-button-next {
-              width: 50%;
-              height: calc(100% - 5rem);
-              top: 5rem;
-              color: #181818;
-          
-              &:after {
-                position: absolute;
-              }
-            }
-
-            .swiper-button-prev {
-              left: 0;
-          
-              &:after {
-                left: 0;
-              }
-            }
-          
-            .swiper-button-next {
-              right: 0;
-          
-              &:after {
-                right: 0;
-              }
-            }
-
-          .swiper-pagination-bullet {
-            width: 4rem;
-            height: .5rem;
-            border-radius: 0;
-            opacity: 1;
-            background-color: #c4c4c4;
-            
-            &.swiper-pagination-bullet-active {
-              background-color: #181818;
-            }
-          }
-
-          .swiper-slide {
-            position: relative;
-            text-align: center;
-
-            img {
-              margin-top: -1rem;
-              width: 70%;
-            }
-          }
-        }
-
-        .first-image, .second-images, .third-image {
-          transition: opacity $transition;
-          @include horizontal-align;
-
-          @media (max-width: $bp-m) {
-            @include center-align;
-          }
-        }
-        
-        .second-images, .third-image {
-          opacity: 0;
-          @media (min-width: $bp-m-min) {
-            margin-top: $headerHeight;
-          }
-
-          &.view {
-            opacity: 1;
-          }
-        }
-
-        .third-image {
-          @media (min-width: $bp-m-min) {
-            margin-top: $headerHeight * 2 ;
-          }
         }
       }
+
+      .swiper-button-prev {
+        left: 0;
+    
+        &:after {
+          left: 0;
+        }
+      }
+    
+      .swiper-button-next {
+        right: 0;
+    
+        &:after {
+          right: 0;
+        }
+      }
+
+      .swiper-pagination-bullet {
+        width: 4rem;
+        height: .5rem;
+        border-radius: 0;
+        opacity: 1;
+        background-color: $s-m;
+        cursor: none;
+        
+        &.swiper-pagination-bullet-active {
+          background-color: $p-d;
+        }
+      }
+
+      .swiper-slide {
+        position: relative;
+        text-align: center;
+
+        img {
+          margin-top: -1rem;
+          width: 70%;
+        }
+      }
+    }
 
     .background-title-frame {
       position: relative;
@@ -234,7 +249,7 @@
 
       h2 {
         font-family: 'Syncopate';
-        @include f-b(6.4rem, #ececec);
+        @include f-b(6.4rem, $s-m);
 
         @media (max-width: $bp-m) {
           font-size: 5.4rem;
@@ -245,7 +260,7 @@
           width: 100%;
           max-width: 0%;
           top: 0;
-          color: #181818;
+          color: $p-d;
           overflow: hidden;
           transition: max-width $transition-vSlow;
         }
@@ -264,11 +279,31 @@
       h3 {
         padding-top: 17.2rem;
         padding-bottom: 2rem;
-        @include f-r(2.8rem, #181818);
+        @include f-r(2.8rem, $p-d);
+
+        @media (max-width: $bp-m) {
+          padding-top: 0;
+        }
       }
 
       p {
-        @include f-r(2rem, #181818, 4rem)
+        @include f-r(2rem, $p-d, 4rem)
+      }
+
+      img {
+        @media (max-width: $bp-m) {
+          display: block;
+          width: 50%;
+          margin: 4rem auto 2rem;
+        }
+      }
+      .swiper-container {
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+
+        .swiper-pagination {
+          bottom: 2px;
+        }
       }
     }
   }

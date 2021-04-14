@@ -13,261 +13,15 @@
     left: 0;
     width: 100%;
     height: 180vh;
-    box-shadow: inset 0 0 3rem $bl;
 
     .background {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       z-index: -1;
       width: 100%;
       height: 100%;
       background: center / cover url(#{$img-url}main1920.jpg);
-    }
-
-    .video-area {
-      .canvas-frame {
-        @include center-align;
-        display: inline-block;
-        z-index: -1;
-        overflow: hidden;
-        will-change: transform;
-        box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.3);
-        filter: grayscale(1);
-
-        &:before {
-          position: absolute;
-          left: 0;
-          top: 0;
-          content: '';
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-          transition: background-color $transition-slow;
-        }
-    
-        &.target1 {
-          width: 50%;
-          margin-top: -20%;
-          margin-left: -10%;
-          @media (max-width: $bp-fw) {
-            margin-top: -30%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: -40%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: -60%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: -80%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -110%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -140%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -120%;
-          }
-        }
-        
-        &.target2 {
-          width: 35%;
-          margin-top: -10%;
-          margin-left: -30%;
-          @media (max-width: $bp-fw) {
-            margin-top: -20%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: -30%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: -50%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: -70%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -100%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -130%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -110%;
-          }
-        }
-        
-        &.target3 {
-          width: 25%;
-          margin-top: -13%;
-          margin-left: 30%;
-          @media (max-width: $bp-fw) {
-            margin-top: -23%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: -33%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: -53%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: -73%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -103%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -133%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -113%;
-          }
-        }
-        
-        &.target4 {
-          width: 40%;
-          margin-top: 5%;
-          margin-left: 20%;
-          @media (max-width: $bp-fw) {
-            margin-top: -5%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: -15%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: -35%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: -55%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -85%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -115%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -95%;
-          }
-        }
-        
-        &.target5 {
-          width: 30%;
-          margin-top: 15%;
-          margin-left: -20%;
-          @media (max-width: $bp-fw) {
-            margin-top: 5%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: -5%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: -15%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: -25%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -35%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -45%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -35%;
-          }
-        }
-        
-        &.target6 {
-          width: 25%;
-          margin-top: 25%;
-          margin-left: -30%;
-          @media (max-width: $bp-fw) {
-            margin-top: 15%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: 5%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: -5%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: -15%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -25%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -35%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -25%;
-          }
-        }
-    
-        &.target7 {
-          width: 20%;
-          margin-top: 50%;
-          margin-left: 25%;
-          @media (max-width: $bp-fw) {
-            margin-top: 40%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: 30%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: 20%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: 10%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: 0%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -10%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: 0%;
-          }
-        }
-        
-        &.target8 {
-          width: 15%;
-          margin-top: 40%;
-          margin-left: 10%;
-          @media (max-width: $bp-fw) {
-            margin-top: 30%;
-          }
-          @media (max-width: $bp-w) {
-            margin-top: 20%;
-          }
-          @media (max-width: $bp-xl) {
-            margin-top: 10%;
-          }
-          @media (max-width: $bp-l) {
-            margin-top: 0%;
-          }
-          @media (max-width: $bp-m) {
-            margin-top: -10%;
-          }
-          @media (max-width: $bp-s) {
-            margin-top: -20%;
-          }
-          @media (max-width: $bp-xs) {
-            margin-top: -10%;
-          }
-        }
-    
-        canvas {
-          width: 100%;
-          height: 100%;
-          display: block;
-        }
-      }
     }
   }
 
@@ -283,6 +37,7 @@
       .main-text {
         display: inline-block;
         @include vertical-align(relative);
+        // animation: neon 2s ease-in-out infinite alternate;
         
         span {
           display: block;
@@ -292,13 +47,16 @@
           transition: font-size $transition-slow;
           
           @media (max-width: $bp-l) {
-            @include f-r(3.1rem, $wh, $ls: 3px);
+            font-size: 3.1rem;
+            letter-spacing: 3px;
           }
           @media (max-width: $bp-m) {
-            @include f-r(2.6rem, $wh, $ls: 2.5px);
+            font-size: 2.6rem;
+            letter-spacing: 2.5px;
           }
           @media (max-width: $bp-s) {
-            @include f-r(2.1rem, $wh, $ls: 2px);
+            font-size: 2.1rem;
+            letter-spacing: 2px;
           }
         }
         
@@ -308,13 +66,13 @@
           transition: font-size $transition-slow;
           
           @media (max-width: $bp-l) {
-            @include f-b(8.1rem, $wh);
+            font-size: 8.1rem
           }
           @media (max-width: $bp-m) {
-            @include f-b(6.6rem, $wh);
+            font-size: 6.6rem
           }
           @media (max-width: $bp-s) {
-            @include f-b(4.1rem, $wh);
+            font-size: 4.1rem
           }
         }
       }

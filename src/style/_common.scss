@@ -3,11 +3,11 @@
 
 html,
 body {
+  min-width: 320px;
   font-size: 6.5px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-kerning: auto;
-  min-width: 320px;
   overflow-y: hidden !important;
   
   @media (min-width: $bp-xs-min) {
@@ -38,6 +38,16 @@ body {
       opacity: 1;
     }
   }
+
+  ::-moz-selection {
+    color: $s-l;
+    background: $p-m;
+  }
+  
+  ::selection {
+    color: $s-l;
+    background: $p-m;
+  }
 }
 
 html,
@@ -51,44 +61,92 @@ header {
 }
 
 #root {
-  width: 100vw;
-  min-width: 320px;
-  height: 100vh;
-  overflow-y: auto;
+  // width: 100vw;
+  // min-width: 320px;
+  // height: 100vh;
+  height: 100%;
+  // overflow-y: auto;
+  overflow: hidden;
 
   @media (min-width: 320px) {
     overflow-x: hidden;
   }
-}
-
-main {
-  // min-width: 338px;
-
-  .ko {
-  //   .split-depth-frame,
-  //   .split-target {
-  //     min-width: 0.5rem;
-  //   }
+  &::-webkit-scrollbar {
+    width: 0;
+    opacity: 0;
   }
-
-  .en {
-  //   .split-depth-frame,
-  //   .split-target {
-  //     min-width: 0.5rem;
-  //   }
+  &::-webkit-scrollbar-thumb {
+    opacity: 0;
+  }
+  &::-webkit-scrollbar-track {
+    opacity: 0;
   }
 }
 
-.transition-group {
-  position: relative;
-  width: 100vw;
-  min-width: 320px;
+.smooth-scroll-frame {
   height: 100vh;
 
-  > div {
-    position: absolute;
-    width: 100%;
+  .scroll-content {
+    will-change: transform;
   }
+
+  .scrollbar-track {
+    // background-color: $bl;
+    background-color: transparent;
+    mix-blend-mode: difference;
+
+    // &:before{
+    //   content: "";
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 100%;
+    //   border-radius: inherit;
+    //   pointer-events: none;
+    //   -webkit-user-select: none;
+    //   -moz-user-select: none;
+    //   -ms-user-select: none;
+    //   user-select: none;
+    //   background-color: $wh;
+    // }
+
+    .scrollbar-thumb {
+      mix-blend-mode: difference;
+      background-color: $bl;
+
+      &:before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        pointer-events: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: white;
+      }
+    }
+  }
+  
+}
+
+.ko {
+//   .split-depth-frame,
+//   .split-target {
+//     min-width: 0.5rem;
+//   }
+}
+
+.en {
+//   .split-depth-frame,
+//   .split-target {
+//     min-width: 0.5rem;
+//   }
 }
 
 h1 {

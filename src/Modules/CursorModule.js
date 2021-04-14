@@ -15,7 +15,6 @@ export const changeSecondClassName = secondClassName => ({
   secondClassName
 });
 
-/* 리덕스에서 관리 할 상태 정의 */
 const initialState = {
   text: null,
   className: '',

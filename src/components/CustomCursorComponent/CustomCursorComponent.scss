@@ -11,10 +11,8 @@
   user-select: none;
   mix-blend-mode: difference;
 
-  &.down-cursor {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+  &.hide {
+    opacity: 0;
   }
 }
 
@@ -24,10 +22,14 @@
     z-index: 900;
     width: 5rem;
     height: 5rem;
-    @include border-a(0.1rem, $bl);
+    @include border-a($bl, 0.1rem);
     will-change: left, top;
     transition: opacity $transition-slow, width $transition-fast, height $transition-fast, background-color $transition, transform $transition-fast;
     text-align: center;
+
+    &.down-cursor {
+      transform: translate(-50%, -50%) scale(0.5);
+    }
 
     &:before {
       content:'';
@@ -39,7 +41,7 @@
       border-radius: 100%;
       pointer-events: none;
       user-select: none;
-      @include border-a(0.1rem, white);
+      @include border-a($wh, 0.1rem);
     }
 
     &.bl-cursor, &.wh-cursor {
@@ -57,7 +59,7 @@
     }
 
     &.bl-cursor {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: $bl-8;
       
       &.down-cursor {
         background-color: $bl;
@@ -65,7 +67,7 @@
     }
     
     &.wh-cursor {
-      background-color: rgba(255,255,255, 0.8);
+      background-color: $wh-8;
       
       &.down-cursor {
         background-color: $wh;
@@ -75,7 +77,7 @@
     &.go-cursor {
       width: 8rem;
       height: 8rem;
-      background-color: rgba(255,255,255, 0.8);
+      background-color: $wh-8;
     }
 
     &.pagination-cursor {
@@ -89,6 +91,7 @@
     width: 1rem;
     height: 1rem;
     background-color: $bl;
+    transition: width $transition, height $transition, border-width $transition;
     will-change: left, top;
 
     &:before {
@@ -106,10 +109,10 @@
 
     span {
       @include center-align;
-      @include f-m(2rem, transparent);
+      @include f-m(0.01rem, transparent);
       font-family: 'Syncopate';
       -webkit-text-stroke: 1px transparent;
-      transition: color $transition;
+      transition: font-size $transition, color $transition;
     }
 
     &.bl-cursor, &.wh-cursor {
@@ -126,14 +129,14 @@
 
     &.bl-cursor {
       span {
-        color: $wh;
+        @include f-m(2rem, $wh);
         -webkit-text-stroke: 1px $wh;
       }
     }
 
     &.wh-cursor {
       span {
-        color: $bl;
+        @include f-m(2rem, $bl);
         -webkit-text-stroke: 1px $bl;
       }
     }
@@ -143,15 +146,15 @@
       border-right: none;
       border-radius: 0;
       border-color: $wh;
-      border-left-width: 1rem;
-      border-top-width: 1rem;
-      border-bottom-width: 1rem;
+      border-left-width: 1.2rem;
+      border-top-width: 1.2rem;
+      border-bottom-width: 1.2rem;
       border-top-color: transparent;
       border-bottom-color: transparent;
       margin-left: 0.25rem;
       width: 0;
       height: 0;
-      transition: width $transition, height $transition, border-width $transition;
+      mix-blend-mode: lighten;
     }
 
     &.focus-cursor {

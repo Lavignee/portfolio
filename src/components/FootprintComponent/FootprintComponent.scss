@@ -5,7 +5,7 @@
   bottom: 0;
   width: 100%;
   height: 50vh;
-  background-color: #181818;
+  background-color: $p-d;
   transition: padding $transition-slow;
   box-shadow: 0 0 1rem black;
 
@@ -17,6 +17,10 @@
     opacity: 0;
     transition: opacity $transition-slow;
     clip-path: circle(0% at 0px 0px);
+    
+    &.will-change {
+      will-change: clip-path;
+    }
     
     img {
       position: absolute;
@@ -161,7 +165,7 @@
     bottom: 5rem;
     font-family: 'Syncopate';
     @include f-b(24rem, transparent);
-    -webkit-text-stroke: 0.1rem #656565;
+    -webkit-text-stroke: 1px $p-m;
     transition: font-size $transition-slow;
     z-index: 1;
 
@@ -182,12 +186,16 @@
     }
   }
 
-  a {
+  .link-button {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 2;
+
+    .delay {
+      pointer-events: none;
+    }
   }
 }

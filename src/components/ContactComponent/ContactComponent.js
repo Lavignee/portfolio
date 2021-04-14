@@ -1,36 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeContactState, changeContactDelay } from '../../Modules/CommonValueModule';
+import kakaoIcon from '../../Static/images/kakao-icon.svg';
+import mobileIcon from '../../Static/images/mobile-icon.svg';
+import mailIcon from '../../Static/images/mail-icon.svg';
+import './ContactComponent.scss';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+// import { changeContactState, changeContactButtonDelay } from '../../Modules/CommonValueModule';
 import CustomInputComposition from '../../compositions/CustomInputComposition';
 import CustomTextareaComposition from '../../compositions/CustomTextareaComposition';
 import CustomButtonComposition from '../../compositions/CustomButtonComposition';
 import SplitTextComponent from '../SplitTextComponent';
 import useInterval from "../../utils/useInterval";
-import kakaoIcon from '../../Static/images/kakao-icon.svg';
-import mobileIcon from '../../Static/images/mobile-icon.svg';
-import mailIcon from '../../Static/images/mail-icon.svg';
-import './ContactComponent.scss';
 
 const ContactComponent = () => {
-  const dispatch = useDispatch();
-  const onChangeContactState = () => dispatch(changeContactState());
-  const onChangeContactDelay = (value) => dispatch(changeContactDelay(value));
-  const { currentContactState } = useSelector(state => ({
-    currentContactState: state.CommonValueModule.currentContactState
-  }));
-  const { currentContactDelay } = useSelector(state => ({
-    currentContactDelay: state.CommonValueModule.currentContactDelay
-  }));
+  // const dispatch = useDispatch();
+  // const onChangeContactState = () => dispatch(changeContactState());
+  // const onChangeContactButtonDelay = (value) => dispatch(changeContactButtonDelay(value));
+  const [currentContactState] = useSelector(state => [state.CommonValueModule.currentContactState], shallowEqual);
+  // const [currentContactButtonDelay] = useSelector(state => [state.CommonValueModule.currentContactButtonDelay], shallowEqual);
+  const [contactSplitTextReady, setContactSplitTextReady] = useState(false);
   const [qnumber, setQnumber] = useState(1);
   const qnumberRef = useRef(qnumber);
   qnumberRef.current = qnumber;
 
-  const contactButtonDelay = () => {
-    onChangeContactDelay(true);
-    setTimeout(() => {
-      onChangeContactDelay(false);
-    }, 1000)
-  }
+  // const ContactButtonDelay = () => {
+  //   console.log('ButtonDelay')
+  //   onChangeContactButtonDelay(true);
+  //   const buttonDelayTimer = setTimeout(() => {
+  //     onChangeContactButtonDelay(false);
+  //   }, 1000);
+  //   return () => clearTimeout(buttonDelayTimer);
+  // }
 
   const contactAnimation = () => {
     if (currentContactState) {
@@ -44,22 +43,28 @@ const ContactComponent = () => {
     }
   }
 
+  // useEffect(() => {
+  // ContactButtonDelay();
+  // }, [currentContactState]);
+
   useEffect(() => {
-    contactButtonDelay();
-  }, [currentContactState]);
+    if (currentContactState) {
+      setContactSplitTextReady(true)
+    }
+  }, [currentContactState])
 
   useInterval(() => {
     contactAnimation();
-  }, currentContactState === true ? 6000 : null);
+  }, contactSplitTextReady ? 6000 : null);
 
   return (
     <div className='contact-area'>
-      {/* <div className={`contact-button${currentContactDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
+      {/* <div className={`contact-button${currentContactButtonDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
         {currentContactState ? (
           <>Close</>
         ) : (
-            <>Contact</>
-          )}
+          <>Contact</>
+        )}
       </div> */}
 
       <div className={`contact-frame${currentContactState ? ' open' : ' close'}`}>
@@ -78,13 +83,13 @@ const ContactComponent = () => {
           <div className='container'>
             <div className={`back-text${currentContactState ? ' open' : ' close'}`}>
               {currentContactState && qnumberRef.current === 1 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} index={'con1'} depth>What  should  I  do  for  you?</SplitTextComponent>
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con1'} ready={contactSplitTextReady} depth>What  should  I  do  for  you?</SplitTextComponent>
               )}
               {currentContactState && qnumberRef.current === 2 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} index={'con2'} depth>Could  you  tell  me  about  the  project?</SplitTextComponent>
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con2'} ready={contactSplitTextReady} depth>Could  you  tell  me  about  the  project?</SplitTextComponent>
               )}
               {currentContactState && qnumberRef.current === 3 && (
-                <SplitTextComponent animation={'up'} scroll={'all'} index={'con3'} depth>I  will  reply  by  email  as  soon  as  possible.</SplitTextComponent>
+                <SplitTextComponent animation={'up'} scroll={'all'} index={'con3'} ready={contactSplitTextReady} depth>I  will  reply  by  email  as  soon  as  possible.</SplitTextComponent>
               )}
             </div>
           </div>
@@ -95,12 +100,12 @@ const ContactComponent = () => {
                 <div className='col-12 col-s-6 col-l-4'>
                   <div className={`email-form-frame${currentContactState ? ' open' : ' close'}`}>
                     <div>
-                      <CustomInputComposition type={'text'} placeholder={'Name'} />
-                      <CustomInputComposition type={'text'} placeholder={'Phone'} />
-                      <CustomInputComposition type={'email'} placeholder={'Email'} />
-                      <CustomInputComposition type={'text'} placeholder={'Title'} />
+                      <CustomInputComposition type={'text'} placeholder={'Name'} label={'name'} />
+                      <CustomInputComposition type={'text'} placeholder={'Phone'} label={'phone'} />
+                      <CustomInputComposition type={'email'} placeholder={'Email'} label={'email'} />
+                      <CustomInputComposition type={'text'} placeholder={'Title'} label={'title'} />
                     </div>
-                    <CustomTextareaComposition placeholder={'Inquiry'} />
+                    <CustomTextareaComposition placeholder={'Inquiry'} label={'content'} />
                     <CustomButtonComposition text={'Send'} align={'right'} />
                   </div>
                 </div>

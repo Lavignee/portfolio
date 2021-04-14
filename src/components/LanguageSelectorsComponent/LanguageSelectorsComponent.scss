@@ -14,7 +14,7 @@
       padding: 0.8rem 2.2rem 0.8rem 1rem;
       text-align: right;
       font-family: 'Syncopate';
-      @include f-r(1.3rem, #656565);
+      @include f-r(1.3rem, $p-m);
 
       &:before {
         content: '';
@@ -24,8 +24,8 @@
         right: 1rem;
         width: 0.6rem;
         height: 0.6rem;
-        @include border-b(#656565);
-        @include border-l(#656565);
+        @include border-b($p-m);
+        @include border-l($p-m);
       }
     }
 
@@ -41,7 +41,7 @@
         padding: 0.8rem 2.2rem 0.8rem 1rem;
         text-align: right;
         font-family: 'Syncopate';
-        @include f-r(1.3rem, #656565);
+        @include f-r(1.3rem, $p-m);
   
         &.hide {
           display: none;

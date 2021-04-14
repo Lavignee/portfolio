@@ -1,0 +1,24 @@
+@import '../../Style/Util/util_mixins';
+
+.not-found-section {
+  position: relative;
+  height: 100vh;
+  padding-top: $headerHeight;
+  text-align: center;
+
+  .guide-ment {
+    @include center-align;
+    word-break: keep-all;
+  }
+
+  button {
+    padding: 1rem;
+    font-size: 3rem;
+    @include border-a($bl);
+
+    &:hover {
+      color: $wh;
+      background-color: $bl;
+    }
+  }
+}

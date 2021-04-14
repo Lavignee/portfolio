@@ -1,15 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import './SwitchAnimationComponent.scss';
+import { useSelector, shallowEqual } from 'react-redux';
 
 const SwitchAnimationComponent = () => {
-  const { currentSwitchAnimation } = useSelector(state => ({
-    currentSwitchAnimation: state.CommonValueModule.currentSwitchAnimation
-  }));
+  const [currentSwitchAnimation] = useSelector(state => [state.CommonValueModule.currentSwitchAnimation], shallowEqual);
 
   return (
     <>
-      {/* <div className={`screen-cover${currentSwitchAnimation ? ' active' : ''}`}></div> */}
+      <div className={`screen-cover${currentSwitchAnimation ? ' active' : ''}`}></div>
     </>
   )
 }

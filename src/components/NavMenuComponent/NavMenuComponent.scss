@@ -1,6 +1,32 @@
 @import '../../Style/Util/util_mixins';
 
 header, .gnb-area {
+  a, .link-button {
+    display: inline-flex;
+    
+    svg {
+      display: inline;
+      width: 100%;
+      max-width: 58px;
+      @include vertical-align(relative);
+      transition: width $transition-slow;
+
+      @media (max-width: $bp-l) {
+        width: 95%;
+      }
+      @media (max-width: $bp-m) {
+        width: 90%;
+      }
+      @media (max-width: $bp-s) {
+        width: 85%;
+      }
+    }
+
+    &.delay {
+      pointer-events: none;
+    }
+  }
+  
   .right-area {
     position: absolute;
     top: 1.5rem;
@@ -33,7 +59,7 @@ header, .gnb-area {
         
         &.invert {
           path {
-            fill: #f9f9f9;
+            fill: $s-l;
           }
         }
       }

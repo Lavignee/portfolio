@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { gsap } from 'gsap';
 import svg from '../../static/images/icon-svg.json';
-import useWindowSize from "../../utils/useWindowSize";
 import './IconSliderComponent.scss';
+import { gsap } from 'gsap';
+import useWindowSize from "../../utils/useWindowSize";
 
-const IconsliderComponent = () => {
+const IconsliderComponent = ({ sliderTrigger }) => {
   const { height } = useWindowSize();
+  const [willChange, setWillChange] = useState(false);
   const [row, setRow] = useState();
-  // const colors = ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999", "#aaaaaa"];
+
   // const allIcons = [svg.bitbucket, svg.bootstrap, svg.css, svg.figma, svg.gatsby, svg.git, svg.github, svg.graphql, svg.gsap, svg.html, svg.i18next, svg.javascript, svg.jira, svg.jquery, svg.materialui, svg.mobx, svg.netlify, svg.nextjs, svg.parcel, svg.react, svg.redux, svg.sass, svg.sourcetree, svg.typescript, svg.webgl, svg.webpack, svg.zeplin]
   const wellIcons = [svg.bitbucket, svg.bootstrap, svg.css, svg.figma, svg.git, svg.github, svg.gsap, svg.html, svg.i18next, svg.javascript]
   const wellIcons2 = [svg.jira, svg.jquery, svg.materialui, svg.parcel, svg.react, svg.redux, svg.sass, svg.sourcetree, svg.webpack, svg.zeplin]
   const wellIcons3 = [svg.javascript, svg.i18next, svg.html, svg.gsap, svg.github, svg.git, svg.figma, svg.css, svg.bootstrap, svg.bitbucket]
   const wellIcons4 = [svg.zeplin, svg.webpack, svg.sourcetree, svg.sass, svg.redux, svg.react, svg.parcel, svg.materialui, svg.jquery, svg.jira]
   // const bedIcons = [svg.gatsby, svg.graphql, svg.mobx, svg.netlify, svg.nextjs, svg.typescript, svg.webgl]
+
   const defaultSlider = (
     <div className={`icon-slider ${row}`}>
       {wellIcons.map(wellIcons => (
-        <div key={wellIcons} className='icon-content-frame'>
+        <div key={wellIcons} className={`icon-content-frame${willChange ? ' will-change' : ''}`}>
           <div className='content' dangerouslySetInnerHTML={{ __html: wellIcons }}></div>
         </div>
       ))
@@ -27,7 +29,7 @@ const IconsliderComponent = () => {
   const reverseSlider = (
     <div className={`icon-slider ${row} reverse`}>
       {wellIcons2.map(wellIcons2 => (
-        <div key={wellIcons2} className='icon-content-frame'>
+        <div key={wellIcons2} className={`icon-content-frame${willChange ? ' will-change' : ''}`}>
           <div className='content' dangerouslySetInnerHTML={{ __html: wellIcons2 }}></div>
         </div>
       ))
@@ -37,7 +39,7 @@ const IconsliderComponent = () => {
   const defaultSlider2 = (
     <div className={`icon-slider ${row}`}>
       {wellIcons3.map(wellIcons => (
-        <div key={wellIcons} className='icon-content-frame'>
+        <div key={wellIcons} className={`icon-content-frame${willChange ? ' will-change' : ''}`}>
           <div className='content' dangerouslySetInnerHTML={{ __html: wellIcons }}></div>
         </div>
       ))
@@ -47,7 +49,7 @@ const IconsliderComponent = () => {
   const reverseSlider2 = (
     <div className={`icon-slider ${row} reverse`}>
       {wellIcons4.map(wellIcons2 => (
-        <div key={wellIcons2} className='icon-content-frame'>
+        <div key={wellIcons2} className={`icon-content-frame${willChange ? ' will-change' : ''}`}>
           <div className='content' dangerouslySetInnerHTML={{ __html: wellIcons2 }}></div>
         </div>
       ))
@@ -55,21 +57,7 @@ const IconsliderComponent = () => {
     </div>
   )
 
-  const iconSliderSetting = () => {
-    gsap.set('.icon-content-frame', {
-      x: (i) => i * 100 + '%'
-    });
 
-    gsap.to('.icon-content-frame', {
-      duration: 80,
-      ease: 'none',
-      x: '+=1000' + '%',
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % 1000)
-      },
-      repeat: -1
-    });
-  }
 
   const autoHeightContent = () => {
     if (height < 739.2) {
@@ -94,9 +82,36 @@ const IconsliderComponent = () => {
   }, [height])
 
   useEffect(() => {
-    iconSliderSetting();
-    return () => iconSliderSetting();
-  }, []);
+    if (sliderTrigger) {
+      setWillChange(true);
+    }
+
+    return () => setWillChange(false);
+  }, [sliderTrigger])
+
+  useEffect(() => {
+    gsap.set('.icon-content-frame', {
+      x: (i) => i * 100 + '%'
+    });
+
+    const sliderAnimation = gsap.to('.icon-content-frame', {
+      id: 'slider-animation',
+      duration: 80,
+      ease: 'none',
+      x: '+=1000' + '%',
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % 1000)
+      },
+      repeat: -1
+    });
+    sliderAnimation.pause()
+
+    if (willChange) {
+      sliderAnimation.play()
+    }
+
+    return () => sliderAnimation.kill()
+  }, [willChange])
 
   return (
     <>

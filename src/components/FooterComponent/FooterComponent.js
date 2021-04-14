@@ -1,12 +1,12 @@
 import React from 'react';
-import LanguageSelectorsComponent from '../languageSelectorsComponent';
 import './FooterComponent.scss';
+// import LanguageSelectorsComponent from '../languageSelectorsComponent';
 
 const FooterComponent = () => {
   return (
     <footer>
       <div className='container between relative'>
-        <LanguageSelectorsComponent />
+        {/* <LanguageSelectorsComponent /> */}
         <span>Copyright 2020. doyoung Lee. All rights reserved.</span>
       </div>
     </footer>

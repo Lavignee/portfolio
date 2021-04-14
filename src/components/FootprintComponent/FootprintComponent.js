@@ -1,20 +1,18 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { gsap } from "gsap";
-import { useDispatch } from 'react-redux';
-import { changeClassName, changeSecondClassName } from '../../Modules/CursorModule';
+import React, { memo, useState, useRef } from 'react';
 import footprintCircle from '../../Static/images/footprint-circle.svg';
 import footprintArrow from '../../Static/images/footprint-arrow.svg';
-import FooterContainer from '../../Containers/FooterContainer';
 import footprint from '../../Static/images/footprint.jpg';
-
 import './FootprintComponent.scss';
+import { useSelector, shallowEqual } from 'react-redux';
+import { isDesktop } from 'react-device-detect';
+import { gsap } from "gsap";
+import FooterComponent from '../FooterComponent';
 
-const FootprintComponent = () => {
+const FootprintComponent = ({ onHover, onClick, onLeave }) => {
+  const [currentButtonDelay] = useSelector(state => [state.CommonValueModule.currentButtonDelay], shallowEqual);
+
   const footprintCursorRef = useRef(null);
-  const dispatch = useDispatch();
-  const cursorClass = (className) => dispatch(changeClassName(className));
-  const cursorSecondClass = (secondClassName) => dispatch(changeSecondClassName(secondClassName));
+  const [clipPathReady, setClipPathReady] = useState(false);
 
   const footprintMoveCircle = (e) => {
     gsap.to(footprintCursorRef.current, 0.3, {
@@ -24,26 +22,17 @@ const FootprintComponent = () => {
     });
   }
 
-  const footprintDetailHover = () => {
-    cursorClass(' go-cursor')
-  }
-
-  const onLeave = () => {
-    cursorClass('')
-    cursorSecondClass('')
-  };
-
   return (
     <>
-      <section id='footprint' className='container-fluid footprint-section' onMouseMove={(e) => footprintMoveCircle(e)}>
-        <div className='footprint-image-mask' ref={footprintCursorRef} >
+      <section id='footprint' className='container-fluid footprint-section' onMouseEnter={() => setClipPathReady(true)} onMouseMove={(e) => footprintMoveCircle(e)} onMouseLeave={() => setClipPathReady(false)}>
+        <div className={`footprint-image-mask${clipPathReady ? ' will-change' : ''}`} ref={footprintCursorRef} >
           <img src={footprint} alt="footprint" />
         </div>
 
         <div className='container footprint-title-area'>
           <div className='footprint-content'>
             <div className='footprint-circle-area'>
-              <img src={footprintCircle} alt='footprint design circle' />
+              {isDesktop && <img src={footprintCircle} alt='footprint design circle' />}
             </div>
             <h2>Footprint</h2>
             <span>프로젝트 / 경력사항 / 외부수주</span>
@@ -51,14 +40,14 @@ const FootprintComponent = () => {
               <img src={footprintArrow} alt='footprint design arrow' />
             </div>
           </div>
-          <Link to='footprint' onMouseEnter={footprintDetailHover} onMouseLeave={onLeave} onClick={onLeave}></Link>
+          <div className={`link-button${currentButtonDelay ? ' delay' : ''}`} onMouseEnter={() => onHover(' go-cursor')} onMouseLeave={() => onLeave()} onClick={() => onClick('/footprint')}></div>
         </div>
 
         <div className='footprint-back-text'>FOOTPRINT</div>
       </section>
-      <FooterContainer />
+      <FooterComponent />
     </>
   )
 }
 
-export default FootprintComponent;
+export default memo(FootprintComponent);

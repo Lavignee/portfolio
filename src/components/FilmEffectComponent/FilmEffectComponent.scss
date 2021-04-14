@@ -1,0 +1,26 @@
+@import '../../Style/Util/util_mixins';
+
+%default {
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.film-frame {
+  @extend %default;
+  background: center / cover url(#{$img-url}film.gif);
+  mix-blend-mode: multiply;
+}
+
+.noise-frame {
+  @extend %default;
+  opacity: 0.05;
+  background: url(#{$img-url}noise.gif);
+
+  @media (max-width: $bp-m) {
+    opacity: 0.03;
+  }
+}

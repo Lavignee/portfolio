@@ -11,6 +11,6 @@ footer {
   span {
     @include vertical-align;
     right: 0;
-    @include f-l(1.8rem, #656565);
+    @include f-l(1.8rem, $s-d);
   }
 }

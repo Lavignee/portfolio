@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
-import { gsap } from "gsap";
-import { useDispatch } from 'react-redux';
-import { changeText, changeClassName } from '../../Modules/CursorModule';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import './FootprintDetailComponent.scss';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { changeGsapState, makeSmoothScroll } from '../../Modules/CommonValueModule';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import TextSliderComponent from '../TextSliderComponent';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/effect-fade/effect-fade.scss';
-import './FootprintDetailComponent.scss';
-
+import { gsap } from "gsap";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
+import TextSliderComponent from '../TextSliderComponent';
+
 SwiperCore.use([Navigation, Pagination, EffectFade]);
 
 const career = [
@@ -48,7 +48,7 @@ const project = [
   },
 ]
 
-const CareerContent = ({ isActive, idx, id, keyword, title, date, summary, text }) => {
+const CareerContent = ({ isActive, idx, keyword, title, date, summary, text }) => {
   const summarys = []
   summary.forEach((item, i) => summarys.push(<span key={item + i}>{item}</span>))
   return (
@@ -66,7 +66,7 @@ const CareerContent = ({ isActive, idx, id, keyword, title, date, summary, text 
   )
 }
 
-const ProjectContent = ({ isActive, idx, id, keyword, title, date, summary, text }) => {
+const ProjectContent = ({ isActive, idx, keyword, title, date, summary, text }) => {
   const summarys = []
   summary.forEach((item, i) => summarys.push(<span key={item + i}>{item}</span>))
   return (
@@ -84,89 +84,72 @@ const ProjectContent = ({ isActive, idx, id, keyword, title, date, summary, text
   )
 }
 
-const FootprintDetailComponent = () => {
+const FootprintDetailComponent = ({ onHover, onLeave }) => {
   const dispatch = useDispatch();
-  const cursorText = (text) => dispatch(changeText(text));
-  const cursorClass = (className) => dispatch(changeClassName(className));
+  const gsapReady = (value) => dispatch(changeGsapState(value));
+  const makeScroll = (value) => dispatch(makeSmoothScroll(value));
+  const [currentGsapState] = useSelector(state => [state.CommonValueModule.currentGsapState], shallowEqual);
 
   useEffect(() => {
-    let triggers = ScrollTrigger.getAll();
-    triggers.forEach(trigger => {
-      trigger.kill();
-    });
+    gsapReady(false);
+    makeScroll(true);
 
-    ScrollTrigger.matchMedia({
-      "(min-width: 985px)": function () {
-        gsap.fromTo('.mobile-division', {
-          opacity: 0
-        }, {
-          opacity: 0,
-        });
-      },
-      "(max-width: 984px)": function () {
-        gsap.fromTo('.text-slider-left-area', {
-          opacity: 1
-        }, {
-          opacity: 0,
-          scrollTrigger: {
-            scroller: '#root',
-            id: 'text-slider-left',
-            trigger: '.text-slider-left-area',
-            start: 'top+=50% center',
-            end: 'bottom-=5% center',
-            scrub: true
-          }
-        });
+    return () => {
+      let triggers = ScrollTrigger.getAll();
+      triggers.forEach(trigger => {
+        trigger.kill();
+      });
 
-        gsap.fromTo('.text-slider-right-area', {
-          opacity: 0
-        }, {
-          opacity: 1,
-          scrollTrigger: {
-            scroller: '#root',
-            id: 'text-slider-right',
-            trigger: '.text-slider-right-area',
-            start: 'top+=100% center',
-            end: 'bottom+=50% center',
-            scrub: true
-          }
-        });
+      onLeave();
+    }
+  }, [])
 
-        gsap.fromTo('.mobile-division', {
-          opacity: 1
-        }, {
-          opacity: 0,
-          scrollTrigger: {
-            scroller: '#root',
-            id: 'mobile-division',
-            trigger: '.carrer-frame',
-            start: 'bottom center',
-            end: 'bottom+=50% center',
-            scrub: true
-          }
-        });
-      }
-    });
-  }, []);
+  useEffect(() => {
+    if (currentGsapState) {
+      ScrollTrigger.matchMedia({
+        "(max-width: 984px)": () => {
+          gsap.fromTo('.text-slider-left-area', {
+            opacity: 1
+          }, {
+            opacity: 0,
+            scrollTrigger: {
+              id: 'text-slider-left',
+              trigger: '.text-slider-left-area',
+              start: 'top+=30% center',
+              end: 'bottom-=30% center',
+              scrub: true
+            }
+          });
 
-  const prevCursor = () => {
-    cursorText('more recent');
-    cursorClass(' bl-cursor');
-  }
+          gsap.fromTo('.text-slider-right-area', {
+            opacity: 0
+          }, {
+            opacity: 1,
+            scrollTrigger: {
+              id: 'text-slider-right',
+              trigger: '.text-slider-right-area',
+              start: 'top+=50% center',
+              end: 'bottom-=30% center',
+              scrub: true
+            }
+          });
 
-  const nextCursor = () => {
-    cursorText('more past');
-    cursorClass(' bl-cursor');
-  }
-
-  const paginationCursor = () => {
-    cursorClass(' pagination-cursor');
-  }
-
-  const leaveCursor = () => {
-    cursorText('');
-    cursorClass('');
-  }
+          gsap.fromTo('.mobile-division', {
+            opacity: 1
+          }, {
+            opacity: 0,
+            scrollTrigger: {
+              id: 'mobile-division',
+              trigger: '.text-slider-left-area',
+              start: 'top+=30% center',
+              end: 'bottom-=30% center',
+              scrub: true
+            }
+          });
+        }
+      });
+    }
+  }, [currentGsapState])
 
   return (
     <div className='footprint-detail'>
@@ -184,7 +167,7 @@ const FootprintDetailComponent = () => {
               spaceBetween={50}
               slidesPerView={1}
               effect='fade'
-              updateOnWindowResize
+              resizeObserver
               navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
               pagination={{ clickable: true, el: '.swiper-pagination' }}
             >
@@ -195,9 +178,9 @@ const FootprintDetailComponent = () => {
                   )}
                 </SwiperSlide>
               ))}
-              <div className='swiper-pagination left-pagination' onMouseEnter={paginationCursor} onMouseLeave={leaveCursor}></div>
-              <div className='swiper-button-next' onMouseEnter={nextCursor} onMouseLeave={leaveCursor}></div>
-              <div className='swiper-button-prev' onMouseEnter={prevCursor} onMouseLeave={leaveCursor}></div>
+              <div className='swiper-pagination left-pagination' onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
+              <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'past')} onMouseLeave={() => onLeave()}></div>
+              <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'recent')} onMouseLeave={() => onLeave()}></div>
             </Swiper>
           </div>
 
@@ -216,7 +199,7 @@ const FootprintDetailComponent = () => {
               spaceBetween={50}
               slidesPerView={1}
               effect='fade'
-              updateOnWindowResize
+              resizeObserver
               navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
               pagination={{ clickable: true, el: '.swiper-pagination' }}
             >
@@ -227,9 +210,9 @@ const FootprintDetailComponent = () => {
                   )}
                 </SwiperSlide>
               ))}
-              <div className='swiper-pagination right-pagination' onMouseEnter={paginationCursor} onMouseLeave={leaveCursor}></div>
-              <div className='swiper-button-next' onMouseEnter={nextCursor} onMouseLeave={leaveCursor}></div>
-              <div className='swiper-button-prev' onMouseEnter={prevCursor} onMouseLeave={leaveCursor}></div>
+              <div className='swiper-pagination right-pagination' onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
+              <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'past')} onMouseLeave={() => onLeave()}></div>
+              <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'recent')} onMouseLeave={() => onLeave()}></div>
             </Swiper>
           </div>
         </div>

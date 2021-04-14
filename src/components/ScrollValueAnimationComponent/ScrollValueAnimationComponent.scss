@@ -1,0 +1,10 @@
+@import '../../Style/Util/util_mixins';
+
+.scroll-percent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  @include f-b(20rem, transparent);
+  -webkit-text-stroke: 1px $s-m;
+  opacity: 0.5;
+}

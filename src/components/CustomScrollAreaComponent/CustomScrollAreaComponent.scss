@@ -1,9 +1,0 @@
-@import '../../Style/Util/util_mixins';
-
-.scroll-area {
-  height: 100vh;
-
-  .scroll-content {
-    will-change: transform;
-  }
-}

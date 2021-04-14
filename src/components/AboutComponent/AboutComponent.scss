@@ -1,7 +1,11 @@
 @import '../../Style/Util/util_mixins';
 
 .about-section {
+  position: relative;
+  z-index: 1;
   background-color: $wh;
+  box-shadow: 0 0 3rem $bl-5;
+
   .about-frame {
     position: relative;
     padding-top: 20rem;
@@ -17,8 +21,12 @@
         transform: translateY(50%);
         font-family: Syncopate;
         @include f-b(18rem, $wh);
-        -webkit-text-stroke: 0.1rem $bl;
+        -webkit-text-stroke: 1px $bl;
         transition: font-size $transition-slow;
+
+        &.will-change {
+          will-change: text-shadow, transform;
+        }
 
         @media (max-width: $bp-m) {
           font-size: 15rem;
@@ -129,6 +137,12 @@
       > div {
         padding-top: 4rem;
         padding-bottom: 4rem;
+
+        &.will-change {
+          > div {
+            will-change: transform, opacity;
+          }
+        }
         
         > div {
           display: inline-block;
@@ -137,7 +151,7 @@
           @include f-b(12rem, $wh);
           white-space: nowrap;
           transition: font-size $transition-slow;
-          -webkit-text-stroke: 0.1rem $bl;
+          -webkit-text-stroke: 1px $bl;
 
           @media (max-width: $bp-xl) {
             font-size: 10rem;
@@ -161,93 +175,180 @@
             z-index: -1;
             font-family: 'Syncopate';
             color: transparent;
-            -webkit-text-stroke: 0.1rem transparent;
+            -webkit-text-stroke: 1px transparent;
           }
         }
       }
       
       .first-line {
-        &.first {
-          div {
-            transform: translateX(-100%);
-            animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
-
-            span {
-              animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
-              @media (max-width: $bp-m) {
-                animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+        &.desktop {
+          &.first {
+            div {
+              transform: translateX(-100%);
+              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+  
+              span {
+                @media (min-width: $bp-m-min) {
+                  animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                }
+                @media (max-width: $bp-m) {
+                  animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                }
+              }
+            }
+          }
+          &.second {
+            text-align: right;
+            div {
+              transform: translateX(100%);
+              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+  
+              span {
+                @media (min-width: $bp-m-min) {
+                animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                }
+                @media (max-width: $bp-m) {
+                  animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                }
               }
             }
           }
         }
-        &.second {
-          text-align: right;
-          div {
-            transform: translateX(100%);
-            animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
 
-            span {
-              animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
-              @media (max-width: $bp-m) {
-                animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
-              }
+        &.mobile {
+          &.first {
+            div {
+              transform: translateX(-100%);
+              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+            }
+          }
+          &.second {
+            text-align: right;
+            div {
+              transform: translateX(100%);
+              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
             }
           }
         }
       }
+
       .second-line {
-        &.first {
-          div {
-            transform: translateX(-100%);
-            animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
-
-            span {
-              animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
-              @media (max-width: $bp-m) {
-                animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+        &.desktop {
+          &.first {
+            div {
+              transform: translateX(-100%);
+              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+  
+              span {
+                @media (min-width: $bp-m-min) {
+                animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                }
+                @media (max-width: $bp-m) {
+                  animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                }
+              }
+            }
+          }
+          &.second {
+            text-align: right;
+            div {
+              transform: translateX(100%);
+              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+  
+              span {
+                @media (min-width: $bp-m-min) {
+                animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                }
+                @media (max-width: $bp-m) {
+                  animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                }
               }
             }
           }
         }
-        &.second {
-          text-align: right;
-          div {
-            transform: translateX(100%);
-            animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
 
-            span {
-              animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
-              @media (max-width: $bp-m) {
-                animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
-              }
+        &.mobile {
+          &.first {
+            div {
+              transform: translateX(-100%);
+              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+            }
+          }
+          &.second {
+            text-align: right;
+            div {
+              transform: translateX(100%);
+              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
             }
           }
         }
       }
-      .third-line {
-        &.first {
-          div {
-            transform: translateX(-100%);
-            animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
 
-            span {
-              animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
-              @media (max-width: $bp-m) {
-                animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+      .third-line {
+        &.desktop {
+          &.first {
+            div {
+              transform: translateX(-100%);
+              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+  
+              span {
+                @media (min-width: $bp-m-min) {
+                animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                }
+                @media (max-width: $bp-m) {
+                  animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                }
+              }
+            }
+          }
+          &.second {
+            text-align: right;
+            div {
+              transform: translateX(100%);
+              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+  
+              span {
+                @media (min-width: $bp-m-min) {
+                animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                }
+                @media (max-width: $bp-m) {
+                  animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                }
               }
             }
           }
         }
-        &.second {
-          text-align: right;
-          div {
-            transform: translateX(100%);
-            animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
 
-            span {
-              animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
-              @media (max-width: $bp-m) {
-                animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+        &.mobile {
+          &.first {
+            div {
+              transform: translateX(-100%);
+              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+            }
+          }
+          &.second {
+            text-align: right;
+            div {
+              transform: translateX(100%);
+              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+            }
+          }
+        }
+      }
+
+      .first-line, .second-line, .third-line {
+        &.mobile {
+          &.first {
+            div {
+              span {
+                text-shadow: -5px 0px 5px $bl-3;
+              }
+            }
+          }
+          &.second {
+            div {
+              span {
+                text-shadow: 5px 0px 5px $bl-3;
               }
             }
           }
@@ -270,109 +371,119 @@
         padding-bottom: 6rem;
       }
 
-      a {
+      button {
         display: inline-block;
+        position: relative;
+        padding: 3rem 3rem 3rem 12.4rem;
+        font-family: 'Syncopate';
+        @include f-r(5rem, $bl);
+        border-radius: 5rem;
+        transition: font-size $transition-slow, color $transition;
+        z-index: 2;
+        
+        @media (max-width: $bp-m) {
+          font-size: 4rem;
+        }
+        @media (max-width: $bp-s) {
+          font-size: 3rem;
+        }
+        @media (max-width: $bp-xs) {
+          font-size: 2rem;
+        }
 
-        button {
-          position: relative;
-          padding: 3rem 3rem 3rem 12.4rem;
-          font-family: 'Syncopate';
-          @include f-r(5rem, $bl);
-          border-radius: 5rem;
-          transition: font-size $transition-slow;
-          z-index: 2;
-          
-          @media (max-width: $bp-m) {
-            font-size: 4rem;
-          }
-          @media (max-width: $bp-s) {
-            font-size: 3rem;
-          }
-          @media (max-width: $bp-xs) {
-            font-size: 2rem;
-          }
-
-          &:after {
-            content: '';
-            @include vertical-align;
-            width: 6.4rem;
-            height: 6.4rem;
-            right: calc(100% - 9.4rem);
-            border-radius: 100%;
-            background: left / 80% url(#{$img-url}footprint-arrow.svg) no-repeat, #181818;
-            transition: opacity $transition, width $transition, height $transition;
-            z-index: 1;
-
-            @media (max-width: $bp-m) {
-              width: 5.9rem;
-              height: 5.9rem;
-            }
-            @media (max-width: $bp-s) {
-              width: 5.4rem;
-              height: 5.4rem;
-            }
-            @media (max-width: $bp-xs) {
-              width: 4.9rem;
-              height: 4.9rem;
-            }
-          }
-
-          &:before {
-            content: '';
-            @include vertical-align;
-            width: 6.4rem;
-            height: 6.4rem;
-            right: calc(100% - 9.4rem);
-            border-radius: 100%;
-            background-color: #181818;
-            transition: border-radius $transition, right $transition, width $transition, height $transition;
-            mix-blend-mode: difference;
-            z-index: -1;
-
-            @media (max-width: $bp-m) {
-              width: 5.9rem;
-              height: 5.9rem;
-            }
-            @media (max-width: $bp-s) {
-              width: 5.4rem;
-              height: 5.4rem;
-            }
-            @media (max-width: $bp-xs) {
-              width: 4.9rem;
-              height: 4.9rem;
-            }
-          }
-          
-          &:hover {
-            color: $wh;
-
-            &:before {
-              width: 100%;
-              height: 100%;
-              right: calc(0%);
-              border-radius: 5rem;
-            }
-            
-            .shadow-inset, .shadow-inset-deep, .shadow-inset-deep2 {
-              box-shadow: inset 0 0rem 0rem rgba(0, 0, 0, 0) !important;
-            }
-
-            .shadow, .shadow-deep, .shadow-deep2 {
-              box-shadow: 0 0rem 0rem rgba(0, 0, 0, 0) !important;
-            }
-          }
-
-          .shadow-inset, .shadow, .shadow-inset-deep, .shadow-deep, .shadow-inset-deep2, .shadow-deep2 {
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-radius: 5rem;
-            transition: box-shadow $transition;
+        &.will-change {
+          span {
+            will-change: box-shadow;
           }
         }
+
+        &.delay {
+          pointer-events: none;
+        }
+
+        &:after {
+          content: '';
+          @include vertical-align;
+          width: 6.4rem;
+          height: 6.4rem;
+          right: calc(100% - 9.4rem);
+          border-radius: 100%;
+          background: left / 80% url(#{$img-url}footprint-arrow.svg) no-repeat, $p-d;
+          transition: opacity $transition, width $transition, height $transition;
+          z-index: 1;
+
+          @media (max-width: $bp-m) {
+            width: 5.9rem;
+            height: 5.9rem;
+          }
+          @media (max-width: $bp-s) {
+            width: 5.4rem;
+            height: 5.4rem;
+          }
+          @media (max-width: $bp-xs) {
+            width: 4.9rem;
+            height: 4.9rem;
+          }
+        }
+
+        &:before {
+          content: '';
+          @include vertical-align;
+          width: 6.4rem;
+          height: 6.4rem;
+          right: calc(100% - 9.4rem);
+          border-radius: 100%;
+          background-color: $p-d;
+          transition: border-radius $transition, right $transition, width $transition, height $transition;
+          mix-blend-mode: difference;
+          z-index: -1;
+
+          @media (max-width: $bp-m) {
+            width: 5.9rem;
+            height: 5.9rem;
+          }
+          @media (max-width: $bp-s) {
+            width: 5.4rem;
+            height: 5.4rem;
+          }
+          @media (max-width: $bp-xs) {
+            width: 4.9rem;
+            height: 4.9rem;
+          }
+        }
+        
+        &:hover {
+          color: $wh;
+          // animation: neon 1.5s ease-in-out infinite alternate;
+
+          &:before {
+            width: 100%;
+            height: 100%;
+            right: calc(0%);
+            border-radius: 5rem;
+          }
+        }
+
+        .shadow-inset, .shadow, .shadow-inset-deep, .shadow-deep, .shadow-inset-deep2, .shadow-deep2 {
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          border-radius: 5rem;
+        }
+
+        &.mobile {
+          color: $wh;
+          
+          &:before {
+            width: 100%;
+            height: 100%;
+            right: calc(0%);
+            border-radius: 5rem;
+          }
+      }
       }
     }
   }

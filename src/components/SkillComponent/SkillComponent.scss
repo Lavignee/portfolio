@@ -2,12 +2,13 @@
 
 #skill {
   background-color: $wh;
-  box-shadow: inset 0 0 1rem $bl;
+  position: relative;
+  z-index: 0;
 }
 
 .skill-section {
   position: relative;
-  height: 120vh;
+  height: 100vh;
   overflow: hidden;
 
   @media (max-width: $bp-m) {
@@ -56,14 +57,14 @@
       .list {
         z-index: 0;
 
-        a {
+        .link-button {
           position: relative;
           display: block;
+          width: 100%;
           padding: 3rem 1.5rem;
           text-align: right;
           font-family: 'NEXON Lv2 Gothic';
           @include f-b(10rem, $ls: -0.5rem);
-          @include border-a($bl);
           white-space: nowrap;
           transform: translate3d(0, 0, 0) rotateY(-30deg);
           transform-origin: right center;
@@ -80,9 +81,13 @@
             font-size: 7rem;
           }
 
+          &.delay {
+            pointer-events: none;
+          }
+
           &:hover {
               transform: translate3d(0, 0, 0) rotateY(0deg);
-              background-color: #181818;
+              background-color: $p-m;
               color: $wh;
               letter-spacing: 0rem;
           }

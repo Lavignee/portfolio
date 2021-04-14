@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { changeClassName, changeSecondClassName } from '../../Modules/CursorModule';
 import svg from '../../static/images/icon-svg.json';
+import './SkillDetailComponent.scss';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { changeGsapState } from '../../Modules/CommonValueModule';
+import Scrollbar from 'smooth-scrollbar';
+import { isDesktop } from 'react-device-detect';
 import { gsap } from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import './SkillDetailComponent.scss';
-
 gsap.registerPlugin(ScrollTrigger);
 
 const bitbucketSvg = svg.bitbucket
@@ -80,24 +80,53 @@ const interest = [
   { number: '11', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' }
 ];
 
-const SkillDetailComponent = ({ match }) => {
+const SkillDetailComponent = ({ match, onHover, onLeave, pageTimer }) => {
+  const dispatch = useDispatch();
+  const gsapReady = (value) => dispatch(changeGsapState(value));
+  const [currentGsapState] = useSelector(state => [state.CommonValueModule.currentGsapState], shallowEqual);
+
   const { list } = match.params;
   const lists = useRef([]);
   const scrollPosition = useRef();
+  const [currentSkillScroller, setCurrentSkillScroller] = useState();
   const [currentList, setCurrentList] = useState(list);
   const [listHoverMotion, setListHoverMotion] = useState('');
   const [currentTarget, setCurrentTarget] = useState(0);
   const [opacity, setOpacity] = useState('opacity');
-  const dispatch = useDispatch();
-  const cursorClass = (className) => dispatch(changeClassName(className));
-  const cursorSecondClass = (secondClassName) => dispatch(changeSecondClassName(secondClassName));
 
-  const tabHover = () => {
-    cursorClass(' focus-cursor');
+  const makeSmoothScrollbarforSkill = () => {
+    const scroller = scrollPosition.current;
+    let skillScrollBar;
+    if (isDesktop) {
+      skillScrollBar = Scrollbar.init(scroller, { damping: 0.02, alwaysShowTracks: true });
+    } else {
+      skillScrollBar = Scrollbar.init(scroller, { damping: 0.1, alwaysShowTracks: true });
+    }
+    setCurrentSkillScroller(skillScrollBar);
+
+    ScrollTrigger.scrollerProxy(scroller, {
+      scrollTop(value) {
+        if (arguments.length) {
+          skillScrollBar.scrollTop = value;
+        }
+        return skillScrollBar.scrollTop;
+      }
+    });
+    ScrollTrigger.defaults({ scroller: scroller });
+
+    skillScrollBar.addListener(ScrollTrigger.update);
+    gsapReady(true);
+  }
+
+  const skillScrollRemaker = (timer) => {
+    const skillScrollRemake = setTimeout(() => {
+      makeSmoothScrollbarforSkill();
+    }, timer);
+    return () => clearTimeout(skillScrollRemake);
   }
 
   const listHover = (number) => {
-    cursorClass(' focus-cursor');
+    onHover(' focus-cursor')
     if (currentTarget + 1 > number) {
       setListHoverMotion('top')
     } else if (currentTarget + 1 < number) {
@@ -105,98 +134,47 @@ const SkillDetailComponent = ({ match }) => {
     }
   }
 
-  const onLeave = () => {
-    cursorClass('');
-    cursorSecondClass('');
+  const onListLeave = () => {
+    onLeave();
     setListHoverMotion('');
   };
 
-  const workmanships = (level) => {
-    return (
-      <div className={`levels level-${level} ${opacity}`}>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    )
-  }
-
-  const listDetail = (target) => {
-    switch (target) {
-      case 'language':
-        return language.map(language => (
-          <div key={language.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(language)} onMouseEnter={() => listHover(language.number)} onMouseLeave={onLeave}>
-            <li className={listHoverMotion}>{language.svg === '' ? <div>{language.name}</div> : <div dangerouslySetInnerHTML={{ __html: language.svg }}></div>}</li>
-          </div >
-        ))
-      case 'lib':
-        return lib.map(lib => (
-          <div key={lib.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(lib)} onMouseEnter={() => listHover(lib.number)} onMouseLeave={onLeave}>
-            <li className={listHoverMotion}>{lib.svg === '' ? <div>{lib.name}</div> : <div dangerouslySetInnerHTML={{ __html: lib.svg }}></div>}</li>
-          </div>
-        ))
-      case 'tool':
-        return tool.map(tool => (
-          <div key={tool.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(tool)} onMouseEnter={() => listHover(tool.number)} onMouseLeave={onLeave}>
-            <li className={listHoverMotion}>{tool.svg === '' ? <div>{tool.name}</div> : <div dangerouslySetInnerHTML={{ __html: tool.svg }}></div>}</li>
-          </div>
-        ))
-      case 'interest':
-        return interest.map(interest => (
-          <div key={interest.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(interest)} onMouseEnter={() => listHover(interest.number)} onMouseLeave={onLeave}>
-            <li className={listHoverMotion}>{interest.svg === '' ? <div>{interest.name}</div> : <div dangerouslySetInnerHTML={{ __html: interest.svg }}></div>}</li>
-          </div>
-        ))
-      default: ''
-    }
-  }
-
-  const targetDetail = (target) => {
-    switch (target) {
-      case 'language':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{language.length}</span></div><div className='content'><div>{workmanships(language[currentTarget].workmanship)}<h2 className={opacity}>{language[currentTarget].name}</h2></div><p className={`${opacity}${language[currentTarget].workmanship}`}>{language[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{language[currentTarget].name}</span></>
-      case 'lib':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{lib.length}</span></div><div className='content'><div>{workmanships(lib[currentTarget].workmanship)}<h2 className={opacity}>{lib[currentTarget].name}</h2></div><p className={`${opacity}${lib[currentTarget].workmanship}`}>{lib[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{lib[currentTarget].name}</span></>
-      case 'tool':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{tool.length}</span></div><div className='content'><div>{workmanships(tool[currentTarget].workmanship)}<h2 className={opacity}>{tool[currentTarget].name}</h2></div><p className={`${opacity}${tool[currentTarget].workmanship}`}>{tool[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{tool[currentTarget].name}</span></>
-      case 'interest':
-        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{interest.length}</span></div><div className='content'><div>{workmanships(interest[currentTarget].workmanship)}<h2 className={opacity}>{interest[currentTarget].name}</h2></div><p className={`${opacity}${interest[currentTarget].workmanship}`}>{interest[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{interest[currentTarget].name}</span></>
-      default: ''
-    }
-  }
-
   const changeList = (e) => {
-    setCurrentTarget(0);
-    scrollPosition.current.scrollTo(0, 0);
     if (e.target.dataset.list !== currentList) {
+      currentSkillScroller.setPosition(0, 0)
+      Scrollbar.destroyAll();
+      gsapReady(false);
       lists.current = [];
-      let triggers = ScrollTrigger.getAll();
-      triggers.forEach(trigger => {
-        trigger.kill();
-      });
-      setCurrentList(e.target.dataset.list);
+      setCurrentList('');
+      setCurrentTarget(0);
+      pageTimer(e.target.dataset.list, 10);
+      skillScrollRemaker(50);
+    } else {
+      currentSkillScroller.scrollTo(0, 0, 600)
     }
   }
 
   const changeHistoryList = () => {
-    setCurrentTarget(0);
-    scrollPosition.current.scrollTo(0, 0);
+    Scrollbar.destroyAll();
+    gsapReady(false);
     lists.current = [];
-    let triggers = ScrollTrigger.getAll();
-    triggers.forEach(trigger => {
-      trigger.kill();
-    });
-    setCurrentList(location.pathname.split('/skill/')[1]);
+    setCurrentList('');
+    setCurrentTarget(0);
+    const changeHistoryTimer = setTimeout(() => {
+      setCurrentList(location.pathname.split('/skill/')[1]);
+    }, 10);
+    skillScrollRemaker(50);
   }
 
   const changeTarget = (id) => {
     setCurrentTarget(id);
     setOpacity('')
-    setTimeout(() => {
+    onListLeave();
+
+    const opacityTimer = setTimeout(() => {
       setOpacity('opacity')
-    }, 100)
+    }, 100);
+    return () => clearTimeout(opacityTimer);
   }
 
   const addToRefs = el => {
@@ -242,10 +220,13 @@ const SkillDetailComponent = ({ match }) => {
         }
       });
     });
+
     setOpacity('')
-    setTimeout(() => {
+
+    const opacityTimer = setTimeout(() => {
       setOpacity('opacity')
-    }, 100)
+    }, 100);
+    return () => clearTimeout(opacityTimer);
   }
 
   const scrollSkew = () => {
@@ -257,7 +238,7 @@ const SkillDetailComponent = ({ match }) => {
       scroller: ".skill-list",
 
       onUpdate: (self) => {
-        let skew = clamp(self.getVelocity() / -300);
+        let skew = clamp(self.getVelocity() / -200);
         if (Math.abs(skew) > Math.abs(proxy.skew)) {
           proxy.skew = skew;
           gsap.to(proxy, { skew: 0, duration: 0.3, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
@@ -268,24 +249,86 @@ const SkillDetailComponent = ({ match }) => {
 
   const clickList = (target) => {
     const listHeight = scrollPosition.current.clientHeight / 3
-    scrollPosition.current.scrollTo({
-      left: 0, top: listHeight * (target.number - 1), behavior: 'smooth'
-    });
+    currentSkillScroller.scrollTo(0, listHeight * (target.number - 1), 600)
+  }
+
+  const workmanships = (level) => {
+    return (
+      <div className={`levels level-${level} ${opacity}`}>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    )
+  }
+
+  const listDetail = (target) => {
+    switch (target) {
+      case 'language':
+        return language.map(language => (
+          <ul key={language.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(language)} onMouseEnter={() => listHover(language.number)} onMouseLeave={onListLeave}>
+            <li className={listHoverMotion}>{language.svg === '' ? <div>{language.name}</div> : <div dangerouslySetInnerHTML={{ __html: language.svg }}></div>}</li>
+          </ul >
+        ))
+      case 'lib':
+        return lib.map(lib => (
+          <ul key={lib.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(lib)} onMouseEnter={() => listHover(lib.number)} onMouseLeave={onListLeave}>
+            <li className={listHoverMotion}>{lib.svg === '' ? <div>{lib.name}</div> : <div dangerouslySetInnerHTML={{ __html: lib.svg }}></div>}</li>
+          </ul>
+        ))
+      case 'tool':
+        return tool.map(tool => (
+          <ul key={tool.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(tool)} onMouseEnter={() => listHover(tool.number)} onMouseLeave={onListLeave}>
+            <li className={listHoverMotion}>{tool.svg === '' ? <div>{tool.name}</div> : <div dangerouslySetInnerHTML={{ __html: tool.svg }}></div>}</li>
+          </ul>
+        ))
+      case 'interest':
+        return interest.map(interest => (
+          <ul key={interest.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs} onClick={() => clickList(interest)} onMouseEnter={() => listHover(interest.number)} onMouseLeave={onListLeave}>
+            <li className={listHoverMotion}>{interest.svg === '' ? <div>{interest.name}</div> : <div dangerouslySetInnerHTML={{ __html: interest.svg }}></div>}</li>
+          </ul>
+        ))
+      default: ''
+    }
+  }
+
+  const targetDetail = (target) => {
+    switch (target) {
+      case 'language':
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{language.length}</span></div><div className='content'><div>{workmanships(language[currentTarget].workmanship)}<h2 className={opacity}>{language[currentTarget].name}</h2></div><p className={`${opacity}${language[currentTarget].workmanship}`}>{language[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{language[currentTarget].name}</span></>
+      case 'lib':
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{lib.length}</span></div><div className='content'><div>{workmanships(lib[currentTarget].workmanship)}<h2 className={opacity}>{lib[currentTarget].name}</h2></div><p className={`${opacity}${lib[currentTarget].workmanship}`}>{lib[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{lib[currentTarget].name}</span></>
+      case 'tool':
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{tool.length}</span></div><div className='content'><div>{workmanships(tool[currentTarget].workmanship)}<h2 className={opacity}>{tool[currentTarget].name}</h2></div><p className={`${opacity}${tool[currentTarget].workmanship}`}>{tool[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{tool[currentTarget].name}</span></>
+      case 'interest':
+        return <><div className='pagenation'><span>{currentTarget + 1}</span>/<span>{interest.length}</span></div><div className='content'><div>{workmanships(interest[currentTarget].workmanship)}<h2 className={opacity}>{interest[currentTarget].name}</h2></div><p className={`${opacity}${interest[currentTarget].workmanship}`}>{interest[currentTarget].summary}</p></div><span className={`back-text ${opacity}`}>{interest[currentTarget].name}</span></>
+      default: ''
+    }
   }
 
   useEffect(() => {
-    let triggers = ScrollTrigger.getAll();
-    triggers.forEach(trigger => {
-      trigger.kill();
-    });
-  }, []);
+    Scrollbar.destroyAll();
+    gsapReady(false);
+    makeSmoothScrollbarforSkill();
+
+    return () => {
+      let triggers = ScrollTrigger.getAll();
+      triggers.forEach(trigger => {
+        trigger.kill();
+      });
+
+      onLeave();
+    }
+  }, [])
 
   useEffect(() => {
-    listScroller();
-    scrollSkew();
-  }, [currentList])
+    currentGsapState && listScroller(), scrollSkew();
+  }, [currentGsapState, currentList])
 
   useEffect(() => {
+    scrollPosition.current.scrollTo(0, 0);
     if (location.pathname.split('/skill/')[1] !== currentList) {
       changeHistoryList();
     }
@@ -295,10 +338,10 @@ const SkillDetailComponent = ({ match }) => {
     <div className='skill-detail'>
       <div className='container fluid pl-pr-none'>
         <ul className='skill-tab'>
-          <li><NavLink to='/skill/language' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='language'>언 어</NavLink></li>
-          <li><NavLink to='/skill/lib' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='lib'>프레임워크&라이브러리</NavLink></li>
-          <li><NavLink to='/skill/tool' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='tool'>개발 도구</NavLink></li>
-          <li><NavLink to='/skill/interest' onClick={changeList} onMouseEnter={tabHover} onMouseLeave={onLeave} data-list='interest'>최근 관심 기술</NavLink></li>
+          <li><button className={currentList === 'language' ? 'active' : ''} onClick={changeList} onMouseEnter={() => onHover(' focus-cursor')} onMouseLeave={onListLeave} data-list='language'>언 어</button></li>
+          <li><button className={currentList === 'lib' ? 'active' : ''} onClick={changeList} onMouseEnter={() => onHover(' focus-cursor')} onMouseLeave={onListLeave} data-list='lib'>프레임워크&라이브러리</button></li>
+          <li><button className={currentList === 'tool' ? 'active' : ''} onClick={changeList} onMouseEnter={() => onHover(' focus-cursor')} onMouseLeave={onListLeave} data-list='tool'>개발 도구</button></li>
+          <li><button className={currentList === 'interest' ? 'active' : ''} onClick={changeList} onMouseEnter={() => onHover(' focus-cursor')} onMouseLeave={onListLeave} data-list='interest'>최근 관심 기술</button></li>
         </ul>
 
         <div className='row content-frame'>

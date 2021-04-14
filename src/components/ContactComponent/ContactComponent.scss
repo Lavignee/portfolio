@@ -13,7 +13,7 @@
     border-bottom-left-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
     writing-mode: vertical-rl;
-    box-shadow: 0 0 1rem #181818;
+    box-shadow: 0 0 1rem $p-d;
     font-family: 'Syncopate';
     @include f-b(1.8rem);
     background-color: $wh;
@@ -37,7 +37,7 @@
     }
   
     &.open {
-      background-color: #181818;
+      background-color: $p-d;
       color: $wh;
     }
   }
@@ -150,7 +150,7 @@
       padding-right: 10px;
       opacity: 0;
       animation-duration: 1s;
-      @include f-b(8rem, #181818);
+      @include f-b(8rem, $p-d);
 
       @media (max-width: $bp-m) {
         font-size: 7rem;
@@ -169,7 +169,7 @@
       .split-depth-frame,
       .split-target {
         font-family: Syncopate;
-        min-width: 0.8rem;
+        min-width: 1.5rem;
   
         span {
           font-family: Syncopate;

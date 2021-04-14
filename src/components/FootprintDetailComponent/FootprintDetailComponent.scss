@@ -3,18 +3,19 @@
 .footprint-detail {
   position: relative;
   width: 100%;
-  height: 100vh;
 
   @media (min-width: $bp-l-min) {
     .text-slider-right-area {
       opacity: 1 !important;
     }
   }
+
   @media (max-width: $bp-l) {
     .text-slider-left-area, .text-slider-right-area {
       position: fixed;
-      height: 100vh;
+      height: 100%;
     }
+
     .text-slider-right-area {
       opacity: 0;
     }
@@ -28,7 +29,7 @@
       width: 50%;
       height: calc(100% - 10rem);
       top: 5rem;
-      color: #181818;
+      color: $p-d;
       cursor: none;
       transition: opacity $transition;
 
@@ -69,6 +70,7 @@
           height: 1rem;
         }
       }
+      
       &.left-pagination, &.right-pagination {
         span {
           &:before {
@@ -147,7 +149,7 @@
         height: .5rem;
         border-radius: 0;
         opacity: 1;
-        background-color: #c4c4c4;
+        background-color: $s-m;
         cursor: none;
         transition: transform $transition, width $transition, height $transition;
 
@@ -157,7 +159,7 @@
         
         &.swiper-pagination-bullet-active {
           z-index: 2;
-          background-color: #181818;
+          background-color: $p-d;
         }
       }
     }
@@ -177,19 +179,19 @@
             .content {
               height: 100%;
               padding: 2.5rem;
-              background-color: rgba(255, 255, 255, 0.7);
+              background-color: $wh-7;
     
               .keyword {
                 display: inline-block;
                 padding: 1rem;
                 margin-bottom: 2rem;
-                background-color: #c4c4c4;
-                @include f-m(1.8rem, #222222);
+                background-color: $s-m;
+                @include f-m(1.8rem, $p-d);
               }
         
               .title {
                 padding-bottom: 1rem;
-                @include f-b(3.6rem, #181818);
+                @include f-b(3.6rem, $p-d);
                 @media (max-width: $bp-s) {
                   font-size: 3.4rem;
                 }
@@ -200,7 +202,7 @@
               
               .date {
                 padding-bottom: 3.5rem;
-                @include f-m(2rem, #a6a6a6);
+                @include f-m(2rem, $p-m);
               }
               
               .summarys {
@@ -210,7 +212,7 @@
                   @include center-align;
                   width: 1px;
                   height: 80%;
-                  background-color: #e0e0e0;
+                  background-color: $p-l;
                 }
                 
                 span {
@@ -225,7 +227,7 @@
                 &.division {
                   padding-top: 3.5rem;
                   padding-bottom: 3.5rem;
-                  background-color: #f0f0f0;
+                  background-color: $s-l;
                   @media (max-width: $bp-l) {
                     padding-top: 3rem;
                     padding-bottom: 3rem;
@@ -286,13 +288,12 @@
 
   .mobile-division {
     position: absolute;
-    top: calc(100% - 10rem);
+    top: calc(50% - 15rem);
     right: 2rem;
     z-index: 2;
     @include f-b(2rem);
     font-family: 'Syncopate';
     opacity: 0;
-    transition: opacity $transition-slow;
     pointer-events: none;
 
     span {
@@ -343,7 +344,7 @@
           padding-top: 3rem;
           font-family: 'Syncopate';
           writing-mode: vertical-rl;
-          @include f-b(3.6rem, #7d7d7d);
+          @include f-b(3.6rem, $s-m);
         }
 
         .left-text {
