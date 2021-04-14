@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import svg from 'static/images/icon-svg.json';
 import './SkillDetailComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeGsapState } from 'modules/CommonValueModule';
+import { changeGsapState } from './modules/CommonValueModule';
 import Scrollbar from 'smooth-scrollbar';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';

@@ -1,8 +1,8 @@
 import React from 'react';
 import 'style/index.scss';
 import { useDispatch } from 'react-redux';
-import { changeSwitchAnimation, changeButtonDelay, smoothTop, changeSmoothScrollState } from 'modules/CommonValueModule';
-import { changeClassName, changeSecondClassName, changeText } from 'modules/CursorModule';
+import { changeSwitchAnimation, changeButtonDelay, smoothTop, changeSmoothScrollState } from './modules/CommonValueModule';
+import { changeClassName, changeSecondClassName, changeText } from './modules/CursorModule';
 import { useHistory } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

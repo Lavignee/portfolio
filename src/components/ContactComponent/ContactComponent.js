@@ -4,7 +4,7 @@ import mobileIcon from 'static/images/mobile-icon.svg';
 import mailIcon from 'static/images/mail-icon.svg';
 import './ContactComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-// import { changeContactState, changeContactButtonDelay } from 'modules/CommonValueModule';
+// import { changeContactState, changeContactButtonDelay } from './modules/CommonValueModule';
 import CustomInputComposition from 'compositions/CustomInputComposition';
 import CustomTextareaComposition from 'compositions/CustomTextareaComposition';
 import CustomButtonComposition from 'compositions/CustomButtonComposition';
