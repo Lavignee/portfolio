@@ -9,12 +9,12 @@
       {
         "root": ["./src"],
         "alias": {
-          "@components": "./src/components",
-          "@compositions": "./src/compositions",
-          "@static": "./src/static",
-          "@style": "./src/style",
-          "@modules": "./src/modules",
-          "@utils": "./src/utils",
+          "@components": "./components",
+          "@compositions": "./compositions",
+          "@static": "./static",
+          "@style": "./style",
+          "@modules": "./modules",
+          "@utils": "./utils"
         }
       }
     ]
