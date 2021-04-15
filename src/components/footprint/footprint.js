@@ -32,12 +32,12 @@ const Footprint = ({ onHover, onClick, onLeave }) => {
         <div className='container footprint-title-area'>
           <div className='footprint-content'>
             <div className='footprint-circle-area'>
-              {isDesktop && <img src={footprintCircle} alt='footprint design circle' />}
+              {isDesktop && <img width='auto' height='auto' src={footprintCircle} alt='footprint design circle' />}
             </div>
             <h2>Footprint</h2>
             <span>프로젝트 / 경력사항 / 외부수주</span>
             <div className='footprint-arrow-area'>
-              <img src={footprintArrow} alt='footprint design arrow' />
+              <img width='100%' height='100%' src={footprintArrow} alt='footprint design arrow' />
             </div>
           </div>
           <div className={`link-button${currentButtonDelay ? ' delay' : ''}`} onMouseEnter={() => onHover(' go-cursor')} onMouseLeave={() => onLeave()} onClick={() => onClick('/footprint')}></div>

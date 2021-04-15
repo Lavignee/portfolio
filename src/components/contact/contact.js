@@ -98,7 +98,7 @@ const Contact = () => {
             <div className='container pl-pr-none'>
               <div className='row contact-content'>
                 <div className='col-12 col-s-6 col-l-4'>
-                  <div className={`email-form-frame${currentContactState ? ' open' : ' close'}`}>
+                  {/* <div className={`email-form-frame${currentContactState ? ' open' : ' close'}`}>
                     <div>
                       <CustomInput type={'text'} placeholder={'Name'} label={'name'} />
                       <CustomInput type={'text'} placeholder={'Phone'} label={'phone'} />
@@ -107,14 +107,14 @@ const Contact = () => {
                     </div>
                     <CustomTextarea placeholder={'Inquiry'} label={'content'} />
                     <CustomButton text={'Send'} align={'right'} />
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className='col-12 col-s-6 col-l-4'>
                   <div className={`info-frame${currentContactState ? ' open' : ' close'}`}>
-                    <div><span><img src={kakaoIcon} alt='kakao app icon' /></span> Lavignee</div>
-                    <div><span><img src={mobileIcon} alt='mobile icon' /></span> +82 010.2690.9243</div>
-                    <div><span><img src={mailIcon} alt='letter icon' /></span> doyoung9243@naver.com</div>
+                    <div><span><img width='100%' height='100%' src={kakaoIcon} alt='kakao app icon' /></span> Lavignee</div>
+                    <div><span><img width='100%' height='100%' src={mobileIcon} alt='mobile icon' /></span> +82 010.2690.9243</div>
+                    <div><span><img width='100%' height='100%' src={mailIcon} alt='letter icon' /></span> doyoung9243@naver.com</div>
                   </div>
                 </div>
               </div>

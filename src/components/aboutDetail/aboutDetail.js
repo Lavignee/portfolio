@@ -356,7 +356,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
 
 
           <div className='photo-area d-m-block d-xs-none'>
-            <img className='first-image' src={child} alt='childhood image' />
+            <img width='70%' height='auto' className='first-image' src={child} alt='childhood image' />
             <Swiper
               className='second-images'
               slidesPerView={1}
@@ -366,26 +366,26 @@ const AboutDetail = ({ onHover, onLeave }) => {
               pagination={{ clickable: false }}
             >
               <SwiperSlide>
-                <img src={shop1} alt='shop image1' />
+                <img width='70%' height='auto' src={shop1} alt='shop image1' />
               </SwiperSlide>
               <SwiperSlide>
-                <img src={shop2} alt='shop image2' />
+                <img width='70%' height='auto' src={shop2} alt='shop image2' />
               </SwiperSlide>
               <SwiperSlide>
-                <img src={shop3} alt='shop image3' />
+                <img width='70%' height='auto' src={shop3} alt='shop image3' />
               </SwiperSlide>
               <SwiperSlide>
-                <img src={shop4} alt='shop image4' />
+                <img width='70%' height='auto' src={shop4} alt='shop image4' />
               </SwiperSlide>
               <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'next')} onMouseLeave={() => onLeave()}></div>
               <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'prev')} onMouseLeave={() => onLeave()}></div>
             </Swiper>
-            <img className='third-image' src={current} alt='current image' />
+            <img width='70%' height='auto' className='third-image' src={current} alt='current image' />
           </div>
 
           <div className='col-12 col-m-7 off-m-5'>
             <div className='background-story-frame first-image-trigger'>
-              {width < 768 && <img className='first-image' src={child} alt='childhood image' />}
+              {width < 768 && <img width='50%' height='auto' className='first-image' src={child} alt='childhood image' />}
               <h3>학생시절</h3>
               <p>8살부터 사용해온 컴퓨터는 제게는 너무 신기하고 배울 것이 참 많은 기기였습니다. 학교에서 배우는 국어, 영어, 수학보다 컴퓨터의 탐색기를 하나하나 열어보고 각종 윈도우의 기능과 타자 연습, 다양한 게임들을 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 <b>아버지의 책 출간을 돕기도 했습니다.</b> 이후 미대 교수였던 아버지의 영향을 받아 미술 전공을 준비했었지만, 입시 미술이 적성에 맞지 않아 고등학교를 졸업한 20살에 곧바로 입대하였습니다.</p>
             </div>
@@ -401,16 +401,16 @@ const AboutDetail = ({ onHover, onLeave }) => {
                   pagination={{ clickable: false }}
                 >
                   <SwiperSlide>
-                    <img src={shop1} alt='shop image1' />
+                    <img width='70%' height='auto' src={shop1} alt='shop image1' />
                   </SwiperSlide>
                   <SwiperSlide>
-                    <img src={shop2} alt='shop image2' />
+                    <img width='70%' height='auto' src={shop2} alt='shop image2' />
                   </SwiperSlide>
                   <SwiperSlide>
-                    <img src={shop3} alt='shop image3' />
+                    <img width='70%' height='auto' src={shop3} alt='shop image3' />
                   </SwiperSlide>
                   <SwiperSlide>
-                    <img src={shop4} alt='shop image4' />
+                    <img width='70%' height='auto' src={shop4} alt='shop image4' />
                   </SwiperSlide>
                   <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'next')} onMouseLeave={() => onLeave()}></div>
                   <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'prev')} onMouseLeave={() => onLeave()}></div>
@@ -421,7 +421,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
             </div>
 
             <div className='background-story-frame third-image-trigger'>
-              {width < 768 && <img className='third-image' src={current} alt='current image' />}
+              {width < 768 && <img width='50%' height='auto' className='third-image' src={current} alt='current image' />}
               <h3>웹 개발자 ~ 현재</h3>
               <p>지인들과 팀을 꾸려 일을 하다 <b>작은 회사를 설립</b>하였고, 회사 운영을 함께 하며 개발 일을 해왔습니다. 초보 개발자였지만 기획자가 따로 없었으므로 서비스의 개발과 개선 등을 기획부터 해왔고, 회사의 <b>인사관리</b>, <b>고객 응대</b>, <b>세무</b>, <b>수금</b>까지 맡았습니다. <b>적은 인원</b>과 자본으로 힘들게 시작하였지만 성장하는 회사를 보고 즐겁게 일할 수 있었습니다. 다양한 업무 경험으로 넓은 시각이 생겼지만 이렇게 일을 해서는 전문가가 되기는 어렵겠다는 생각에 퇴사하게 되었습니다. 이후 프리랜서로 일을 하며 React 프로젝트에 참여해보았고, 현재까지 나온 다양한 기능을 익히는데 많은 시간을 투자하고 있습니다.</p>
             </div>

@@ -6,7 +6,7 @@ const Navmenu = ({ onlogoHover, onClick, onHeaderLeave, onGnbButtonClick, onGnbB
   const [currentButtonDelay] = useSelector(state => [state.CommonValue.currentButtonDelay], shallowEqual);
 
   const logoClick = () => {
-    location.pathname === '/' ? scrollTop : onClick('/', 'top?')
+    location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?')
   }
 
   return (
