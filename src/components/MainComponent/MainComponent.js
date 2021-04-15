@@ -4,7 +4,7 @@ import src1280 from 'static/videos/video1280.mp4';
 import src640 from 'static/videos/video640.mp4';
 import './MainComponent.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart } from '../../modules/CommonValueModule';
+import { splitTextStart } from 'modules/CommonValueModule';
 import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

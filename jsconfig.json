@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
     "jsx": "react",
+    "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
       "*": ["src/*"],
-      "components/*": ["components/*"],
-      "compositions/*": ["compositions/*"],
-      "static/*": ["static/*"],
-      "style/*": ["style/*"],
-      "modules/*": ["modules/*"],
-      "utils/*": ["utils/*"],
+      "components/*": ["./components/*"],
+      "compositions/*": ["./compositions/*"],
+      "static/*": ["./static/*"],
+      "style/*": ["./style/*"],
+      "modules/*": ["./modules/*"],
+      "utils/*": ["./utils/*"],
     }
-  }
+  },
+  "include": ["src/**/*"]
 }
