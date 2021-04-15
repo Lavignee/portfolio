@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import CursorModule from './CursorModule';
-import CommonValueModule from './CommonValueModule';
+import Cursor from './cursor';
+import CommonValue from './commonValue';
 
 const RootReducer = combineReducers({
-  CursorModule,
-  CommonValueModule
+  Cursor,
+  CommonValue
 });
 
 export default RootReducer;
