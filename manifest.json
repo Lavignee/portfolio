@@ -1,0 +1,21 @@
+{
+ "name": "Do Young Lee's Portfolio",
+ "short_name" : "LDY's Portfolio",
+ "icons": [
+  {
+   "src": "./src/static/images/favicon/android-icon-192x192.png",
+   "sizes": "192x192",
+   "type": "image\/png",
+   "density": "4.0"
+  }
+ ],
+ "start_url" : "/",
+  "scope" : ".",
+  "display" : "standalone",
+  "orientation" : "any",
+  "background_color" : "#424242",
+  "theme_color" : "#424242",
+  "description" : "Hello, this is the portfolio site of front developer Lee Do-young.",
+  "dir" : "ltr",
+  "lang" : "ko-KR"
+}

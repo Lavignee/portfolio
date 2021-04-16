@@ -21,7 +21,7 @@ const Home = ({ onHover, onClick, onLeave }) => {
 
   return (
     <div className='home-area'>
-      <Main />
+      <Main onHover={onHover} onLeaves={onLeave} />
       <About onHover={onHover} onClick={onClick} onLeaves={onLeave} />
       <Skill onHover={onHover} onClick={onClick} onLeave={onLeave} />
       <Footprint onHover={onHover} onClick={onClick} onLeave={onLeave} />

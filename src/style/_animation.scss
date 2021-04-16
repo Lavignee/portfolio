@@ -70,7 +70,7 @@
   }
 }
 
-// AboutComponent
+// About
 @keyframes moving-right {
   0% {
     opacity: 0;
@@ -195,7 +195,7 @@
   }
 }
 
-// SkillDetailComponent
+// SkillDetail
 @keyframes slide-right {
   0% {
     opacity: 0;
@@ -208,7 +208,7 @@
   }
 }
 
-//SwitchAnimationComponent
+//SwitchAnimation
 @keyframes screen-cover {
   0% {
     border-radius: 10%;
@@ -294,7 +294,23 @@
   }
 }
 
-// neonStyle
+// footerDetail
+
+@keyframes focusing {
+  0% {
+    background-color: transparent;
+  }
+  
+  50% {
+    background-color: $bl-2;
+  }
+  
+  100% {
+    background-color: transparent;
+  }
+}
+
+// neonStyleTest
 @keyframes neon {
   from {
     text-shadow: 0 0 10px $s-m, 0 0 20px $s-m

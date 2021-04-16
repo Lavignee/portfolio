@@ -28,6 +28,16 @@
   .main-content-frame {
     position: relative;
 
+    .test {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      height: 100%;
+      background-color: $p-m;
+      pointer-events: none;
+      animation: hide 3s 2s linear forwards;
+    }
+
     .main-text-frame {
       text-align: center;
       position: relative;
@@ -36,7 +46,9 @@
 
       .main-text {
         display: inline-block;
+        opacity: 0;
         @include vertical-align(relative);
+        animation: show 3s 0.5s linear forwards;
         // animation: neon 2s ease-in-out infinite alternate;
         
         span {
@@ -87,20 +99,19 @@
         padding-top: 40rem;
         margin-top: -30rem;
 
-        @media (max-width: $bp-s) {
-          padding-top: 15rem;
-          margin-top: -35rem;
-        }
-        
-        @media (max-width: $bp-m) {
-          padding-top: 35rem;
-          margin-top: -45rem;
-        }
-
         @media (max-width: $bp-l) {
           padding-top: 40rem;
           margin-top: -55rem;
         }
+        @media (max-width: $bp-m) {
+          padding-top: 35rem;
+          margin-top: -45rem;
+        }
+        @media (max-width: $bp-s) {
+          padding-top: 20rem;
+          margin-top: -35rem;
+        }
+
 
         .type-p {
           @include f-r(6.2rem, $wh, 6rem);
@@ -133,7 +144,20 @@
           .split-depth-frame,
           .split-target {
             font-family: Syncopate;
-            min-width: 0.8rem;
+            min-width: 1.16rem;
+
+            @media (max-width: $bp-l) {
+              min-width: 0.96rem;
+            }
+            @media (max-width: $bp-m) {
+              min-width: 0.78rem;
+            }
+            @media (max-width: $bp-s) {
+              min-width: 0.6rem;
+            }
+            @media (max-width: $bp-xs) {
+              min-width: 0.4rem;
+            }
 
             span {
               font-family: Syncopate;

@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 import VideoToCanvas from 'components/videoToCanvas';
 import SplitText from 'components/splitText';
 
-const Main = () => {
+const Main = ({ onHover, onLeaves }) => {
   const dispatch = useDispatch();
   const onScrollIntro = () => dispatch(splitTextStart('intro'));
   const onScrollIntro2 = () => dispatch(splitTextStart('intro2'));
@@ -150,8 +150,9 @@ const Main = () => {
       </div>
 
       <div className='main-content-frame'>
+        <div className='test'></div>
         <div className='main-text-frame'>
-          <div className='main-text'>
+          <div className='main-text' onMouseEnter={() => onHover(' reverse-cursor')} onMouseLeave={() => onLeaves()}>
             <span>FRONT - END DEVELOPER</span>
             <p>Doyoung Lee</p>
           </div>
@@ -160,9 +161,9 @@ const Main = () => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'} ready={canvasReady} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitText>
+              <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'} ready={canvasReady} depth>I've  been  a  front  developer  for  4  years.</SplitText>
 
-              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'int2'} ready={canvasReady} depth>It  was  produced  focusing  on  simple  but  delicate  details  without  any  additional  design.</SplitText>
+              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'int2'} ready={canvasReady} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitText>
             </div>
           </div>
         </div>

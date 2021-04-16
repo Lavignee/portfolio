@@ -72,7 +72,7 @@ const App = () => {
         </SmoothScroll>
         {/* <ScrollValueAnimation /> */}
         <FilmEffect />
-        <Contact />
+        <Contact onHover={onHover} onLeave={onLeave} />
         <SwitchAnimation />
       </CustomCursor >
     </>

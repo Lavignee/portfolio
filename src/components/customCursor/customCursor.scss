@@ -80,6 +80,12 @@
       background-color: $wh-8;
     }
 
+    &.reverse-cursor {
+      width: 15rem;
+      height: 15rem;
+      background-color: $wh-8;
+    }
+
     &.pagination-cursor {
       opacity: 0;
     }
@@ -155,6 +161,10 @@
       width: 0;
       height: 0;
       mix-blend-mode: lighten;
+    }
+
+    &.reverse-cursor {
+      opacity: 0;
     }
 
     &.focus-cursor {

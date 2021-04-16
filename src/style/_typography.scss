@@ -3,7 +3,7 @@
 //   font-family: 'Noto Sans';
 //   font-style: normal;
 //   font-weight: 100;
-//   src: url('../static/fonts/NotoSansCJKkr-Thin.woff2') format('woff2'),
+//   src: local('Noto Sans'), url('../static/fonts/NotoSansCJKkr-Thin.woff2') format('woff2'),
 //     url('../static/fonts/NotoSansCJKkr-Thin.woff') format('woff');
 //    font-display: swap;
 // }
@@ -12,7 +12,7 @@
 //   font-family: 'Noto Sans';
 //   font-style: normal;
 //   font-weight: 300;
-//   src: url('../static/fonts/NotoSansCJKkr-Light.woff2') format('woff2'),
+//   src: local('Noto Sans'), url('../static/fonts/NotoSansCJKkr-Light.woff2') format('woff2'),
 //     url('../static/fonts/NotoSansCJKkr-Light.woff') format('woff');
 //    font-display: swap;
 // }
@@ -21,7 +21,7 @@
 //   font-family: 'Noto Sans';
 //   font-style: normal;
 //   font-weight: 400;
-//   src: url('../static/fonts/NotoSansCJKkr-Regular.woff2') format('woff2'),
+//   src: local('Noto Sans'), url('../static/fonts/NotoSansCJKkr-Regular.woff2') format('woff2'),
 //     url('../static/fonts/NotoSansCJKkr-Regular.woff') format('woff');
 //    font-display: swap;
 // }
@@ -30,7 +30,7 @@
 //   font-family: 'Noto Sans';
 //   font-style: normal;
 //   font-weight: 500;
-//   src: url('../static/fonts/NotoSansCJKkr-Medium.woff2') format('woff2'),
+//   src: local('Noto Sans'), url('../static/fonts/NotoSansCJKkr-Medium.woff2') format('woff2'),
 //     url('../static/fonts/NotoSansCJKkr-Medium.woff') format('woff');
 //    font-display: swap;
 // }
@@ -39,7 +39,7 @@
 //   font-family: 'Noto Sans';
 //   font-style: normal;
 //   font-weight: 700;
-//   src: url('../static/fonts/NotoSansCJKkr-Bold.woff2') format('woff2'),
+//   src: local('Noto Sans'), url('../static/fonts/NotoSansCJKkr-Bold.woff2') format('woff2'),
 //     url('../static/fonts/NotoSansCJKkr-Bold.woff') format('woff');
 //    font-display: swap;
 // }
@@ -48,7 +48,7 @@
 //   font-family: 'Noto Sans';
 //   font-style: normal;
 //   font-weight: 900;
-//   src: url('../static/fonts/NotoSansCJKkr-Black.woff2') format('woff2'),
+//   src: local('Noto Sans'), url('../static/fonts/NotoSansCJKkr-Black.woff2') format('woff2'),
 //     url('../static/fonts/NotoSansCJKkr-Black.woff') format('woff');
 //    font-display: swap;
 // }
@@ -58,7 +58,7 @@
 //   font-family: 'NanumSquare';
 //   font-style: normal;
 //   font-weight: 300;
-//   src: url('../static/fonts/NanumSquareL.woff') format('woff');
+//   src: local('NanumSquare'), url('../static/fonts/NanumSquareL.woff') format('woff');
 //    font-display: swap;
 // }
 
@@ -66,7 +66,7 @@
 //   font-family: 'NanumSquare';
 //   font-style: normal;
 //   font-weight: 400;
-//   src: url('../static/fonts/NanumSquareR.woff') format('woff');
+//   src: local('NanumSquare'), url('../static/fonts/NanumSquareR.woff') format('woff');
 //    font-display: swap;
 // }
 
@@ -74,7 +74,7 @@
 //   font-family: 'NanumSquare';
 //   font-style: normal;
 //   font-weight: 700;
-//   src: url('../static/fonts/NanumSquareB.woff') format('woff');
+//   src: local('NanumSquare'), url('../static/fonts/NanumSquareB.woff') format('woff');
 //    font-display: swap;
 // }
 
@@ -82,7 +82,7 @@
 //   font-family: 'NanumSquare';
 //   font-style: normal;
 //   font-weight: 800;
-//   src: url('../static/fonts/NanumSquareEB.woff') format('woff');
+//   src: local('NanumSquare'), url('../static/fonts/NanumSquareEB.woff') format('woff');
 //    font-display: swap;
 // }
 
@@ -91,21 +91,21 @@
   font-family: 'NEXON Lv2 Gothic Light';
   font-style: normal;
   font-weight: 300;
-  src: url('../static/fonts/NEXON-Lv2-Gothic-Light.woff') format('woff');
+  src: local('NEXON Lv2 Gothic Light'), url('../static/fonts/NEXON-Lv2-Gothic-Light.woff') format('woff');
   font-display: swap;
 }
 @font-face {
   font-family: 'NEXON Lv2 Gothic';
   font-style: normal;
   font-weight: 400;
-  src: url('../static/fonts/NEXON-Lv2-Gothic.woff') format('woff');
+  src: local('NEXON Lv2 Gothic'), url('../static/fonts/NEXON-Lv2-Gothic.woff') format('woff');
   font-display: swap;
 }
 @font-face {
   font-family: 'NEXON Lv2 Gothic Bold';
   font-style: normal;
   font-weight: 700;
-  src: url('../static/fonts/NEXON-Lv2-Gothic-Bold.woff') format('woff');
+  src: local('NEXON Lv2 Gothic Bold'), url('../static/fonts/NEXON-Lv2-Gothic-Bold.woff') format('woff');
   font-display: swap;
 }
 
@@ -114,7 +114,7 @@
 //   font-family: 'Roboto';
 //   font-style: normal;
 //   font-weight: 100;
-//   src: url('../static/fonts/Roboto-Thin.woff2') format('woff2'),
+//   src: local('Roboto'), url('../static/fonts/Roboto-Thin.woff2') format('woff2'),
 //     url('../static/fonts/Roboto-Thin.woff') format('woff');
 //    font-display: swap;
 // }
@@ -123,7 +123,7 @@
 //   font-family: 'Roboto';
 //   font-style: normal;
 //   font-weight: 300;
-//   src: url('../static/fonts/Roboto-Light.woff2') format('woff2'),
+//   src: local('Roboto'), url('../static/fonts/Roboto-Light.woff2') format('woff2'),
 //     url('../static/fonts/Roboto-Light.woff') format('woff');
 //    font-display: swap;
 // }
@@ -132,7 +132,7 @@
 //   font-family: 'Roboto';
 //   font-style: normal;
 //   font-weight: 400;
-//   src: url('../static/fonts/Roboto-Regular.woff2') format('woff2'),
+//   src: local('Roboto'), url('../static/fonts/Roboto-Regular.woff2') format('woff2'),
 //     url('../static/fonts/Roboto-Regular.woff') format('woff');
 //    font-display: swap;
 // }
@@ -141,7 +141,7 @@
 //   font-family: 'Roboto';
 //   font-style: normal;
 //   font-weight: 500;
-//   src: url('../static/fonts/Roboto-Medium.woff2') format('woff2'),
+//   src: local('Roboto'), url('../static/fonts/Roboto-Medium.woff2') format('woff2'),
 //     url('../static/fonts/Roboto-Medium.woff') format('woff');
 //    font-display: swap;
 // }
@@ -150,7 +150,7 @@
 //   font-family: 'Roboto';
 //   font-style: normal;
 //   font-weight: 700;
-//   src: url('../static/fonts/Roboto-Bold.woff2') format('woff2'),
+//   src: local('Roboto'), url('../static/fonts/Roboto-Bold.woff2') format('woff2'),
 //     url('../static/fonts/Roboto-Bold.woff') format('woff');
 //    font-display: swap;
 // }
@@ -159,7 +159,7 @@
 //   font-family: 'Roboto';
 //   font-style: normal;
 //   font-weight: 900;
-//   src: url('../static/fonts/Roboto-Black.woff2') format('woff2'),
+//   src: local('Roboto'), url('../static/fonts/Roboto-Black.woff2') format('woff2'),
 //     url('../static/fonts/Roboto-Black.woff') format('woff');
 //    font-display: swap;
 // }
@@ -169,7 +169,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 100;
-//   src: url('../static/fonts/Montserrat-Thin.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-Thin.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-Thin.woff') format('woff');
 //    font-display: swap;
 // }
@@ -178,7 +178,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 200;
-//   src: url('../static/fonts/Montserrat-ExtraLight.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-ExtraLight.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-ExtraLight.woff') format('woff');
 //    font-display: swap;
 // }
@@ -187,7 +187,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 300;
-//   src: url('../static/fonts/Montserrat-Light.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-Light.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-Light.woff') format('woff');
 //    font-display: swap;
 // }
@@ -196,7 +196,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 400;
-//   src: url('../static/fonts/Montserrat-Regular.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-Regular.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-Regular.woff') format('woff');
 //    font-display: swap;
 // }
@@ -205,7 +205,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 500;
-//   src: url('../static/fonts/Montserrat-Medium.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-Medium.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-Medium.woff') format('woff');
 //    font-display: swap;
 // }
@@ -214,7 +214,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 600;
-//   src: url('../static/fonts/Montserrat-SemiBold.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-SemiBold.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-SemiBold.woff') format('woff');
 //    font-display: swap;
 // }
@@ -223,7 +223,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 700;
-//   src: url('../static/fonts/Montserrat-Bold.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-Bold.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-Bold.woff') format('woff');
 //    font-display: swap;
 // }
@@ -232,7 +232,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 800;
-//   src: url('../static/fonts/Montserrat-ExtraBold.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-ExtraBold.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-ExtraBold.woff') format('woff');
 //    font-display: swap;
 // }
@@ -241,7 +241,7 @@
 //   font-family: 'Montserrat';
 //   font-style: normal;
 //   font-weight: 900;
-//   src: url('../static/fonts/Montserrat-Black.woff2') format('woff2'),
+//   src: local('Montserrat'), url('../static/fonts/Montserrat-Black.woff2') format('woff2'),
 //     url('../static/fonts/Montserrat-Black.woff') format('woff');
 //    font-display: swap;
 // }
@@ -251,13 +251,13 @@
   font-family: 'Syncopate';
   font-style: normal;
   font-weight: 400;
-  src: url('../static/fonts/Syncopate-Regular.woff') format('woff');
+  src: local('Syncopate'), url('../static/fonts/Syncopate-Regular.woff2') format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: 'Syncopate';
   font-style: normal;
   font-weight: 700;
-  src: url('../static/fonts/Syncopate-Bold.woff') format('woff');
+  src: local('Syncopate'), url('../static/fonts/Syncopate-Bold.woff2') format('woff2');
   font-display: swap;
 }

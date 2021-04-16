@@ -181,13 +181,17 @@
     .swiper-container {
       .swiper-button-prev, .swiper-button-next {
         width: 50%;
-        height: calc(100% - 5rem);
-        top: 5rem;
+        height: 100%;
+        top: 0;
         color: $p-d;
         cursor: none;
     
         &:after {
           position: absolute;
+        }
+
+        &:hover {
+          animation: focusing 0.5s linear;
         }
       }
 

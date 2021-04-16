@@ -5,13 +5,14 @@ import mailIcon from 'static/images/mail-icon.svg';
 import './contact.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 // import { changeContactState, changeContactButtonDelay } from 'modules/CommonValue';
+import { isMobile } from 'react-device-detect';
 import CustomInput from 'compositions/customInput';
 import CustomTextarea from 'compositions/customTextarea';
 import CustomButton from 'compositions/customButton';
 import SplitText from 'components/splitText';
 import useInterval from 'utils/useInterval';
 
-const Contact = () => {
+const Contact = ({ onHover, onLeave }) => {
   // const dispatch = useDispatch();
   // const onChangeContactState = () => dispatch(changeContactState());
   // const onChangeContactButtonDelay = (value) => dispatch(changeContactButtonDelay(value));
@@ -113,8 +114,14 @@ const Contact = () => {
                 <div className='col-12 col-s-6 col-l-4'>
                   <div className={`info-frame${currentContactState ? ' open' : ' close'}`}>
                     <div><span><img width='100%' height='100%' src={kakaoIcon} alt='kakao app icon' /></span> Lavignee</div>
-                    <div><span><img width='100%' height='100%' src={mobileIcon} alt='mobile icon' /></span> +82 010.2690.9243</div>
+                    {isMobile ? (
+                      <div className='link' onMouseEnter={() => onHover(' go-cursor')} onMouseLeave={() => onLeave()}><span><img width='100%' height='100%' src={mobileIcon} alt='mobile icon' /></span>{isMobile ? <a href="tel:010-1234-5678">+82 010.2690.9243</a> : ' +82 010.2690.9243'}</div>
+                    ) : (
+                      <div><span><img width='100%' height='100%' src={mobileIcon} alt='mobile icon' /></span>{isMobile ? <a href="tel:010-1234-5678">+82 010.2690.9243</a> : ' +82 010.2690.9243'}</div>
+                    )}
+
                     <div><span><img width='100%' height='100%' src={mailIcon} alt='letter icon' /></span> doyoung9243@naver.com</div>
+                    <div className='link' onMouseEnter={() => onHover(' go-cursor')} onMouseLeave={() => onLeave()}><span><img width='100%' height='100%' src={mailIcon} alt='github icon' /></span> <a href='https://github.com/Lavignee/portfolio' target='_black'>github.com/Lavignee</a></div>
                   </div>
                 </div>
               </div>
