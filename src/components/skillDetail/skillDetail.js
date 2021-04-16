@@ -71,9 +71,9 @@ const tool = [
 const interest = [
   { number: '1', id: 'typescript', name: 'TypeScript', workmanship: 1, summary: '어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 실무에서 사용하게 된다면 금방 익숙해질 것 같습니다.', svg: typescriptSvg },
   { number: '2', id: 'contextapi', name: 'context API', workmanship: 1, summary: '아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 실무에서 사용하게 된다면 금방 익숙해질 것 같습니다.', svg: '' },
-  { number: '3', id: 'mobx', name: 'MobX', workmanship: '', summary: 'Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.', svg: mobxSvg },
-  { number: '4', id: 'gatsby', name: 'Gatsby', workmanship: '', summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: gatsbySvg },
-  { number: '5', id: 'webgl', name: 'WebGL', workmanship: '', summary: '진입장벽이 만만치 않지만 언젠가 자유롭게 다뤄보고 싶습니다.', svg: webglSvg },
+  { number: '3', id: 'mobx', name: 'MobX', workmanship: 0, summary: 'Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.', svg: mobxSvg },
+  { number: '4', id: 'gatsby', name: 'Gatsby', workmanship: 0, summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: gatsbySvg },
+  { number: '5', id: 'webgl', name: 'WebGL', workmanship: 0, summary: '진입장벽이 만만치 않지만 언젠가 자유롭게 다뤄보고 싶습니다.', svg: webglSvg },
   { number: '6', id: 'graphql', name: 'GraphQL', workmanship: '', summary: '', svg: graphqlSvg },
   { number: '7', id: 'express', name: 'Express.js', workmanship: '', summary: '', svg: '' },
   { number: '8', id: 'nextjs', name: 'Next.js', workmanship: '', summary: '', svg: nextjsSvg },

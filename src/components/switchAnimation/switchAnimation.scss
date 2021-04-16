@@ -10,7 +10,7 @@
   background-color: $p-d;
   border-radius: 10%;
   transform: rotate(-240deg) translate(-40%, -220%) scale(2);
-  transition: border-radius $transition-slow, transform $transition-slow;
+  transition: border-radius $transition-slow2, transform $transition-slow2;
 
   @media (max-width: $bp-m) {
     transform: rotate(-240deg) translate(-40%, -250%) scale(2);

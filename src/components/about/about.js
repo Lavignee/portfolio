@@ -342,7 +342,7 @@ const About = ({ onHover, onClick, onLeaves }) => {
 
           <div className={`second-line${isDesktop && aboutAnimationReady ? ' desktop will-change' : ''}${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}>{nextText ? <div>Premeditated<span className='second-span'>Premeditated</span></div> : <div>Until it works<span className='second-span'>Until it works</span></div>}</div>
 
-          <div className={`third-line${isDesktop && aboutAnimationReady ? ' desktop will-change' : ''}${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}>{nextText ? <div>Efficient<span className='third-span'>Efficient</span></div> : <div>Honest<span className='third-span'>Honest</span></div>}</div>
+          <div className={`third-line${isDesktop && aboutAnimationReady ? ' desktop will-change' : ''}${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}>{nextText ? <div>Meticulous<span className='third-span'>Meticulous</span></div> : <div>Honest<span className='third-span'>Honest</span></div>}</div>
         </div>
 
         <div className='about-detail-button'>
