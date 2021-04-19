@@ -5,6 +5,7 @@ const CONTACT_BUTTON_DELAY = 'BUTTON_DELAY2';
 const BUTTON_DELAY = 'BUTTON_DELAY';
 const GNB_STATE = 'GNB_STATE';
 const SWITCH_ANIMATION = 'SWITCH_ANIMATION';
+const FIRM_STATE = 'FIRM_STATE';
 const SMOOTH_TOP = 'SMOOTH_TOP';
 const SMOOTH_SCROLL_STATE = 'SMOOTH_SCROLL_STATE';
 const SMOOTH_SCROLL_STATE_FAST = 'SMOOTH_SCROLL_STATE_FAST';
@@ -41,6 +42,10 @@ export const changeGnbState = currentGnbState => ({
 export const changeSwitchAnimation = currentSwitchAnimation => ({
   type: SWITCH_ANIMATION,
   currentSwitchAnimation
+});
+export const changeFilmState = currentFilmState => ({
+  type: FIRM_STATE,
+  currentFilmState
 });
 export const smoothTop = currentSmoothTopState => ({
   type: SMOOTH_TOP,
@@ -82,6 +87,7 @@ const initialState = {
   currentButtonDelay: false,
   currentGnbState: false,
   currentSwitchAnimation: false,
+  currentFilmState: false,
   currentSmoothTopState: false,
   currentScrollState: false,
   currentScrollStateFast: false,
@@ -128,6 +134,11 @@ const CommonValue = (state = initialState, action) => {
       return {
         ...state,
         currentSwitchAnimation: action.currentSwitchAnimation
+      };
+    case FIRM_STATE:
+      return {
+        ...state,
+        currentFilmState: action.currentFilmState
       };
     case SMOOTH_TOP:
       return {

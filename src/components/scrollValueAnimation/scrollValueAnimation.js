@@ -3,7 +3,7 @@ import './scrollValueAnimation.scss';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const ScrollValueAnimation = () => {
-  const [currentScrollValue, currentScrollLimit] = useSelector(state => [state.CommonValue.currentScrollValue, state.CommonValue.currentScrollLimit], shallowEqual);
+  const [currentGnbState, currentScrollValue, currentScrollLimit] = useSelector(state => [state.CommonValue.currentGnbState, state.CommonValue.currentScrollValue, state.CommonValue.currentScrollLimit], shallowEqual);
 
   const testRef = useRef(0)
   const [percentView, setPercentView] = useState(false)
@@ -15,7 +15,7 @@ const ScrollValueAnimation = () => {
 
   useEffect(() => {
     location.pathname === '/' ? setPercentView(true) : setPercentView(false)
-  }, [location.pathname])
+  }, [currentGnbState])
 
   return (
     percentView && <div className='scroll-percent'>{testRef.current + '%'}</div>

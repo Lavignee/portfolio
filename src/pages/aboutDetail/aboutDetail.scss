@@ -157,12 +157,12 @@
         padding-bottom: 4rem;
       }
 
-      .first-image, .second-images, .third-image {
+      .first-image, .second-images, .third-images {
         transition: opacity $transition;
         @include horizontal-align;
       }
       
-      .second-images, .third-image {
+      .second-images, .third-images {
         opacity: 0;
         pointer-events: none;
         margin-top: $headerHeight;
@@ -170,10 +170,11 @@
         &.view {
           opacity: 1;
           pointer-events: initial;
+          z-index: 2;
         }
       }
 
-      .third-image {
+      .third-images {
         margin-top: $headerHeight * 2 ;
       }
     }
@@ -185,6 +186,10 @@
         top: 0;
         color: $p-d;
         cursor: none;
+
+        @media (max-width: $bp-m) {
+          top: 2.2rem;
+        }
     
         &:after {
           position: absolute;

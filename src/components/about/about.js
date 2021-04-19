@@ -1,12 +1,15 @@
 import React, { memo, useState, useRef, useEffect } from 'react';
-import aboutOne from 'static/images/about-one.jpg';
-import aboutTwo from 'static/images/about-two.jpg';
-import aboutThree from 'static/images/about-three.jpg';
-import './about.scss';
 import { useSelector, shallowEqual } from 'react-redux';
 import { isDesktop, isMobile } from 'react-device-detect';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import aboutOne from 'static/images/about-one.jpg';
+import aboutTwo from 'static/images/about-two.jpg';
+import aboutThree from 'static/images/about-three.jpg';
+
+import './about.scss';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const About = ({ onHover, onClick, onLeaves }) => {

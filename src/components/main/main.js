@@ -1,16 +1,20 @@
 import React, { memo, useEffect, useState } from 'react';
-// import src1920 from 'static/videos/video1920.mp4';
-import src1280 from 'static/videos/video1280.mp4';
-import src640 from 'static/videos/video640.mp4';
-import './main.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { splitTextStart } from 'modules/commonValue';
 import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+
+// import src1920 from 'static/videos/video1920.mp4';
+import src1280 from 'static/videos/video1280.mp4';
+import src640 from 'static/videos/video640.mp4';
+
+import './main.scss';
+
 import VideoToCanvas from 'components/videoToCanvas';
 import SplitText from 'components/splitText';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Main = ({ onHover, onLeaves }) => {
   const dispatch = useDispatch();

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import svg from 'static/images/icon-svg.json';
-import './iconSlider.scss';
 import { gsap } from 'gsap';
+
+import svg from 'static/images/icon-svg.json';
+
+import './iconSlider.scss';
+
 import useWindowSize from 'utils/useWindowSize';
 
 const Iconslider = ({ sliderTrigger }) => {

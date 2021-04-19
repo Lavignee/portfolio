@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
-import './footprintDetail.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { changeGsapState, makeSmoothScroll } from 'modules/commonValue';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import './footprintDetail.scss';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/effect-fade/effect-fade.scss';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+
 import TextSlider from 'components/textSlider';
 
 SwiperCore.use([Navigation, Pagination, EffectFade]);
+gsap.registerPlugin(ScrollTrigger);
 
 const career = [
   {
@@ -26,7 +28,7 @@ const career = [
 
 const project = [
   {
-    id: 1, keyword: '# Project', title: '개인 포트폴리오 개발', date: '2020.10 ~ 2021.04 (472시간)', summary: ['React 개발', '반응형 사이트', 'Parcel 사용', 'GSAP로 동적효과 구현', 'Video to canvas 구현', '다양한 애니메이션 구현'], text: 'React 개발 경험이 많지 않아 좀 더 익숙해질 겸 지루하지 않고, 다양한 표현방식을 가진 포트폴리오를 만들고 싶었습니다. 일부 이미지 파일과 SVG 아이콘 등을 제외하고 구성 및 UX 기획부터 디자인, 개발까지 모두 직접 하였습니다. 최초 기획에는 다국어 번역, 메일 발송 기능과 FHD 이상의 화면에서 추가 애니메이션 등도 포함되었지만, 이미 육아와 가사를 병행하다 보니 애초 완성보다 많이 지체되어 우선 마무리(추후 계속 개발 예정)하게 되었습니다. 개발 기간 자체는 꽤 길지만 매번 작업 시 작성한 개발 시간은 472시간으로 하루 8시간의 업무 기준으로 59일 (약 2달)입니다.'
+    id: 1, keyword: '# Project', title: '개인 포트폴리오 개발', date: '2020.10 ~ 2021.04 (476시간)', summary: ['React 개발', '반응형 사이트', 'Parcel 사용', 'GSAP로 동적효과 구현', 'Video to canvas 구현', '다양한 애니메이션 구현'], text: 'React 개발 경험이 많지 않아 좀 더 익숙해질 겸 지루하지 않고, 다양한 표현방식을 가진 포트폴리오를 만들고 싶었습니다. 일부 이미지 파일과 SVG 아이콘 등을 제외하고 구성 및 UX 기획부터 디자인, 개발까지 모두 직접 하였습니다. 최초 기획에는 다국어 번역, 메일 발송 기능과 FHD 이상의 화면에서 추가 애니메이션 등도 포함되었지만, 이미 육아와 가사를 병행하다 보니 애초 완성보다 많이 지체되어 우선 마무리(추후 계속 개발 예정)하게 되었습니다. 개발 기간 자체는 꽤 길지만 매번 작업 시 작성한 개발 시간은 476시간으로 주 40시간 근로제 기준으로 59.5일 (약 두달 보름)입니다.'
   },
   {
     id: 2, keyword: '# Project', title: '커스터디 서비스 기획 및 개발', date: '2019.12 ~ 2020.04', summary: ['React 개발', '반응형 사이트', 'Material-UI 사용', '기간별 자산 변동량 Chart 개발', '보유 자산 비율 Chart 개발', '사이트 번역 및 개발', '이메일 폼 퍼블리싱 작업'], text: 'Online과 Offline의 분리가 명확하고 다양한 권한 관리와 보안정책이 도입된 암호화폐 관리 서비스입니다. 프로젝트 초기에는 디자이너 없이 Material-UI 기능과 디자인을 그대로 사용하여 개발되었으나, 제가 계약된 당시에는 디자이너가 와서 디자인을 적용해야 했습니다. 기존에 작성된 코드는 이미 대부분 Material-UI에서 제공되는 컴포넌트들로 구성되어 있었기 때문에 해당 컴포넌트들에서 디자인 요소를 제거한 뒤 새로 스타일을 입히거나 오버라이드 하여 작업하였습니다.'
@@ -48,25 +50,7 @@ const project = [
   },
 ]
 
-const CareerContent = ({ isActive, idx, keyword, title, date, summary, text }) => {
-  const summarys = []
-  summary.forEach((item, i) => summarys.push(<span key={item + i}>{item}</span>))
-  return (
-    <div key={idx} className={`content-frame${isActive ? ' active' : ''}`}>
-      <ul className='content'>
-        <li className='keyword'>{keyword}</li>
-        <li className='title'>{title}</li>
-        <li className='date'>{date}</li>
-        <li className='summarys big'>{summarys}</li>
-        {text && (
-          <p>{text}</p>
-        )}
-      </ul>
-    </div>
-  )
-}
-
-const ProjectContent = ({ isActive, idx, keyword, title, date, summary, text }) => {
+const ContentText = ({ isActive, idx, keyword, title, date, summary, text }) => {
   const summarys = []
   summary.forEach((item, i) => summarys.push(<span key={item + i}>{item}</span>))
   return (
@@ -90,6 +74,80 @@ const FootprintDetail = ({ onHover, onLeave }) => {
   const makeScroll = (value) => dispatch(makeSmoothScroll(value));
   const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
 
+  const sliderContent = (content) => {
+    return (
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        effect='fade'
+        resizeObserver
+        navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
+        pagination={{ clickable: true, el: '.swiper-pagination' }}
+      >
+        {content.map((content, idx) => (
+          <SwiperSlide key={idx}>
+            {({ isActive }) => (
+              <ContentText isActive={isActive} idx={idx} keyword={content.keyword} title={content.title} date={content.date} summary={content.summary} text={content.text} />
+            )}
+          </SwiperSlide>
+        ))}
+        <div className='swiper-pagination left-pagination' onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
+        <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'past')} onMouseLeave={() => onLeave()}></div>
+        <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'recent')} onMouseLeave={() => onLeave()}></div>
+      </Swiper>
+    )
+  }
+
+  const FootprintDetailGsap = () => {
+    ScrollTrigger.matchMedia({
+      '(min-width: 985px)': () => {
+        gsap.to('.mobile-division', {
+          opacity: 0
+        })
+      },
+      '(max-width: 984px)': () => {
+        gsap.fromTo('.text-slider-left-area', {
+          opacity: 1
+        }, {
+          opacity: 0,
+          scrollTrigger: {
+            id: 'text-slider-left',
+            trigger: '.text-slider-left-area',
+            start: 'top+=30% center',
+            end: 'bottom-=30% center',
+            scrub: true
+          }
+        });
+
+        gsap.fromTo('.text-slider-right-area', {
+          opacity: 0
+        }, {
+          opacity: 1,
+          scrollTrigger: {
+            id: 'text-slider-right',
+            trigger: '.text-slider-right-area',
+            start: 'top+=50% center',
+            end: 'bottom-=30% center',
+            scrub: true
+          }
+        });
+
+        gsap.fromTo('.mobile-division', {
+          opacity: 1
+        }, {
+          opacity: 0,
+          scrollTrigger: {
+            id: 'mobile-division',
+            trigger: '.text-slider-left-area',
+            start: 'top+=30% center',
+            end: 'bottom-=30% center',
+            scrub: true
+          }
+        });
+      }
+    });
+  }
+
   useEffect(() => {
     gsapReady(false);
     makeScroll(true);
@@ -105,55 +163,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
   }, [])
 
   useEffect(() => {
-    if (currentGsapState) {
-      ScrollTrigger.matchMedia({
-        '(min-width: 985px)': () => {
-          gsap.to('.mobile-division', {
-            opacity: 0
-          })
-        },
-        '(max-width: 984px)': () => {
-          gsap.fromTo('.text-slider-left-area', {
-            opacity: 1
-          }, {
-            opacity: 0,
-            scrollTrigger: {
-              id: 'text-slider-left',
-              trigger: '.text-slider-left-area',
-              start: 'top+=30% center',
-              end: 'bottom-=30% center',
-              scrub: true
-            }
-          });
-
-          gsap.fromTo('.text-slider-right-area', {
-            opacity: 0
-          }, {
-            opacity: 1,
-            scrollTrigger: {
-              id: 'text-slider-right',
-              trigger: '.text-slider-right-area',
-              start: 'top+=50% center',
-              end: 'bottom-=30% center',
-              scrub: true
-            }
-          });
-
-          gsap.fromTo('.mobile-division', {
-            opacity: 1
-          }, {
-            opacity: 0,
-            scrollTrigger: {
-              id: 'mobile-division',
-              trigger: '.text-slider-left-area',
-              start: 'top+=30% center',
-              end: 'bottom-=30% center',
-              scrub: true
-            }
-          });
-        }
-      });
-    }
+    currentGsapState && FootprintDetailGsap();
   }, [currentGsapState])
 
   return (
@@ -168,25 +178,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
 
         <div className='row'>
           <div className='col-12 off-l-none col-l-5 carrer-frame'>
-            <Swiper
-              spaceBetween={50}
-              slidesPerView={1}
-              effect='fade'
-              resizeObserver
-              navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
-              pagination={{ clickable: true, el: '.swiper-pagination' }}
-            >
-              {career.map((career, idx) => (
-                <SwiperSlide key={idx}>
-                  {({ isActive }) => (
-                    <CareerContent isActive={isActive} idx={idx} keyword={career.keyword} title={career.title} date={career.date} summary={career.summary} text={career.text} />
-                  )}
-                </SwiperSlide>
-              ))}
-              <div className='swiper-pagination left-pagination' onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
-              <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'past')} onMouseLeave={() => onLeave()}></div>
-              <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'recent')} onMouseLeave={() => onLeave()}></div>
-            </Swiper>
+            {sliderContent(career)}
           </div>
 
           <div className='mobile-division'>Project<br />&Subcontract<span></span></div>
@@ -200,25 +192,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
           </div>
 
           <div className='col-12 col-l-6 project-frame'>
-            <Swiper
-              spaceBetween={50}
-              slidesPerView={1}
-              effect='fade'
-              resizeObserver
-              navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
-              pagination={{ clickable: true, el: '.swiper-pagination' }}
-            >
-              {project.map((project, idx) => (
-                <SwiperSlide key={idx}>
-                  {({ isActive }) => (
-                    <ProjectContent isActive={isActive} idx={idx} keyword={project.keyword} title={project.title} date={project.date} summary={project.summary} text={project.text} />
-                  )}
-                </SwiperSlide>
-              ))}
-              <div className='swiper-pagination right-pagination' onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
-              <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'past')} onMouseLeave={() => onLeave()}></div>
-              <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'recent')} onMouseLeave={() => onLeave()}></div>
-            </Swiper>
+            {sliderContent(project)}
           </div>
         </div>
       </div>

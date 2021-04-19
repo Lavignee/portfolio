@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import './header.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { changeContactState, changeContactStateFalse, changeGnbState, changeSmoothScrollStateFast } from 'modules/commonValue';
 import { useHistory } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+
+import './header.scss';
+
 import NavMenu from 'components/navMenu';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
   const dispatch = useDispatch();

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import './textSlider.scss';
 import { gsap } from 'gsap';
+
+import './textSlider.scss';
 
 const TextSlider = ({ text, type }) => {
   const textSliderSetting = (text, align) => {

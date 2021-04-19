@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './splitText.scss';
 import { useSelector, shallowEqual } from 'react-redux';
+
+import './splitText.scss';
 
 const SplitText = ({ children, scroll, index, animation, setTime, delay, ready, depth, noContainer }) => {
   const [currentSplitText] = useSelector(state => [state.CommonValue.currentSplitText], shallowEqual);
@@ -27,6 +28,7 @@ const SplitText = ({ children, scroll, index, animation, setTime, delay, ready, 
         )
       )
     }
+
     if (childrenLength < children.length + 1) {
       splittingTimer.current = setTimeout(() => {
         Splitting();

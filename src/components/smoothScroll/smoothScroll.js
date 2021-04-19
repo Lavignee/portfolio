@@ -1,11 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
-import './smoothScroll.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { changeGsapState, smoothTop, makeSmoothScroll, changeSmoothScrollState, changeSmoothScrollStateFast, changeContactStateFalse, changeGnbState, checkScrollValue, checkScrollLimit } from 'modules/commonValue';
-import Scrollbar from 'smooth-scrollbar';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import './smoothScroll.scss';
+
+import Scrollbar from 'smooth-scrollbar';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const SmoothScroll = ({ children }) => {
@@ -34,7 +37,6 @@ const SmoothScroll = ({ children }) => {
       bodyScrollBar = Scrollbar.init(scroller, { damping: 0.1, alwaysShowTracks: true });
     }
 
-    // checkLimit(bodyScrollBar.limit.y);
     bodyScrollBar.addListener(() => checkScroll(bodyScrollBar.scrollTop))
     bodyScrollBar.addListener(() => checkLimit(bodyScrollBar.limit.y))
     ScrollTrigger.scrollerProxy(scroller, {

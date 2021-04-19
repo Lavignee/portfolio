@@ -1,15 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import kakaoIcon from 'static/images/kakao-icon.svg';
-import mobileIcon from 'static/images/mobile-icon.svg';
-import mailIcon from 'static/images/mail-icon.svg';
-import './contact.scss';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 // import { changeContactState, changeContactButtonDelay } from 'modules/CommonValue';
 import { isMobile } from 'react-device-detect';
-import CustomInput from 'compositions/customInput';
-import CustomTextarea from 'compositions/customTextarea';
-import CustomButton from 'compositions/customButton';
+
+import kakaoIcon from 'static/images/kakao-icon.svg';
+import mobileIcon from 'static/images/mobile-icon.svg';
+import mailIcon from 'static/images/mail-icon.svg';
+
+import './contact.scss';
+
 import SplitText from 'components/splitText';
+// import CustomInput from 'compositions/customInput';
+// import CustomTextarea from 'compositions/customTextarea';
+// import CustomButton from 'compositions/customButton';
 import useInterval from 'utils/useInterval';
 
 const Contact = ({ onHover, onLeave }) => {
@@ -24,7 +27,6 @@ const Contact = ({ onHover, onLeave }) => {
   qnumberRef.current = qnumber;
 
   // const ContactButtonDelay = () => {
-  //   console.log('ButtonDelay')
   //   onChangeContactButtonDelay(true);
   //   const buttonDelayTimer = setTimeout(() => {
   //     onChangeContactButtonDelay(false);

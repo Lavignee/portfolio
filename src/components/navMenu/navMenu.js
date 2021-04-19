@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import './navmenu.scss';
 import { useSelector, shallowEqual } from 'react-redux';
+
+import './navmenu.scss';
 
 const Navmenu = ({ onlogoHover, onClick, onHeaderLeave, onGnbButtonClick, onGnbButtonHover, onDown, onUp, scrollTop }) => {
   const [currentButtonDelay] = useSelector(state => [state.CommonValue.currentButtonDelay], shallowEqual);

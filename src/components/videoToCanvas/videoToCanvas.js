@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+
 import './videoToCanvas.scss';
 
 const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
@@ -84,8 +85,6 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
 
       // const pauseVid = () => {
       // test2Ref.current = false;
-      // console.log('pauseVid 2.video.paused = ' + video.paused)
-      // console.log('pauseVid 2.test2Ref.current = ' + test2Ref.current)
       // if (!video.paused && test2Ref.current) {
       //   console.log('pause!!')
       //   video.removeEventListener('play', () => draw(video, context, numbers), false)

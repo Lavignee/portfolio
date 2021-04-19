@@ -1,10 +1,12 @@
 import React, { memo } from 'react';
+
 import './notFound.scss';
 
 const NotFound = () => {
   const back = () => {
     history.back()
   }
+
   return (
     <div className='not-found-section'>
       <div className='guide-ment'>

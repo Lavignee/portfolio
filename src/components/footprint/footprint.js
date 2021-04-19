@@ -1,11 +1,14 @@
 import React, { memo, useState, useRef } from 'react';
-import footprintCircle from 'static/images/footprint-circle.svg';
-import footprintArrow from 'static/images/footprint-arrow.svg';
-import footprint from 'static/images/footprint.jpg';
-import './footprint.scss';
 import { useSelector, shallowEqual } from 'react-redux';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
+
+import footprintCircle from 'static/images/footprint-circle.svg';
+import footprintArrow from 'static/images/footprint-arrow.svg';
+import footprint from 'static/images/footprint.jpg';
+
+import './footprint.scss';
+
 import Footer from 'components/footer';
 
 const Footprint = ({ onHover, onClick, onLeave }) => {

@@ -9,6 +9,7 @@
       {
         "root": ["./src"],
         "alias": {
+          "pages": "./src/pages",
           "components": "./src/components",
           "compositions": "./src/compositions",
           "static": "./src/static",

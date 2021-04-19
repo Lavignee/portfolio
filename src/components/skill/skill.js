@@ -1,10 +1,13 @@
 import React, { memo, useEffect, useState } from 'react';
-import './skill.scss';
 import { useSelector, shallowEqual } from 'react-redux';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+
+import './skill.scss';
+
 import IconSlider from 'components/iconSlider';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Skill = ({ onHover, onClick, onLeave }) => {
   const [currentGsapState, currentButtonDelay] = useSelector(state => [state.CommonValue.currentGsapState, state.CommonValue.currentButtonDelay], shallowEqual);
@@ -21,9 +24,7 @@ const Skill = ({ onHover, onClick, onLeave }) => {
         end: 'bottom top'
       }
     });
-  }
 
-  const forFootprintPin = () => {
     gsap.fromTo('.skill-section', {
       // opacity: 1,
       // filter: 'blur(0px)'
@@ -41,7 +42,7 @@ const Skill = ({ onHover, onClick, onLeave }) => {
   }
 
   useEffect(() => {
-    currentGsapState && skillComponentGSAP(), forFootprintPin();
+    currentGsapState && skillComponentGSAP();
   }, [currentGsapState])
 
 

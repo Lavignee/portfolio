@@ -1,16 +1,19 @@
 import React, { lazy, Suspense } from 'react';
-import './contentSwitcher.scss';
 import { Switch, Route } from 'react-router-dom';
+
+import './contentSwitcher.scss';
+
 // const Home = lazy(() => import('components/home'));
-const AboutDetail = lazy(() => import('components/aboutDetail'));
-const SkillDetail = lazy(() => import('components/skillDetail'));
-const FootprintDetail = lazy(() => import('components/footprintDetail'));
-const NotFound = lazy(() => import('components/notFound'));
-import Home from 'components/home';
-// import AboutDetail from 'components/aboutDetail';
-// import SkillDetail from 'components/skillDetail';
-// import FootprintDetail from 'components/footprintDetail';
-// import NotFound from 'components/notFound';
+const AboutDetail = lazy(() => import('pages/aboutDetail'));
+const SkillDetail = lazy(() => import('pages/skillDetail'));
+const FootprintDetail = lazy(() => import('pages/footprintDetail'));
+const NotFound = lazy(() => import('pages/notFound'));
+
+import Home from 'pages/home';
+// import AboutDetail from 'pages/aboutDetail';
+// import SkillDetail from 'pages/skillDetail';
+// import FootprintDetail from 'pages/footprintDetail';
+// import NotFound from 'pages/notFound';
 
 const ContentSwitcher = ({ onHover, onClick, onLeave, pageTimer }) => {
   return (

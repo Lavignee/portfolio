@@ -140,7 +140,7 @@
             transition: background-color $transition, height $transition, border-radius $transition, top $transition, bottom $transition, transform $transition;
           }
 
-          li {
+          .inner {
             height: 100%;
             position: relative;
 
@@ -158,6 +158,8 @@
             div {
               @include center-align;
               @include f-b(3rem);
+              opacity: 0;
+              animation: show 0.3s linear forwards;
 
               svg {
                 opacity: 0.3;
@@ -178,6 +180,7 @@
               }
             }
           }
+
           &.prev, &.next {
             z-index: 1;
           }
@@ -230,7 +233,7 @@
               height: 100%;
             }
             
-            li {
+            .inner {
               &:before {
                 bottom: 100%;
               }
@@ -253,11 +256,12 @@
                   height: 30%;
                 }
               }
+              
+              svg {
+                opacity: 1;
+              }
             }
 
-            svg {
-              opacity: 1;
-            }
           }
         }
       }
@@ -295,7 +299,7 @@
           width: 50%;
           height: 100%;
           z-index: 1;
-
+          
           @media (max-width: $bp-l) {
             width: 60%;
           }
@@ -308,12 +312,12 @@
           @media (max-width: $bp-xs) {
             width: 90%;
           }
-
-          >div {
+          
+          > div {
             height: 53%;
             display: flex;
             flex-direction: column-reverse;
-
+            
             h2 {
               position: relative;
               bottom:0;
@@ -326,9 +330,7 @@
               }
               
               &.opacity {
-                animation-duration: 0.3s;
-                animation-name: show;
-                animation-fill-mode: forwards;
+                animation: show 0.3s linear forwards;
               };
             }
     
@@ -355,7 +357,7 @@
                 display: inline-block;
                 width: 4rem;
                 height: .8rem;
-                background-color: $s-d;
+                background-color: $p-m;
     
                 &:not(:last-child) {
                   margin-right: 1.8rem;
@@ -441,9 +443,7 @@
           z-index: 0;
 
           &.opacity {
-            animation-duration: 1s;
-            animation-name: slide-right;
-            animation-fill-mode: forwards;
+            animation: slide-right 1s forwards;
           }
         }
       }

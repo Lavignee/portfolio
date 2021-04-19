@@ -1,0 +1,66 @@
+@import '../../style/util_mixins';
+
+.tooltip-area {
+  position: relative;
+  padding: 0.7rem 0.7rem 0.5rem 0.7rem;
+  @include f-b(2rem, $p-d);
+  @include border-b(1px, $p-d);
+
+  &:hover {
+    color: $wh;
+    background-color: $p-d;
+    border-radius: 0.5rem;
+  }
+  
+  .tooltip-frame {
+    @include horizontal-align;
+    bottom: 100%;
+    padding-bottom: 1rem;
+    z-index: 1;
+    
+    span {
+      display: block;
+      white-space: nowrap;
+      word-break: keep-all;
+      padding: 0rem 1rem;
+      background-color: $wh;
+      @include border-a(2px, $p-d);
+      border-radius: 0.5rem;
+      text-align: center;
+      @include f-b(2rem, $p-m);
+      box-sizing: content-box;
+      animation: show 0.2s linear forwards;
+
+      @media (max-width: $bp-xl) {
+        white-space: initial;
+      }
+  
+      &:after, &:before {
+        margin-top: -1.2rem;
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+
+        @media (max-width: $bp-m) {
+          margin-top: -1.3rem;
+        }
+      }
+      
+      &:after {
+        border-top-color: $wh;
+        border-width: 0.5rem;
+        margin-left: -0.5rem;
+      }
+      &:before {
+        border-top-color: $p-d;
+        border-width: 0.8rem;
+        margin-left: -0.8rem;
+      }
+    }
+  }
+}
