@@ -40,21 +40,21 @@ const tool = [
   { number: '5', id: 'jira', name: 'Jira', workmanship: 4, summary: '처음부터 끝까지 세팅해본적은 없지만, 멤버로서 사용에는 아주 익숙합니다.', svg: svg.jira },
   { number: '6', id: 'figma', name: 'Figma', workmanship: 4, summary: '초기에 PSD나 AI로 작업할때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. ', svg: svg.figma },
   { number: '7', id: 'zeplin', name: 'Zeplin', workmanship: 2, summary: '초기에 PSD나 AI로 작업할 때 사용했었습니다. 다시 사용하게 된다면 그동안의 변화를 익힐 시간이 필요할 것 같습니다.', svg: svg.zeplin },
-  { number: '8', id: 'netlify', name: 'Netlify', workmanship: 1, summary: '이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드에서 영문모를 에러가 많아, 로컬에서 빌드 하여 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.', svg: svg.netlify },
-  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 1, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse }
+  { number: '8', id: 'netlify', name: 'Netlify', workmanship: 3, summary: '이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드에서 영문모를 에러가 많아, 로컬에서 빌드 하여 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.', svg: svg.netlify },
+  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 3, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse }
 ];
 
 const interest = [
-  { number: '1', id: 'typescript', name: 'TypeScript', workmanship: 1, summary: '어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 실무에서 사용하게 된다면 금방 익숙해질 것 같습니다.', svg: svg.typescript },
-  { number: '2', id: 'contextapi', name: 'context API', workmanship: 1, summary: '아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 실무에서 사용하게 된다면 금방 익숙해질 것 같습니다.', svg: '' },
-  { number: '3', id: 'mobx', name: 'MobX', workmanship: 1, summary: 'Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.', svg: svg.mobx },
-  { number: '4', id: 'gatsby', name: 'Gatsby', workmanship: 1, summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: svg.gatsby },
-  { number: '5', id: 'webgl', name: 'WebGL', workmanship: 1, summary: '진입장벽이 만만치 않지만 언젠가 자유롭게 다뤄보고 싶습니다.', svg: svg.webgl },
-  { number: '6', id: 'graphql', name: 'GraphQL', workmanship: '', summary: '', svg: svg.graphql },
-  { number: '7', id: 'express', name: 'Express.js', workmanship: '', summary: '', svg: '' },
-  { number: '8', id: 'nextjs', name: 'Next.js', workmanship: '', summary: '', svg: svg.nextjs },
-  { number: '9', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' },
-  { number: '10', id: 'axios', name: 'Axios', workmanship: '', summary: '', svg: '' }
+  { number: '1', id: 'typescript', name: 'TypeScript', workmanship: 2, summary: '어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 현재 가장 많이 쓰이고 있는듯하여 최우선으로 숙달할 예정입니다.', svg: svg.typescript },
+  { number: '2', id: 'contextapi', name: 'context API', workmanship: 2, summary: '아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 실무에서 사용하게 된다면 금방 익숙해질 것 같습니다.', svg: '' },
+  { number: '3', id: 'mobx', name: 'MobX', workmanship: 1, summary: '이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다. Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.', svg: svg.mobx },
+  { number: '4', id: 'nextjs', name: 'Next.js', workmanship: 1, summary: '이미 적용된 프로젝트는 종종 있었으나, 직접적으로 다뤄보진 않았습니다.', svg: svg.nextjs },
+  { number: '5', id: 'express', name: 'Express.js', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' },
+  { number: '6', id: 'axios', name: 'Axios', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' }
+  { number: '7', id: 'graphql', name: 'GraphQL', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: svg.graphql },
+  { number: '8', id: 'gatsby', name: 'Gatsby', workmanship: 1, summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: svg.gatsby },
+  { number: '9', id: 'webgl', name: 'WebGL', workmanship: 1, summary: '다뤄보고 싶은 생각이 있습니다.', svg: svg.webgl },
+  { number: '10', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' },
 ];
 
 const empty = [
