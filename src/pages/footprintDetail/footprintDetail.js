@@ -74,7 +74,8 @@ const FootprintDetail = ({ onHover, onLeave }) => {
   const makeScroll = (value) => dispatch(makeSmoothScroll(value));
   const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
 
-  const sliderContent = (content) => {
+  const sliderContent = (content, kind) => {
+    console.log(content)
     return (
       <Swiper
         spaceBetween={50}
@@ -91,7 +92,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
             )}
           </SwiperSlide>
         ))}
-        <div className='swiper-pagination left-pagination' onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
+        <div className={`swiper-pagination ${kind}-pagination`} onMouseEnter={() => onHover(' pagination-cursor')} onMouseLeave={() => onLeave()}></div>
         <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'past')} onMouseLeave={() => onLeave()}></div>
         <div className='swiper-button-prev' onMouseEnter={() => onHover(' bl-cursor', 'recent')} onMouseLeave={() => onLeave()}></div>
       </Swiper>
@@ -178,7 +179,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
 
         <div className='row'>
           <div className='col-12 off-l-none col-l-5 carrer-frame'>
-            {sliderContent(career)}
+            {sliderContent(career, 'left')}
           </div>
 
           <div className='mobile-division'>Project<br />&Subcontract<span></span></div>
@@ -192,7 +193,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
           </div>
 
           <div className='col-12 col-l-6 project-frame'>
-            {sliderContent(project)}
+            {sliderContent(project, 'right')}
           </div>
         </div>
       </div>
