@@ -12,10 +12,10 @@ const Iconslider = ({ sliderTrigger }) => {
   const [willChange, setWillChange] = useState(false);
   const [row, setRow] = useState();
 
-  // const allIcons = [svg.bitbucket, svg.bootstrap, svg.css, svg.figma, svg.gatsby, svg.git, svg.github, svg.graphql, svg.gsap, svg.html, svg.i18next, svg.javascript, svg.jira, svg.jquery, svg.materialui, svg.mobx, svg.netlify, svg.nextjs, svg.parcel, svg.react, svg.redux, svg.sass, svg.sourcetree, svg.typescript, svg.webgl, svg.webpack, svg.zeplin]
-  const wellIcons = [svg.bitbucket, svg.bootstrap, svg.css, svg.figma, svg.git, svg.github, svg.gsap, svg.html, svg.i18next, svg.javascript]
+  // const allIcons = [svg.bitbucket, svg.bootstrap, svg.css, svg.figma, svg.gatsby, svg.git, svg.github, svg.graphql, svg.gsap, svg.html, svg.i18next, svg.javascript, svg.jira, svg.jquery, svg.materialui, svg.mobx, svg.netlify, svg.nextjs, svg.parcel, svg.react, svg.redux, svg.sass, svg.sourcetree, svg.typescript, svg.webgl, svg.webpack, svg.zeplin, svg.lighthouse]
+  const wellIcons = [svg.bitbucket, svg.bootstrap, svg.css, svg.figma, svg.lighthouse, svg.github, svg.gsap, svg.html, svg.i18next, svg.javascript]
   const wellIcons2 = [svg.jira, svg.jquery, svg.materialui, svg.parcel, svg.react, svg.redux, svg.sass, svg.sourcetree, svg.webpack, svg.zeplin]
-  const wellIcons3 = [svg.javascript, svg.i18next, svg.html, svg.gsap, svg.github, svg.git, svg.figma, svg.css, svg.bootstrap, svg.bitbucket]
+  const wellIcons3 = [svg.javascript, svg.i18next, svg.html, svg.gsap, svg.github, svg.lighthouse, svg.figma, svg.css, svg.bootstrap, svg.bitbucket]
   const wellIcons4 = [svg.zeplin, svg.webpack, svg.sourcetree, svg.sass, svg.redux, svg.react, svg.parcel, svg.materialui, svg.jquery, svg.jira]
   // const bedIcons = [svg.gatsby, svg.graphql, svg.mobx, svg.netlify, svg.nextjs, svg.typescript, svg.webgl]
 

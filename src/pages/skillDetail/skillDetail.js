@@ -41,7 +41,7 @@ const tool = [
   { number: '6', id: 'figma', name: 'Figma', workmanship: 4, summary: '초기에 PSD나 AI로 작업할때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. ', svg: svg.figma },
   { number: '7', id: 'zeplin', name: 'Zeplin', workmanship: 2, summary: '초기에 PSD나 AI로 작업할 때 사용했었습니다. 다시 사용하게 된다면 그동안의 변화를 익힐 시간이 필요할 것 같습니다.', svg: svg.zeplin },
   { number: '8', id: 'netlify', name: 'Netlify', workmanship: 1, summary: '이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드에서 영문모를 에러가 많아, 로컬에서 빌드 하여 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.', svg: svg.netlify },
-  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 1, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: '' }
+  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 1, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse }
 ];
 
 const interest = [
