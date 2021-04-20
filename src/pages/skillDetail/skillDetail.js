@@ -50,11 +50,11 @@ const interest = [
   { number: '3', id: 'mobx', name: 'MobX', workmanship: 1, summary: '이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다. Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.', svg: svg.mobx },
   { number: '4', id: 'nextjs', name: 'Next.js', workmanship: 1, summary: '이미 적용된 프로젝트는 종종 있었으나, 직접적으로 다뤄보진 않았습니다.', svg: svg.nextjs },
   { number: '5', id: 'express', name: 'Express.js', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' },
-  { number: '6', id: 'axios', name: 'Axios', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' }
+  { number: '6', id: 'axios', name: 'Axios', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' },
   { number: '7', id: 'graphql', name: 'GraphQL', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: svg.graphql },
   { number: '8', id: 'gatsby', name: 'Gatsby', workmanship: 1, summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: svg.gatsby },
   { number: '9', id: 'webgl', name: 'WebGL', workmanship: 1, summary: '다뤄보고 싶은 생각이 있습니다.', svg: svg.webgl },
-  { number: '10', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' },
+  { number: '10', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' }
 ];
 
 const empty = [
