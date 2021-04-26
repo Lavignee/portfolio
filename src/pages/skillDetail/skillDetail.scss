@@ -161,6 +161,10 @@
               opacity: 0;
               animation: show 0.3s linear forwards;
 
+              @media (max-width: $bp-m) {
+                animation: show 0.3s 0.2s linear forwards;
+              }
+
               svg {
                 opacity: 0.3;
                 transition: opacity $transition;

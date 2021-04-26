@@ -73,7 +73,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
   const [currentList, setCurrentList] = useState(list);
   const [listHoverMotion, setListHoverMotion] = useState('');
   const [currentTarget, setCurrentTarget] = useState(0);
-  const [opacity, setOpacity] = useState('opacity');
+  const [opacity, setOpacity] = useState('');
 
   const makeSmoothScrollbarforSkill = () => {
     const scroller = scrollPosition.current;
@@ -99,13 +99,6 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     gsapReady(true);
   }
 
-  const skillScrollRemaker = (timer) => {
-    const skillScrollRemake = setTimeout(() => {
-      makeSmoothScrollbarforSkill();
-    }, timer);
-    return () => clearTimeout(skillScrollRemake);
-  }
-
   const listHover = (number) => {
     onHover(' focus-cursor')
     if (currentTarget + 1 > number) {
@@ -120,45 +113,38 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     setListHoverMotion('');
   };
 
-  const changeList = (e) => {
+  const changeList = async (e) => {
     if (e.target.dataset.list !== currentList) {
       lists.current = [];
-      setOpacity('')
       currentSkillScroller.setPosition(0, 0)
       Scrollbar.destroyAll();
-      gsapReady(false);
-      setCurrentList('');
+      await gsapReady(false);
       setCurrentTarget(0);
       if (isDesktop) {
-        pageTimer(e.target.dataset.list, 10);
-        skillScrollRemaker(50);
+        await pageTimer(e.target.dataset.list, 0);
+        makeSmoothScrollbarforSkill();
       } else {
-        pageTimer(e.target.dataset.list, 100);
-        skillScrollRemaker(500);
+        await pageTimer(e.target.dataset.list, 0);
+        makeSmoothScrollbarforSkill();
       }
     } else {
       currentSkillScroller.scrollTo(0, 0, 600)
     }
   }
 
-  const changeHistoryList = () => {
+  const changeHistoryList = async () => {
     lists.current = [];
-    setOpacity('')
     currentSkillScroller.setPosition(0, 0)
     Scrollbar.destroyAll();
-    gsapReady(false);
-    setCurrentList('');
+    await gsapReady(false);
     setCurrentTarget(0);
-    const changeHistoryTimer = setTimeout(() => {
-      setCurrentList(location.pathname.split('/skill/')[1]);
-    }, 10);
-    skillScrollRemaker(50);
-    return () => clearTimeout(changeHistoryTimer);
+    setCurrentList(location.pathname.split('/skill/')[1]);
+    makeSmoothScrollbarforSkill();
   }
 
   const changeTarget = (id) => {
     setCurrentTarget(id);
-    setOpacity('')
+    setOpacity('');
     onListLeave();
 
     const opacityTimer = setTimeout(() => {
@@ -210,13 +196,6 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
         }
       });
     });
-
-    setOpacity('')
-
-    const opacityTimer = setTimeout(() => {
-      setOpacity('opacity')
-    }, 100);
-    return () => clearTimeout(opacityTimer);
   }
 
   const scrollSkew = () => {
@@ -300,7 +279,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
   }, [currentGsapState, currentList])
 
   useEffect(() => {
-    scrollPosition.current.scrollTo(0, 0);
+    setOpacity('');
     if (location.pathname.split('/skill/')[1] !== currentList) {
       changeHistoryList();
     }

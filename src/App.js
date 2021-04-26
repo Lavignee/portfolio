@@ -1,4 +1,5 @@
 import React from 'react';
+import 'regenerator-runtime/runtime';
 import 'style/index.scss';
 import { useDispatch } from 'react-redux';
 import { changeSwitchAnimation, changeButtonDelay, smoothTop, changeSmoothScrollState } from 'modules/commonValue';
@@ -65,6 +66,7 @@ const App = () => {
 
   return (
     <>
+      {/* <React.StrictMode> */}
       <CustomCursor>
         <Header onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} scrollTop={onSmoothTop} />
         <SmoothScroll>
@@ -75,6 +77,7 @@ const App = () => {
         <Contact onHover={onHover} onLeave={onLeave} />
         <SwitchAnimation />
       </CustomCursor >
+      {/* </React.StrictMode> */}
     </>
   );
 }

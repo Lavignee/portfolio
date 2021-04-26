@@ -75,7 +75,6 @@ const FootprintDetail = ({ onHover, onLeave }) => {
   const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
 
   const sliderContent = (content, kind) => {
-    console.log(content)
     return (
       <Swiper
         spaceBetween={50}
