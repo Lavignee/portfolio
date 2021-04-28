@@ -41,7 +41,8 @@ const tool = [
   { number: '6', id: 'figma', name: 'Figma', workmanship: 4, summary: '초기에 PSD나 AI로 작업할때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. ', svg: svg.figma },
   { number: '7', id: 'zeplin', name: 'Zeplin', workmanship: 2, summary: '초기에 PSD나 AI로 작업할 때 사용했었습니다. 다시 사용하게 된다면 그동안의 변화를 익힐 시간이 필요할 것 같습니다.', svg: svg.zeplin },
   { number: '8', id: 'netlify', name: 'Netlify', workmanship: 3, summary: '이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드에서 영문모를 에러가 많아, 로컬에서 빌드 하여 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.', svg: svg.netlify },
-  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 3, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse }
+  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 3, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse },
+  { number: '10', id: 'axios', name: 'Axios', workmanship: 3, summary: '실무에서는 사용해보지 못했지만, 과제 등으로 다루어보았습니다. 익히기 쉬웠고 사용도 간편했습니다.', svg: '' },
 ];
 
 const interest = [
@@ -50,11 +51,10 @@ const interest = [
   { number: '3', id: 'mobx', name: 'MobX', workmanship: 1, summary: '이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다. Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.', svg: svg.mobx },
   { number: '4', id: 'nextjs', name: 'Next.js', workmanship: 1, summary: '이미 적용된 프로젝트는 종종 있었으나, 직접적으로 다뤄보진 않았습니다.', svg: svg.nextjs },
   { number: '5', id: 'express', name: 'Express.js', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' },
-  { number: '6', id: 'axios', name: 'Axios', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: '' },
-  { number: '7', id: 'graphql', name: 'GraphQL', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: svg.graphql },
-  { number: '8', id: 'gatsby', name: 'Gatsby', workmanship: 1, summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: svg.gatsby },
-  { number: '9', id: 'webgl', name: 'WebGL', workmanship: 1, summary: '다뤄보고 싶은 생각이 있습니다.', svg: svg.webgl },
-  { number: '10', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' }
+  { number: '6', id: 'graphql', name: 'GraphQL', workmanship: 1, summary: '아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.', svg: svg.graphql },
+  { number: '7', id: 'gatsby', name: 'Gatsby', workmanship: 1, summary: '요즘 꽤 많이 보이는 서비스입니다. 시간이 나면 다뤄볼 생각입니다.', svg: svg.gatsby },
+  { number: '8', id: 'webgl', name: 'WebGL', workmanship: 1, summary: '다뤄보고 싶은 생각이 있습니다.', svg: svg.webgl },
+  { number: '9', id: 'analytics', name: 'Google Analytics', workmanship: '', summary: '', svg: '' }
 ];
 
 const empty = [
