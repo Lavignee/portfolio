@@ -22,7 +22,7 @@ const language = [
 const lib = [
   { number: '1', id: 'react', name: 'React', workmanship: 4, summary: 'Class 기반일 때부터 React를 익히고 있었지만, 실무에서 사용해볼 기회가 없었습니다. 프리랜서로 일할 때 Hook를 섞어가며 실무를 겪어보았고, 이번 포트폴리오는 Hook 기반으로 제작하였습니다. 초기부터 지금까지 React에 변화가 많았기에 혼란이 많았지만 개발 방식은 꽤 익숙해진 단계고 최적화와 효율 등에 더 매진할 예정입니다.', svg: svg.react },
   { number: '2', id: 'redux', name: 'Redux', workmanship: 3, summary: '간단한 상태값과 트리거등의 역할로 이번 포트폴리오에서 처음 사용하였습니다. 다양한 플러그인들과 효율적인 사용은 경험이 더 필요할 것 같습니다.', svg: svg.redux },
-  { number: '3', id: 'webpack', name: 'Webpack', workmanship: 3, summary: 'React를 처음 익히면서 Webpack을 배우게 되었습니다. 당시에 한번 처음부터 끝까지 커스텀 해본 경험이 있지만, 시간이 꽤 지났고 최근에는 다뤄볼 기회가 없었습니다. 직접 다시 세팅할 일이 있다면 그동안의 변화를 습득할 시간이 필요할 것 같습니다.', svg: svg.webpack },
+  { number: '3', id: 'webpack', name: 'Webpack', workmanship: 3, summary: 'React를 처음 익히면서 Webpack을 배우게 되었습니다. 최근에는 작은 과제를 진행하기 위해 webpack 5를 직접 세팅하여 사용해 보았습니다.', svg: svg.webpack },
   { number: '4', id: 'parcel', name: 'Parcel', workmanship: 4, summary: '이번 포트폴리오 제작에 사용한 번들러입니다. Webpack과 비교하여 Learning Curve가 적고 바로 사용이 쉬우나 아직 관련 정보나 사례가 좀 적다는 단점을 겪었습니다.', svg: svg.parcel },
   { number: '5', id: 'sass', name: 'SASS(SCSS)', workmanship: 5, summary: 'CSS보다 작성에서 오는 피로도가 적고 약간의 함수나 변수 사용이 꽤 편리합니다. 다루는데 큰 이해가 필요하진 않습니다.', svg: svg.sass },
   { number: '6', id: 'gsap', name: 'GSAP', workmanship: 4, summary: '순수 CSS로 작성해서 만들어지는 애니메이션보다 시각적, 성능적으로 월등한 동적 효과를 표현할 수 있습니다. 유료 버전은 다뤄보지 않았지만 대부분의 기능이 무료이며, 응용에 무리가 없다고 생각합니다.', svg: svg.gsap },
