@@ -29,20 +29,20 @@ const lib = [
   { number: '7', id: 'i18next', name: 'I18next', workmanship: 5, summary: 'html이나 Javascript 환경, 서버단에서 오는 텍스트 등 다양한 번역 동작을 경험해보았습니다.', svg: svg.i18next },
   { number: '8', id: 'jquery', name: 'Jquery', workmanship: 4, summary: 'Javascript를 처음 익힐 때 JQuery는 Learning Curve를 줄여주는 좋은 도구였습니다. 사용하지 않은지 오래되긴 했지만 여전히 다루는 데는 문제가 없을 것 같습니다.', svg: svg.jquery },
   { number: '9', id: 'bootstrap', name: 'Bootstrap', workmanship: 5, summary: '반응형 사이트를 처음 접하고 개발할 당시 자주 사용하였던 프레임워크입니다, 현재도 BreakPoint 등을 참고하고, Grid 커스텀에도 응용하여 사용합니다.', svg: svg.bootstrap },
-  { number: '10', id: 'materialui', name: 'Material-UI', workmanship: 4, summary: '프리랜서로 일하는 중 접하게 되었습니다. Bootstrap처럼 React에서 사용되는 프레임워크로 사용이나 커스텀의 방식도 꽤 익숙했다고 생각합니다.', svg: svg.materialui }
+  { number: '10', id: 'materialui', name: 'Material-UI', workmanship: 4, summary: '프리랜서로 일하는 중 접하게 되었습니다. Bootstrap처럼 React에서 사용되는 프레임워크로 사용이나 커스텀의 방식도 꽤 익숙했다고 생각합니다.', svg: svg.materialui },
+  { number: '11', id: 'axios', name: 'Axios', workmanship: 3, summary: '실무에서는 사용해보지 못했지만, 과제 등으로 다루어보았습니다. 익히기 쉬웠고 사용도 간편했습니다.', svg: '' },
 ];
 
 const tool = [
   { number: '1', id: 'git', name: 'Git', workmanship: '3', summary: '개발자에게는 필수이고 당연히, 또 오랜 시간 사용하고 있지만 터미널에서 cli로 써본 적은 별로 없는 것 같습니다.', svg: svg.git },
-  { number: '2', id: 'github', name: 'Github', workmanship: 4, summary: '대표적인 서비스지만 공개적인 형태라는 점에서 사용빈도가 낮았습니다. 이번 포트폴리오부터는 사용해보려고 합니다.', svg: svg.github },
+  { number: '2', id: 'github', name: 'Github', workmanship: 4, summary: '대표적인 서비스지만 공개적인 형태라는 점에서 사용빈도가 낮았습니다. 이번 포트폴리오 프로젝트부터는 Github를 사용하려고 합니다.', svg: svg.github },
   { number: '3', id: 'bitbucket', name: 'Bitbucket', workmanship: 4, summary: '대부분의 Git 관련 프로젝트들이 직장과 관계되어 있고 소규모 팀에서 무료 Private 프로젝트를 만들 수 있었으므로 가장 많이 사용했습니다.', svg: svg.bitbucket },
   { number: '4', id: 'sourcetree', name: 'Sourcetree', workmanship: 3, summary: 'GUI가 한눈에 들어오기도 하고 Bitbucket을 오래 사용하였기에 지금까지 사용하고 있는 Git 형상관리 툴입니다. 기능이 많지만 느리고 버그가 좀 잦다는 단점이 있습니다.', svg: svg.sourcetree },
   { number: '5', id: 'jira', name: 'Jira', workmanship: 4, summary: '처음부터 끝까지 세팅해본적은 없지만, 멤버로서 사용에는 아주 익숙합니다.', svg: svg.jira },
   { number: '6', id: 'figma', name: 'Figma', workmanship: 4, summary: '초기에 PSD나 AI로 작업할때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. ', svg: svg.figma },
   { number: '7', id: 'zeplin', name: 'Zeplin', workmanship: 2, summary: '초기에 PSD나 AI로 작업할 때 사용했었습니다. 다시 사용하게 된다면 그동안의 변화를 익힐 시간이 필요할 것 같습니다.', svg: svg.zeplin },
   { number: '8', id: 'netlify', name: 'Netlify', workmanship: 3, summary: '이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드에서 영문모를 에러가 많아, 로컬에서 빌드 하여 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.', svg: svg.netlify },
-  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 3, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse },
-  { number: '10', id: 'axios', name: 'Axios', workmanship: 3, summary: '실무에서는 사용해보지 못했지만, 과제 등으로 다루어보았습니다. 익히기 쉬웠고 사용도 간편했습니다.', svg: '' },
+  { number: '9', id: 'lighthouse', name: 'Lighthouse', workmanship: 3, summary: '이번 포트폴리오를 제작하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용은 편했습니다.', svg: svg.lighthouse }
 ];
 
 const interest = [
