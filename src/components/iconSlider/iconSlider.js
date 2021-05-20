@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 
 import svg from 'static/images/icon-svg.json';
@@ -62,7 +62,7 @@ const Iconslider = ({ sliderTrigger }) => {
 
 
 
-  const autoHeightContent = () => {
+  const autoHeightContent = useCallback(() => {
     if (height < 739.2) {
       setRow('four')
     } else if (height < 950.4) {
@@ -78,11 +78,11 @@ const Iconslider = ({ sliderTrigger }) => {
     } else if (height < 2006.4) {
       setRow('ten')
     }
-  }
+  }, [height])
 
   useEffect(() => {
     autoHeightContent();
-  }, [height])
+  }, [autoHeightContent, height])
 
   useEffect(() => {
     if (sliderTrigger) {

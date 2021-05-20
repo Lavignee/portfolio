@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { changeGsapState, smoothTop, makeSmoothScroll, changeSmoothScrollState, changeSmoothScrollStateFast, changeContactStateFalse, changeGnbState, checkScrollValue, checkScrollLimit } from 'modules/commonValue';
 import { isDesktop } from 'react-device-detect';
@@ -13,21 +13,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SmoothScroll = ({ children }) => {
   const dispatch = useDispatch();
-  const gsapReady = (value) => dispatch(changeGsapState(value));
-  const makeScroll = (value) => dispatch(makeSmoothScroll(value));
-  const checkScroll = (value) => dispatch(checkScrollValue(value));
-  const checkLimit = (value) => dispatch(checkScrollLimit(value));
-  const onSmoothTop = (value) => dispatch(smoothTop(value));
-  const changecrollState = (value) => dispatch(changeSmoothScrollState(value));
-  const changecrollStateFast = (value) => dispatch(changeSmoothScrollStateFast(value));
-  const onChangeContactStateFalse = (value) => dispatch(changeContactStateFalse(value));
-  const onChangeGnbState = () => dispatch(changeGnbState());
+  const gsapReady = useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
+  const makeScroll = useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  const checkScroll = useCallback((value) => dispatch(checkScrollValue(value)), [dispatch]);
+  const checkLimit = useCallback((value) => dispatch(checkScrollLimit(value)), [dispatch]);
+  const onSmoothTop = useCallback((value) => dispatch(smoothTop(value)), [dispatch]);
+  const changecrollState = useCallback((value) => dispatch(changeSmoothScrollState(value)), [dispatch]);
+  const changecrollStateFast = useCallback((value) => dispatch(changeSmoothScrollStateFast(value)), [dispatch]);
+  const onChangeContactStateFalse = useCallback((value) => dispatch(changeContactStateFalse(value)), [dispatch]);
+  const onChangeGnbState = useCallback(() => dispatch(changeGnbState()), [dispatch]);
   const [currentSmoothTopState, currentScrollState, currentScrollStateFast, makeScrollState, currentGnbState] = useSelector(state => [state.CommonValue.currentSmoothTopState, state.CommonValue.currentScrollState, state.CommonValue.currentScrollStateFast, state.CommonValue.makeScrollState, state.CommonValue.currentGnbState], shallowEqual);
 
   const smoothScroller = useRef();
   const [currentScroller, setCurrentScroller] = useState();
 
-  const makeSmoothScrollbar = () => {
+  const makeSmoothScrollbar = useCallback(() => {
     const scroller = smoothScroller.current;
     let bodyScrollBar;
 
@@ -52,11 +52,11 @@ const SmoothScroll = ({ children }) => {
     bodyScrollBar.addListener(ScrollTrigger.update);
     gsapReady(true);
     setCurrentScroller(bodyScrollBar)
-  }
+  }, [checkLimit, checkScroll, gsapReady])
 
   useEffect(() => {
     makeSmoothScrollbar();
-  }, []);
+  }, [makeSmoothScrollbar]);
 
   useEffect(() => {
     if (makeScrollState) {
@@ -66,10 +66,10 @@ const SmoothScroll = ({ children }) => {
     }
 
     onChangeContactStateFalse(false);
-    if (currentGnbState) {
-      onChangeGnbState();
-    }
-  }, [makeScrollState]);
+    // if (currentGnbState) {
+    //   onChangeGnbState();
+    // }
+  }, [currentScroller, makeScroll, makeScrollState, makeSmoothScrollbar, onChangeContactStateFalse, onChangeGnbState]);
 
   useEffect(() => {
     if (currentScrollState) {
@@ -80,7 +80,7 @@ const SmoothScroll = ({ children }) => {
       }, 600);
       return () => clearTimeout(destroyScrollTimer);
     }
-  }, [currentScrollState]);
+  }, [changecrollState, currentScrollState, gsapReady]);
 
   useEffect(() => {
     if (currentScrollStateFast) {
@@ -88,7 +88,7 @@ const SmoothScroll = ({ children }) => {
       gsapReady(false);
       changecrollStateFast(false);
     }
-  }, [currentScrollStateFast]);
+  }, [changecrollStateFast, currentScrollStateFast, gsapReady]);
 
   useEffect(() => {
     return () => {
@@ -100,7 +100,7 @@ const SmoothScroll = ({ children }) => {
       onSmoothTop(false);
       return () => clearTimeout(scrollToTop);
     }
-  }, [currentSmoothTopState])
+  }, [currentScroller, currentSmoothTopState, onSmoothTop])
 
   return (
     < div className='smooth-scroll-frame' ref={smoothScroller} >

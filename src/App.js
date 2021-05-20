@@ -65,20 +65,16 @@ const App = () => {
   }
 
   return (
-    <>
-      {/* <React.StrictMode> */}
-      <CustomCursor>
-        <Header onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} scrollTop={onSmoothTop} />
-        <SmoothScroll>
-          <ContentSwitcher onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} />
-        </SmoothScroll>
-        {/* <ScrollValueAnimation /> */}
-        <FilmEffect />
-        <Contact onHover={onHover} onLeave={onLeave} />
-        <SwitchAnimation />
-      </CustomCursor >
-      {/* </React.StrictMode> */}
-    </>
+    <CustomCursor>
+      <Header onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} scrollTop={onSmoothTop} />
+      <SmoothScroll>
+        <ContentSwitcher onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} />
+      </SmoothScroll>
+      {/* <ScrollValueAnimation /> */}
+      <FilmEffect />
+      <Contact onHover={onHover} onLeave={onLeave} />
+      <SwitchAnimation />
+    </CustomCursor >
   );
 }
 

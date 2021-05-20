@@ -323,19 +323,19 @@ const About = ({ onHover, onClick, onLeaves }) => {
         <div className='row about-image-frame'>
           <div className='col-4 pl-pr-none picture-frame'>
             <div className='one about-image about-side-image'>
-              <img width='100%' height='100%' src={aboutOne} alt='creator picture' />
+              <img width='100%' height='100%' src={aboutOne} alt='creator 1' />
             </div>
           </div>
 
           <div className='col-4 pl-pr-none picture-frame'>
             <div className='two about-image'>
-              <img width='100%' height='100%' src={aboutTwo} alt='creator picture' />
+              <img width='100%' height='100%' src={aboutTwo} alt='creator 2' />
             </div>
           </div>
 
           <div className='col-4 pl-pr-none picture-frame'>
             <div className='three about-image about-side-image'>
-              <img width='100%' height='100%' src={aboutThree} alt='creator picture' />
+              <img width='100%' height='100%' src={aboutThree} alt='creator 3' />
             </div>
           </div>
         </div>

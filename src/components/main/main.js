@@ -1,7 +1,7 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { splitTextStart } from 'modules/commonValue';
-import { Trans, withTranslation } from 'react-i18next';
+// import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -18,13 +18,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Main = ({ onHover, onLeaves }) => {
   const dispatch = useDispatch();
-  const onScrollIntro = () => dispatch(splitTextStart('intro'));
-  const onScrollIntro2 = () => dispatch(splitTextStart('intro2'));
-  const [language, currentGsapState] = useSelector(state => [state.CommonValue.language, state.CommonValue.currentGsapState], shallowEqual);
+  const onScrollIntro = useCallback(() => dispatch(splitTextStart('intro')), [dispatch]);
+  const onScrollIntro2 = useCallback(() => dispatch(splitTextStart('intro2')), [dispatch]);
+  // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
+  const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
 
   const [canvasReady, setCanvasReady] = useState(true);
 
-  const mainComponentGSAP = () => {
+  const mainComponentGSAP = useCallback(() => {
     const canvasFrames = gsap.utils.toArray('.video-area .canvas-frame');
     const targetToLefts = gsap.utils.toArray('.video-area .left');
     const targetToRights = gsap.utils.toArray('.video-area .right');
@@ -127,7 +128,7 @@ const Main = ({ onHover, onLeaves }) => {
         end: 'bottom top+=72'
       }
     });
-  }
+  }, [onScrollIntro, onScrollIntro2])
 
   useEffect(() => {
     currentGsapState && mainComponentGSAP();
@@ -138,7 +139,7 @@ const Main = ({ onHover, onLeaves }) => {
         trigger.kill();
       });
     }
-  }, [currentGsapState])
+  }, [currentGsapState, mainComponentGSAP])
 
   return (
     <section id='main' className='container main-section'>
@@ -167,7 +168,7 @@ const Main = ({ onHover, onLeaves }) => {
             <div className='type-p'>
               <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'} ready={canvasReady} depth>I've  been  a  front  developer  for  4  years.</SplitText>
 
-              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'int2'} ready={canvasReady} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitText>
+              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'intT'} ready={canvasReady} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitText>
             </div>
           </div>
         </div>
@@ -176,4 +177,5 @@ const Main = ({ onHover, onLeaves }) => {
   )
 }
 
-export default memo(withTranslation('translations')(Main));
+// export default memo(withTranslation('translations')(Main));
+export default memo(Main);

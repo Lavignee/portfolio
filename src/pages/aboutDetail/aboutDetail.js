@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { makeSmoothScroll, changeGsapState, splitTextStart, changeFilmState } from 'modules/commonValue';
 import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
@@ -79,12 +79,12 @@ const textCondition2 = [
 
 const AboutDetail = ({ onHover, onLeave }) => {
   const dispatch = useDispatch();
-  const onScrollAboutFirst = () => dispatch(splitTextStart('aboutFirst'));
-  const onScrollAboutSecond = () => dispatch(splitTextStart('aboutSecond'));
-  const onScrollAboutThird = () => dispatch(splitTextStart('aboutThird'));
-  const makeScroll = (value) => dispatch(makeSmoothScroll(value));
-  const filmReady = (value) => dispatch(changeFilmState(value));
-  const gsapReady = (value) => dispatch(changeGsapState(value));
+  const onScrollAboutFirst = useCallback(() => dispatch(splitTextStart('aboutFirst')), [dispatch]);
+  const onScrollAboutSecond = useCallback(() => dispatch(splitTextStart('aboutSecond')), [dispatch]);
+  const onScrollAboutThird = useCallback(() => dispatch(splitTextStart('aboutThird')), [dispatch]);
+  const makeScroll = useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  const filmReady = useCallback((value) => dispatch(changeFilmState(value)), [dispatch]);
+  const gsapReady = useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
   const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
 
   const { width } = useWindowSize();
@@ -104,7 +104,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
       >
         {target.map((target, idx) => (
           <SwiperSlide key={idx}>
-            <img width='70%' height='auto' src={target} alt={`${kind} image ${idx + 1}`} />
+            <img width='70%' height='auto' src={target} alt={`${kind} ${idx + 1}`} />
           </SwiperSlide>
         ))}
         <div className='swiper-button-next' onMouseEnter={() => onHover(' bl-cursor', 'next')} onMouseLeave={() => onLeave()}></div>
@@ -255,10 +255,13 @@ const AboutDetail = ({ onHover, onLeave }) => {
       filmReady(false)
       setSplitTextReady(false)
     }
-  }, []);
+  }, [filmReady, gsapReady, makeScroll, onLeave]);
 
   useEffect(() => {
-    currentGsapState && aboutDetailGsap(), setSplitTextReady(true)
+    if (currentGsapState) {
+      aboutDetailGsap();
+      setSplitTextReady(true);
+    }
   }, [currentGsapState])
 
   useEffect(() => {
@@ -298,7 +301,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
       secondTimer = null
       thirdTimer = null
     }
-  }, [splitTextReady])
+  }, [onScrollAboutFirst, onScrollAboutSecond, onScrollAboutThird, splitTextReady])
 
   return (
     <div className='about-detail'>
@@ -348,14 +351,14 @@ const AboutDetail = ({ onHover, onLeave }) => {
           </div>
 
           <div className='photo-area d-m-block d-xs-none'>
-            <img width='70%' height='auto' className='first-image' src={child} alt='childhood image' />
+            <img width='70%' height='auto' className='first-image' src={child} alt='childhood' />
             {growBackgroundImageSlider(growBackgroundImage2, 'shop')}
             {growBackgroundImageSlider(growBackgroundImage3, 'current')}
           </div>
 
           <div className='col-12 col-m-7 off-m-5'>
             <div className='background-story-frame first-image-trigger'>
-              {width < 768 && <img width='50%' height='auto' className='first-image' src={child} alt='childhood image' />}
+              {width < 768 && <img width='50%' height='auto' className='first-image' src={child} alt='childhood' />}
               <h3>학생시절</h3>
               <p>초등학교부터 사용한 컴퓨터는 제게는 너무 신기하고 배울 것이 참 많은 기기였습니다. 학교에서 배우는 공부보다 컴퓨터의 탐색기를 하나하나 열어보고 윈도우의 기능과 타자 연습, 다양한 게임들을 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 당시 대학교수셨던 아버지의 <Tooltip onHover={onHover} onLeave={onLeave} info={'도벽@환경도예'}>책</Tooltip>출간을 돕기도 했습니다. 이후 미술 전공을 준비했었지만, 보여주기식의 반복적이고 지루한 입시 미술이 적성에 맞지 않아 고등학교를 졸업하고 바로 입대하였습니다.</p>
             </div>

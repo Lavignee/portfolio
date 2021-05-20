@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import './navmenu.scss';
@@ -6,8 +7,10 @@ import './navmenu.scss';
 const Navmenu = ({ onlogoHover, onClick, onHeaderLeave, onGnbButtonClick, onGnbButtonHover, onDown, onUp, scrollTop }) => {
   const [currentButtonDelay] = useSelector(state => [state.CommonValue.currentButtonDelay], shallowEqual);
 
+  let history = useHistory();
+
   const logoClick = () => {
-    location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?')
+    history.location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?')
   }
 
   return (

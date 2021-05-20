@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { changeGsapState } from 'modules/commonValue';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
@@ -63,8 +64,10 @@ const empty = [
 
 const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
   const dispatch = useDispatch();
-  const gsapReady = (value) => dispatch(changeGsapState(value));
+  const gsapReady = useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
   const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
+
+  let history = useHistory();
 
   const { list } = match.params;
   const lists = useRef([]);
@@ -75,7 +78,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
   const [currentTarget, setCurrentTarget] = useState(0);
   const [opacity, setOpacity] = useState('');
 
-  const makeSmoothScrollbarforSkill = () => {
+  const makeSmoothScrollbarforSkill = useCallback(() => {
     const scroller = scrollPosition.current;
     let skillScrollBar;
     if (isDesktop) {
@@ -97,7 +100,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
 
     skillScrollBar.addListener(ScrollTrigger.update);
     gsapReady(true);
-  }
+  }, [gsapReady])
 
   const listHover = (number) => {
     onHover(' focus-cursor')
@@ -108,10 +111,10 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     }
   }
 
-  const onListLeave = () => {
+  const onListLeave = useCallback(() => {
     onLeave();
     setListHoverMotion('');
-  };
+  }, [onLeave])
 
   const changeList = async (e) => {
     if (e.target.dataset.list !== currentList) {
@@ -132,17 +135,17 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     }
   }
 
-  const changeHistoryList = async () => {
+  const changeHistoryList = useCallback(async () => {
     lists.current = [];
     currentSkillScroller.setPosition(0, 0)
     Scrollbar.destroyAll();
     await gsapReady(false);
     setCurrentTarget(0);
-    setCurrentList(location.pathname.split('/skill/')[1]);
+    setCurrentList(history.location.pathname.split('/skill/')[1]);
     makeSmoothScrollbarforSkill();
-  }
+  }, [currentSkillScroller, gsapReady, history.location.pathname, makeSmoothScrollbarforSkill])
 
-  const changeTarget = (id) => {
+  const changeTarget = useCallback((id) => {
     setCurrentTarget(id);
     setOpacity('');
     onListLeave();
@@ -151,7 +154,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
       setOpacity('opacity')
     }, 100);
     return () => clearTimeout(opacityTimer);
-  }
+  }, [onListLeave])
 
   const addToRefs = el => {
     if (el && !lists.current.includes(el) && currentGsapState) {
@@ -159,7 +162,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     }
   };
 
-  const listScroller = () => {
+  const listScroller = useCallback(() => {
     lists.current.forEach((el, index) => {
       gsap.to(el, {
         scrollTrigger: {
@@ -196,7 +199,7 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
         }
       });
     });
-  }
+  }, [changeTarget])
 
   const scrollSkew = () => {
     let proxy = { skew: 0 },
@@ -275,15 +278,18 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
   }, [])
 
   useEffect(() => {
-    currentGsapState && listScroller(), scrollSkew();
-  }, [currentGsapState, currentList])
+    if (currentGsapState) {
+      listScroller();
+      scrollSkew();
+    }
+  }, [currentGsapState, currentList, listScroller])
 
   useEffect(() => {
     setOpacity('');
-    if (location.pathname.split('/skill/')[1] !== currentList) {
+    if (history.location.pathname.split('/skill/')[1] !== currentList) {
       changeHistoryList();
     }
-  }, [location.pathname])
+  }, [changeHistoryList, currentList, history.location.pathname])
 
   return (
     <div className='skill-detail'>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 // import { changeContactState, changeContactButtonDelay } from 'modules/CommonValue';
 import { isMobile } from 'react-device-detect';
 

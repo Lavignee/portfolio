@@ -23,7 +23,7 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
   const [blur, setBlur] = useState('')
 
   const onlogoHover = () => {
-    location.pathname === '/' ? onHover(' bl-cursor', 'top?') : onHover(' bl-cursor', 'Home?');
+    history.location.pathname === '/' ? onHover(' bl-cursor', 'top?') : onHover(' bl-cursor', 'Home?');
   };
 
   const listClick = (path) => {

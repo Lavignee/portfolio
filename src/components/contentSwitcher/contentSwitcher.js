@@ -3,17 +3,17 @@ import { Switch, Route } from 'react-router-dom';
 
 import './contentSwitcher.scss';
 
-// const Home = lazy(() => import('components/home'));
-const AboutDetail = lazy(() => import('pages/aboutDetail'));
-const SkillDetail = lazy(() => import('pages/skillDetail'));
-const FootprintDetail = lazy(() => import('pages/footprintDetail'));
-const NotFound = lazy(() => import('pages/notFound'));
-
 import Home from 'pages/home';
 // import AboutDetail from 'pages/aboutDetail';
 // import SkillDetail from 'pages/skillDetail';
 // import FootprintDetail from 'pages/footprintDetail';
 // import NotFound from 'pages/notFound';
+
+// const Home = lazy(() => import('components/home'));
+const AboutDetail = lazy(() => import('pages/aboutDetail'));
+const SkillDetail = lazy(() => import('pages/skillDetail'));
+const FootprintDetail = lazy(() => import('pages/footprintDetail'));
+const NotFound = lazy(() => import('pages/notFound'));
 
 const ContentSwitcher = ({ onHover, onClick, onLeave, pageTimer }) => {
   return (

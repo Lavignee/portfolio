@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 
 import './videoToCanvas.scss';
 
@@ -13,8 +13,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
   const canvasDrawTrigger = useRef();
   // const test2Ref = useRef(false);
   const [canvasPlay, setCanvasPlay] = useState(false)
-
-  const videoSet = [
+  const videoSet = useMemo(() => [
     {
       maskX: -(resolX / 2), maskY: 0, sizeX: resolX * 3, sizeY: resolY * 3
     },
@@ -33,7 +32,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
     {
       maskX: -(resolX * 0.5), maskY: -(resolY), sizeX: resolX * 2, sizeY: resolY * 2
     }
-  ]
+  ], [resolX, resolY])
 
   const makeVirtualVideoElement = (src) => {
     const video = document.createElement('video')
@@ -43,7 +42,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
     return video
   }
 
-  const draw = (video, context, numbers) => {
+  const draw = useCallback((video, context, numbers) => {
     context.drawImage(video, 0, 0, resolX, resolY, videoSet[numbers].maskX, videoSet[numbers].maskY, videoSet[numbers].sizeX, videoSet[numbers].sizeY)
     if (canvasDrawTrigger.current === true) {
       const drawTimer = setTimeout(() => {
@@ -51,7 +50,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
       }, 1000 / 25, video, context);
       return () => clearTimeout(drawTimer);
     }
-  }
+  }, [resolX, resolY, videoSet])
 
   useEffect(() => {
     if (canvasReady) {
@@ -108,7 +107,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }) => {
     testCanvas(virtualVideo.current, canvasRef5.current, 4)
     testCanvas(virtualVideo.current, canvasRef6.current, 5)
     canvasDrawTrigger.current = canvasPlay
-  }, [canvasPlay])
+  }, [canvasPlay, draw, src])
 
   return (
     <div className='video-area'>
