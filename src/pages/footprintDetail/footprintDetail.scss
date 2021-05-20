@@ -324,7 +324,6 @@
   }
 
   .division-frame {
-    height: 100%;
     background-color: $bl;
     @media (max-width: $bp-l) {
       display: none;
@@ -334,14 +333,14 @@
       @include horizontal-align;
       top: 0;
       width: 1px;
-      height: 100vh;
+      height: 100%;
       background-color: $wh;
     }
 
     .point-frame {
       position: relative;
       width: 100%;
-      height: 100vh;
+      height: 100%;
 
       .left-area, .right-area {
         display: inline-block;
