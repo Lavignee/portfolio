@@ -117,18 +117,18 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     setListHoverMotion('');
   }, [onLeave])
 
-  const changeList = (e) => {
+  const changeList = async (e) => {
     if (e.target.dataset.list !== currentList) {
       lists.current = [];
       currentSkillScroller.setPosition(0, 0)
       Scrollbar.destroyAll();
-      gsapReady(false);
+      await gsapReady(false);
       setCurrentTarget(0);
       if (isDesktop) {
-        pageTimer(e.target.dataset.list, 0);
+        await pageTimer(e.target.dataset.list, 0);
         makeSmoothScrollbarforSkill();
       } else {
-        pageTimer(e.target.dataset.list, 0);
+        await pageTimer(e.target.dataset.list, 0);
         makeSmoothScrollbarforSkill();
       }
     } else {
@@ -136,11 +136,11 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     }
   }
 
-  const changeHistoryList = useCallback(() => {
+  const changeHistoryList = useCallback(async () => {
     lists.current = [];
     currentSkillScroller.setPosition(0, 0)
     Scrollbar.destroyAll();
-    gsapReady(false);
+    await gsapReady(false);
     setCurrentTarget(0);
     setCurrentList(history.location.pathname.split('/skill/')[1]);
     makeSmoothScrollbarforSkill();
