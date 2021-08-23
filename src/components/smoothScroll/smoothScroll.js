@@ -32,7 +32,7 @@ const SmoothScroll = ({ children }) => {
     let bodyScrollBar;
 
     if (isDesktop) {
-      bodyScrollBar = Scrollbar.init(scroller, { damping: 0.02, alwaysShowTracks: true });
+      bodyScrollBar = Scrollbar.init(scroller, { damping: 0.03, alwaysShowTracks: true });
     } else {
       bodyScrollBar = Scrollbar.init(scroller, { damping: 0.1, alwaysShowTracks: true });
     }
