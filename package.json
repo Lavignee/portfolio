@@ -14,10 +14,10 @@
     ]
   },
   "dependencies": {
+    "@babel/preset-env": "^7.13.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@babel/preset-env": "^7.13.10",
     "autoprefixer": "9.8.6",
     "babel-plugin-module-resolver": "^4.1.0",
     "browserslist": "^4.16.4",
@@ -47,7 +47,6 @@
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/preset-react": "^7.12.13",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-compress": "^2.0.2"
+    "parcel-bundler": "^1.12.4"
   }
 }
