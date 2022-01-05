@@ -344,7 +344,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
         </div>
 
         <div className='row'>
-          <div className='col-12 off-l-none col-l-5 carrer-frame'>
+          <div className='col-12 off-l-none col-l-5 career-frame'>
             {sliderContent(career, 'left')}
           </div>
 
@@ -358,7 +358,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
             <div className='division-line'></div>
             <div className='point-frame'>
               <div className='left-area'>
-                <div className='left-text'>Carrer</div>
+                <div className='left-text'>Career</div>
               </div>
               <div className='right-area'>
                 <div className='right-text'>Project&Subcontract</div>

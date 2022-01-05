@@ -11,7 +11,8 @@
   }
 
   @media (max-width: $bp-l) {
-    .text-slider-left-area, .text-slider-right-area {
+    .text-slider-left-area,
+    .text-slider-right-area {
       position: fixed;
       height: 100%;
     }
@@ -25,7 +26,8 @@
     min-height: $headerHeight-100vh;
     height: 100%;
 
-    .swiper-button-prev, .swiper-button-next {
+    .swiper-button-prev,
+    .swiper-button-next {
       width: 50%;
       height: calc(100% - 10rem);
       top: 5rem;
@@ -36,7 +38,7 @@
       &.swiper-button-disabled {
         opacity: 0;
       }
-  
+
       &:after {
         position: absolute;
       }
@@ -45,23 +47,23 @@
         animation: focusing 0.5s linear;
       }
     }
-  
+
     .swiper-button-prev {
       left: 0;
-  
+
       &:after {
         left: 0;
       }
     }
-  
+
     .swiper-button-next {
       right: 0;
-  
+
       &:after {
         right: 0;
       }
     }
-  
+
     .swiper-pagination {
       bottom: 1rem;
       padding-top: 2rem;
@@ -74,8 +76,9 @@
           height: 1rem;
         }
       }
-      
-      &.left-pagination, &.right-pagination {
+
+      &.left-pagination,
+      &.right-pagination {
         span {
           &:before {
             position: absolute;
@@ -104,7 +107,7 @@
           }
         }
       }
-      
+
       &.right-pagination {
         &:hover {
           span {
@@ -146,11 +149,11 @@
           }
         }
       }
-      
+
       .swiper-pagination-bullet {
         position: relative;
         width: 4rem;
-        height: .5rem;
+        height: 0.5rem;
         border-radius: 0;
         opacity: 1;
         background-color: $s-m;
@@ -160,7 +163,7 @@
         &:hover {
           transform: scale(1.5);
         }
-        
+
         &.swiper-pagination-bullet-active {
           z-index: 2;
           background-color: $p-d;
@@ -176,15 +179,15 @@
           box-sizing: border-box;
           opacity: 0;
           padding: 2.5rem;
-          
+
           &.active {
             opacity: 1;
-    
+
             .content {
               height: 100%;
               padding: 2.5rem;
               background-color: $wh-7;
-    
+
               .keyword {
                 display: inline-block;
                 padding: 1rem;
@@ -192,7 +195,7 @@
                 background-color: $s-m;
                 @include f-m(1.8rem, $p-d);
               }
-        
+
               .title {
                 padding-bottom: 1rem;
                 @include f-b(3.6rem, $p-d);
@@ -203,22 +206,22 @@
                   font-size: 3.2rem;
                 }
               }
-              
+
               .date {
                 padding-bottom: 3.5rem;
                 @include f-m(2rem, $p-m);
               }
-              
+
               .summarys {
                 position: relative;
-                
+
                 .line {
                   @include center-align;
                   width: 1px;
                   height: 80%;
                   background-color: $p-l;
                 }
-                
+
                 span {
                   display: inline-block;
                   vertical-align: top;
@@ -234,7 +237,7 @@
                     @include f-r(2.5rem, $bl);
                   }
                 }
-                
+
                 &.division {
                   padding-top: 3.5rem;
                   padding-bottom: 3.5rem;
@@ -256,11 +259,11 @@
                     padding-top: 1.5rem;
                     padding-bottom: 1.5rem;
                   }
-      
+
                   span {
                     width: 50%;
-                    padding-left: 3.5rem ;
-                    padding-right: 3.5rem ;
+                    padding-left: 3.5rem;
+                    padding-right: 3.5rem;
 
                     @media (max-width: $bp-l) {
                       padding-left: 3rem;
@@ -281,7 +284,7 @@
                   }
                 }
               }
-        
+
               p {
                 width: 100%;
                 padding-top: 4rem;
@@ -294,7 +297,8 @@
     }
   }
 
-  .carrer-frame, .project-frame {
+  .career-frame,
+  .project-frame {
     padding-top: $headerHeight;
   }
 
@@ -342,13 +346,15 @@
       width: 100%;
       height: 100%;
 
-      .left-area, .right-area {
+      .left-area,
+      .right-area {
         display: inline-block;
         position: relative;
         width: 50%;
         height: 100%;
-        
-        .left-text, .right-text {
+
+        .left-text,
+        .right-text {
           position: absolute;
           left: 50%;
           display: inline-block;
@@ -361,7 +367,7 @@
         .left-text {
           transform: translateX(-50%);
         }
-        
+
         .right-text {
           bottom: 0;
           transform: translateX(-50%) rotateX(180deg) rotateY(180deg);
