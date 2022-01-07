@@ -275,7 +275,7 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
               </li>
             </ul>
 
-            <ul className='last-content'>
+            {/* <ul className='last-content'>
               <li className={`${blur}${currentGnbState ? ' line-up' : ''}`}>
                 <div
                   className='list-contact'
@@ -285,7 +285,7 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
                   CONTACT<span>CONTACT</span>
                 </div>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
