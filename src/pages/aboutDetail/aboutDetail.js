@@ -77,7 +77,7 @@ const aboutSecondContent = [
 
 const textCondition = [
   {
-    colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 col-xl-4 about-first',
+    colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 about-first',
     scroll: 'aboutFirst',
     index1: 'abl1',
     index2: 'abl2',
@@ -85,7 +85,7 @@ const textCondition = [
   },
   {
     colInfo:
-      'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 col-xl-4 off-xl-4 about-second',
+      'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 about-second',
     scroll: 'aboutSecond',
     index1: 'abc1',
     index2: 'abc2',
@@ -93,7 +93,7 @@ const textCondition = [
   },
   {
     colInfo:
-      'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 col-xl-4 off-xl-8 about-third',
+      'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
     scroll: 'aboutThird',
     index1: 'abr1',
     index2: 'abr2',
@@ -104,16 +104,16 @@ const textCondition = [
 const textCondition2 = [
   {
     colInfo:
-      'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 col-xl-4 off-xl-8 about-third',
+      'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
     align: 'left',
   },
   {
     colInfo:
-      'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 col-xl-4 off-xl-4 about-second',
+      'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 about-second',
     align: 'center',
   },
   {
-    colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 col-xl-4 about-first',
+    colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 about-first',
     align: 'right',
   },
 ];
