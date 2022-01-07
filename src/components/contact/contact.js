@@ -3,23 +3,26 @@ import { useSelector, shallowEqual } from 'react-redux';
 // import { changeContactState, changeContactButtonDelay } from 'modules/CommonValue';
 import { isMobile } from 'react-device-detect';
 
-import kakaoIcon from 'static/images/kakao-icon.svg';
-import mobileIcon from 'static/images/mobile-icon.svg';
-import mailIcon from 'static/images/mail-icon.svg';
+import kakaoIcon from '../../static/images/kakao-icon.svg';
+import mobileIcon from '../../static/images/mobile-icon.svg';
+import mailIcon from '../../static/images/mail-icon.svg';
 
 import './contact.scss';
 
-import SplitText from 'components/splitText';
+import SplitText from '../../components/splitText';
 // import CustomInput from 'compositions/customInput';
 // import CustomTextarea from 'compositions/customTextarea';
 // import CustomButton from 'compositions/customButton';
-import useInterval from 'utils/useInterval';
+import useInterval from '../../utils/useInterval';
 
 const Contact = ({ onHover, onLeave }) => {
   // const dispatch = useDispatch();
   // const onChangeContactState = () => dispatch(changeContactState());
   // const onChangeContactButtonDelay = (value) => dispatch(changeContactButtonDelay(value));
-  const [currentContactState] = useSelector(state => [state.CommonValue.currentContactState], shallowEqual);
+  const [currentContactState] = useSelector(
+    (state) => [state.CommonValue.currentContactState],
+    shallowEqual
+  );
   // const [currentContactButtonDelay] = useSelector(state => [state.CommonValue.currentContactButtonDelay], shallowEqual);
   const [contactSplitTextReady, setContactSplitTextReady] = useState(false);
   const [qnumber, setQnumber] = useState(1);
@@ -37,14 +40,14 @@ const Contact = ({ onHover, onLeave }) => {
   const contactAnimation = () => {
     if (currentContactState) {
       if (qnumberRef.current === 1) {
-        setQnumber(2)
+        setQnumber(2);
       } else if (qnumberRef.current === 2) {
-        setQnumber(3)
+        setQnumber(3);
       } else if (qnumberRef.current === 3) {
-        setQnumber(1)
+        setQnumber(1);
       }
     }
-  }
+  };
 
   // useEffect(() => {
   // ContactButtonDelay();
@@ -52,13 +55,16 @@ const Contact = ({ onHover, onLeave }) => {
 
   useEffect(() => {
     if (currentContactState) {
-      setContactSplitTextReady(true)
+      setContactSplitTextReady(true);
     }
-  }, [currentContactState])
+  }, [currentContactState]);
 
-  useInterval(() => {
-    contactAnimation();
-  }, contactSplitTextReady ? 6000 : null);
+  useInterval(
+    () => {
+      contactAnimation();
+    },
+    contactSplitTextReady ? 6000 : null
+  );
 
   return (
     <div className='contact-area'>
@@ -70,7 +76,8 @@ const Contact = ({ onHover, onLeave }) => {
         )}
       </div> */}
 
-      <div className={`contact-frame${currentContactState ? ' open' : ' close'}`}>
+      <div
+        className={`contact-frame${currentContactState ? ' open' : ' close'}`}>
         <>
           <div className='contact-grid-frame'>
             <div className='contact-grid'></div>
@@ -84,15 +91,39 @@ const Contact = ({ onHover, onLeave }) => {
           </div>
 
           <div className='container'>
-            <div className={`back-text${currentContactState ? ' open' : ' close'}`}>
+            <div
+              className={`back-text${
+                currentContactState ? ' open' : ' close'
+              }`}>
               {currentContactState && qnumberRef.current === 1 && (
-                <SplitText animation={'up'} scroll={'all'} index={'con1'} ready={contactSplitTextReady} depth>What  should  I  do  for  you?</SplitText>
+                <SplitText
+                  animation={'up'}
+                  scroll={'all'}
+                  index={'con1'}
+                  ready={contactSplitTextReady}
+                  depth>
+                  What should I do for you?
+                </SplitText>
               )}
               {currentContactState && qnumberRef.current === 2 && (
-                <SplitText animation={'up'} scroll={'all'} index={'con2'} ready={contactSplitTextReady} depth>Could  you  tell  me  about  the  project?</SplitText>
+                <SplitText
+                  animation={'up'}
+                  scroll={'all'}
+                  index={'con2'}
+                  ready={contactSplitTextReady}
+                  depth>
+                  Could you tell me about the project?
+                </SplitText>
               )}
               {currentContactState && qnumberRef.current === 3 && (
-                <SplitText animation={'up'} scroll={'all'} index={'con3'} ready={contactSplitTextReady} depth>I  will  reply  by  email  as  soon  as  possible.</SplitText>
+                <SplitText
+                  animation={'up'}
+                  scroll={'all'}
+                  index={'con3'}
+                  ready={contactSplitTextReady}
+                  depth>
+                  I will reply by email as soon as possible.
+                </SplitText>
               )}
             </div>
           </div>
@@ -114,16 +145,87 @@ const Contact = ({ onHover, onLeave }) => {
                 </div>
 
                 <div className='col-12 col-s-6 col-l-4'>
-                  <div className={`info-frame${currentContactState ? ' open' : ' close'}`}>
-                    <div><span><img width='100%' height='100%' src={kakaoIcon} alt='kakao app icon' /></span> Lavignee</div>
+                  <div
+                    className={`info-frame${
+                      currentContactState ? ' open' : ' close'
+                    }`}>
+                    <div>
+                      <span>
+                        <img
+                          width='100%'
+                          height='100%'
+                          src={kakaoIcon}
+                          alt='kakao app icon'
+                        />
+                      </span>{' '}
+                      Lavignee
+                    </div>
                     {isMobile ? (
-                      <div className='link' onMouseEnter={() => onHover(' go-cursor')} onMouseLeave={() => onLeave()}><span><img width='100%' height='100%' src={mobileIcon} alt='mobile icon' /></span>{isMobile ? <a href="tel:010-1234-5678">+82 010.2690.9243</a> : ' +82 010.2690.9243'}</div>
+                      <div
+                        className='link'
+                        onMouseEnter={() => onHover(' go-cursor')}
+                        onMouseLeave={() => onLeave()}>
+                        <span>
+                          <img
+                            width='100%'
+                            height='100%'
+                            src={mobileIcon}
+                            alt='mobile icon'
+                          />
+                        </span>
+                        {isMobile ? (
+                          <a href='tel:010-1234-5678'>+82 010.2690.9243</a>
+                        ) : (
+                          ' +82 010.2690.9243'
+                        )}
+                      </div>
                     ) : (
-                      <div><span><img width='100%' height='100%' src={mobileIcon} alt='mobile icon' /></span>{isMobile ? <a href="tel:010-1234-5678">+82 010.2690.9243</a> : ' +82 010.2690.9243'}</div>
+                      <div>
+                        <span>
+                          <img
+                            width='100%'
+                            height='100%'
+                            src={mobileIcon}
+                            alt='mobile icon'
+                          />
+                        </span>
+                        {isMobile ? (
+                          <a href='tel:010-1234-5678'>+82 010.2690.9243</a>
+                        ) : (
+                          ' +82 010.2690.9243'
+                        )}
+                      </div>
                     )}
 
-                    <div><span><img width='100%' height='100%' src={mailIcon} alt='letter icon' /></span> doyoung9243@naver.com</div>
-                    <div className='link' onMouseEnter={() => onHover(' go-cursor')} onMouseLeave={() => onLeave()}><span><img width='100%' height='100%' src={mailIcon} alt='github icon' /></span> <a href='https://github.com/Lavignee/portfolio' target='_black'>github.com/Lavignee</a></div>
+                    <div>
+                      <span>
+                        <img
+                          width='100%'
+                          height='100%'
+                          src={mailIcon}
+                          alt='letter icon'
+                        />
+                      </span>{' '}
+                      doyoung9243@naver.com
+                    </div>
+                    <div
+                      className='link'
+                      onMouseEnter={() => onHover(' go-cursor')}
+                      onMouseLeave={() => onLeave()}>
+                      <span>
+                        <img
+                          width='100%'
+                          height='100%'
+                          src={mailIcon}
+                          alt='github icon'
+                        />
+                      </span>{' '}
+                      <a
+                        href='https://github.com/Lavignee/portfolio'
+                        target='_black'>
+                        github.com/Lavignee
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -132,7 +234,7 @@ const Contact = ({ onHover, onLeave }) => {
         </>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Contact;

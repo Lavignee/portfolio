@@ -1,17 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from 'static/languages/en.json';
-import ko from 'static/languages/ko.json';
+import en from './src/static/languages/en.json';
+import ko from './src/static/languages/ko.json';
 
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {
   en: {
-    translation: en
+    translation: en,
   },
   ko: {
-    translation: ko
-  }
+    translation: ko,
+  },
 };
 
 i18n
@@ -23,8 +23,8 @@ i18n
     keySeparator: false, // we do not use keys in form messages.welcome
 
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false, // react already safes from xss
+    },
   });
 
 export default i18n;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { changeGsapState } from 'modules/commonValue';
+import { useLocation } from 'react-router-dom';
+import { changeGsapState } from '../../Modules/commonValue';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import svg from 'static/images/icon-svg.json';
+import svg from '../../static/images/icon-svg.json';
 
 import './skillDetail.scss';
 
@@ -317,7 +317,7 @@ const empty = [
   { number: '', id: '', name: '', workmanship: 0, summary: '', svg: '' },
 ];
 
-const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
+const SkillDetail = ({ onHover, onLeave, pageTimer }) => {
   const dispatch = useDispatch();
   const gsapReady = useCallback(
     (value) => dispatch(changeGsapState(value)),
@@ -328,9 +328,9 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
     shallowEqual
   );
 
-  let history = useHistory();
+  let location = useLocation();
 
-  const { list } = match.params;
+  const { list } = location.pathname;
   const lists = useRef([]);
   const scrollPosition = useRef();
   const [currentSkillScroller, setCurrentSkillScroller] = useState();
@@ -404,18 +404,14 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
 
   const changeHistoryList = useCallback(async () => {
     lists.current = [];
+    console.log('currentSkillScroller', currentSkillScroller);
     currentSkillScroller.setPosition(0, 0);
     Scrollbar.destroyAll();
     await gsapReady(false);
     setCurrentTarget(0);
-    setCurrentList(history.location.pathname.split('/skill/')[1]);
+    setCurrentList(location.pathname.split('/skill/')[1]);
     makeSmoothScrollbarforSkill();
-  }, [
-    currentSkillScroller,
-    gsapReady,
-    history.location.pathname,
-    makeSmoothScrollbarforSkill,
-  ]);
+  }, [currentSkillScroller, gsapReady, location, makeSmoothScrollbarforSkill]);
 
   const changeTarget = useCallback(
     (id) => {
@@ -593,10 +589,10 @@ const SkillDetail = ({ match, onHover, onLeave, pageTimer }) => {
 
   useEffect(() => {
     setOpacity('');
-    if (history.location.pathname.split('/skill/')[1] !== currentList) {
+    if (location.pathname.split('/skill/')[1] !== currentList) {
       changeHistoryList();
     }
-  }, [changeHistoryList, currentList, history.location.pathname]);
+  }, [changeHistoryList, currentList, location]);
 
   return (
     <div className='skill-detail'>

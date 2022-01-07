@@ -93,8 +93,8 @@
     .col-fw-#{$i} {
       position: relative;
       width: 100%;
-      padding-left: $gutter / 2 * 0.1 + rem;
-      padding-right: $gutter / 2 * 0.1 + rem;
+      padding-left: ($gutter * 0.5) * 0.1 + rem;
+      padding-right: ($gutter * 0.5) * 0.1 + rem;
       transition: width $transition-slow, max-width $transition-slow;
     }
   }
@@ -107,8 +107,8 @@
   .col-w-auto,
   .col-fw-auto {
     position: relative;
-    padding-left: $gutter / 2 * 0.1 + rem;
-    padding-right: $gutter / 2 * 0.1 + rem;
+    padding-left: ($gutter * 0.5) * 0.1 + rem;
+    padding-right: ($gutter * 0.5) * 0.1 + rem;
   }
 }
 

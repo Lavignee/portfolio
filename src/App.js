@@ -1,21 +1,30 @@
 import React from 'react';
 import 'regenerator-runtime/runtime';
-import 'style/index.scss';
+import './style/index.scss';
 import { useDispatch } from 'react-redux';
-import { changeSwitchAnimation, changeButtonDelay, smoothTop, changeSmoothScrollState } from 'modules/commonValue';
-import { changeFirstClassName, changeSecondClassName, changeText } from 'modules/cursor';
-import { useHistory } from 'react-router-dom';
+import {
+  changeSwitchAnimation,
+  changeButtonDelay,
+  smoothTop,
+  changeSmoothScrollState,
+} from './modules/commonValue';
+import {
+  changeFirstClassName,
+  changeSecondClassName,
+  changeText,
+} from './modules/cursor';
+import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CustomCursor from './components/customCursor';
+import Header from './components/header';
+import SmoothScroll from './components/smoothScroll';
+import ContentSwitcher from './components/contentSwitcher';
+import Contact from './components/contact';
+import SwitchAnimation from './components/switchAnimation';
+// import ScrollValueAnimation from './components/scrollValueAnimation';
+import FilmEffect from './components/filmEffect';
 gsap.registerPlugin(ScrollTrigger);
-import CustomCursor from 'components/customCursor'
-import Header from 'components/header';
-import SmoothScroll from 'components/smoothScroll';
-import ContentSwitcher from 'components/contentSwitcher';
-import Contact from 'components/contact';
-import SwitchAnimation from 'components/switchAnimation';
-// import ScrollValueAnimation from 'components/scrollValueAnimation';
-import FilmEffect from 'components/filmEffect';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,25 +36,25 @@ const App = () => {
   const screenCover = (value) => dispatch(changeSwitchAnimation(value));
   const onChangeButtonDelay = (value) => dispatch(changeButtonDelay(value));
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const onHover = (hoverCursor, hoverText) => {
     cursorClass(hoverCursor);
     hoverText && cursorText(hoverText);
-  }
+  };
 
   const onClick = (path, hoverText) => {
     onLeave(hoverText);
-    onChangeButtonDelay(true)
+    onChangeButtonDelay(true);
     screenCover(true);
     changecrollState(true);
     screenCoverTimer();
     pageTimer(path, 1000);
-  }
+  };
 
   const onLeave = (hoverText) => {
     cursorClass('');
-    cursorSecondClass('')
+    cursorSecondClass('');
     hoverText && cursorText(hoverText);
   };
 
@@ -55,27 +64,38 @@ const App = () => {
       onChangeButtonDelay(false);
     }, 2000);
     return () => clearTimeout(screenCoverAnimationTimer);
-  }
+  };
 
   const pageTimer = (path, timer) => {
     const pageDetailTimer = setTimeout(() => {
-      history.push(path);
+      navigate(path);
     }, timer);
     return () => clearTimeout(pageDetailTimer);
-  }
+  };
 
   return (
     <CustomCursor>
-      <Header onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} scrollTop={onSmoothTop} />
+      <Header
+        onHover={onHover}
+        onClick={onClick}
+        onLeave={onLeave}
+        pageTimer={pageTimer}
+        scrollTop={onSmoothTop}
+      />
       <SmoothScroll>
-        <ContentSwitcher onHover={onHover} onClick={onClick} onLeave={onLeave} pageTimer={pageTimer} />
+        <ContentSwitcher
+          onHover={onHover}
+          onClick={onClick}
+          onLeave={onLeave}
+          pageTimer={pageTimer}
+        />
       </SmoothScroll>
       {/* <ScrollValueAnimation /> */}
       <FilmEffect />
       <Contact onHover={onHover} onLeave={onLeave} />
       <SwitchAnimation />
-    </CustomCursor >
+    </CustomCursor>
   );
-}
+};
 
 export default App;

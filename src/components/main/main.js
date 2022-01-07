@@ -1,27 +1,37 @@
 import React, { memo, useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart } from 'modules/commonValue';
+import { splitTextStart } from '../../Modules/commonValue';
 // import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // import src1920 from 'static/videos/video1920.mp4';
 // import src1280 from 'static/videos/video1280.mp4';
-import src640 from 'static/videos/video640.mp4';
+// import src640 from 'static/videos/video640.mp4';
 
 import './main.scss';
 
-import VideoToCanvas from 'components/videoToCanvas';
-import SplitText from 'components/splitText';
+import VideoToCanvas from '../videoToCanvas';
+import SplitText from '../splitText';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Main = ({ onHover, onLeaves }) => {
+  const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
   const dispatch = useDispatch();
-  const onScrollIntro = useCallback(() => dispatch(splitTextStart('intro')), [dispatch]);
-  const onScrollIntro2 = useCallback(() => dispatch(splitTextStart('intro2')), [dispatch]);
+  const onScrollIntro = useCallback(
+    () => dispatch(splitTextStart('intro')),
+    [dispatch]
+  );
+  const onScrollIntro2 = useCallback(
+    () => dispatch(splitTextStart('intro2')),
+    [dispatch]
+  );
   // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
-  const [currentGsapState] = useSelector(state => [state.CommonValue.currentGsapState], shallowEqual);
+  const [currentGsapState] = useSelector(
+    (state) => [state.CommonValue.currentGsapState],
+    shallowEqual
+  );
 
   const [canvasReady, setCanvasReady] = useState(true);
 
@@ -33,10 +43,10 @@ const Main = ({ onHover, onLeaves }) => {
       trigger: '.main-text-frame',
       start: 'top',
       end: 'bottom',
-      scrub: 1
-    }
+      scrub: 1,
+    };
 
-    canvasFrames.forEach(target => {
+    canvasFrames.forEach((target) => {
       gsap.to(target, {
         scale: 0.8,
         y: -300,
@@ -45,13 +55,13 @@ const Main = ({ onHover, onLeaves }) => {
             y = parseInt(y);
             var newY = y.toFixed(0);
             return newY + 'px';
-          }
+          },
         },
-        scrollTrigger: canvasTrigger
-      })
+        scrollTrigger: canvasTrigger,
+      });
     });
 
-    targetToLefts.forEach(target => {
+    targetToLefts.forEach((target) => {
       gsap.to(target, {
         x: -50,
         modifiers: {
@@ -59,13 +69,13 @@ const Main = ({ onHover, onLeaves }) => {
             x = parseInt(x);
             var newX = x.toFixed(0);
             return newX + 'px';
-          }
+          },
         },
-        scrollTrigger: canvasTrigger
+        scrollTrigger: canvasTrigger,
       });
     });
 
-    targetToRights.forEach(target => {
+    targetToRights.forEach((target) => {
       gsap.to(target, {
         x: 50,
         modifiers: {
@@ -73,9 +83,9 @@ const Main = ({ onHover, onLeaves }) => {
             x = parseInt(x);
             var newX = x.toFixed(0);
             return newX + 'px';
-          }
+          },
         },
-        scrollTrigger: canvasTrigger
+        scrollTrigger: canvasTrigger,
       });
     });
 
@@ -85,8 +95,8 @@ const Main = ({ onHover, onLeaves }) => {
         start: 'top center',
         onEnter: () => onScrollIntro(),
         // onEnterBack: () => onScrollIntro(),
-        end: 'bottom center'
-      }
+        end: 'bottom center',
+      },
     });
 
     gsap.to('.intro-ment', {
@@ -95,8 +105,8 @@ const Main = ({ onHover, onLeaves }) => {
         start: 'top center-=400',
         onEnter: () => onScrollIntro2(),
         // onEnterBack: () => onScrollIntro2(),
-        end: 'bottom center-=400'
-      }
+        end: 'bottom center-=400',
+      },
     });
 
     gsap.to('.main-section', {
@@ -107,8 +117,8 @@ const Main = ({ onHover, onLeaves }) => {
         onEnterBack: () => setCanvasReady(true),
         onLeave: () => setCanvasReady(false),
         onLeaveBack: () => setCanvasReady(false),
-        end: 'bottom top'
-      }
+        end: 'bottom top',
+      },
     });
 
     gsap.to('header', {
@@ -116,8 +126,8 @@ const Main = ({ onHover, onLeaves }) => {
         trigger: '.main-section',
         start: 'top-=1 top',
         toggleClass: { targets: 'header', className: 'invert' },
-        end: 'bottom top'
-      }
+        end: 'bottom top',
+      },
     });
 
     gsap.to('.gnb-button', {
@@ -125,21 +135,21 @@ const Main = ({ onHover, onLeaves }) => {
         trigger: '.main-section',
         start: 'top top+=72',
         toggleClass: { targets: '.menu-img', className: 'invert' },
-        end: 'bottom top+=72'
-      }
+        end: 'bottom top+=72',
+      },
     });
-  }, [onScrollIntro, onScrollIntro2])
+  }, [onScrollIntro, onScrollIntro2]);
 
   useEffect(() => {
     currentGsapState && mainComponentGSAP();
 
     return () => {
       let triggers = ScrollTrigger.getAll();
-      triggers.forEach(trigger => {
+      triggers.forEach((trigger) => {
         trigger.kill();
       });
-    }
-  }, [currentGsapState, mainComponentGSAP])
+    };
+  }, [currentGsapState, mainComponentGSAP]);
 
   return (
     <section id='main' className='container main-section'>
@@ -152,13 +162,21 @@ const Main = ({ onHover, onLeaves }) => {
         ) : (
           <VideoToCanvas src={src640} resolX={640} resolY={360} canvasReady={canvasReady} />
           )} */}
-        <VideoToCanvas src={src640} resolX={640} resolY={360} canvasReady={canvasReady} />
+        <VideoToCanvas
+          src={src640}
+          resolX={640}
+          resolY={360}
+          canvasReady={canvasReady}
+        />
       </div>
 
       <div className='main-content-frame'>
         <div className='test'></div>
         <div className='main-text-frame'>
-          <div className='main-text' onMouseEnter={() => onHover(' reverse-cursor')} onMouseLeave={() => onLeaves()}>
+          <div
+            className='main-text'
+            onMouseEnter={() => onHover(' reverse-cursor')}
+            onMouseLeave={() => onLeaves()}>
             <span>FRONT - END DEVELOPER</span>
             <p>Doyoung Lee</p>
           </div>
@@ -167,16 +185,32 @@ const Main = ({ onHover, onLeaves }) => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'} ready={canvasReady} depth>I've  been  a  front  developer  for  4  years.</SplitText>
+              <SplitText
+                animation={'up'}
+                setTime={5}
+                scroll={'intro'}
+                index={'int'}
+                ready={canvasReady}
+                depth>
+                I've been a front developer for 4 years.
+              </SplitText>
 
-              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'intT'} ready={canvasReady} depth>This  is  the  portfolio  that  introduces  me  for  the  first  time.</SplitText>
+              <SplitText
+                animation={'up'}
+                setTime={5}
+                scroll={'intro2'}
+                index={'intT'}
+                ready={canvasReady}
+                depth>
+                This is the portfolio that introduces me for the first time.
+              </SplitText>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 // export default memo(withTranslation('translations')(Main));
 export default memo(Main);

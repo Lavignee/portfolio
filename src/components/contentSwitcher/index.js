@@ -1,1 +1,1 @@
-export { default } from './contentSwitcher'
+export { default } from './contentSwitcher';

@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from 'modules/commonValue';
-import SwiperCore, { EffectFade, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
+import { EffectFade, Navigation, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import './footprintDetail.scss';
 import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import 'swiper/components/effect-fade/effect-fade.scss';
+import 'swiper/modules/navigation/navigation.scss';
+import 'swiper/modules/pagination/pagination.scss';
+import 'swiper/modules/effect-fade/effect-fade.scss';
 
-import TextSlider from 'components/textSlider';
+import TextSlider from '../../components/textSlider';
 
-SwiperCore.use([Navigation, Pagination, EffectFade]);
 gsap.registerPlugin(ScrollTrigger);
 
 const career = [
@@ -213,6 +212,7 @@ const FootprintDetail = ({ onHover, onLeave }) => {
   const sliderContent = (content, kind) => {
     return (
       <Swiper
+        modules={[Navigation, Pagination, EffectFade]}
         spaceBetween={50}
         slidesPerView={1}
         effect='fade'

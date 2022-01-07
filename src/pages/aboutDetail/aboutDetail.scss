@@ -3,12 +3,13 @@
 .about-detail {
   background-color: $wh;
   overflow-x: hidden;
-  
+
   .about-keywords {
     position: relative;
     height: 100vh;
 
-    .first-content-area, .second-content-area {
+    .first-content-area,
+    .second-content-area {
       display: flex;
       flex-flow: wrap;
       padding-top: $headerHeight;
@@ -18,7 +19,7 @@
       bottom: 0;
       left: 0;
     }
-  
+
     .keyword-frame {
       position: relative;
       width: 100%;
@@ -37,7 +38,7 @@
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
       }
-  
+
       h2 {
         color: $bl;
         white-space: nowrap;
@@ -51,7 +52,7 @@
           font-size: 2.5rem;
         }
       }
-  
+
       .type-p {
         margin-top: 2rem;
         margin-bottom: 6rem;
@@ -76,8 +77,9 @@
       .position-frame {
         @include vertical-align(relative);
       }
-  
-      .back-keyword, .back-keyword-second {
+
+      .back-keyword,
+      .back-keyword-second {
         @include vertical-align;
         z-index: -1;
 
@@ -104,7 +106,7 @@
             font-size: 7rem;
           }
         }
-  
+
         &.left {
           right: 0;
         }
@@ -150,19 +152,26 @@
         background-color: $wh;
       }
 
-      .swiper-container {
+      .swiper {
         position: absolute;
         top: 0;
         width: 100%;
         padding-bottom: 4rem;
+
+        .swiper-slide {
+          text-align: center;
+        }
       }
 
-      .first-image, .second-images, .third-images {
+      .first-image,
+      .second-images,
+      .third-images {
         transition: opacity $transition;
         @include horizontal-align;
       }
-      
-      .second-images, .third-images {
+
+      .second-images,
+      .third-images {
         opacity: 0;
         pointer-events: none;
         margin-top: $headerHeight;
@@ -175,12 +184,13 @@
       }
 
       .third-images {
-        margin-top: $headerHeight * 2 ;
+        margin-top: $headerHeight * 2;
       }
     }
 
-    .swiper-container {
-      .swiper-button-prev, .swiper-button-next {
+    .swiper {
+      .swiper-button-prev,
+      .swiper-button-next {
         width: 50%;
         height: 100%;
         top: 0;
@@ -190,7 +200,7 @@
         @media (max-width: $bp-m) {
           top: 2.2rem;
         }
-    
+
         &:after {
           position: absolute;
         }
@@ -202,15 +212,15 @@
 
       .swiper-button-prev {
         left: 0;
-    
+
         &:after {
           left: 0;
         }
       }
-    
+
       .swiper-button-next {
         right: 0;
-    
+
         &:after {
           right: 0;
         }
@@ -218,12 +228,12 @@
 
       .swiper-pagination-bullet {
         width: 4rem;
-        height: .5rem;
+        height: 0.5rem;
         border-radius: 0;
         opacity: 1;
         background-color: $s-m;
         cursor: none;
-        
+
         &.swiper-pagination-bullet-active {
           background-color: $p-d;
         }
@@ -276,8 +286,11 @@
       }
     }
 
-    .background-title-frame, .background-story-frame {
-      h2, h3, p {
+    .background-title-frame,
+    .background-story-frame {
+      h2,
+      h3,
+      p {
         @media (min-width: $bp-l-min) {
           padding-left: 6.5rem;
         }
@@ -296,7 +309,7 @@
       }
 
       p {
-        @include f-r(2rem, $p-d, 4rem)
+        @include f-r(2rem, $p-d, 4rem);
       }
 
       img {

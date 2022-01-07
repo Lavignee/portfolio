@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from 'modules/commonValue';
+import { changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
 
 import './home.scss';
 
 import Scrollbar from 'smooth-scrollbar';
-import Main from 'components/main';
-import About from 'components/about';
-import Skill from 'components/skill';
-import Footprint from 'components/footprint';
+import Main from '../../components/main';
+import About from '../../components/about';
+import Skill from '../../components/skill';
+import Footprint from '../../components/footprint';
 
 const Home = ({ onHover, onClick, onLeave }) => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const Home = ({ onHover, onClick, onLeave }) => {
     Scrollbar.destroyAll();
     gsapReady(false);
     makeScroll(true);
-  }, [])
+  }, []);
 
   return (
     <div className='home-area'>
@@ -28,7 +28,7 @@ const Home = ({ onHover, onClick, onLeave }) => {
       <Skill onHover={onHover} onClick={onClick} onLeave={onLeave} />
       <Footprint onHover={onHover} onClick={onClick} onLeave={onLeave} />
     </div>
-  )
-}
+  );
+};
 
 export default Home;
