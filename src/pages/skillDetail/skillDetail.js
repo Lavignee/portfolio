@@ -385,16 +385,17 @@ const SkillDetail = ({ onHover, onLeave, pageTimer }) => {
 
   const changeList = async (e) => {
     if (e.target.dataset.list !== currentList) {
+      const skillLocation = '/skill/' + e.target.dataset.list;
       lists.current = [];
       currentSkillScroller.setPosition(0, 0);
       Scrollbar.destroyAll();
       await gsapReady(false);
       setCurrentTarget(0);
       if (isDesktop) {
-        await pageTimer(e.target.dataset.list, 0);
+        await pageTimer(skillLocation, 0);
         makeSmoothScrollbarforSkill();
       } else {
-        await pageTimer(e.target.dataset.list, 0);
+        await pageTimer(skillLocation, 0);
         makeSmoothScrollbarforSkill();
       }
     } else {
@@ -404,11 +405,11 @@ const SkillDetail = ({ onHover, onLeave, pageTimer }) => {
 
   const changeHistoryList = useCallback(async () => {
     lists.current = [];
-    console.log('currentSkillScroller', currentSkillScroller);
-    currentSkillScroller.setPosition(0, 0);
+    currentSkillScroller?.setPosition(0, 0);
     Scrollbar.destroyAll();
     await gsapReady(false);
     setCurrentTarget(0);
+    // setCurrentList(location.pathnam);
     setCurrentList(location.pathname.split('/skill/')[1]);
     makeSmoothScrollbarforSkill();
   }, [currentSkillScroller, gsapReady, location, makeSmoothScrollbarforSkill]);
