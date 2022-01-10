@@ -2,9 +2,9 @@
 
 .scroll-percent {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  @include f-b(20rem, transparent);
+  @include vertical-align;
+  right: 0.8rem;
+  @include f-b(5rem, transparent);
   -webkit-text-stroke: 1px $s-m;
   opacity: 0.5;
 }
