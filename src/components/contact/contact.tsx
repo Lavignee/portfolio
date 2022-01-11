@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-// import { changeContactState, changeContactButtonDelay } from 'Modules/CommonValue';
+// import { changeContactState, changeContactButtonDelay } from '../../Modules/commonValue';
 import { isMobile } from 'react-device-detect';
 
 import kakaoIcon from '../../static/images/kakao-icon.svg';
@@ -95,7 +95,7 @@ const Contact = ({ onHover, onLeave }) => {
             <div
               className={`back-text${currentContactState ? ' open' : ' close'
                 }`}>
-              {/* {currentContactState && qnumberRef.current === 1 && (
+              {currentContactState && qnumberRef.current === 1 && (
                 <SplitText
                   animation={'up'}
                   scroll={'all'}
@@ -124,7 +124,7 @@ const Contact = ({ onHover, onLeave }) => {
                   depth>
                   I will reply by email as soon as possible.
                 </SplitText>
-              )} */}
+              )}
             </div>
           </div>
 

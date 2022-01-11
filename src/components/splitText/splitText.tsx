@@ -27,36 +27,38 @@ const SplitText = ({
   const splittingTimer = useRef(null);
 
   const Splitting = useCallback(() => {
-    childrenLength++
-    depth
-      ? setSplit(
-        (split) => [
-          ...split,
-          <div
-            key={index + (childrenLength - 1)}
-            className='split-depth-frame'>
-            <span>
-              {children.substring(childrenLength - 1, childrenLength)}
-            </span>
+    if (childrenLength < children.length + 1) {
+      childrenLength++
+      console.log('childrenLength', childrenLength)
+      console.log('children.length', children.length)
+      depth
+        ? setSplit(
+          (split) => [
+            ...split,
             <div
+              key={index + (childrenLength - 1)}
+              className='split-depth-frame'>
+              <span>
+                {children.substring(childrenLength - 1, childrenLength)}
+              </span>
+              <div
+                className={`split-target ${animation ? animation : 'default'}`}>
+                {children.substring(childrenLength - 1, childrenLength)}
+              </div>
+            </div>,
+          ],
+        )
+        : setSplit(
+          (split) => [
+            ...split,
+            <div
+              key={index + (childrenLength - 1)}
               className={`split-target ${animation ? animation : 'default'}`}>
               {children.substring(childrenLength - 1, childrenLength)}
-            </div>
-          </div>,
-        ],
-      )
-      : setSplit(
-        (split) => [
-          ...split,
-          <div
-            key={index + (childrenLength - 1)}
-            className={`split-target ${animation ? animation : 'default'}`}>
-            {children.substring(childrenLength - 1, childrenLength)}
-          </div>,
-        ],
-      );
+            </div>,
+          ],
+        );
 
-    if (childrenLength < children.length + 1) {
       splittingTimer.current = setTimeout(
         () => {
           Splitting();
@@ -93,7 +95,7 @@ const SplitText = ({
     SplittingReady();
 
     return () => (splittingTimer.current = null);
-  }, [SplittingReady, currentSplitText]);
+  }, [currentSplitText]);
 
   useEffect(() => {
     if (ready) {
