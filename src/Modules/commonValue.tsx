@@ -102,8 +102,10 @@ type CommonState = {
   language: string;
   currentContactState: boolean;
   currentContactButtonDelay: boolean;
+  // currentButtonDelay: 버튼 연속 클릭 방지를 위한 딜레이.
   currentButtonDelay: boolean;
   currentGnbState: boolean;
+  // currentSwitchAnimation: 스크린 커버 애니메이션.
   currentSwitchAnimation: boolean;
   currentFilmState: boolean;
   currentSmoothTopState: boolean;

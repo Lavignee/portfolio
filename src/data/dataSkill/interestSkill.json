@@ -1,0 +1,60 @@
+{
+  "interest": [
+    {
+      "number": 1,
+      "id": "typescript",
+      "name": "TypeScript",
+      "workmanship": 2,
+      "summary": "어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 현재 가장 많이 쓰이고 있는듯하여 최우선으로 숙달할 예정입니다."
+    },
+    {
+      "number": 2,
+      "id": "graphql",
+      "name": "GraphQL",
+      "workmanship": 2,
+      "summary": "개념과 기본 사용법은 익혀두었지만, 실무에서 사용해보진 못했습니다."
+    },
+    {
+      "number": 3,
+      "id": "mobx",
+      "name": "MobX",
+      "workmanship": 1,
+      "summary": "이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다. Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다."
+    },
+    {
+      "number": 4,
+      "id": "nextjs",
+      "name": "Next.js",
+      "workmanship": 1,
+      "summary": "이미 적용된 프로젝트는 종종 있었으나, 직접적으로 다뤄보진 않았습니다."
+    },
+    {
+      "number": 5,
+      "id": "express",
+      "name": "Express.js",
+      "workmanship": 1,
+      "summary": "아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다."
+    },
+    {
+      "number": 6,
+      "id": "nginx",
+      "name": "Nginx",
+      "workmanship": 1,
+      "summary": "아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다."
+    },
+    {
+      "number": 7,
+      "id": "webgl",
+      "name": "WebGL",
+      "workmanship": 1,
+      "summary": "나중에 꼭 다뤄보고 싶은 생각이 있습니다."
+    },
+    {
+      "number": 8,
+      "id": "analytics",
+      "name": "Google Analytics",
+      "workmanship": 0,
+      "summary": ""
+    }
+  ]
+}

@@ -27,37 +27,48 @@ import FilmEffect from './components/filmEffect';
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
+  // redux dispatch 정의.
   const dispatch = useDispatch();
-  const onSmoothTop = (value) => dispatch(smoothTop(value));
-  const changecrollState = (value) => dispatch(changeSmoothScrollState(value));
-  const cursorClass = (value) => dispatch(changeFirstClassName(value));
-  const cursorSecondClass = (value) => dispatch(changeSecondClassName(value));
-  const cursorText = (value) => dispatch(changeText(value));
-  const screenCover = (value) => dispatch(changeSwitchAnimation(value));
-  const onChangeButtonDelay = (value) => dispatch(changeButtonDelay(value));
+  const onSmoothTop = (value: boolean) => dispatch(smoothTop(value));
+  const changecrollState = (value: boolean) => dispatch(changeSmoothScrollState(value));
+  const cursorClass = (value: string) => dispatch(changeFirstClassName(value));
+  const cursorSecondClass = (value: string) => dispatch(changeSecondClassName(value));
+  const cursorText = (value: string) => dispatch(changeText(value));
+  const screenCover = (value: boolean) => dispatch(changeSwitchAnimation(value));
+  const onChangeButtonDelay = (value: boolean) => dispatch(changeButtonDelay(value));
 
+  // react-router-dom으로 화면 호출.
   let navigate = useNavigate();
 
-  const onHover = (hoverCursor, hoverText) => {
+  // 마우스 오버 시 
+  const onHover = (hoverCursor: string, hoverText?: string | null) => {
+    // 커서 형태 변경.
     cursorClass(hoverCursor);
+    // 텍스트 파람 존재 시 커서 텍스트 변경.
     hoverText && cursorText(hoverText);
   };
 
-  const onClick = (path, hoverText) => {
+  // 마우스 좌 클릭 시
+  const onClick = (path: string, hoverText: string) => {
     onLeave(hoverText);
+    // 버튼 연속 클릭 방지 딜레이 활성.
     onChangeButtonDelay(true);
+    // 스크린 커버 애니메이션 동작.
     screenCover(true);
+    // 스크린 커버 시간에 맞는 스무스 스크롤 제거 활성.
     changecrollState(true);
     screenCoverTimer();
     pageTimer(path, 1000);
   };
 
-  const onLeave = (hoverText) => {
+  // 커서 형태 초기화, 텍스트 파람 존재 시 텍스트 변경.
+  const onLeave = (hoverText?: string | null) => {
     cursorClass('');
     cursorSecondClass('');
     hoverText && cursorText(hoverText);
   };
 
+  // 스크린 커버 애니메이션 종료 시점에 스크린 커버, 버튼 딜레이 비활성.
   const screenCoverTimer = () => {
     const screenCoverAnimationTimer = setTimeout(() => {
       screenCover(false);
@@ -66,7 +77,8 @@ const App = () => {
     return () => clearTimeout(screenCoverAnimationTimer);
   };
 
-  const pageTimer = (path, timer) => {
+  // 일정시간(즉시 ~ 스크린 커버가 화면을 다 덮은 뒤) 후 화면 전환.
+  const pageTimer = (path: string, timer: number) => {
     const pageDetailTimer = setTimeout(() => {
       navigate(path);
     }, timer);
@@ -74,7 +86,9 @@ const App = () => {
   };
 
   return (
+    // 커서 돔.
     <CustomCursor>
+      {/* 헤더 */}
       <Header
         onHover={onHover}
         onClick={onClick}
@@ -82,7 +96,9 @@ const App = () => {
         pageTimer={pageTimer}
         scrollTop={onSmoothTop}
       />
+      {/* 스크롤 영역 */}
       <SmoothScroll>
+        {/* 컨텐츠 */}
         <ContentSwitcher
           onHover={onHover}
           onClick={onClick}
@@ -90,9 +106,13 @@ const App = () => {
           pageTimer={pageTimer}
         />
       </SmoothScroll>
+      {/* 스크롤 퍼센트 */}
       <ScrollValueAnimation />
+      {/* 필름 그레인 효과*/}
       <FilmEffect />
+      {/* 컨텍트 컨텐츠 */}
       <Contact onHover={onHover} onLeave={onLeave} />
+      {/* 스크린 커버 */}
       <SwitchAnimation />
     </CustomCursor>
   );

@@ -29,8 +29,6 @@ const SplitText = ({
   const Splitting = useCallback(() => {
     if (childrenLength < children.length + 1) {
       childrenLength++
-      console.log('childrenLength', childrenLength)
-      console.log('children.length', children.length)
       depth
         ? setSplit(
           (split) => [

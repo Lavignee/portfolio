@@ -1,0 +1,25 @@
+{
+  "language": [
+    {
+      "number": 1,
+      "id": "html",
+      "name": "HTML",
+      "workmanship": 5,
+      "summary": "대부분 목적에 맞는 올바른 태그를 사용하고 있습니다. 스크린리더의 적용 여부에 따라 더 까다롭게 신경 써 볼 수 있겠지만 현재는 웹 표준과 가이드가 너무 잘 나와 있기 때문에 완전히 자유롭고 다양하게 사용할 수 있습니다"
+    },
+    {
+      "number": 2,
+      "id": "css",
+      "name": "CSS",
+      "workmanship": 4,
+      "summary": "대부분의 style 종류와 우선순위, 상관관계를 파악하고 있습니다. 이전에는 'Internet Explorer 8~9' 까지 Cross Browsing 하는 개발 조건을 많이 겪어 보기도 했습니다. 3D Animation을 곧바로 작성하는 수준까지는 경험이 더 필요할 것 같습니다."
+    },
+    {
+      "number": 3,
+      "id": "javascript",
+      "name": "JavaScript",
+      "workmanship": 4,
+      "summary": "MDN을 통째로 외우는 수준은 멀었지만, 언어 사용에 제한은 없는 수준입니다."
+    }
+  ]
+}

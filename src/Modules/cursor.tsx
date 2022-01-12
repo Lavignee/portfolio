@@ -21,8 +21,11 @@ type CursorAction =
   | ReturnType<typeof changeSecondClassName>;
 
 type CursorState = {
+  // 커서에 출력할 텍스트
   text: string;
+  // 커서 변화를 위한 스타일
   firstClassName: string;
+  // 커서 변화를 위한 추가 스타일
   secondClassName: string;
 }
 

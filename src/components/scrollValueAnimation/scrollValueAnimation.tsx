@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import './scrollValueAnimation.scss';
 import { useLocation } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
-import { isMobile } from 'react-device-detect';
 import { RootState } from '../../Modules';
+import { isMobile } from 'react-device-detect';
 
 const ScrollValueAnimation = () => {
+  // redux useSelector 정의.
   const [currentGnbState, currentScrollValue, currentScrollLimit] = useSelector(
     (state: RootState) => [
       state.CommonValue.currentGnbState,
@@ -15,17 +16,23 @@ const ScrollValueAnimation = () => {
     shallowEqual
   );
 
+  // react-router-dom으로 url 확인.
   let location = useLocation();
 
-  const scrollPercentRef = useRef(null);
-  const [percentView, setPercentView] = useState(false);
+  // 스크롤 퍼센트 계산값을 담기 위한 로컬 변수 용도.
+  const scrollPercentRef = React.useRef(0);
+  // 스크롤 퍼센트의 랜더 여부.
+  const [percentView, setPercentView] = React.useState(false);
 
-  useEffect(() => {
-    let scrollPercent = ((+currentScrollValue / +currentScrollLimit) * 100).toFixed(0);
-    scrollPercentRef.current = Number.isNaN(scrollPercent) ? 0 : scrollPercent
+  React.useEffect(() => {
+    // 화면 로드 시 스크롤 퍼센트 계산.
+    const scrollPercentCalc = ((+currentScrollValue / +currentScrollLimit) * 100).toFixed(0);
+    const scrollPercentResult = typeof (scrollPercentCalc) !== 'number' ? 0 : scrollPercentCalc;
+    scrollPercentRef.current = scrollPercentResult;
   }, [currentScrollLimit, currentScrollValue]);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    // 화면 로드 시 url에 따라 스크롤 퍼센트의 랜더 여부 변경.
     if (location.pathname === '/' || location.pathname === '/about' || (location.pathname === '/footprint' && isMobile)) {
       setPercentView(true);
     } else {
@@ -34,7 +41,7 @@ const ScrollValueAnimation = () => {
   }, [currentGnbState, location]);
 
   return (
-    percentView && <div className='scroll-percent'>{scrollPercentRef.current + '%'}</div>
+    percentView ? <div className='scroll-percent'>{scrollPercentRef.current + '%'}</div> : null
   );
 };
 
