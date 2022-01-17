@@ -79,8 +79,8 @@
     },
     {
       "number": 12,
-      "id": "stroybook",
-      "name": "Stroybook",
+      "id": "storoybook",
+      "name": "Storybook",
       "workmanship": 4,
       "summary": "삼성의 차세대 Knox Portal 프로젝트에서 공통 컴포넌트를 개발하며 다른 개발팀에 사용법을 공유하기 위해 개발하였습니다. 라이브러리 개발에는 적합한 도구입니다."
     }

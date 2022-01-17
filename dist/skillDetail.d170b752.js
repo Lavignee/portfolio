@@ -569,6 +569,7 @@ var _smoothScrollbar = require("smooth-scrollbar");
 var _smoothScrollbarDefault = parcelHelpers.interopDefault(_smoothScrollbar);
 var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
+// react-router-dom으로 화면 호출.
 const empty = [
     {
         number: 0,
@@ -579,7 +580,7 @@ const empty = [
         svg: ''
     }, 
 ];
-const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
+const SkillDetail = ({ onHover , onLeave  })=>{
     _s();
     // redux dispatch 정의.
     const dispatch = _reactRedux.useDispatch();
@@ -594,147 +595,126 @@ const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
     , _reactRedux.shallowEqual);
     // react-router-dom으로 url 확인.
     let location = _reactRouterDom.useLocation();
-    const list = location.pathname;
+    let navigate = _reactRouterDom.useNavigate();
     const lists = _react.useRef([]);
     const scrollPosition = _react.useRef(null);
     const [currentSkillScroller, setCurrentSkillScroller] = _react.useState(null);
-    const [currentList, setCurrentList] = _react.useState(list);
+    const [currentList, setCurrentList] = _react.useState(location.pathname);
     const [listHoverMotion, setListHoverMotion] = _react.useState('');
     const [currentTarget, setCurrentTarget] = _react.useState(0);
     const [opacity, setOpacity] = _react.useState('');
-    // 
+    // 스무스 스크롤 재생성.
     const makeSmoothScrollbarforSkill = _react.useCallback(()=>{
-        const scroller = scrollPosition.current;
         let skillScrollBar;
-        if (_reactDeviceDetect.isDesktop) skillScrollBar = _smoothScrollbarDefault.default.init(scroller, {
+        // 기기에 따라 다른 스크롤 딜레이 적용.
+        if (_reactDeviceDetect.isDesktop) skillScrollBar = _smoothScrollbarDefault.default.init(scrollPosition.current, {
             damping: 0.02,
             alwaysShowTracks: true
         });
-        else skillScrollBar = _smoothScrollbarDefault.default.init(scroller, {
+        else skillScrollBar = _smoothScrollbarDefault.default.init(scrollPosition.current, {
             damping: 0.1,
             alwaysShowTracks: true
         });
-        setCurrentSkillScroller(skillScrollBar);
-        _scrollTrigger.ScrollTrigger.scrollerProxy(scroller, {
+        // 새로운 스크롤 생성 시 위치 초기화.(재랜더가 아니므로 이전 위치로 인한 오류 방지.)
+        skillScrollBar.setPosition(0, 0);
+        //GSAP 스크롤 트리거에 스무스 스크롤의 스크롤 값 동기화.
+        _scrollTrigger.ScrollTrigger.scrollerProxy(scrollPosition.current, {
             scrollTop (value) {
                 if (arguments.length) skillScrollBar.scrollTop = value;
                 return skillScrollBar.scrollTop;
             }
         });
         _scrollTrigger.ScrollTrigger.defaults({
-            scroller: scroller
+            scroller: scrollPosition.current
         });
         skillScrollBar.addListener(_scrollTrigger.ScrollTrigger.update);
+        // 다른 함수에서도 스크롤 컨트롤을 위해 state에 지정.
+        setCurrentSkillScroller(skillScrollBar);
+        // GSAP의 사용 준비 완료.
         gsapReady(true);
-    }, [
-        gsapReady
-    ]);
+    }, []);
+    // skill 세부 목록에 마우스 오버 시,
     const listHover = (number)=>{
+        // 커서 형태 변경.
         onHover(' focus-cursor');
+        // 마우스 오버 된 컨텐츠의 위치(위, 아래)에 따라 애니메이션 동작.
         if (currentTarget + 1 > number) setListHoverMotion('top');
         else if (currentTarget + 1 < number) setListHoverMotion('bottom');
     };
+    // skill 세부 목록에서 마우스 벗어날 시,
     const onListLeave = _react.useCallback(()=>{
+        // 커서 형태 초기화.
         onLeave();
+        // 마우스 오버 애니메이션 제거.
         setListHoverMotion('');
-    }, [
-        onLeave
-    ]);
-    const changeList = async (e)=>{
-        if (e.target.dataset.list !== currentList) {
-            const skillLocation = '/skill/' + e.target.dataset.list;
-            lists.current = [];
-            currentSkillScroller.setPosition(0, 0);
-            _smoothScrollbarDefault.default.destroyAll();
-            await gsapReady(false);
-            setCurrentTarget(0);
-            if (_reactDeviceDetect.isDesktop) {
-                await pageTimer(skillLocation, 0);
-                makeSmoothScrollbarforSkill();
-            } else {
-                await pageTimer(skillLocation, 0);
-                makeSmoothScrollbarforSkill();
-            }
-        } else currentSkillScroller.scrollTo(0, 0, 600);
+    }, []);
+    // skill 목록에 클릭 시
+    const changeList = (e)=>{
+        // 클릭 된 목록이 현재 목록인지 체크하여,
+        if (e.target.dataset.list !== currentList) // 다른 경우 해당 url로 화면 다시 호출.
+        navigate('/skill/' + e.target.dataset.list);
+        else // 같은 경우 해당 목록의 최상단으로 이동.
+        currentSkillScroller.scrollTo(0, 0, 600);
     };
+    // 클릭이 아닌 히스토리를 통한 목록 변경 시.
     const changeHistoryList = _react.useCallback(async ()=>{
+        // 기존의 skill 세부 목록을 초기화.
         lists.current = [];
-        currentSkillScroller?.setPosition(0, 0);
+        // 기존의 스크롤 데이터 삭제.
         _smoothScrollbarDefault.default.destroyAll();
+        // 스크롤과 동기화 된 gsap 관련 로직 비활성화.
         await gsapReady(false);
+        // 활성화 된 skill content 초기화.
         setCurrentTarget(0);
+        // 현재 url 정보를 활성화 목록에 재정의.
         setCurrentList(location.pathname.split('/skill/')[1]);
+        // 재정의된 내용으로 스크롤 다시 생성.
         makeSmoothScrollbarforSkill();
     }, [
-        currentSkillScroller,
-        gsapReady,
-        location,
-        makeSmoothScrollbarforSkill
+        location
     ]);
+    //스크롤 트리거가 변경 된 경우.
     const changeTarget = _react.useCallback((id)=>{
+        // 스크롤 트리거가 감지한 영역 ID로 content를 변경.
         setCurrentTarget(id);
+        // content의 text를 숨김.
         setOpacity('');
-        onListLeave();
+        // 시간차를 두고 텍스트 출력.
         const opacityTimer = setTimeout(()=>{
             setOpacity('opacity');
         }, 100);
         return ()=>clearTimeout(opacityTimer)
         ;
-    }, [
-        onListLeave
-    ]);
+    }, []);
     const addToRefs = (el)=>{
         if (el && !lists.current.includes(el) && currentGsapState) lists.current.push(el);
     };
+    // 중앙에 위치한 skill 세부 목록 영역에 스크롤 트리거 적용.
     const listScroller = _react.useCallback(()=>{
         lists.current.forEach((el, index)=>{
-            _gsap.gsap.to(el, {
-                scrollTrigger: {
-                    id: `list-prev-${index + 1}`,
-                    trigger: el,
-                    scroller: '.skill-list',
-                    start: 'top+=100% center',
-                    toggleClass: {
-                        targets: el,
-                        className: 'prev'
-                    },
-                    end: 'bottom+=100% center'
-                }
-            });
             _gsap.gsap.to(el, {
                 scrollTrigger: {
                     id: `list-${index + 1}`,
                     trigger: el,
                     scroller: '.skill-list',
                     start: 'top center',
+                    // 활성화 클래스를 토글.
                     toggleClass: {
                         targets: el,
                         className: 'active'
                     },
+                    // 아래에서 부터 영역 들어올 시 활성화 대상을 전달.
                     onEnter: ()=>changeTarget(index)
                     ,
+                    // 위에서 부터 영역 들어올 시 활성화 대상을 전달.
                     onEnterBack: ()=>changeTarget(index)
                     ,
                     end: 'bottom center'
                 }
             });
-            _gsap.gsap.to(el, {
-                scrollTrigger: {
-                    id: `list-next-${index + 1}`,
-                    trigger: el,
-                    scroller: '.skill-list',
-                    start: 'top-=100% center',
-                    toggleClass: {
-                        targets: el,
-                        className: 'next'
-                    },
-                    end: 'bottom-=100% center'
-                }
-            });
         });
-    }, [
-        changeTarget
-    ]);
+    }, []);
+    // 스크롤 트리거와 연동된 skew 애니메이션 적용.
     const scrollSkew = ()=>{
         let proxy = {
             skew: 0
@@ -756,14 +736,23 @@ const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
             }
         });
     };
+    // skill 세부 목록을 클릭 시,
     const clickList = (target)=>{
+        // skill 세부 목록의 중앙 영역을 계산.
         const listHeight = scrollPosition.current.clientHeight / 3;
+        // skill 세부 목록의 중앙 영역으로 스크롤 이동.
         currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
     };
-    const workmanships = (level)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: `levels level-${level} ${opacity}`
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null)));
+    const SkillList = (targetUrl, text)=>{
+        return(/*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
+            className: currentList === targetUrl ? 'active' : '',
+            onClick: (e)=>changeList(e)
+            ,
+            onMouseEnter: ()=>onHover(' focus-cursor')
+            ,
+            onMouseLeave: onListLeave,
+            "data-list": targetUrl
+        }, text)));
     };
     const contents = (target, contentKind)=>{
         let content1;
@@ -797,7 +786,9 @@ const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
             className: 'pagenation'
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, currentTarget + 1), "/", /*#__PURE__*/ _reactDefault.default.createElement("span", null, content1.length)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'content'
-        }, /*#__PURE__*/ _reactDefault.default.createElement("div", null, workmanships(content1[currentTarget].workmanship), /*#__PURE__*/ _reactDefault.default.createElement("h2", {
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: `levels level-${content1[currentTarget].workmanship} ${opacity}`
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null), /*#__PURE__*/ _reactDefault.default.createElement("span", null)), /*#__PURE__*/ _reactDefault.default.createElement("h2", {
             className: opacity
         }, content1[currentTarget].name)), /*#__PURE__*/ _reactDefault.default.createElement("p", {
             className: `${opacity}${content1[currentTarget].workmanship}`
@@ -811,8 +802,8 @@ const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
         makeSmoothScrollbarforSkill();
         return ()=>{
             let triggers = _scrollTrigger.ScrollTrigger.getAll();
-            triggers.forEach((trigger)=>{
-                trigger.kill();
+            triggers.forEach((item)=>{
+                item.kill();
             });
             onLeave();
         };
@@ -828,14 +819,11 @@ const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
         }
     }, [
         currentGsapState,
-        currentList,
-        listScroller
+        currentList
     ]);
     _react.useEffect(()=>{
-        setOpacity('');
         if (location.pathname.split('/skill/')[1] !== currentList) changeHistoryList();
     }, [
-        changeHistoryList,
         currentList,
         location
     ]);
@@ -894,11 +882,12 @@ const SkillDetail = ({ onHover , onLeave , pageTimer  })=>{
         className: 'skill-detail-content'
     }, contents(currentList, 'detail')))))));
 };
-_s(SkillDetail, "+czfswPfK7llEI99zyaz2aHyMbM=", false, function() {
+_s(SkillDetail, "UqhoOuKHZJ4Ps3coqYCzzZlHuqw=", false, function() {
     return [
         _reactRedux.useDispatch,
         _reactRedux.useSelector,
-        _reactRouterDom.useLocation
+        _reactRouterDom.useLocation,
+        _reactRouterDom.useNavigate
     ];
 });
 _c = SkillDetail;
@@ -915,7 +904,7 @@ $RefreshReg$(_c, "SkillDetail");
 module.exports = JSON.parse("{\"language\":[{\"number\":1,\"id\":\"html\",\"name\":\"HTML\",\"workmanship\":5,\"summary\":\"대부분 목적에 맞는 올바른 태그를 사용하고 있습니다. 스크린리더의 적용 여부에 따라 더 까다롭게 신경 써 볼 수 있겠지만 현재는 웹 표준과 가이드가 너무 잘 나와 있기 때문에 완전히 자유롭고 다양하게 사용할 수 있습니다\"},{\"number\":2,\"id\":\"css\",\"name\":\"CSS\",\"workmanship\":4,\"summary\":\"대부분의 style 종류와 우선순위, 상관관계를 파악하고 있습니다. 이전에는 'Internet Explorer 8~9' 까지 Cross Browsing 하는 개발 조건을 많이 겪어 보기도 했습니다. 3D Animation을 곧바로 작성하는 수준까지는 경험이 더 필요할 것 같습니다.\"},{\"number\":3,\"id\":\"javascript\",\"name\":\"JavaScript\",\"workmanship\":4,\"summary\":\"MDN을 통째로 외우는 수준은 멀었지만, 언어 사용에 제한은 없는 수준입니다.\"}]}");
 
 },{}],"hlmSY":[function(require,module,exports) {
-module.exports = JSON.parse("{\"lib\":[{\"number\":1,\"id\":\"react\",\"name\":\"React\",\"workmanship\":4,\"summary\":\"Class 기반일 때부터 React를 익히고 있었지만, 실무에서 사용해볼 기회가 없었습니다. 커스터디 프로젝트에서 Hooks를 주로 사용하며 실무를 겪어보았고, 이번 포트폴리오는 Hooks 기반으로 제작하였습니다. 초기부터 지금까지 React에 변화가 많아 학습 시에 혼란이 많았지만 개발 및 설계는 이제 익숙합니다.\"},{\"number\":2,\"id\":\"redux\",\"name\":\"Redux\",\"workmanship\":3,\"summary\":\"간단한 상태 값과 트리거등의 역할로 이번 포트폴리오부터 사용하였습니다. 다양한 미들웨어들과 효율적인 사용은 경험이 더 필요할 것 같습니다.\"},{\"number\":3,\"id\":\"webpack\",\"name\":\"Webpack\",\"workmanship\":3,\"summary\":\"React를 처음 익히면서 Webpack을 배우게 되었습니다. 최근에는 개인 프로젝트를 진행하기 위해 webpack 5를 직접 세팅하여 사용해 보았습니다.\"},{\"number\":4,\"id\":\"parcel\",\"name\":\"Parcel\",\"workmanship\":4,\"summary\":\"이번 포트폴리오 개발에 사용한 번들러입니다. Webpack과 비교하여 Learning curve가 적고 바로 사용이 쉬우나 아직 관련 정보나 사례가 좀 적다는 단점을 겪었습니다.\"},{\"number\":5,\"id\":\"sass\",\"name\":\"SASS(SCSS)\",\"workmanship\":5,\"summary\":\"CSS보다 작성에서 오는 피로도가 적고 약간의 함수나 변수 사용이 꽤 편리합니다. 다루는데 큰 이해가 필요하진 않습니다.\"},{\"number\":6,\"id\":\"gsap\",\"name\":\"GSAP\",\"workmanship\":4,\"summary\":\"순수 CSS로 작성해서 만들어지는 애니메이션보다 시각적, 성능적으로 월등한 동적 효과를 표현할 수 있습니다. 유료 버전은 다뤄보지 않았지만 대부분의 기능이 무료이며, 응용에 무리가 없다고 생각합니다.\"},{\"number\":7,\"id\":\"i18next\",\"name\":\"I18next\",\"workmanship\":5,\"summary\":\"html이나 Javascript 환경, 서버에서 오는 텍스트 등 다양한 번역을 개발해보았습니다.\"},{\"number\":8,\"id\":\"jquery\",\"name\":\"Jquery\",\"workmanship\":4,\"summary\":\"Javascript를 처음 익힐 때 JQuery는 Learning curve를 줄여주는 좋은 도구였습니다. 사용하지 않은지 오래되긴 했지만 여전히 다루는 데는 문제가 없을 것 같습니다.\"},{\"number\":9,\"id\":\"bootstrap\",\"name\":\"Bootstrap\",\"workmanship\":5,\"summary\":\"반응형 사이트를 처음 접하고 개발할 당시 자주 사용하였던 프레임워크입니다, 현재도 BreakPoint 등을 참고하고, Grid 커스텀에도 응용하여 사용합니다.\"},{\"number\":10,\"id\":\"materialui\",\"name\":\"Material-UI\",\"workmanship\":4,\"summary\":\"커스터디 프로젝트에서 접하게 되었습니다. Bootstrap처럼 React에서 사용되는 프레임워크로 사용이나 커스텀의 방식도 꽤 익숙했다고 생각합니다.\"},{\"number\":11,\"id\":\"axios\",\"name\":\"Axios\",\"workmanship\":3,\"summary\":\"개인 프로젝트에서 주로 다루어보았고, 실무에서는 깊게 사용해볼 기회는 아직 없었습니다. 익히기 쉬웠고 사용도 간편했습니다.\"},{\"number\":12,\"id\":\"stroybook\",\"name\":\"Stroybook\",\"workmanship\":4,\"summary\":\"삼성의 차세대 Knox Portal 프로젝트에서 공통 컴포넌트를 개발하며 다른 개발팀에 사용법을 공유하기 위해 개발하였습니다. 라이브러리 개발에는 적합한 도구입니다.\"}]}");
+module.exports = JSON.parse("{\"lib\":[{\"number\":1,\"id\":\"react\",\"name\":\"React\",\"workmanship\":4,\"summary\":\"Class 기반일 때부터 React를 익히고 있었지만, 실무에서 사용해볼 기회가 없었습니다. 커스터디 프로젝트에서 Hooks를 주로 사용하며 실무를 겪어보았고, 이번 포트폴리오는 Hooks 기반으로 제작하였습니다. 초기부터 지금까지 React에 변화가 많아 학습 시에 혼란이 많았지만 개발 및 설계는 이제 익숙합니다.\"},{\"number\":2,\"id\":\"redux\",\"name\":\"Redux\",\"workmanship\":3,\"summary\":\"간단한 상태 값과 트리거등의 역할로 이번 포트폴리오부터 사용하였습니다. 다양한 미들웨어들과 효율적인 사용은 경험이 더 필요할 것 같습니다.\"},{\"number\":3,\"id\":\"webpack\",\"name\":\"Webpack\",\"workmanship\":3,\"summary\":\"React를 처음 익히면서 Webpack을 배우게 되었습니다. 최근에는 개인 프로젝트를 진행하기 위해 webpack 5를 직접 세팅하여 사용해 보았습니다.\"},{\"number\":4,\"id\":\"parcel\",\"name\":\"Parcel\",\"workmanship\":4,\"summary\":\"이번 포트폴리오 개발에 사용한 번들러입니다. Webpack과 비교하여 Learning curve가 적고 바로 사용이 쉬우나 아직 관련 정보나 사례가 좀 적다는 단점을 겪었습니다.\"},{\"number\":5,\"id\":\"sass\",\"name\":\"SASS(SCSS)\",\"workmanship\":5,\"summary\":\"CSS보다 작성에서 오는 피로도가 적고 약간의 함수나 변수 사용이 꽤 편리합니다. 다루는데 큰 이해가 필요하진 않습니다.\"},{\"number\":6,\"id\":\"gsap\",\"name\":\"GSAP\",\"workmanship\":4,\"summary\":\"순수 CSS로 작성해서 만들어지는 애니메이션보다 시각적, 성능적으로 월등한 동적 효과를 표현할 수 있습니다. 유료 버전은 다뤄보지 않았지만 대부분의 기능이 무료이며, 응용에 무리가 없다고 생각합니다.\"},{\"number\":7,\"id\":\"i18next\",\"name\":\"I18next\",\"workmanship\":5,\"summary\":\"html이나 Javascript 환경, 서버에서 오는 텍스트 등 다양한 번역을 개발해보았습니다.\"},{\"number\":8,\"id\":\"jquery\",\"name\":\"Jquery\",\"workmanship\":4,\"summary\":\"Javascript를 처음 익힐 때 JQuery는 Learning curve를 줄여주는 좋은 도구였습니다. 사용하지 않은지 오래되긴 했지만 여전히 다루는 데는 문제가 없을 것 같습니다.\"},{\"number\":9,\"id\":\"bootstrap\",\"name\":\"Bootstrap\",\"workmanship\":5,\"summary\":\"반응형 사이트를 처음 접하고 개발할 당시 자주 사용하였던 프레임워크입니다, 현재도 BreakPoint 등을 참고하고, Grid 커스텀에도 응용하여 사용합니다.\"},{\"number\":10,\"id\":\"materialui\",\"name\":\"Material-UI\",\"workmanship\":4,\"summary\":\"커스터디 프로젝트에서 접하게 되었습니다. Bootstrap처럼 React에서 사용되는 프레임워크로 사용이나 커스텀의 방식도 꽤 익숙했다고 생각합니다.\"},{\"number\":11,\"id\":\"axios\",\"name\":\"Axios\",\"workmanship\":3,\"summary\":\"개인 프로젝트에서 주로 다루어보았고, 실무에서는 깊게 사용해볼 기회는 아직 없었습니다. 익히기 쉬웠고 사용도 간편했습니다.\"},{\"number\":12,\"id\":\"storoybook\",\"name\":\"Storybook\",\"workmanship\":4,\"summary\":\"삼성의 차세대 Knox Portal 프로젝트에서 공통 컴포넌트를 개발하며 다른 개발팀에 사용법을 공유하기 위해 개발하였습니다. 라이브러리 개발에는 적합한 도구입니다.\"}]}");
 
 },{}],"9Dsg3":[function(require,module,exports) {
 module.exports = JSON.parse("{\"tool\":[{\"number\":1,\"id\":\"git\",\"name\":\"Git\",\"workmanship\":4,\"summary\":\"개발자에게는 필수이고 당연히, 또 오랜 시간 사용하고 있지만 터미널에서 cli로 써본 적은 별로 없는 것 같습니다.\"},{\"number\":2,\"id\":\"github\",\"name\":\"Github\",\"workmanship\":4,\"summary\":\"대표적인 서비스지만 공개적인 형태라는 점에서 사용빈도가 낮았습니다. 이번 포트폴리오 프로젝트부터는 Github를 사용하려고 합니다.\"},{\"number\":3,\"id\":\"bitbucket\",\"name\":\"Bitbucket\",\"workmanship\":4,\"summary\":\"대부분의 Git 관련 프로젝트들이 직장과 관계되어 있고 소규모 팀에서 무료 Private 프로젝트를 만들 수 있었으므로 가장 많이 사용했습니다.\"},{\"number\":4,\"id\":\"sourcetree\",\"name\":\"Sourcetree\",\"workmanship\":3,\"summary\":\"GUI가 한눈에 들어오기도 하고 Bitbucket을 오래 사용하였기에 지금까지 사용하고 있는 Git 형상관리 툴입니다. 기능이 많지만 느리고 버그가 좀 잦다는 단점이 있습니다.\"},{\"number\":5,\"id\":\"jira\",\"name\":\"Jira\",\"workmanship\":4,\"summary\":\"처음부터 끝까지 세팅해본적은 없지만, 멤버로서 사용에는 아주 익숙합니다. 삼성에서 PL의 역할로써 사용해보기도 했습니다.\"},{\"number\":6,\"id\":\"figma\",\"name\":\"Figma\",\"workmanship\":4,\"summary\":\"예전 초기 프로젝트에서 PSD나 AI를 받아서 작업할 때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. \"},{\"number\":7,\"id\":\"zeplin\",\"name\":\"Zeplin\",\"workmanship\":4,\"summary\":\"예전 초기 프로젝트에서 PSD나 AI를 받아서 작업할 때와 삼성 Knox포털 작업 시 기획서의 대용으로 사용하였습니다.\"},{\"number\":8,\"id\":\"netlify\",\"name\":\"Netlify\",\"workmanship\":3,\"summary\":\"이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드는 에러가 많아, 빌드는 local에서 진행하고 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.\"},{\"number\":9,\"id\":\"lighthouse\",\"name\":\"Lighthouse\",\"workmanship\":3,\"summary\":\"이번 포트폴리오를 개발하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용이 편했습니다.\"}]}");
