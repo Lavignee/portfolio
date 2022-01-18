@@ -569,17 +569,6 @@ var _smoothScrollbar = require("smooth-scrollbar");
 var _smoothScrollbarDefault = parcelHelpers.interopDefault(_smoothScrollbar);
 var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
-// react-router-dom으로 화면 호출.
-const empty = [
-    {
-        number: 0,
-        id: '',
-        name: '',
-        workmanship: 0,
-        summary: '',
-        svg: ''
-    }, 
-];
 const SkillDetail = ({ onHover , onLeave  })=>{
     _s();
     // redux dispatch 정의.
@@ -599,7 +588,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
     const lists = _react.useRef([]);
     const scrollPosition = _react.useRef(null);
     const [currentSkillScroller, setCurrentSkillScroller] = _react.useState(null);
-    const [currentList, setCurrentList] = _react.useState(location.pathname);
+    const [currentUrl, setCurrentUrl] = _react.useState(location.pathname.split('/skill/')[1]);
     const [listHoverMotion, setListHoverMotion] = _react.useState('');
     const [currentTarget, setCurrentTarget] = _react.useState(0);
     const [opacity, setOpacity] = _react.useState('');
@@ -632,7 +621,9 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         setCurrentSkillScroller(skillScrollBar);
         // GSAP의 사용 준비 완료.
         gsapReady(true);
-    }, []);
+    }, [
+        gsapReady
+    ]);
     // skill 세부 목록에 마우스 오버 시,
     const listHover = (number)=>{
         // 커서 형태 변경.
@@ -647,11 +638,13 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         onLeave();
         // 마우스 오버 애니메이션 제거.
         setListHoverMotion('');
-    }, []);
+    }, [
+        onLeave
+    ]);
     // skill 목록에 클릭 시
     const changeList = (e)=>{
         // 클릭 된 목록이 현재 목록인지 체크하여,
-        if (e.target.dataset.list !== currentList) // 다른 경우 해당 url로 화면 다시 호출.
+        if (e.target.dataset.list !== currentUrl) // 다른 경우 해당 url로 화면 다시 호출.
         navigate('/skill/' + e.target.dataset.list);
         else // 같은 경우 해당 목록의 최상단으로 이동.
         currentSkillScroller.scrollTo(0, 0, 600);
@@ -667,11 +660,13 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         // 활성화 된 skill content 초기화.
         setCurrentTarget(0);
         // 현재 url 정보를 활성화 목록에 재정의.
-        setCurrentList(location.pathname.split('/skill/')[1]);
+        setCurrentUrl(location.pathname.split('/skill/')[1]);
         // 재정의된 내용으로 스크롤 다시 생성.
         makeSmoothScrollbarforSkill();
     }, [
-        location
+        gsapReady,
+        location.pathname,
+        makeSmoothScrollbarforSkill
     ]);
     //스크롤 트리거가 변경 된 경우.
     const changeTarget = _react.useCallback((id)=>{
@@ -713,7 +708,9 @@ const SkillDetail = ({ onHover , onLeave  })=>{
                 }
             });
         });
-    }, []);
+    }, [
+        changeTarget
+    ]);
     // 스크롤 트리거와 연동된 skew 애니메이션 적용.
     const scrollSkew = ()=>{
         let proxy = {
@@ -743,9 +740,9 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         // skill 세부 목록의 중앙 영역으로 스크롤 이동.
         currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
     };
-    const SkillList = (targetUrl, text)=>{
+    const SkillList = ({ targetUrl , text  })=>{
         return(/*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
-            className: currentList === targetUrl ? 'active' : '',
+            className: currentUrl === targetUrl ? 'active' : '',
             onClick: (e)=>changeList(e)
             ,
             onMouseEnter: ()=>onHover(' focus-cursor')
@@ -754,18 +751,26 @@ const SkillDetail = ({ onHover , onLeave  })=>{
             "data-list": targetUrl
         }, text)));
     };
-    const contents = (target, contentKind)=>{
+    const contents = (contentKind)=>{
         let content1;
         let svgs = Object.entries(_iconSvgJsonDefault.default);
         let svgContent = new Map();
         svgs.forEach((item)=>{
             svgContent.set(item[0], item[1]);
         });
-        if (target === 'language') content1 = _languageSkillJsonDefault.default.language;
-        else if (target === 'lib') content1 = _libSkillJsonDefault.default.lib;
-        else if (target === 'tool') content1 = _toolSkillJsonDefault.default.tool;
-        else if (target === 'interest') content1 = _interestSkillJsonDefault.default.interest;
-        else content1 = empty;
+        if (currentUrl === 'language') content1 = _languageSkillJsonDefault.default.language;
+        else if (currentUrl === 'lib') content1 = _libSkillJsonDefault.default.lib;
+        else if (currentUrl === 'tool') content1 = _toolSkillJsonDefault.default.tool;
+        else if (currentUrl === 'interest') content1 = _interestSkillJsonDefault.default.interest;
+        else content1 = [
+            {
+                number: 0,
+                id: '',
+                name: '',
+                workmanship: 0,
+                summary: ''
+            }
+        ];
         return contentKind === 'list' ? content1.map((content)=>/*#__PURE__*/ _reactDefault.default.createElement("li", {
                 key: content.number,
                 className: 'list col-4 col-l-3 pl-pr-none',
@@ -819,13 +824,15 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         }
     }, [
         currentGsapState,
-        currentList
+        currentUrl,
+        listScroller
     ]);
     _react.useEffect(()=>{
-        if (location.pathname.split('/skill/')[1] !== currentList) changeHistoryList();
+        if (location.pathname.split('/skill/')[1] !== currentUrl) changeHistoryList();
     }, [
-        currentList,
-        location
+        changeHistoryList,
+        currentUrl,
+        location.pathname
     ]);
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'skill-detail'
@@ -833,39 +840,19 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         className: 'container fluid pl-pr-none'
     }, /*#__PURE__*/ _reactDefault.default.createElement("ul", {
         className: 'skill-tab'
-    }, /*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
-        className: currentList === 'language' ? 'active' : '',
-        onClick: (e)=>changeList(e)
-        ,
-        onMouseEnter: ()=>onHover(' focus-cursor')
-        ,
-        onMouseLeave: onListLeave,
-        "data-list": 'language'
-    }, "\uC5B8 \uC5B4")), /*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
-        className: currentList === 'lib' ? 'active' : '',
-        onClick: (e)=>changeList(e)
-        ,
-        onMouseEnter: ()=>onHover(' focus-cursor')
-        ,
-        onMouseLeave: onListLeave,
-        "data-list": 'lib'
-    }, "\uD504\uB808\uC784\uC6CC\uD06C&\uB77C\uC774\uBE0C\uB7EC\uB9AC")), /*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
-        className: currentList === 'tool' ? 'active' : '',
-        onClick: (e)=>changeList(e)
-        ,
-        onMouseEnter: ()=>onHover(' focus-cursor')
-        ,
-        onMouseLeave: onListLeave,
-        "data-list": 'tool'
-    }, "\uAC1C\uBC1C \uB3C4\uAD6C")), /*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
-        className: currentList === 'interest' ? 'active' : '',
-        onClick: (e)=>changeList(e)
-        ,
-        onMouseEnter: ()=>onHover(' focus-cursor')
-        ,
-        onMouseLeave: onListLeave,
-        "data-list": 'interest'
-    }, "\uCD5C\uADFC \uAD00\uC2EC \uAE30\uC220"))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }, /*#__PURE__*/ _reactDefault.default.createElement(SkillList, {
+        targetUrl: 'language',
+        text: '\uC5B8\uC5B4'
+    }), /*#__PURE__*/ _reactDefault.default.createElement(SkillList, {
+        targetUrl: 'lib',
+        text: '\uD504\uB808\uC784\uC6CC\uD06C&\uB77C\uC774\uBE0C\uB7EC\uB9AC'
+    }), /*#__PURE__*/ _reactDefault.default.createElement(SkillList, {
+        targetUrl: 'tool',
+        text: '\uAC1C\uBC1C \uB3C4\uAD6C'
+    }), /*#__PURE__*/ _reactDefault.default.createElement(SkillList, {
+        targetUrl: 'interest',
+        text: '\uCD5C\uADFC \uAD00\uC2EC \uAE30\uC220'
+    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'row content-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'col-12 pl-pr-none skill-list-frame'
@@ -874,15 +861,15 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         ref: scrollPosition
     }, /*#__PURE__*/ _reactDefault.default.createElement("li", {
         className: 'default-list col-4 col-l-3'
-    }), contents(currentList, 'list'), /*#__PURE__*/ _reactDefault.default.createElement("li", {
+    }), contents('list'), /*#__PURE__*/ _reactDefault.default.createElement("li", {
         className: 'default-list col-4 col-l-3'
     }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'col-8 off-4 col-l-9 off-l-3 pl-pr-none skill-detail-content-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'skill-detail-content'
-    }, contents(currentList, 'detail')))))));
+    }, contents('detail')))))));
 };
-_s(SkillDetail, "UqhoOuKHZJ4Ps3coqYCzzZlHuqw=", false, function() {
+_s(SkillDetail, "YWKsOicxSpJRZNYFBzy5KkDjhbE=", false, function() {
     return [
         _reactRedux.useDispatch,
         _reactRedux.useSelector,

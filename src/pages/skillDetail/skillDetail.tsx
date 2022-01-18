@@ -19,12 +19,6 @@ import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// react-router-dom으로 화면 호출.
-
-const empty = [
-  { number: 0, id: '', name: '', workmanship: 0, summary: '', svg: '' },
-];
-
 // Props로 받는 이벤트들에 대한 type 정의
 type SkillDetailProps = {
   onHover: (hoverCursor: string, hoverText?: string | null) => void;
@@ -47,7 +41,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   const scrollPosition = useRef<any>(null);
 
   const [currentSkillScroller, setCurrentSkillScroller] = useState<any>(null);
-  const [currentList, setCurrentList] = useState(location.pathname);
+  const [currentUrl, setCurrentUrl] = useState(location.pathname.split('/skill/')[1]);
   const [listHoverMotion, setListHoverMotion] = useState('');
   const [currentTarget, setCurrentTarget] = useState(0);
   const [opacity, setOpacity] = useState('');
@@ -88,7 +82,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
 
     // GSAP의 사용 준비 완료.
     gsapReady(true);
-  }, []);
+  }, [gsapReady]);
 
   // skill 세부 목록에 마우스 오버 시,
   const listHover = (number: number) => {
@@ -108,12 +102,12 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     onLeave();
     // 마우스 오버 애니메이션 제거.
     setListHoverMotion('');
-  }, []);
+  }, [onLeave]);
 
   // skill 목록에 클릭 시
   const changeList = (e: any) => {
     // 클릭 된 목록이 현재 목록인지 체크하여,
-    if (e.target.dataset.list !== currentList) {
+    if (e.target.dataset.list !== currentUrl) {
       // 다른 경우 해당 url로 화면 다시 호출.
       navigate('/skill/' + e.target.dataset.list);
     } else {
@@ -133,10 +127,10 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     // 활성화 된 skill content 초기화.
     setCurrentTarget(0);
     // 현재 url 정보를 활성화 목록에 재정의.
-    setCurrentList(location.pathname.split('/skill/')[1]);
+    setCurrentUrl(location.pathname.split('/skill/')[1]);
     // 재정의된 내용으로 스크롤 다시 생성.
     makeSmoothScrollbarforSkill();
-  }, [location]);
+  }, [gsapReady, location.pathname, makeSmoothScrollbarforSkill]);
 
   //스크롤 트리거가 변경 된 경우.
   const changeTarget = useCallback(
@@ -180,7 +174,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
         },
       });
     });
-  }, []);
+  }, [changeTarget]);
 
   // 스크롤 트리거와 연동된 skew 애니메이션 적용.
   const scrollSkew = () => {
@@ -215,11 +209,16 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
   };
 
-  const SkillList = (targetUrl: string, text: string) => {
+  type SkillListProps = {
+    targetUrl: string;
+    text: string;
+  }
+
+  const SkillList = ({ targetUrl, text }: SkillListProps) => {
     return (
       <li>
         <button
-          className={currentList === targetUrl ? 'active' : ''}
+          className={currentUrl === targetUrl ? 'active' : ''}
           onClick={(e) => changeList(e)}
           onMouseEnter={() => onHover(' focus-cursor')}
           onMouseLeave={onListLeave}
@@ -230,7 +229,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     )
   }
 
-  const contents = (target: string, contentKind: string) => {
+  const contents = (contentKind: string) => {
     let content;
     let svgs = Object.entries(svg)
     let svgContent = new Map();
@@ -238,16 +237,16 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
       svgContent.set(item[0], item[1])
     });
 
-    if (target === 'language') {
+    if (currentUrl === 'language') {
       content = language.language;
-    } else if (target === 'lib') {
+    } else if (currentUrl === 'lib') {
       content = lib.lib;
-    } else if (target === 'tool') {
+    } else if (currentUrl === 'tool') {
       content = tool.tool;
-    } else if (target === 'interest') {
+    } else if (currentUrl === 'interest') {
       content = interest.interest;
     } else {
-      content = empty;
+      content = [{ number: 0, id: '', name: '', workmanship: 0, summary: '' }];
     }
     return contentKind === 'list' ? (
       content.map((content) => (
@@ -314,73 +313,36 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
       listScroller();
       scrollSkew();
     }
-  }, [currentGsapState, currentList]);
+  }, [currentGsapState, currentUrl, listScroller]);
 
   useEffect(() => {
-    if (location.pathname.split('/skill/')[1] !== currentList) {
+    if (location.pathname.split('/skill/')[1] !== currentUrl) {
       changeHistoryList();
     }
-  }, [currentList, location]);
+  }, [changeHistoryList, currentUrl, location.pathname]);
 
   return (
     <div className='skill-detail'>
       <div className='container fluid pl-pr-none'>
         <ul className='skill-tab'>
-          <li>
-            <button
-              className={currentList === 'language' ? 'active' : ''}
-              onClick={(e) => changeList(e)}
-              onMouseEnter={() => onHover(' focus-cursor')}
-              onMouseLeave={onListLeave}
-              data-list='language'>
-              언 어
-            </button>
-          </li>
-          {/* <SkillList targetUrl='language' text='언어' /> */}
-          <li>
-            <button
-              className={currentList === 'lib' ? 'active' : ''}
-              onClick={(e) => changeList(e)}
-              onMouseEnter={() => onHover(' focus-cursor')}
-              onMouseLeave={onListLeave}
-              data-list='lib'>
-              프레임워크&라이브러리
-            </button>
-          </li>
-          <li>
-            <button
-              className={currentList === 'tool' ? 'active' : ''}
-              onClick={(e) => changeList(e)}
-              onMouseEnter={() => onHover(' focus-cursor')}
-              onMouseLeave={onListLeave}
-              data-list='tool'>
-              개발 도구
-            </button>
-          </li>
-          <li>
-            <button
-              className={currentList === 'interest' ? 'active' : ''}
-              onClick={(e) => changeList(e)}
-              onMouseEnter={() => onHover(' focus-cursor')}
-              onMouseLeave={onListLeave}
-              data-list='interest'>
-              최근 관심 기술
-            </button>
-          </li>
+          <SkillList targetUrl='language' text='언어' />
+          <SkillList targetUrl='lib' text='프레임워크&라이브러리' />
+          <SkillList targetUrl='tool' text='개발 도구' />
+          <SkillList targetUrl='interest' text='최근 관심 기술' />
         </ul>
 
         <div className='row content-frame'>
           <div className='col-12 pl-pr-none skill-list-frame'>
             <ul className='skill-list' ref={scrollPosition}>
               <li className='default-list col-4 col-l-3'></li>
-              {contents(currentList, 'list')}
+              {contents('list')}
               <li className='default-list col-4 col-l-3'></li>
             </ul>
           </div>
 
           <div className='col-8 off-4 col-l-9 off-l-3 pl-pr-none skill-detail-content-frame'>
             <div className='skill-detail-content'>
-              {contents(currentList, 'detail')}
+              {contents('detail')}
             </div>
           </div>
         </div>
