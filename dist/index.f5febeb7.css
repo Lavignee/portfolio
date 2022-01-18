@@ -2738,35 +2738,6 @@ header {
 #root::-webkit-scrollbar-track {
   opacity: 0;
 }
-.smooth-scroll-frame {
-  height: 100vh;
-}
-.smooth-scroll-frame .scroll-content {
-  will-change: transform;
-}
-.smooth-scroll-frame .scrollbar-track {
-  background-color: transparent;
-  mix-blend-mode: difference;
-}
-.smooth-scroll-frame .scrollbar-track .scrollbar-thumb {
-  mix-blend-mode: difference;
-  background-color: #1b1b1b;
-}
-.smooth-scroll-frame .scrollbar-track .scrollbar-thumb:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-color: white;
-}
 h1 {
   color: #1b1b1b;
   font-size: 8rem;
@@ -5683,6 +5654,52 @@ header .right-area .gnb-button .menu-img.invert path, .gnb-area .right-area .gnb
   to {
     text-shadow: 0 0 5px #bdbdbd, 0 0 10px #bdbdbd;
   }
+}
+.smooth-scroll-frame {
+  height: 100vh;
+}
+@media (min-width: 985px) {
+  .smooth-scroll-frame.opacity-none .scroll-content {
+    -webkit-transform: translate3d(0px, 0px, 0px) !important;
+            transform: translate3d(0px, 0px, 0px) !important;
+  }
+}
+.smooth-scroll-frame.opacity-none .scrollbar-track .scrollbar-thumb {
+  background-color: #1b1b1b;
+}
+@media (min-width: 985px) {
+  .smooth-scroll-frame.opacity-none .scrollbar-track .scrollbar-thumb {
+    display: none;
+  }
+}
+.smooth-scroll-frame.opacity-none .scrollbar-track .scrollbar-thumb:before {
+  background-color: transparent;
+}
+.smooth-scroll-frame .scroll-content {
+  will-change: transform;
+}
+.smooth-scroll-frame .scrollbar-track {
+  background-color: transparent;
+  mix-blend-mode: difference;
+}
+.smooth-scroll-frame .scrollbar-track .scrollbar-thumb {
+  mix-blend-mode: difference;
+  background-color: #1b1b1b;
+}
+.smooth-scroll-frame .scrollbar-track .scrollbar-thumb:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: white;
 }
 @-webkit-keyframes rotate {
   0% {

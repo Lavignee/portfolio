@@ -80,6 +80,7 @@ export const splitTextStart = (currentSplitText: string) => ({
   currentSplitText
 });
 
+// ReturnType으로 interface 중복없이 작성.
 type CommonAction =
   | ReturnType<typeof changeLanguage>
   | ReturnType<typeof changeContactState>
@@ -98,7 +99,8 @@ type CommonAction =
   | ReturnType<typeof changeGsapState>
   | ReturnType<typeof splitTextStart>;
 
-type CommonState = {
+// state들의 interface 정의.
+interface CommonState {
   language: string;
   currentContactState: boolean;
   currentContactButtonDelay: boolean;

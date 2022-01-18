@@ -554,6 +554,10 @@ var _swiper = require("swiper");
 var _swiperReactJs = require("swiper/react/swiper-react.js");
 var _gsap = require("gsap");
 var _scrollTrigger = require("gsap/ScrollTrigger");
+var _hashtagAboutJson = require("../../data/dataAbout/hashtagAbout.json");
+var _hashtagAboutJsonDefault = parcelHelpers.interopDefault(_hashtagAboutJson);
+var _introduceAboutJson = require("../../data/dataAbout/introduceAbout.json");
+var _introduceAboutJsonDefault = parcelHelpers.interopDefault(_introduceAboutJson);
 var _childJpg = require("../../static/images/child.jpg");
 var _childJpgDefault = parcelHelpers.interopDefault(_childJpg);
 var _shop1Jpg = require("../../static/images/shop1.jpg");
@@ -585,46 +589,6 @@ var _tooltip = require("../../components/tooltip");
 var _tooltipDefault = parcelHelpers.interopDefault(_tooltip);
 var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
-const aboutContent = [
-    {
-        id: 1,
-        title: '# 애자일',
-        text: "'정해진 대로', '늘 하던 대로' 도 좋지만 작업 간에 알게 되는 다양한 방식과 변화를 유연하게 받아들이고 빠르게 검토하여 곧바로 적용하는 편입니다.",
-        back: 'AGILE'
-    },
-    {
-        id: 2,
-        title: '# 될 때까지',
-        text: '목표가 생기고 필요하다고 생각되면, 많은 노력과 시간이 들더라도 꿋꿋이 해내어 성취감을 얻는 걸 좋아합니다. 처음의 생각과 다르게 아주 많이 어렵고, 말도 안 되더라도 말입니다.',
-        back: 'Until it works'
-    },
-    {
-        id: 3,
-        title: '# 솔직한',
-        text: '당연한데 의외로 많은 사람이 못하고 있습니다. 잘못한 걸 잘했다고, 나쁜 것 을 좋다고 하지 않습니다. 단점과 잘못을 포장하지 않습니다. 양보를 영원히 할 수는 없고, 부끄러움 없이는 나아지기 어렵다고 생각합니다.',
-        back: 'Honest'
-    }, 
-];
-const aboutSecondContent = [
-    {
-        id: 4,
-        title: '# 아이디어',
-        text: '항상 자신 있는 부분입니다. 아주 사소하고 작은 것부터 당연하다고 여기는 것까지 뻔한 것을 뻔하게 하기 싫어합니다. 남과 같이 해서는 남보다 나아질 수 없다고 생각합니다.',
-        back: 'Idea'
-    },
-    {
-        id: 5,
-        title: '# 계획적인',
-        text: '일의 순서와 계획을 논리적으로 잘 세우고, 갑작스러운 변수에 대한 대비도 잘 하는 편입니다. 메사에 침착하고 효율적일 수 있습니다.',
-        back: 'Premeditated'
-    },
-    {
-        id: 6,
-        title: '# 세심한',
-        text: '정리 정돈을 잘하며, 나의 행동과 주변 환경을 잘 인지하는 편입니다. 15세 이후 제 물건을 잃어버린 적이 없습니다. 차분하고 침착하게 생활합니다.',
-        back: 'Meticulous'
-    }, 
-];
 const textCondition = [
     {
         colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 about-first',
@@ -961,7 +925,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             index: textCondition1.index1,
             ready: splitTextReady,
             depth: true
-        }, aboutContent[idx].title)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        }, _hashtagAboutJsonDefault.default.hashtagFirst[idx].title)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'type-p'
         }, /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
             animation: 'up',
@@ -970,9 +934,9 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             index: textCondition1.index2,
             ready: splitTextReady,
             depth: true
-        }, aboutContent[idx].text)))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        }, _hashtagAboutJsonDefault.default.hashtagFirst[idx].text)))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: `back-keyword ${textCondition1.align}`
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, aboutContent[idx].back)))
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, _hashtagAboutJsonDefault.default.hashtagFirst[idx].back)))
     )), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'second-content-area'
     }, textCondition2.map((textCondition21, idx)=>/*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -984,11 +948,11 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             className: 'position-frame'
         }, /*#__PURE__*/ _reactDefault.default.createElement("h2", {
             className: 'about-tag'
-        }, aboutSecondContent[idx].title), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        }, _hashtagAboutJsonDefault.default.hashtagSecond[idx].title), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'type-p'
-        }, aboutSecondContent[idx].text))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        }, _hashtagAboutJsonDefault.default.hashtagSecond[idx].text))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: `back-keyword-second ${textCondition21.align}`
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, aboutSecondContent[idx].back)))
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, _hashtagAboutJsonDefault.default.hashtagSecond[idx].back)))
     )))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'container fluid about-background'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -1017,63 +981,59 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         className: 'first-image',
         src: _childJpgDefault.default,
         alt: 'childhood'
-    }), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uD559\uC0DD\uC2DC\uC808"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "\uCD08\uB4F1\uD559\uAD50\uBD80\uD130 \uC0AC\uC6A9\uD55C \uCEF4\uD4E8\uD130\uB294 \uC81C\uAC8C\uB294 \uB108\uBB34 \uC2E0\uAE30\uD558\uACE0 \uBC30\uC6B8 \uAC83\uC774 \uCC38 \uB9CE\uC740 \uAE30\uAE30\uC600\uC2B5\uB2C8\uB2E4. \uD559\uAD50\uC5D0\uC11C \uBC30\uC6B0\uB294 \uACF5\uBD80\uBCF4\uB2E4 \uCEF4\uD4E8\uD130\uC758 \uD0D0\uC0C9\uAE30\uB97C \uD558\uB098\uD558\uB098 \uC5F4\uC5B4\uBCF4\uACE0 \uC708\uB3C4\uC6B0\uC758 \uAE30\uB2A5\uACFC \uD0C0\uC790 \uC5F0\uC2B5, \uB2E4\uC591\uD55C \uAC8C\uC784\uB4E4\uC744 \uD574\uBCF4\uB294 \uAC8C \uAC00\uC7A5 \uD070 \uC7AC\uBBF8\uC600\uC2B5\uB2C8\uB2E4. \uC77C\uCC0D \uBC30\uC6B4 \uCEF4\uD4E8\uD130 \uD0C0\uC790\uB85C \uB2F9\uC2DC \uB300\uD559\uAD50\uC218\uC168\uB358 \uC544\uBC84\uC9C0\uC758", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '도벽@환경도예'
-    }, "\uCC45"), "\uCD9C\uAC04\uC744 \uB3D5\uAE30\uB3C4 \uD588\uC2B5\uB2C8\uB2E4. \uC774\uD6C4 \uBBF8\uC220 \uC804\uACF5\uC744 \uC900\uBE44\uD588\uC5C8\uC9C0\uB9CC, \uBCF4\uC5EC\uC8FC\uAE30\uC2DD\uC758 \uBC18\uBCF5\uC801\uC774\uACE0 \uC9C0\uB8E8\uD55C \uC785\uC2DC \uBBF8\uC220\uC774 \uC801\uC131\uC5D0 \uB9DE\uC9C0 \uC54A\uC544 \uACE0\uB4F1\uD559\uAD50\uB97C \uC878\uC5C5\uD558\uACE0 \uBC14\uB85C \uC785\uB300\uD558\uC600\uC2B5\uB2C8\uB2E4.")), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uD559\uC0DD\uC2DC\uC808"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, _introduceAboutJsonDefault.default.first)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'background-story-frame second-image-trigger'
-    }, width < 768 && growBackgroundImageSlider(growBackgroundImage2, 'shop'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC804\uC5ED \uD6C4"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "22\uC138\uC5D0 \uC804\uC5ED\uC744 \uD558\uACE0\uB294 \uB2E4\uC591\uD55C \uC77C\uC744 \uACBD\uD5D8\uD588\uC2B5\uB2C8\uB2E4. 2~30\uB300\uB85C \uC774\uB8E8\uC5B4\uC9C4", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, width < 768 && growBackgroundImageSlider(growBackgroundImage2, 'shop'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC804\uC5ED \uD6C4"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "22\uC138\uC5D0 \uC804\uC5ED\uC744 \uD558\uACE0\uB294 \uB2E4\uC591\uD55C \uC77C\uC744 \uACBD\uD5D8\uD588\uC2B5\uB2C8\uB2E4. 2~30\uB300\uB85C \uC774\uB8E8\uC5B4\uC9C4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '시스템 동바리 (prefabricated shoring system)'
-    }, "\uAC74\uC124\uD300"), "\uC5D0 \uB4E4\uC5B4\uAC00 1\uB144 \uC815\uB3C4 \uBAB8\uC744 \uC4F0\uB294 \uC77C\uB3C4 \uD574\uBCF4\uC558\uACE0, 2\uB144 \uC815\uB3C4", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uAC74\uC124\uD300"), "\uC5D0 \uB4E4\uC5B4\uAC00 1\uB144 \uC815\uB3C4 \uBAB8\uC744 \uC4F0\uB294 \uC77C\uB3C4 \uD574\uBCF4\uC558\uACE0, 2\uB144 \uC815\uB3C4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: 'LED, LCD, Clalen (콘택트 렌즈), PCI'
-    }, "\uB2E4\uC591\uD55C \uACF5\uC7A5"), "\uC5D0\uC11C OP(Operator) \uC77C\uB3C4 \uD558\uC600\uC2B5\uB2C8\uB2E4. \uC774\uD6C4 \uD559\uC0DD \uC2DC\uC808\uC5D0 PC\uBC29 \uC544\uB974\uBC14\uC774\uD2B8 \uC77C\uC774 \uC990\uAC70\uC6E0\uB358 \uAE30\uC5B5\uC774 \uC788\uC5B4", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uB2E4\uC591\uD55C \uACF5\uC7A5"), "\uC5D0\uC11C OP(Operator) \uC77C\uB3C4 \uD558\uC600\uC2B5\uB2C8\uB2E4. \uC774\uD6C4 \uD559\uC0DD \uC2DC\uC808\uC5D0 PC\uBC29 \uC544\uB974\uBC14\uC774\uD2B8 \uC77C\uC774 \uC990\uAC70\uC6E0\uB358 \uAE30\uC5B5\uC774 \uC788\uC5B4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '시즌아이(seasoni)'
-    }, "\uD504\uB79C\uCC28\uC774\uC988"), "PC\uBC29\uC5D0 \uC810\uC7A5\uC73C\uB85C \uCDE8\uC5C5\uD558\uC5EC 2\uB144\uAC04 \uC77C\uD588\uC2B5\uB2C8\uB2E4. \uD558\uB4DC\uC6E8\uC5B4\uC5D0 \uB300\uD55C \uACF5\uBD80\uB3C4 \uB9CE\uC774 \uD558\uC600\uACE0,", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uD504\uB79C\uCC28\uC774\uC988"), "PC\uBC29\uC5D0 \uC810\uC7A5\uC73C\uB85C \uCDE8\uC5C5\uD558\uC5EC 2\uB144\uAC04 \uC77C\uD588\uC2B5\uB2C8\uB2E4. \uD558\uB4DC\uC6E8\uC5B4\uC5D0 \uB300\uD55C \uACF5\uBD80\uB3C4 \uB9CE\uC774 \uD558\uC600\uACE0,", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '피카라이브 전국 비교 보고서 기준'
-    }, "\uC804\uAD6D \uB9E4\uCD9C \uC0C1\uC704 1%"), "\uC758 \uB9E4\uC7A5\uC774 \uB418\uC5B4 \uB610 \uB2E4\uB978 \uD504\uB79C\uCC28\uC774\uC988 \uAE30\uC5C5\uC5D0\uC11C \uC2A4\uCE74\uC6B0\uD2B8 \uC81C\uC758\uB97C \uBC1B\uC544", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uC804\uAD6D \uB9E4\uCD9C \uC0C1\uC704 1%"), "\uC758 \uB9E4\uC7A5\uC774 \uB418\uC5B4 \uB610 \uB2E4\uB978 \uD504\uB79C\uCC28\uC774\uC988 \uAE30\uC5C5\uC5D0\uC11C \uC2A4\uCE74\uC6B0\uD2B8 \uC81C\uC758\uB97C \uBC1B\uC544", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '오산(2), 천안, 평택'
-    }, "\uC5EC\uB7EC \uB9E4\uC7A5"), "\uC744 \uC624\uD508 \uBC0F \uAD00\uB9AC \uD558\uC600\uC2B5\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uD574\uB2F9 \uBD84\uC57C\uC5D0\uC11C \uC88B\uC740 \uC5EC\uAC74\uC5D0 \uC788\uC5C8\uC74C\uC5D0\uB3C4 \uC55E\uC73C\uB85C \uC804\uB9DD\uC774 \uBC1D\uC9C0 \uC54A\uB2E4\uB294 \uD310\uB2E8\uC5D0 \uADF8\uB9CC\uB450\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC774\uD6C4", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uC5EC\uB7EC \uB9E4\uC7A5"), "\uC744 \uC624\uD508 \uBC0F \uAD00\uB9AC \uD558\uC600\uC2B5\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uD574\uB2F9 \uBD84\uC57C\uC5D0\uC11C \uC88B\uC740 \uC5EC\uAC74\uC5D0 \uC788\uC5C8\uC74C\uC5D0\uB3C4 \uC55E\uC73C\uB85C \uC804\uB9DD\uC774 \uBC1D\uC9C0 \uC54A\uB2E4\uB294 \uD310\uB2E8\uC5D0 \uADF8\uB9CC\uB450\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC774\uD6C4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '일반기업 솔루션 쇼핑몰'
-    }, "\uC6F9 \uC0AC\uC774\uD2B8"), "\uB97C \uC6B4\uC601\uD558\uB824\uB294 \uC9C0\uC778\uC744 \uB3D5\uAC8C \uB418\uBA74\uC11C \uC6F9 \uAC1C\uBC1C\uC790\uC758 \uC601\uC5ED\uC744 \uC54C\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uB300\uBD80\uBD84 \uAD6C\uAE00\uACFC \uAC04\uB2E8\uD55C \uC11C\uC801\uC73C\uB85C \uB3C5\uD559\uD558\uC5EC \uD37C\uBE14\uB9AC\uC2F1\uC744 \uBC30\uC6B0\uACE0", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uC6F9 \uC0AC\uC774\uD2B8"), "\uB97C \uC6B4\uC601\uD558\uB824\uB294 \uC9C0\uC778\uC744 \uB3D5\uAC8C \uB418\uBA74\uC11C \uC6F9 \uAC1C\uBC1C\uC790\uC758 \uC601\uC5ED\uC744 \uC54C\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uB300\uBD80\uBD84 \uAD6C\uAE00\uACFC \uAC04\uB2E8\uD55C \uC11C\uC801\uC73C\uB85C \uB3C5\uD559\uD558\uC5EC \uD37C\uBE14\uB9AC\uC2F1\uC744 \uBC30\uC6B0\uACE0", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '본인, 디자이너, 계약담당의 3인'
     }, "\uC9C0\uC778\uB4E4\uACFC \uD300"), "\uC744 \uAFB8\uB824 \uC678\uC8FC \uC5C5\uBB34\uB97C \uBC1B\uC544\uC11C \uCC98\uB9AC\uD558\uAE30 \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4.")), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'background-story-frame third-image-trigger'
-    }, width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC6F9 \uAC1C\uBC1C\uC790 ~ \uD604\uC7AC"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "\uD568\uAED8 \uC77C\uD558\uB294 \uD300\uC740 \uC810\uC810 \uC804\uBB38\uD654\uB418\uC5B4", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC6F9 \uAC1C\uBC1C\uC790 ~ \uD604\uC7AC"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "\uD568\uAED8 \uC77C\uD558\uB294 \uD300\uC740 \uC810\uC810 \uC804\uBB38\uD654\uB418\uC5B4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '크리에이티브코드'
-    }, "\uD68C\uC0AC"), "\uAC00 \uB418\uC5C8\uACE0, \uC800\uB294 \uC124\uB9BD \uBA64\uBC84\uB85C\uC11C \uAC1C\uBC1C\uACFC \uD68C\uC0AC \uC6B4\uC601\uC744 \uD568\uAED8 \uD574\uC654\uC2B5\uB2C8\uB2E4. \uC8FC\uB2C8\uC5B4 \uAC1C\uBC1C\uC790\uC600\uC9C0\uB9CC \uAE30\uD68D\uC790\uAC00 \uB530\uB85C \uC5C6\uC5C8\uC73C\uBBC0\uB85C \uC11C\uBE44\uC2A4\uC758 \uAC1C\uBC1C\uACFC \uAC1C\uC120 \uB4F1\uC744 \uAE30\uD68D\uBD80\uD130 \uD574\uC654\uACE0, \uD68C\uC0AC\uC758", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uD68C\uC0AC"), "\uAC00 \uB418\uC5C8\uACE0, \uC800\uB294 \uC124\uB9BD \uBA64\uBC84\uB85C\uC11C \uAC1C\uBC1C\uACFC \uD68C\uC0AC \uC6B4\uC601\uC744 \uD568\uAED8 \uD574\uC654\uC2B5\uB2C8\uB2E4. \uC8FC\uB2C8\uC5B4 \uAC1C\uBC1C\uC790\uC600\uC9C0\uB9CC \uAE30\uD68D\uC790\uAC00 \uB530\uB85C \uC5C6\uC5C8\uC73C\uBBC0\uB85C \uC11C\uBE44\uC2A4\uC758 \uAC1C\uBC1C\uACFC \uAC1C\uC120 \uB4F1\uC744 \uAE30\uD68D\uBD80\uD130 \uD574\uC654\uACE0, \uD68C\uC0AC\uC758", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '채용, 면접, 휴가, 해고, 정부 혜택 처리 등'
-    }, "\uC778\uC0AC"), ",", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uC778\uC0AC"), ",", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '계약, 기획, 기능명세, 업무 조율, 수금 등'
-    }, "\uACE0\uAC1D \uC751\uB300"), ",", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uACE0\uAC1D \uC751\uB300"), ",", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '급여 계산, 부가가치세, 연말 정산'
-    }, "\uC138\uBB34"), ",", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uC138\uBB34"), ",", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '시설 및 비품 구입, PC 관리 등'
-    }, "\uAD00\uB9AC"), "\uB97C \uC804\uBD80 \uB9E1\uC544 \uCC98\uB9AC\uD558\uC600\uC2B5\uB2C8\uB2E4.", ' ', /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+    }, "\uAD00\uB9AC"), "\uB97C \uC804\uBD80 \uB9E1\uC544 \uCC98\uB9AC\uD558\uC600\uC2B5\uB2C8\uB2E4.", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
         onHover: onHover,
         onLeave: onLeave,
         info: '프론트 2명, 백엔드 1명, 디자이너 1명, 대표'
@@ -1097,7 +1057,7 @@ $RefreshReg$(_c1, "%default%");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","swiper":"eH5h9","swiper/react/swiper-react.js":"eabGd","gsap":"2aTR0","gsap/ScrollTrigger":"41HI5","../../static/images/child.jpg":"9Cba2","../../static/images/shop1.jpg":"1CZzf","../../static/images/shop2.jpg":"1qAk8","../../static/images/shop3.jpg":"gHNI4","../../static/images/shop4.jpg":"8joFQ","../../static/images/current1.jpg":"bn565","../../static/images/current2.jpg":"fXsT1","../../static/images/current3.jpg":"eCkVm","./aboutDetail.scss":"4ubFp","swiper/swiper.scss":"3GX5N","swiper/modules/navigation/navigation.scss":"30lJ4","swiper/modules/pagination/pagination.scss":"1Gpfv","swiper/modules/effect-fade/effect-fade.scss":"iNnHv","smooth-scrollbar":"jRlDB","../../utils/useWindowSize":"4Wm0y","../../components/splitText":"6C3o4","../../components/tooltip":"bIqIv","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13"}],"eH5h9":[function(require,module,exports) {
+},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","swiper":"eH5h9","swiper/react/swiper-react.js":"eabGd","gsap":"2aTR0","gsap/ScrollTrigger":"41HI5","../../static/images/child.jpg":"9Cba2","../../static/images/shop1.jpg":"1CZzf","../../static/images/shop2.jpg":"1qAk8","../../static/images/shop3.jpg":"gHNI4","../../static/images/shop4.jpg":"8joFQ","../../static/images/current1.jpg":"bn565","../../static/images/current2.jpg":"fXsT1","../../static/images/current3.jpg":"eCkVm","./aboutDetail.scss":"4ubFp","swiper/swiper.scss":"3GX5N","swiper/modules/navigation/navigation.scss":"30lJ4","swiper/modules/pagination/pagination.scss":"1Gpfv","swiper/modules/effect-fade/effect-fade.scss":"iNnHv","smooth-scrollbar":"jRlDB","../../utils/useWindowSize":"4Wm0y","../../components/splitText":"6C3o4","../../components/tooltip":"bIqIv","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13","../../data/dataAbout/hashtagAbout.json":"5EcWp","../../data/dataAbout/introduceAbout.json":"66Txa"}],"eH5h9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 /**
@@ -10474,6 +10434,12 @@ $RefreshReg$(_c, "Tooltip");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"4mchR","./tooltip.scss":"aNxmH","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13"}],"aNxmH":[function() {},{}]},["emU3S","cl2ti"], null, "parcelRequire2041")
+},{"react":"4mchR","./tooltip.scss":"aNxmH","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13"}],"aNxmH":[function() {},{}],"5EcWp":[function(require,module,exports) {
+module.exports = JSON.parse("{\"hashtagFirst\":[{\"id\":1,\"title\":\"# 애자일\",\"text\":\"'정해진 대로', '늘 하던 대로' 도 좋지만 작업 간에 알게 되는 다양한 방식과 변화를 유연하게 받아들이고 빠르게 검토하여 곧바로 적용하는 편입니다.\",\"back\":\"AGILE\"},{\"id\":2,\"title\":\"# 될 때까지\",\"text\":\"목표가 생기고 필요하다고 생각되면, 많은 노력과 시간이 들더라도 꿋꿋이 해내어 성취감을 얻는 걸 좋아합니다. 처음의 생각과 다르게 아주 많이 어렵고, 말도 안 되더라도 말입니다.\",\"back\":\"Until it works\"},{\"id\":3,\"title\":\"# 솔직한\",\"text\":\"당연한데 의외로 많은 사람이 못하고 있습니다. 잘못한 걸 잘했다고, 나쁜 것 을 좋다고 하지 않습니다. 단점과 잘못을 포장하지 않습니다. 양보를 영원히 할 수는 없고, 부끄러움 없이는 나아지기 어렵다고 생각합니다.\",\"back\":\"Honest\"}],\"hashtagSecond\":[{\"id\":4,\"title\":\"# 아이디어\",\"text\":\"항상 자신 있는 부분입니다. 아주 사소하고 작은 것부터 당연하다고 여기는 것까지 뻔한 것을 뻔하게 하기 싫어합니다. 남과 같이 해서는 남보다 나아질 수 없다고 생각합니다.\",\"back\":\"Idea\"},{\"id\":5,\"title\":\"# 계획적인\",\"text\":\"일의 순서와 계획을 논리적으로 잘 세우고, 갑작스러운 변수에 대한 대비도 잘 하는 편입니다. 메사에 침착하고 효율적일 수 있습니다.\",\"back\":\"Premeditated\"},{\"id\":6,\"title\":\"# 세심한\",\"text\":\"정리 정돈을 잘하며, 나의 행동과 주변 환경을 잘 인지하는 편입니다. 15세 이후 제 물건을 잃어버린 적이 없습니다. 차분하고 침착하게 생활합니다.\",\"back\":\"Meticulous\"}]}");
+
+},{}],"66Txa":[function(require,module,exports) {
+module.exports = JSON.parse("{\"introduce\":[{\"first\":\"초등학교부터 사용한 컴퓨터는 제게는 너무 신기하고 배울 것이 참 많은 기기였습니다. 학교에서 배우는 공부보다 컴퓨터의 탐색기를 하나하나 열어보고 윈도우의 기능과 타자 연습, 다양한 게임들을 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 당시 대학교수셨던 아버지의 $$책$$ 출간을 돕기도 했습니다. 이후 미술 전공을 준비했었지만, 보여주기식의 반복적이고 지루한 입시 미술이 적성에 맞지 않아 고등학교를 졸업하고 바로 입대하였습니다.\"}]}");
+
+},{}]},["emU3S","cl2ti"], null, "parcelRequire2041")
 
 //# sourceMappingURL=aboutDetail.7b426723.js.map

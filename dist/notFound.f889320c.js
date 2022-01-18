@@ -553,6 +553,7 @@ var _notFoundScss = require("./notFound.scss");
 var _s = $RefreshSig$();
 const NotFound = ()=>{
     _s();
+    // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
     let navigate = _reactRouterDom.useNavigate();
     let location = _reactRouterDom.useLocation();
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -570,7 +571,7 @@ _s(NotFound, "VDZHUspDq9N5O9RWjniBrjgIdAA=", false, function() {
     ];
 });
 _c = NotFound;
-exports.default = /*#__PURE__*/ _c1 = _react.memo(NotFound);
+exports.default = /*#__PURE__*/ _c1 = _reactDefault.default.memo(NotFound);
 var _c, _c1;
 $RefreshReg$(_c, "NotFound");
 $RefreshReg$(_c1, "%default%");

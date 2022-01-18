@@ -1,25 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
+import { makeSmoothScroll } from '../../Modules/commonValue';
 
 import './home.scss';
 
-import Scrollbar from 'smooth-scrollbar';
 import Main from '../../components/main';
 import About from '../../components/about';
 import Skill from '../../components/skill';
 import Footprint from '../../components/footprint';
 
-const Home = ({ onHover, onClick, onLeave }) => {
-  const dispatch = useDispatch();
-  const gsapReady = (value) => dispatch(changeGsapState(value));
-  const makeScroll = (value) => dispatch(makeSmoothScroll(value));
+// Props로 받는 이벤트들에 대한 interface 정의.
+interface HomeProps {
+  onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  onClick: (path: string, hoverText: string) => void;
+  onLeave: (hoverText?: string | null) => void;
+}
 
-  useEffect(() => {
-    Scrollbar.destroyAll();
-    gsapReady(false);
+const Home = ({ onHover, onClick, onLeave }: HomeProps) => {
+  // redux dispatch 정의.
+  const dispatch = useDispatch();
+  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
+
+  // 화면 진입 시 현재 컨텐츠를 기준으로 스크롤 재생성.
+  React.useEffect(() => {
     makeScroll(true);
-  }, []);
+  }, [makeScroll]);
 
   return (
     <div className='home-area'>

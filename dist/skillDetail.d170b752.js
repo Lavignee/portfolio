@@ -582,7 +582,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
             state.CommonValue.currentGsapState
         ]
     , _reactRedux.shallowEqual);
-    // react-router-dom으로 url 확인.
+    // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
     let location = _reactRouterDom.useLocation();
     let navigate = _reactRouterDom.useNavigate();
     const lists = _reactDefault.default.useRef([]);
@@ -815,7 +815,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         gsapReady(false);
         // 현재 컨텐츠 데이터에 맞춰 스크롤 재생성 및 스크롤 트리거 연결.
         makeSmoothScrollbarforSkill();
-        // 스크롤 트리거 및 커서 초기화.
+        // 화면 벗어날 시 스크롤 트리거 및 커서 초기화.
         return ()=>{
             let triggers = _scrollTrigger.ScrollTrigger.getAll();
             triggers.forEach((item)=>{

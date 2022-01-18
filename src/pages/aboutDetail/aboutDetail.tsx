@@ -11,6 +11,9 @@ import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import hashtag from '../../data/dataAbout/hashtagAbout.json';
+import introduce from '../../data/dataAbout/introduceAbout.json';
+
 import child from '../../static/images/child.jpg';
 import shop1 from '../../static/images/shop1.jpg';
 import shop2 from '../../static/images/shop2.jpg';
@@ -33,48 +36,6 @@ import Tooltip from '../../components/tooltip';
 import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const aboutContent = [
-  {
-    id: 1,
-    title: '# 애자일',
-    text: "'정해진 대로', '늘 하던 대로' 도 좋지만 작업 간에 알게 되는 다양한 방식과 변화를 유연하게 받아들이고 빠르게 검토하여 곧바로 적용하는 편입니다.",
-    back: 'AGILE',
-  },
-  {
-    id: 2,
-    title: '# 될 때까지',
-    text: '목표가 생기고 필요하다고 생각되면, 많은 노력과 시간이 들더라도 꿋꿋이 해내어 성취감을 얻는 걸 좋아합니다. 처음의 생각과 다르게 아주 많이 어렵고, 말도 안 되더라도 말입니다.',
-    back: 'Until it works',
-  },
-  {
-    id: 3,
-    title: '# 솔직한',
-    text: '당연한데 의외로 많은 사람이 못하고 있습니다. 잘못한 걸 잘했다고, 나쁜 것 을 좋다고 하지 않습니다. 단점과 잘못을 포장하지 않습니다. 양보를 영원히 할 수는 없고, 부끄러움 없이는 나아지기 어렵다고 생각합니다.',
-    back: 'Honest',
-  },
-];
-
-const aboutSecondContent = [
-  {
-    id: 4,
-    title: '# 아이디어',
-    text: '항상 자신 있는 부분입니다. 아주 사소하고 작은 것부터 당연하다고 여기는 것까지 뻔한 것을 뻔하게 하기 싫어합니다. 남과 같이 해서는 남보다 나아질 수 없다고 생각합니다.',
-    back: 'Idea',
-  },
-  {
-    id: 5,
-    title: '# 계획적인',
-    text: '일의 순서와 계획을 논리적으로 잘 세우고, 갑작스러운 변수에 대한 대비도 잘 하는 편입니다. 메사에 침착하고 효율적일 수 있습니다.',
-    back: 'Premeditated',
-  },
-  {
-    id: 6,
-    title: '# 세심한',
-    text: '정리 정돈을 잘하며, 나의 행동과 주변 환경을 잘 인지하는 편입니다. 15세 이후 제 물건을 잃어버린 적이 없습니다. 차분하고 침착하게 생활합니다.',
-    back: 'Meticulous',
-  },
-];
 
 const textCondition = [
   {
@@ -426,7 +387,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                         index={textCondition.index1}
                         ready={splitTextReady}
                         depth>
-                        {aboutContent[idx].title}
+                        {hashtag.hashtagFirst[idx].title}
                       </SplitText>
                     </h2>
                     <div className='type-p'>
@@ -437,13 +398,13 @@ const AboutDetail = ({ onHover, onLeave }) => {
                         index={textCondition.index2}
                         ready={splitTextReady}
                         depth>
-                        {aboutContent[idx].text}
+                        {hashtag.hashtagFirst[idx].text}
                       </SplitText>
                     </div>
                   </div>
                 </div>
                 <div className={`back-keyword ${textCondition.align}`}>
-                  <span>{aboutContent[idx].back}</span>
+                  <span>{hashtag.hashtagFirst[idx].back}</span>
                 </div>
               </div>
             ))}
@@ -455,13 +416,13 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 <div className={textCondition2.colInfo}>
                   <div className='position-frame'>
                     <h2 className='about-tag'>
-                      {aboutSecondContent[idx].title}
+                      {hashtag.hashtagSecond[idx].title}
                     </h2>
-                    <div className='type-p'>{aboutSecondContent[idx].text}</div>
+                    <div className='type-p'>{hashtag.hashtagSecond[idx].text}</div>
                   </div>
                 </div>
                 <div className={`back-keyword-second ${textCondition2.align}`}>
-                  <span>{aboutSecondContent[idx].back}</span>
+                  <span>{hashtag.hashtagSecond[idx].back}</span>
                 </div>
               </div>
             ))}
@@ -512,12 +473,12 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 />
               )}
               <h3>학생시절</h3>
-              <p>
+              {/* <p>
                 초등학교부터 사용한 컴퓨터는 제게는 너무 신기하고 배울 것이 참
                 많은 기기였습니다. 학교에서 배우는 공부보다 컴퓨터의 탐색기를
                 하나하나 열어보고 윈도우의 기능과 타자 연습, 다양한 게임들을
                 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 당시
-                대학교수셨던 아버지의{' '}
+                대학교수셨던 아버지의
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -527,6 +488,9 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 출간을 돕기도 했습니다. 이후 미술 전공을 준비했었지만,
                 보여주기식의 반복적이고 지루한 입시 미술이 적성에 맞지 않아
                 고등학교를 졸업하고 바로 입대하였습니다.
+              </p> */}
+              <p>
+                {introduce.first}
               </p>
             </div>
 
@@ -535,14 +499,14 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 growBackgroundImageSlider(growBackgroundImage2, 'shop')}
               <h3>전역 후</h3>
               <p>
-                22세에 전역을 하고는 다양한 일을 경험했습니다. 2~30대로 이루어진{' '}
+                22세에 전역을 하고는 다양한 일을 경험했습니다. 2~30대로 이루어진
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
                   info={'시스템 동바리 (prefabricated shoring system)'}>
                   건설팀
                 </Tooltip>
-                에 들어가 1년 정도 몸을 쓰는 일도 해보았고, 2년 정도{' '}
+                에 들어가 1년 정도 몸을 쓰는 일도 해보았고, 2년 정도
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -550,7 +514,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                   다양한 공장
                 </Tooltip>
                 에서 OP(Operator) 일도 하였습니다. 이후 학생 시절에 PC방
-                아르바이트 일이 즐거웠던 기억이 있어{' '}
+                아르바이트 일이 즐거웠던 기억이 있어
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -558,14 +522,14 @@ const AboutDetail = ({ onHover, onLeave }) => {
                   프랜차이즈
                 </Tooltip>
                 PC방에 점장으로 취업하여 2년간 일했습니다. 하드웨어에 대한
-                공부도 많이 하였고,{' '}
+                공부도 많이 하였고,
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
                   info={'피카라이브 전국 비교 보고서 기준'}>
                   전국 매출 상위 1%
                 </Tooltip>
-                의 매장이 되어 또 다른 프랜차이즈 기업에서 스카우트 제의를 받아{' '}
+                의 매장이 되어 또 다른 프랜차이즈 기업에서 스카우트 제의를 받아
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -574,7 +538,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 </Tooltip>
                 을 오픈 및 관리 하였습니다. 하지만 해당 분야에서 좋은 여건에
                 있었음에도 앞으로 전망이 밝지 않다는 판단에 그만두게 되었습니다.
-                이후{' '}
+                이후
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -583,7 +547,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 </Tooltip>
                 를 운영하려는 지인을 돕게 되면서 웹 개발자의 영역을 알게
                 되었습니다. 대부분 구글과 간단한 서적으로 독학하여 퍼블리싱을
-                배우고{' '}
+                배우고
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -599,7 +563,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 growBackgroundImageSlider(growBackgroundImage3, 'current')}
               <h3>웹 개발자 ~ 현재</h3>
               <p>
-                함께 일하는 팀은 점점 전문화되어{' '}
+                함께 일하는 팀은 점점 전문화되어
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
@@ -608,35 +572,35 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 </Tooltip>
                 가 되었고, 저는 설립 멤버로서 개발과 회사 운영을 함께
                 해왔습니다. 주니어 개발자였지만 기획자가 따로 없었으므로
-                서비스의 개발과 개선 등을 기획부터 해왔고, 회사의{' '}
+                서비스의 개발과 개선 등을 기획부터 해왔고, 회사의
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
                   info={'채용, 면접, 휴가, 해고, 정부 혜택 처리 등'}>
                   인사
                 </Tooltip>
-                ,{' '}
+                ,
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
                   info={'계약, 기획, 기능명세, 업무 조율, 수금 등'}>
                   고객 응대
                 </Tooltip>
-                ,{' '}
+                ,
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
                   info={'급여 계산, 부가가치세, 연말 정산'}>
                   세무
                 </Tooltip>
-                ,{' '}
+                ,
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}
                   info={'시설 및 비품 구입, PC 관리 등'}>
                   관리
                 </Tooltip>
-                를 전부 맡아 처리하였습니다.{' '}
+                를 전부 맡아 처리하였습니다.
                 <Tooltip
                   onHover={onHover}
                   onLeave={onLeave}

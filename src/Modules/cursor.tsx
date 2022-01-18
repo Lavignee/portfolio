@@ -15,12 +15,14 @@ export const changeSecondClassName = (secondClassName: string) => ({
   secondClassName
 });
 
+// ReturnType으로 interface 중복없이 작성.
 type CursorAction =
   | ReturnType<typeof changeText>
   | ReturnType<typeof changeFirstClassName>
   | ReturnType<typeof changeSecondClassName>;
 
-type CursorState = {
+// state들의 interface 정의.
+interface CursorState {
   // 커서에 출력할 텍스트
   text: string;
   // 커서 변화를 위한 스타일

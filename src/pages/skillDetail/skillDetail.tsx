@@ -19,8 +19,8 @@ import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Props로 받는 이벤트들에 대한 type 정의
-type SkillDetailProps = {
+// Props로 받는 이벤트들에 대한 interface 정의.
+interface SkillDetailProps {
   onHover: (hoverCursor: string, hoverText?: string | null) => void;
   onLeave: (hoverText?: string | null) => void;
 }
@@ -28,12 +28,12 @@ type SkillDetailProps = {
 const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
+  const gsapReady = React.useCallback((value: boolean) => dispatch(changeGsapState(value)), [dispatch]);
 
   // redux useSelector 정의.
   const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
 
-  // react-router-dom으로 url 확인.
+  // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
   let location = useLocation();
   let navigate = useNavigate();
 
@@ -209,8 +209,8 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
   };
 
-  // skill 목록 파라미터의 타입 정의.
-  type SkillListProps = {
+  // Props로 받는 값에 대한 interface 정의.
+  interface SkillListProps {
     targetUrl: string;
     text: string;
   }
@@ -310,7 +310,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     // 현재 컨텐츠 데이터에 맞춰 스크롤 재생성 및 스크롤 트리거 연결.
     makeSmoothScrollbarforSkill();
 
-    // 스크롤 트리거 및 커서 초기화.
+    // 화면 벗어날 시 스크롤 트리거 및 커서 초기화.
     return () => {
       let triggers = ScrollTrigger.getAll();
       triggers.forEach((item) => {

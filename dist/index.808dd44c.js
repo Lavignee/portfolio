@@ -40161,6 +40161,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
 var _reactRedux = require("react-redux");
 var _commonValue = require("../../Modules/commonValue");
 var _reactDeviceDetect = require("react-device-detect");
@@ -40173,6 +40174,8 @@ var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
 const SmoothScroll = ({ children  })=>{
     _s();
+    // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
+    let location = _reactRouterDom.useLocation();
     const dispatch = _reactRedux.useDispatch();
     const gsapReady = _react.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
     , [
@@ -40214,8 +40217,7 @@ const SmoothScroll = ({ children  })=>{
             state.CommonValue.currentSmoothTopState,
             state.CommonValue.currentScrollState,
             state.CommonValue.currentScrollStateFast,
-            state.CommonValue.makeScrollState,
-            state.CommonValue.currentGnbState, 
+            state.CommonValue.makeScrollState, 
         ]
     , _reactRedux.shallowEqual);
     const smoothScroller = _react.useRef();
@@ -40266,9 +40268,6 @@ const SmoothScroll = ({ children  })=>{
             makeScroll(false);
         }
         onChangeContactStateFalse(false);
-    // if (currentGnbState) {
-    //   onChangeGnbState();
-    // }
     }, [
         currentScroller,
         makeScroll,
@@ -40316,12 +40315,13 @@ const SmoothScroll = ({ children  })=>{
         onSmoothTop
     ]);
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: 'smooth-scroll-frame',
+        className: `smooth-scroll-frame${location.pathname === '/footprint' ? ' opacity-none' : ''}`,
         ref: smoothScroller
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", null, children)));
 };
-_s(SmoothScroll, "QdMBTcsUj6BNy5+iQG9xwm/hXF8=", false, function() {
+_s(SmoothScroll, "MFAtx7lonQ9zpQMa9kQoZIy7MiM=", false, function() {
     return [
+        _reactRouterDom.useLocation,
         _reactRedux.useDispatch,
         _reactRedux.useSelector
     ];
@@ -40336,7 +40336,7 @@ $RefreshReg$(_c, "SmoothScroll");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","react-device-detect":"gQONV","gsap":"2aTR0","gsap/ScrollTrigger":"41HI5","./smoothScroll.scss":"7tsBt","smooth-scrollbar":"jRlDB","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13"}],"7tsBt":[function() {},{}],"jRlDB":[function(require,module,exports) {
+},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","react-device-detect":"gQONV","gsap":"2aTR0","gsap/ScrollTrigger":"41HI5","./smoothScroll.scss":"7tsBt","smooth-scrollbar":"jRlDB","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13","react-router-dom":"16kZP"}],"7tsBt":[function() {},{}],"jRlDB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ScrollbarPlugin", ()=>_plugin.ScrollbarPlugin
@@ -45907,8 +45907,6 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRedux = require("react-redux");
 var _commonValue = require("../../Modules/commonValue");
 var _homeScss = require("./home.scss");
-var _smoothScrollbar = require("smooth-scrollbar");
-var _smoothScrollbarDefault = parcelHelpers.interopDefault(_smoothScrollbar);
 var _main = require("../../components/main");
 var _mainDefault = parcelHelpers.interopDefault(_main);
 var _about = require("../../components/about");
@@ -45920,16 +45918,18 @@ var _footprintDefault = parcelHelpers.interopDefault(_footprint);
 var _s = $RefreshSig$();
 const Home = ({ onHover , onClick , onLeave  })=>{
     _s();
+    // redux dispatch 정의.
     const dispatch = _reactRedux.useDispatch();
-    const gsapReady = (value)=>dispatch(_commonValue.changeGsapState(value))
-    ;
-    const makeScroll = (value)=>dispatch(_commonValue.makeSmoothScroll(value))
-    ;
-    _react.useEffect(()=>{
-        _smoothScrollbarDefault.default.destroyAll();
-        gsapReady(false);
+    const makeScroll = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.makeSmoothScroll(value))
+    , [
+        dispatch
+    ]);
+    // 화면 진입 시 현재 컨텐츠를 기준으로 스크롤 재생성.
+    _reactDefault.default.useEffect(()=>{
         makeScroll(true);
-    }, []);
+    }, [
+        makeScroll
+    ]);
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'home-area'
     }, /*#__PURE__*/ _reactDefault.default.createElement(_mainDefault.default, {
@@ -45949,7 +45949,7 @@ const Home = ({ onHover , onClick , onLeave  })=>{
         onLeave: onLeave
     })));
 };
-_s(Home, "rAh3tY+Iv6hWC9AI4Dm+rCbkwNE=", false, function() {
+_s(Home, "D0obdpYPQaXV+emHgy5T0KY0/PY=", false, function() {
     return [
         _reactRedux.useDispatch
     ];
@@ -45964,7 +45964,7 @@ $RefreshReg$(_c, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","./home.scss":"l2Xgg","smooth-scrollbar":"jRlDB","../../components/main":"hpHrj","../../components/about":"aWbHS","../../components/skill":"6MKrU","../../components/footprint":"kBaTT","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13"}],"l2Xgg":[function() {},{}],"hpHrj":[function(require,module,exports) {
+},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","./home.scss":"l2Xgg","../../components/main":"hpHrj","../../components/about":"aWbHS","../../components/skill":"6MKrU","../../components/footprint":"kBaTT","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13"}],"l2Xgg":[function() {},{}],"hpHrj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>_mainDefault.default

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
   changeGsapState,
@@ -23,6 +24,9 @@ import { RootState } from '../../Modules';
 gsap.registerPlugin(ScrollTrigger);
 
 const SmoothScroll = ({ children }) => {
+  // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
+  let location = useLocation();
+
   const dispatch = useDispatch();
   const gsapReady = useCallback(
     (value) => dispatch(changeGsapState(value)),
@@ -65,14 +69,12 @@ const SmoothScroll = ({ children }) => {
     currentScrollState,
     currentScrollStateFast,
     makeScrollState,
-    // currentGnbState,
   ] = useSelector(
     (state: RootState) => [
       state.CommonValue.currentSmoothTopState,
       state.CommonValue.currentScrollState,
       state.CommonValue.currentScrollStateFast,
       state.CommonValue.makeScrollState,
-      state.CommonValue.currentGnbState,
     ],
     shallowEqual
   );
@@ -127,9 +129,6 @@ const SmoothScroll = ({ children }) => {
     }
 
     onChangeContactStateFalse(false);
-    // if (currentGnbState) {
-    //   onChangeGnbState();
-    // }
   }, [
     currentScroller,
     makeScroll,
@@ -169,7 +168,7 @@ const SmoothScroll = ({ children }) => {
   }, [currentScroller, currentSmoothTopState, onSmoothTop]);
 
   return (
-    <div className='smooth-scroll-frame' ref={smoothScroller}>
+    <div className={`smooth-scroll-frame${location.pathname === '/footprint' ? ' opacity-none' : ''}`} ref={smoothScroller}>
       <div>{children}</div>
     </div>
   );

@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './notFound.scss';
 
 const NotFound = () => {
+  // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
   let navigate = useNavigate();
   let location = useLocation();
 
@@ -30,4 +31,4 @@ const NotFound = () => {
   );
 };
 
-export default memo(NotFound);
+export default React.memo(NotFound);
