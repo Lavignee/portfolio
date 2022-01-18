@@ -573,7 +573,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
     _s();
     // redux dispatch 정의.
     const dispatch = _reactRedux.useDispatch();
-    const gsapReady = _react.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
+    const gsapReady = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
     , [
         dispatch
     ]);
@@ -585,15 +585,15 @@ const SkillDetail = ({ onHover , onLeave  })=>{
     // react-router-dom으로 url 확인.
     let location = _reactRouterDom.useLocation();
     let navigate = _reactRouterDom.useNavigate();
-    const lists = _react.useRef([]);
-    const scrollPosition = _react.useRef(null);
-    const [currentSkillScroller, setCurrentSkillScroller] = _react.useState(null);
-    const [currentUrl, setCurrentUrl] = _react.useState(location.pathname.split('/skill/')[1]);
-    const [listHoverMotion, setListHoverMotion] = _react.useState('');
-    const [currentTarget, setCurrentTarget] = _react.useState(0);
-    const [opacity, setOpacity] = _react.useState('');
+    const lists = _reactDefault.default.useRef([]);
+    const scrollPosition = _reactDefault.default.useRef(null);
+    const [currentSkillScroller, setCurrentSkillScroller] = _reactDefault.default.useState(null);
+    const [currentUrl, setCurrentUrl] = _reactDefault.default.useState(location.pathname.split('/skill/')[1]);
+    const [listHoverMotion, setListHoverMotion] = _reactDefault.default.useState('');
+    const [currentTarget, setCurrentTarget] = _reactDefault.default.useState(0);
+    const [opacity, setOpacity] = _reactDefault.default.useState('');
     // 스무스 스크롤 재생성.
-    const makeSmoothScrollbarforSkill = _react.useCallback(()=>{
+    const makeSmoothScrollbarforSkill = _reactDefault.default.useCallback(()=>{
         let skillScrollBar;
         // 기기에 따라 다른 스크롤 딜레이 적용.
         if (_reactDeviceDetect.isDesktop) skillScrollBar = _smoothScrollbarDefault.default.init(scrollPosition.current, {
@@ -633,7 +633,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         else if (currentTarget + 1 < number) setListHoverMotion('bottom');
     };
     // skill 세부 목록에서 마우스 벗어날 시,
-    const onListLeave = _react.useCallback(()=>{
+    const onListLeave = _reactDefault.default.useCallback(()=>{
         // 커서 형태 초기화.
         onLeave();
         // 마우스 오버 애니메이션 제거.
@@ -650,7 +650,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         currentSkillScroller.scrollTo(0, 0, 600);
     };
     // 클릭이 아닌 히스토리를 통한 목록 변경 시.
-    const changeHistoryList = _react.useCallback(async ()=>{
+    const changeHistoryList = _reactDefault.default.useCallback(async ()=>{
         // 기존의 skill 세부 목록을 초기화.
         lists.current = [];
         // 기존의 스크롤 데이터 삭제.
@@ -669,7 +669,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         makeSmoothScrollbarforSkill
     ]);
     //스크롤 트리거가 변경 된 경우.
-    const changeTarget = _react.useCallback((id)=>{
+    const changeTarget = _reactDefault.default.useCallback((id)=>{
         // 스크롤 트리거가 감지한 영역 ID로 content를 변경.
         setCurrentTarget(id);
         // content의 text를 숨김.
@@ -685,7 +685,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         if (el && !lists.current.includes(el) && currentGsapState) lists.current.push(el);
     };
     // 중앙에 위치한 skill 세부 목록 영역에 스크롤 트리거 적용.
-    const listScroller = _react.useCallback(()=>{
+    const listScroller = _reactDefault.default.useCallback(()=>{
         lists.current.forEach((el, index)=>{
             _gsap.gsap.to(el, {
                 scrollTrigger: {
@@ -740,6 +740,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         // skill 세부 목록의 중앙 영역으로 스크롤 이동.
         currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
     };
+    // skill 목록 템플릿.
     const SkillList = ({ targetUrl , text  })=>{
         return(/*#__PURE__*/ _reactDefault.default.createElement("li", null, /*#__PURE__*/ _reactDefault.default.createElement("button", {
             className: currentUrl === targetUrl ? 'active' : '',
@@ -751,13 +752,16 @@ const SkillDetail = ({ onHover , onLeave  })=>{
             "data-list": targetUrl
         }, text)));
     };
+    // skill 세부 목록 및 컨텐츠 템플릿.
     const contents = (contentKind)=>{
         let content1;
+        // svg json을 읽어와서 키와 값으로 할당.
         let svgs = Object.entries(_iconSvgJsonDefault.default);
         let svgContent = new Map();
         svgs.forEach((item)=>{
             svgContent.set(item[0], item[1]);
         });
+        // url에 따라 출력할 json 데이터를 매치.
         if (currentUrl === 'language') content1 = _languageSkillJsonDefault.default.language;
         else if (currentUrl === 'lib') content1 = _libSkillJsonDefault.default.lib;
         else if (currentUrl === 'tool') content1 = _toolSkillJsonDefault.default.tool;
@@ -771,6 +775,7 @@ const SkillDetail = ({ onHover , onLeave  })=>{
                 summary: ''
             }
         ];
+        // skill 세부 목록 템플릿
         return contentKind === 'list' ? content1.map((content)=>/*#__PURE__*/ _reactDefault.default.createElement("li", {
                 key: content.number,
                 className: 'list col-4 col-l-3 pl-pr-none',
@@ -787,7 +792,8 @@ const SkillDetail = ({ onHover , onLeave  })=>{
                     __html: svgContent.get(content.id)
                 }
             })))
-        ) : /*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        ) : // skill 컨텐츠 템플릿.
+        /*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'pagenation'
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, currentTarget + 1), "/", /*#__PURE__*/ _reactDefault.default.createElement("span", null, content1.length)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'content'
@@ -801,10 +807,15 @@ const SkillDetail = ({ onHover , onLeave  })=>{
             className: `back-text ${opacity}`
         }, content1[currentTarget].name));
     };
-    _react.useEffect(()=>{
+    // 화면 진입 또는 리랜더 시,
+    _reactDefault.default.useEffect(()=>{
+        // 기존 스크롤바 제거.
         _smoothScrollbarDefault.default.destroyAll();
+        // 스크롤 트리거 비활성화.
         gsapReady(false);
+        // 현재 컨텐츠 데이터에 맞춰 스크롤 재생성 및 스크롤 트리거 연결.
         makeSmoothScrollbarforSkill();
+        // 스크롤 트리거 및 커서 초기화.
         return ()=>{
             let triggers = _scrollTrigger.ScrollTrigger.getAll();
             triggers.forEach((item)=>{
@@ -817,18 +828,20 @@ const SkillDetail = ({ onHover , onLeave  })=>{
         makeSmoothScrollbarforSkill,
         onLeave
     ]);
-    _react.useEffect(()=>{
+    // gsap준비된 경우 스크롤 트리커 연결.
+    _reactDefault.default.useEffect(()=>{
         if (currentGsapState) {
             listScroller();
             scrollSkew();
         }
     }, [
         currentGsapState,
-        currentUrl,
         listScroller
     ]);
-    _react.useEffect(()=>{
-        if (location.pathname.split('/skill/')[1] !== currentUrl) changeHistoryList();
+    // url 및 현재 데이터가 언매치 시,
+    _reactDefault.default.useEffect(()=>{
+        if (location.pathname.split('/skill/')[1] !== currentUrl) // 스크롤 재생성 및 스크롤 트리거 재연동.
+        changeHistoryList();
     }, [
         changeHistoryList,
         currentUrl,

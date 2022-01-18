@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { changeGsapState } from '../../Modules/commonValue';
@@ -28,7 +28,7 @@ type SkillDetailProps = {
 const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const gsapReady = useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
+  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
 
   // redux useSelector 정의.
   const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
@@ -37,17 +37,17 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   let location = useLocation();
   let navigate = useNavigate();
 
-  const lists = useRef([]);
-  const scrollPosition = useRef<any>(null);
+  const lists = React.useRef<string[]>([]);
+  const scrollPosition = React.useRef<any>(null);
 
-  const [currentSkillScroller, setCurrentSkillScroller] = useState<any>(null);
-  const [currentUrl, setCurrentUrl] = useState(location.pathname.split('/skill/')[1]);
-  const [listHoverMotion, setListHoverMotion] = useState('');
-  const [currentTarget, setCurrentTarget] = useState(0);
-  const [opacity, setOpacity] = useState('');
+  const [currentSkillScroller, setCurrentSkillScroller] = React.useState<any>(null);
+  const [currentUrl, setCurrentUrl] = React.useState(location.pathname.split('/skill/')[1]);
+  const [listHoverMotion, setListHoverMotion] = React.useState('');
+  const [currentTarget, setCurrentTarget] = React.useState(0);
+  const [opacity, setOpacity] = React.useState('');
 
   // 스무스 스크롤 재생성.
-  const makeSmoothScrollbarforSkill = useCallback(() => {
+  const makeSmoothScrollbarforSkill = React.useCallback(() => {
     let skillScrollBar: any;
     // 기기에 따라 다른 스크롤 딜레이 적용.
     if (isDesktop) {
@@ -97,7 +97,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   };
 
   // skill 세부 목록에서 마우스 벗어날 시,
-  const onListLeave = useCallback(() => {
+  const onListLeave = React.useCallback(() => {
     // 커서 형태 초기화.
     onLeave();
     // 마우스 오버 애니메이션 제거.
@@ -117,7 +117,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   };
 
   // 클릭이 아닌 히스토리를 통한 목록 변경 시.
-  const changeHistoryList = useCallback(async () => {
+  const changeHistoryList = React.useCallback(async () => {
     // 기존의 skill 세부 목록을 초기화.
     lists.current = [];
     // 기존의 스크롤 데이터 삭제.
@@ -133,7 +133,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   }, [gsapReady, location.pathname, makeSmoothScrollbarforSkill]);
 
   //스크롤 트리거가 변경 된 경우.
-  const changeTarget = useCallback(
+  const changeTarget = React.useCallback(
     (id) => {
       // 스크롤 트리거가 감지한 영역 ID로 content를 변경.
       setCurrentTarget(id);
@@ -156,7 +156,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   };
 
   // 중앙에 위치한 skill 세부 목록 영역에 스크롤 트리거 적용.
-  const listScroller = useCallback(() => {
+  const listScroller = React.useCallback(() => {
     lists.current.forEach((el, index) => {
       gsap.to(el, {
         scrollTrigger: {
@@ -209,11 +209,13 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
   };
 
+  // skill 목록 파라미터의 타입 정의.
   type SkillListProps = {
     targetUrl: string;
     text: string;
   }
 
+  // skill 목록 템플릿.
   const SkillList = ({ targetUrl, text }: SkillListProps) => {
     return (
       <li>
@@ -229,14 +231,17 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     )
   }
 
+  // skill 세부 목록 및 컨텐츠 템플릿.
   const contents = (contentKind: string) => {
     let content;
+    // svg json을 읽어와서 키와 값으로 할당.
     let svgs = Object.entries(svg)
     let svgContent = new Map();
     svgs.forEach(item => {
       svgContent.set(item[0], item[1])
     });
 
+    // url에 따라 출력할 json 데이터를 매치.
     if (currentUrl === 'language') {
       content = language.language;
     } else if (currentUrl === 'lib') {
@@ -248,6 +253,8 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     } else {
       content = [{ number: 0, id: '', name: '', workmanship: 0, summary: '' }];
     }
+
+    // skill 세부 목록 템플릿
     return contentKind === 'list' ? (
       content.map((content) => (
         <li
@@ -267,6 +274,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
         </li>
       ))
     ) : (
+      // skill 컨텐츠 템플릿.
       <>
         <div className='pagenation'>
           <span>{currentTarget + 1}</span>/<span>{content.length}</span>
@@ -293,11 +301,16 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     );
   };
 
-  useEffect(() => {
+  // 화면 진입 또는 리랜더 시,
+  React.useEffect(() => {
+    // 기존 스크롤바 제거.
     Scrollbar.destroyAll();
+    // 스크롤 트리거 비활성화.
     gsapReady(false);
+    // 현재 컨텐츠 데이터에 맞춰 스크롤 재생성 및 스크롤 트리거 연결.
     makeSmoothScrollbarforSkill();
 
+    // 스크롤 트리거 및 커서 초기화.
     return () => {
       let triggers = ScrollTrigger.getAll();
       triggers.forEach((item) => {
@@ -308,15 +321,18 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
     };
   }, [gsapReady, makeSmoothScrollbarforSkill, onLeave]);
 
-  useEffect(() => {
+  // gsap준비된 경우 스크롤 트리커 연결.
+  React.useEffect(() => {
     if (currentGsapState) {
       listScroller();
       scrollSkew();
     }
-  }, [currentGsapState, currentUrl, listScroller]);
+  }, [currentGsapState, listScroller]);
 
-  useEffect(() => {
+  // url 및 현재 데이터가 언매치 시,
+  React.useEffect(() => {
     if (location.pathname.split('/skill/')[1] !== currentUrl) {
+      // 스크롤 재생성 및 스크롤 트리거 재연동.
       changeHistoryList();
     }
   }, [changeHistoryList, currentUrl, location.pathname]);
