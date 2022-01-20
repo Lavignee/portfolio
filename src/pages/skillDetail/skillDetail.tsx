@@ -143,8 +143,8 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
       // 시간차를 두고 텍스트 출력.
       const opacityTimer = setTimeout(() => {
         setOpacity('opacity');
+        clearTimeout(opacityTimer);
       }, 100);
-      return () => clearTimeout(opacityTimer);
     },
     []
   );

@@ -3,10 +3,16 @@ import { gsap } from 'gsap';
 
 import './textSlider.scss';
 
-const TextSlider = ({ text, type }) => {
-  const textSliderSetting = (text, align) => {
-    let setting = [];
-    let settingFrame = [];
+// Props로 받는 값에 대한 interface 정의.
+interface TextSliderProps {
+  text: string;
+  type: string;
+}
+
+const TextSlider = ({ text, type }: TextSliderProps) => {
+  const textSliderSetting = (text: string, align: string) => {
+    let setting: JSX.Element[] = [];
+    let settingFrame: JSX.Element[] = [];
     let l;
     if (type === 'left') {
       l = 5;

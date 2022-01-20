@@ -46153,7 +46153,7 @@ const Main = ({ onHover , onLeaves  })=>{
     })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'main-content-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: 'test'
+        className: 'video-delay-cover'
     }), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'main-text-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -46223,17 +46223,33 @@ var _videoToCanvasScss = require("./videoToCanvas.scss");
 var _s = $RefreshSig$();
 const VideoToCanvas = ({ src: src1 , resolX , resolY , canvasReady  })=>{
     _s();
-    const virtualVideo = _react.useRef(null);
-    const canvasRef1 = _react.useRef();
-    const canvasRef2 = _react.useRef();
-    const canvasRef3 = _react.useRef();
-    const canvasRef4 = _react.useRef();
-    const canvasRef5 = _react.useRef();
-    const canvasRef6 = _react.useRef();
-    const canvasDrawTrigger = _react.useRef(null);
-    // const test2Ref = useRef(false);
-    const [canvasPlay, setCanvasPlay] = _react.useState(false);
-    const videoSet = _react.useMemo(()=>[
+    // video 및 source tag를 생성하여 전달받은 영상을 연계.
+    const makeVirtualVideoElement = (src)=>{
+        const video = document.createElement('video');
+        const source = document.createElement('source');
+        source.setAttribute('src', src);
+        video.appendChild(source);
+        return video;
+    };
+    // setTimeout에서 최신화 값을 참조하기 위한 ref.
+    const canvasPlay = _reactDefault.default.useRef(canvasReady);
+    // video 및 source tag를 생성하여 저장할 ref.
+    const virtualVideo = _reactDefault.default.useRef(makeVirtualVideoElement(src1));
+    // 생성된 video 태그의 영상을 canvas에 프레임별로 최신화 할 ref.
+    const canvasRef1 = _reactDefault.default.useRef(null);
+    const canvasRef2 = _reactDefault.default.useRef(null);
+    const canvasRef3 = _reactDefault.default.useRef(null);
+    const canvasRef4 = _reactDefault.default.useRef(null);
+    const canvasRef5 = _reactDefault.default.useRef(null);
+    const canvasRef6 = _reactDefault.default.useRef(null);
+    const timeOutRef1 = _reactDefault.default.useRef(null);
+    const timeOutRef2 = _reactDefault.default.useRef(null);
+    const timeOutRef3 = _reactDefault.default.useRef(null);
+    const timeOutRef4 = _reactDefault.default.useRef(null);
+    const timeOutRef5 = _reactDefault.default.useRef(null);
+    const timeOutRef6 = _reactDefault.default.useRef(null);
+    // 영상의 해상도에 따라 각각 크기와 위치를 다시 적용.
+    const videoSet = _reactDefault.default.useMemo(()=>[
             {
                 maskX: -(resolX / 2),
                 maskY: 0,
@@ -46275,124 +46291,119 @@ const VideoToCanvas = ({ src: src1 , resolX , resolY , canvasReady  })=>{
         resolX,
         resolY
     ]);
-    const makeVirtualVideoElement = (src)=>{
-        const video = document.createElement('video');
-        const source = document.createElement('source');
-        source.setAttribute('src', src);
-        video.appendChild(source);
-        return video;
-    };
-    const draw = _react.useCallback((video, context, numbers)=>{
-        context.drawImage(video, 0, 0, resolX, resolY, videoSet[numbers].maskX, videoSet[numbers].maskY, videoSet[numbers].sizeX, videoSet[numbers].sizeY);
-        if (canvasDrawTrigger.current === true) {
-            const drawTimer = setTimeout(()=>{
-                draw(video, context, numbers);
-            }, 40, video, context);
-            return ()=>clearTimeout(drawTimer)
-            ;
+    // drawCanvas 에서 전달 받은 조건에 따라 프레임에 맞도록 이미지 갱신 또는 종료.
+    const draw = _reactDefault.default.useCallback((video, context, timeOutRef, numbers)=>{
+        if (canvasPlay.current) timeOutRef = setTimeout(()=>{
+            context.drawImage(video, 0, 0, resolX, resolY, videoSet[numbers].maskX, videoSet[numbers].maskY, videoSet[numbers].sizeX, videoSet[numbers].sizeY);
+            draw(video, context, timeOutRef, numbers);
+        }, 1000 / 30, video, context);
+        else {
+            clearTimeout(timeOutRef);
+            timeOutRef = null;
         }
     }, [
         resolX,
         resolY,
         videoSet
     ]);
-    _react.useEffect(()=>{
-        if (canvasReady) setCanvasPlay(true);
-        return ()=>setCanvasPlay(false)
-        ;
+    // video의 동작 여부에 따라 canvas에 draw 조건 변경해서 호출.
+    const drawCanvas = _reactDefault.default.useCallback((canvasRefs, timeOutRef, numbers, set)=>{
+        const context = canvasRefs?.getContext('2d');
+        if (set) {
+            virtualVideo.current.muted = true;
+            virtualVideo.current.loop = true;
+            virtualVideo.current.addEventListener('pause', ()=>draw(virtualVideo.current, context, timeOutRef, numbers)
+            );
+            virtualVideo.current.addEventListener('play', ()=>draw(virtualVideo.current, context, timeOutRef, numbers)
+            );
+        } else {
+            virtualVideo.current.removeEventListener('pause', ()=>draw(virtualVideo.current, context, timeOutRef, numbers)
+            );
+            virtualVideo.current.removeEventListener('play', ()=>draw(virtualVideo.current, context, timeOutRef, numbers)
+            );
+        }
+    }, [
+        draw
+    ]);
+    // 화면 진입 시 이벤트 리스너 등록.
+    _reactDefault.default.useEffect(()=>{
+        if (canvasReady) {
+            drawCanvas(canvasRef1.current, timeOutRef1.current, 0, true);
+            drawCanvas(canvasRef2.current, timeOutRef2.current, 1, true);
+            drawCanvas(canvasRef3.current, timeOutRef3.current, 2, true);
+            drawCanvas(canvasRef4.current, timeOutRef4.current, 3, true);
+            drawCanvas(canvasRef5.current, timeOutRef5.current, 4, true);
+            drawCanvas(canvasRef6.current, timeOutRef6.current, 5, true);
+        }
+        // 화면 벗어날 시 이벤트 리스너 삭제.
+        return ()=>{
+            drawCanvas(canvasRef1.current, timeOutRef1.current, 0, false);
+            drawCanvas(canvasRef2.current, timeOutRef2.current, 1, false);
+            drawCanvas(canvasRef3.current, timeOutRef3.current, 2, false);
+            drawCanvas(canvasRef4.current, timeOutRef4.current, 3, false);
+            drawCanvas(canvasRef5.current, timeOutRef5.current, 4, false);
+            drawCanvas(canvasRef6.current, timeOutRef6.current, 5, false);
+        };
+    }, []);
+    // canvasReady의 상태에 따라 video 일시정지 및 clearTimeout.
+    _reactDefault.default.useEffect(()=>{
+        if (canvasReady) {
+            canvasPlay.current = true;
+            virtualVideo.current.play();
+        } else {
+            canvasPlay.current = false;
+            virtualVideo.current.pause();
+            drawCanvas(canvasRef1.current, timeOutRef1.current, 0, false);
+        }
     }, [
         canvasReady
     ]);
-    _react.useEffect(()=>{
-        const testCanvas = (video, canvasRefs, numbers)=>{
-            const context = canvasRefs.getContext('2d');
-            video.muted = true;
-            video.loop = true;
-            video.onplaying = ()=>{
-            // test2Ref.current = true;
-            };
-            // video.onpause = () => {
-            //   test2Ref.current = false;
-            // };
-            const playVid = ()=>{
-                // if (video.paused && !test2Ref.current) {
-                video.addEventListener('play', ()=>draw(video, context, numbers)
-                , false);
-                video.play();
-            // test2Ref.current = true;
-            // }
-            };
-            // const pauseVid = () => {
-            // test2Ref.current = false;
-            // if (!video.paused && test2Ref.current) {
-            //   console.log('pause!!')
-            //   video.removeEventListener('play', () => draw(video, context, numbers), false)
-            //   video.pause();
-            //   test2Ref.current = false;
-            // }
-            // }
-            if (canvasPlay) playVid();
-        };
-        virtualVideo.current = makeVirtualVideoElement(src1);
-        testCanvas(virtualVideo.current, canvasRef1.current, 0);
-        testCanvas(virtualVideo.current, canvasRef2.current, 1);
-        testCanvas(virtualVideo.current, canvasRef3.current, 2);
-        testCanvas(virtualVideo.current, canvasRef4.current, 3);
-        testCanvas(virtualVideo.current, canvasRef5.current, 4);
-        testCanvas(virtualVideo.current, canvasRef6.current, 5);
-        canvasDrawTrigger.current = canvasPlay;
-    }, [
-        canvasPlay,
-        draw,
-        src1
-    ]);
+    const canvasInfo = [
+        {
+            position: 'right',
+            targetRef: canvasRef1
+        },
+        {
+            position: 'right',
+            targetRef: canvasRef2
+        },
+        {
+            position: 'left',
+            targetRef: canvasRef3
+        },
+        {
+            position: 'left',
+            targetRef: canvasRef4
+        },
+        {
+            position: 'right',
+            targetRef: canvasRef5
+        },
+        {
+            position: 'left',
+            targetRef: canvasRef6
+        }
+    ];
+    // canvas 템플릿.
+    const canvasContent = (content)=>{
+        let canvas = content.map((item, idx)=>{
+            return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                key: idx,
+                className: `canvas-frame targets target${idx + 1} ${item.position}${canvasReady ? ' will-change' : ''}`
+            }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
+                width: resolX,
+                height: resolY,
+                className: 'canvas-target',
+                ref: item.targetRef
+            })));
+        });
+        return canvas;
+    };
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'video-area'
-    }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `canvas-frame targets target1 right${canvasReady ? ' will-change' : ''}`
-    }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
-        width: resolX,
-        height: resolY,
-        className: 'canvas-target',
-        ref: canvasRef1
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `canvas-frame targets target2 right${canvasReady ? ' will-change' : ''}`
-    }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
-        width: resolX,
-        height: resolY,
-        className: 'canvas-target',
-        ref: canvasRef2
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `canvas-frame targets target3 left${canvasReady ? ' will-change' : ''}`
-    }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
-        width: resolX,
-        height: resolY,
-        className: 'canvas-target',
-        ref: canvasRef3
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `canvas-frame targets target4 left${canvasReady ? ' will-change' : ''}`
-    }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
-        width: resolX,
-        height: resolY,
-        className: 'canvas-target',
-        ref: canvasRef4
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `canvas-frame targets target5 right${canvasReady ? ' will-change' : ''}`
-    }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
-        width: resolX,
-        height: resolY,
-        className: 'canvas-target',
-        ref: canvasRef5
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `canvas-frame targets target6 left${canvasReady ? ' will-change' : ''}`
-    }, /*#__PURE__*/ _reactDefault.default.createElement("canvas", {
-        width: resolX,
-        height: resolY,
-        className: 'canvas-target',
-        ref: canvasRef6
-    }))));
+    }, canvasContent(canvasInfo)));
 };
-_s(VideoToCanvas, "UzS/yKbhLuAyXY6jPLp4gImkp0k=");
+_s(VideoToCanvas, "/Z/gNZPGWxzk8fEEmXojydtyXZQ=");
 _c = VideoToCanvas;
 exports.default = VideoToCanvas;
 var _c;
@@ -46470,11 +46481,11 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         ]
     , _reactRedux.shallowEqual);
     let childrenLength = 0;
-    const [willChange, setWillChange] = _react.useState(false);
-    const [happen, setHappen] = _react.useState([]);
-    const [split1, setSplit] = _react.useState([]);
-    const splittingTimer = _react.useRef(null);
-    const Splitting = _react.useCallback(()=>{
+    const [willChange, setWillChange] = useState(false);
+    const [happen, setHappen] = useState([]);
+    const [split1, setSplit] = useState([]);
+    const splittingTimer = useRef(null);
+    const Splitting = useCallback(()=>{
         if (childrenLength < children.length + 1) {
             childrenLength++;
             depth ? setSplit((split)=>[
@@ -46510,7 +46521,7 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         index,
         setTime
     ]);
-    const SplittingReady = _react.useCallback(()=>{
+    const SplittingReady = useCallback(()=>{
         if (currentSplitText === scroll && !happen.includes(currentSplitText) || scroll === 'all') {
             Splitting();
             setHappen([
@@ -46524,13 +46535,13 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         happen,
         scroll
     ]);
-    _react.useEffect(()=>{
+    useEffect(()=>{
         return ()=>{
             clearTimeout(splittingTimer.current);
             splittingTimer.current = null;
         };
     }, []);
-    _react.useEffect(()=>{
+    useEffect(()=>{
         splittingTimer.current = null;
         SplittingReady();
         return ()=>splittingTimer.current = null
@@ -46538,7 +46549,7 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
     }, [
         currentSplitText
     ]);
-    _react.useEffect(()=>{
+    useEffect(()=>{
         if (ready) setWillChange(true);
         return ()=>setWillChange(false)
         ;
@@ -47935,9 +47946,9 @@ const SwitchAnimation = ()=>{
             state.CommonValue.currentSwitchAnimation
         ]
     , _reactRedux.shallowEqual);
-    return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: `screen-cover${currentSwitchAnimation ? ' active' : ''}`
-    })));
+    }));
 };
 _s(SwitchAnimation, "WDay90Wl89/CRQQg5M5l/pgQXIo=", false, function() {
     return [

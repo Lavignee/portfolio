@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
   makeSmoothScroll,
@@ -29,7 +29,6 @@ import 'swiper/modules/navigation/navigation.scss';
 import 'swiper/modules/pagination/pagination.scss';
 import 'swiper/modules/effect-fade/effect-fade.scss';
 
-import Scrollbar from 'smooth-scrollbar';
 import useWindowSize from '../../utils/useWindowSize';
 import SplitText from '../../components/splitText';
 import Tooltip from '../../components/tooltip';
@@ -37,6 +36,7 @@ import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 반복적인 dom구조에서 다른 부분만 배열로 정의.
 const textCondition = [
   {
     colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 about-first',
@@ -63,6 +63,7 @@ const textCondition = [
   },
 ];
 
+// 반복적인 dom구조에서 다른 부분만 배열로 정의.
 const textCondition2 = [
   {
     colInfo:
@@ -80,43 +81,43 @@ const textCondition2 = [
   },
 ];
 
-const AboutDetail = ({ onHover, onLeave }) => {
+// 너무 길어진 데이터 선택자 별도 정의.
+const firstIntroContent = introduce.introduce.first;
+const firstTooltipContent = introduce.tooltipInfo.first;
+const secondIntroContent = introduce.introduce.second;
+const secondTooltipContent = introduce.tooltipInfo.second;
+const thirdIntroContent = introduce.introduce.third;
+const thirdTooltipContent = introduce.tooltipInfo.third;
+
+// 사용 될 이미지 배열로 정의.
+const growBackgroundImage2: any[] = [shop1, shop2, shop3, shop4];
+const growBackgroundImage3: any[] = [current1, current2, current3];
+
+// Props로 받는 이벤트들에 대한 interface 정의.
+interface AboutDetailProps {
+  onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  onLeave: (hoverText?: string | null) => void;
+}
+
+const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
+  // redux dispatch 정의.
   const dispatch = useDispatch();
-  const onScrollAboutFirst = useCallback(
-    () => dispatch(splitTextStart('aboutFirst')),
-    [dispatch]
-  );
-  const onScrollAboutSecond = useCallback(
-    () => dispatch(splitTextStart('aboutSecond')),
-    [dispatch]
-  );
-  const onScrollAboutThird = useCallback(
-    () => dispatch(splitTextStart('aboutThird')),
-    [dispatch]
-  );
-  const makeScroll = useCallback(
-    (value) => dispatch(makeSmoothScroll(value)),
-    [dispatch]
-  );
-  const filmReady = useCallback(
-    (value) => dispatch(changeFilmState(value)),
-    [dispatch]
-  );
-  const gsapReady = useCallback(
-    (value) => dispatch(changeGsapState(value)),
-    [dispatch]
-  );
-  const [currentGsapState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentGsapState],
-    shallowEqual
-  );
+  const onScrollAboutFirst = React.useCallback(() => dispatch(splitTextStart('aboutFirst')), [dispatch]);
+  const onScrollAboutSecond = React.useCallback(() => dispatch(splitTextStart('aboutSecond')), [dispatch]);
+  const onScrollAboutThird = React.useCallback(() => dispatch(splitTextStart('aboutThird')), [dispatch]);
+  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  const filmReady = React.useCallback((value) => dispatch(changeFilmState(value)), [dispatch]);
+  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
+  // redux useSelector 정의.
+  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
 
+  // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
   const { width } = useWindowSize();
-  const growBackgroundImage2 = [shop1, shop2, shop3, shop4];
-  const growBackgroundImage3 = [current1, current2, current3];
-  const [splitTextReady, setSplitTextReady] = useState(false);
 
-  const growBackgroundImageSlider = (target, kind) => {
+  const [splitTextReady, setSplitTextReady] = React.useState(false);
+
+  // 이미지 슬라이드 템플릿.
+  const growBackgroundImageSlider = (target: any[], kind: string) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
@@ -151,6 +152,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
     );
   };
 
+  // 스크롤 트리거 설정.
   const aboutDetailGsap = () => {
     gsap.fromTo(
       '.back-keyword',
@@ -301,12 +303,43 @@ const AboutDetail = ({ onHover, onLeave }) => {
     });
   };
 
-  useEffect(() => {
+  // 툴팁 템플릿.
+  const TooltipContent = (targetInfo: { info: string, text: string }[]) => {
+    let result = targetInfo.map((item: { info: string, text: string }, idx) => {
+      return (
+        <Tooltip
+          key={item.text + idx}
+          onHover={onHover}
+          onLeave={onLeave}
+          info={item.info}>
+          {item.text}
+        </Tooltip>
+      )
+    })
+    return result;
+  }
+
+  // json string 데이터와 툴팁 템플릿 결합하여 컨텐츠 생성.
+  const introduceContent = (target: string, element: JSX.Element[]) => {
+    let combineContent: any[] = target.split('$$');
+    let i = 0;
+    combineContent.forEach((item, idx) => {
+      if (idx % 2 !== 0) {
+        combineContent.splice(idx, 1, element[i]);
+        i++;
+      }
+    });
+    return combineContent
+  }
+
+  // 화면 진입 후 DOM 랜더 시,
+  React.useEffect(() => {
+    // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
     filmReady(true);
-    Scrollbar.destroyAll();
-    gsapReady(false);
+    // 현재 컨텐츠를 기준으로 스크롤 재생성.
     makeScroll(true);
 
+    // 화면 벗어날 시 스크롤 트리거, 커서, 추가 필름, splitText 초기화.
     return () => {
       let triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
@@ -319,17 +352,19 @@ const AboutDetail = ({ onHover, onLeave }) => {
     };
   }, [filmReady, gsapReady, makeScroll, onLeave]);
 
-  useEffect(() => {
+  // gsap가 준비되면 스크롤트리거 생성 및 splitText 동작.
+  React.useEffect(() => {
     if (currentGsapState) {
       aboutDetailGsap();
       setSplitTextReady(true);
     }
   }, [currentGsapState]);
 
-  useEffect(() => {
-    let firstTimer;
-    let secondTimer;
-    let thirdTimer;
+  // splitText에 시간 차 동작 설정.
+  React.useEffect(() => {
+    let firstTimer: ReturnType<typeof setTimeout>;
+    let secondTimer: ReturnType<typeof setTimeout>;
+    let thirdTimer: ReturnType<typeof setTimeout>;
     const firstText = () => {
       firstTimer = setTimeout(() => {
         onScrollAboutFirst();
@@ -359,9 +394,6 @@ const AboutDetail = ({ onHover, onLeave }) => {
       clearTimeout(firstTimer);
       clearTimeout(secondTimer);
       clearTimeout(thirdTimer);
-      firstTimer = null;
-      secondTimer = null;
-      thirdTimer = null;
     };
   }, [
     onScrollAboutFirst,
@@ -370,15 +402,20 @@ const AboutDetail = ({ onHover, onLeave }) => {
     splitTextReady,
   ]);
 
+  // 반복되는 Text 정의.
+  const subTitleText = 'GROWTH\r\rBACKGROUND';
+
   return (
     <div className='about-detail'>
       <div className='container'>
         <div className='about-keywords'>
           <div className='first-content-area'>
+            {/* 상단 화면에 출력 될 keyword 컨텐츠. */}
             {textCondition.map((textCondition, idx) => (
               <div className='row keyword-frame' key={idx}>
                 <div className={textCondition.colInfo}>
                   <div className='position-frame'>
+                    {/* 타이틀 SplitText. */}
                     <h2 className='about-tag'>
                       <SplitText
                         animation={'up'}
@@ -390,6 +427,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                         {hashtag.hashtagFirst[idx].title}
                       </SplitText>
                     </h2>
+                    {/* 본문 SplitText. */}
                     <div className='type-p'>
                       <SplitText
                         animation={'up'}
@@ -410,6 +448,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
             ))}
           </div>
 
+          {/* 중단 화면에 출력 될 keyword 컨텐츠. */}
           <div className='second-content-area'>
             {textCondition2.map((textCondition2, idx) => (
               <div key={idx} className='row keyword-frame'>
@@ -430,23 +469,21 @@ const AboutDetail = ({ onHover, onLeave }) => {
         </div>
       </div>
 
+      {/* 하단 성장배경 컨텐츠. */}
       <div className='container fluid about-background'>
         <div className='container relative pl-pr-none'>
           <div className='background-title-frame'>
             <div className='col-12 col-m-7 off-m-5'>
               <h2>
-                GROWTH
-                <br />
-                BACKGROUND
+                {subTitleText}
               </h2>
               <h2 className='fill-black'>
-                GROWTH
-                <br />
-                BACKGROUND
+                {subTitleText}
               </h2>
             </div>
           </div>
 
+          {/* 좌측 하단에 배치 될 이미지 영역. */}
           <div className='photo-area d-m-block d-xs-none'>
             <img
               width='70%'
@@ -461,6 +498,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
             </div>
           </div>
 
+          {/* 성장배경 본문 및 작은 화면에서 각 위치에 이미지 출력 설정. */}
           <div className='col-12 col-m-7 off-m-5'>
             <div className='background-story-frame first-image-trigger'>
               {width < 768 && (
@@ -473,24 +511,8 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 />
               )}
               <h3>학생시절</h3>
-              {/* <p>
-                초등학교부터 사용한 컴퓨터는 제게는 너무 신기하고 배울 것이 참
-                많은 기기였습니다. 학교에서 배우는 공부보다 컴퓨터의 탐색기를
-                하나하나 열어보고 윈도우의 기능과 타자 연습, 다양한 게임들을
-                해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 당시
-                대학교수셨던 아버지의
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'도벽@환경도예'}>
-                  책
-                </Tooltip>
-                출간을 돕기도 했습니다. 이후 미술 전공을 준비했었지만,
-                보여주기식의 반복적이고 지루한 입시 미술이 적성에 맞지 않아
-                고등학교를 졸업하고 바로 입대하였습니다.
-              </p> */}
               <p>
-                {introduce.first}
+                {introduceContent(firstIntroContent, TooltipContent(firstTooltipContent))}
               </p>
             </div>
 
@@ -499,62 +521,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 growBackgroundImageSlider(growBackgroundImage2, 'shop')}
               <h3>전역 후</h3>
               <p>
-                22세에 전역을 하고는 다양한 일을 경험했습니다. 2~30대로 이루어진
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'시스템 동바리 (prefabricated shoring system)'}>
-                  건설팀
-                </Tooltip>
-                에 들어가 1년 정도 몸을 쓰는 일도 해보았고, 2년 정도
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'LED, LCD, Clalen (콘택트 렌즈), PCI'}>
-                  다양한 공장
-                </Tooltip>
-                에서 OP(Operator) 일도 하였습니다. 이후 학생 시절에 PC방
-                아르바이트 일이 즐거웠던 기억이 있어
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'시즌아이(seasoni)'}>
-                  프랜차이즈
-                </Tooltip>
-                PC방에 점장으로 취업하여 2년간 일했습니다. 하드웨어에 대한
-                공부도 많이 하였고,
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'피카라이브 전국 비교 보고서 기준'}>
-                  전국 매출 상위 1%
-                </Tooltip>
-                의 매장이 되어 또 다른 프랜차이즈 기업에서 스카우트 제의를 받아
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'오산(2), 천안, 평택'}>
-                  여러 매장
-                </Tooltip>
-                을 오픈 및 관리 하였습니다. 하지만 해당 분야에서 좋은 여건에
-                있었음에도 앞으로 전망이 밝지 않다는 판단에 그만두게 되었습니다.
-                이후
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'일반기업 솔루션 쇼핑몰'}>
-                  웹 사이트
-                </Tooltip>
-                를 운영하려는 지인을 돕게 되면서 웹 개발자의 영역을 알게
-                되었습니다. 대부분 구글과 간단한 서적으로 독학하여 퍼블리싱을
-                배우고
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'본인, 디자이너, 계약담당의 3인'}>
-                  지인들과 팀
-                </Tooltip>
-                을 꾸려 외주 업무를 받아서 처리하기 시작했습니다.
+                {introduceContent(secondIntroContent, TooltipContent(secondTooltipContent))}
               </p>
             </div>
 
@@ -563,57 +530,7 @@ const AboutDetail = ({ onHover, onLeave }) => {
                 growBackgroundImageSlider(growBackgroundImage3, 'current')}
               <h3>웹 개발자 ~ 현재</h3>
               <p>
-                함께 일하는 팀은 점점 전문화되어
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'크리에이티브코드'}>
-                  회사
-                </Tooltip>
-                가 되었고, 저는 설립 멤버로서 개발과 회사 운영을 함께
-                해왔습니다. 주니어 개발자였지만 기획자가 따로 없었으므로
-                서비스의 개발과 개선 등을 기획부터 해왔고, 회사의
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'채용, 면접, 휴가, 해고, 정부 혜택 처리 등'}>
-                  인사
-                </Tooltip>
-                ,
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'계약, 기획, 기능명세, 업무 조율, 수금 등'}>
-                  고객 응대
-                </Tooltip>
-                ,
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'급여 계산, 부가가치세, 연말 정산'}>
-                  세무
-                </Tooltip>
-                ,
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'시설 및 비품 구입, PC 관리 등'}>
-                  관리
-                </Tooltip>
-                를 전부 맡아 처리하였습니다.
-                <Tooltip
-                  onHover={onHover}
-                  onLeave={onLeave}
-                  info={'프론트 2명, 백엔드 1명, 디자이너 1명, 대표'}>
-                  적은 인원
-                </Tooltip>
-                과 자본이지만 성장하는 실력과 회사를 보고 즐겁게 일할 수
-                있었습니다. 다양한 업무 경험으로 넓은 시각이 생겼지만, 이렇게
-                일을 해서는 전문가가 되기는 어렵겠다는 생각에 퇴사하게
-                되었습니다. 이후 프리랜서로 짧은 기간 일을 하였고, 얼마 뒤
-                결혼을 하였습니다. 그리고 아내의 임신부터 아들의 100일까지
-                육아와 가사를 보조하며 공부와 포트폴리오 작업을 병행했고, 현재
-                취업을 준비하고 있습니다.
+                {introduceContent(thirdIntroContent, TooltipContent(thirdTooltipContent))}
               </p>
             </div>
           </div>
@@ -623,4 +540,4 @@ const AboutDetail = ({ onHover, onLeave }) => {
   );
 };
 
-export default memo(AboutDetail);
+export default React.memo(AboutDetail);

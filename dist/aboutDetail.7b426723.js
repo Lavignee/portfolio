@@ -579,8 +579,6 @@ var _swiperScss = require("swiper/swiper.scss");
 var _navigationScss = require("swiper/modules/navigation/navigation.scss");
 var _paginationScss = require("swiper/modules/pagination/pagination.scss");
 var _effectFadeScss = require("swiper/modules/effect-fade/effect-fade.scss");
-var _smoothScrollbar = require("smooth-scrollbar");
-var _smoothScrollbarDefault = parcelHelpers.interopDefault(_smoothScrollbar);
 var _useWindowSize = require("../../utils/useWindowSize");
 var _useWindowSizeDefault = parcelHelpers.interopDefault(_useWindowSize);
 var _splitText = require("../../components/splitText");
@@ -589,6 +587,7 @@ var _tooltip = require("../../components/tooltip");
 var _tooltipDefault = parcelHelpers.interopDefault(_tooltip);
 var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
+// 반복적인 dom구조에서 다른 부분만 배열로 정의.
 const textCondition = [
     {
         colInfo: 'col-12 col-xs-10 col-s-8 col-m-6 about-first',
@@ -612,6 +611,7 @@ const textCondition = [
         align: 'right'
     }, 
 ];
+// 반복적인 dom구조에서 다른 부분만 배열로 정의.
 const textCondition2 = [
     {
         colInfo: 'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
@@ -626,50 +626,62 @@ const textCondition2 = [
         align: 'right'
     }, 
 ];
+// 너무 길어진 데이터 선택자 별도 정의.
+const firstIntroContent = _introduceAboutJsonDefault.default.introduce.first;
+const firstTooltipContent = _introduceAboutJsonDefault.default.tooltipInfo.first;
+const secondIntroContent = _introduceAboutJsonDefault.default.introduce.second;
+const secondTooltipContent = _introduceAboutJsonDefault.default.tooltipInfo.second;
+const thirdIntroContent = _introduceAboutJsonDefault.default.introduce.third;
+const thirdTooltipContent = _introduceAboutJsonDefault.default.tooltipInfo.third;
+// 사용 될 이미지 배열로 정의.
+const growBackgroundImage2 = [
+    _shop1JpgDefault.default,
+    _shop2JpgDefault.default,
+    _shop3JpgDefault.default,
+    _shop4JpgDefault.default
+];
+const growBackgroundImage3 = [
+    _current1JpgDefault.default,
+    _current2JpgDefault.default,
+    _current3JpgDefault.default
+];
 const AboutDetail = ({ onHover , onLeave  })=>{
     _s();
+    // redux dispatch 정의.
     const dispatch = _reactRedux.useDispatch();
-    const onScrollAboutFirst = _react.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutFirst'))
+    const onScrollAboutFirst = _reactDefault.default.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutFirst'))
     , [
         dispatch
     ]);
-    const onScrollAboutSecond = _react.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutSecond'))
+    const onScrollAboutSecond = _reactDefault.default.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutSecond'))
     , [
         dispatch
     ]);
-    const onScrollAboutThird = _react.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutThird'))
+    const onScrollAboutThird = _reactDefault.default.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutThird'))
     , [
         dispatch
     ]);
-    const makeScroll = _react.useCallback((value)=>dispatch(_commonValue.makeSmoothScroll(value))
+    const makeScroll = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.makeSmoothScroll(value))
     , [
         dispatch
     ]);
-    const filmReady = _react.useCallback((value)=>dispatch(_commonValue.changeFilmState(value))
+    const filmReady = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.changeFilmState(value))
     , [
         dispatch
     ]);
-    const gsapReady = _react.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
+    const gsapReady = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
     , [
         dispatch
     ]);
+    // redux useSelector 정의.
     const [currentGsapState] = _reactRedux.useSelector((state)=>[
             state.CommonValue.currentGsapState
         ]
     , _reactRedux.shallowEqual);
+    // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
     const { width  } = _useWindowSizeDefault.default();
-    const growBackgroundImage2 = [
-        _shop1JpgDefault.default,
-        _shop2JpgDefault.default,
-        _shop3JpgDefault.default,
-        _shop4JpgDefault.default
-    ];
-    const growBackgroundImage3 = [
-        _current1JpgDefault.default,
-        _current2JpgDefault.default,
-        _current3JpgDefault.default
-    ];
-    const [splitTextReady, setSplitTextReady] = _react.useState(false);
+    const [splitTextReady, setSplitTextReady] = _reactDefault.default.useState(false);
+    // 이미지 슬라이드 템플릿.
     const growBackgroundImageSlider = (target1, kind)=>{
         return(/*#__PURE__*/ _reactDefault.default.createElement(_swiperReactJs.Swiper, {
             modules: [
@@ -708,6 +720,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             onMouseLeave: ()=>onLeave()
         })));
     };
+    // 스크롤 트리거 설정.
     const aboutDetailGsap = ()=>{
         _gsap.gsap.fromTo('.back-keyword', {
             yPercent: -100
@@ -829,11 +842,37 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             }
         });
     };
-    _react.useEffect(()=>{
+    // 툴팁 템플릿.
+    const TooltipContent = (targetInfo)=>{
+        let result = targetInfo.map((item, idx)=>{
+            return(/*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
+                key: item.text + idx,
+                onHover: onHover,
+                onLeave: onLeave,
+                info: item.info
+            }, item.text));
+        });
+        return result;
+    };
+    // json string 데이터와 툴팁 템플릿 결합하여 컨텐츠 생성.
+    const introduceContent = (target, element)=>{
+        let combineContent = target.split('$$');
+        let i = 0;
+        combineContent.forEach((item, idx)=>{
+            if (idx % 2 !== 0) {
+                combineContent.splice(idx, 1, element[i]);
+                i++;
+            }
+        });
+        return combineContent;
+    };
+    // 화면 진입 후 DOM 랜더 시,
+    _reactDefault.default.useEffect(()=>{
+        // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
         filmReady(true);
-        _smoothScrollbarDefault.default.destroyAll();
-        gsapReady(false);
+        // 현재 컨텐츠를 기준으로 스크롤 재생성.
         makeScroll(true);
+        // 화면 벗어날 시 스크롤 트리거, 커서, 추가 필름, splitText 초기화.
         return ()=>{
             let triggers = _scrollTrigger.ScrollTrigger.getAll();
             triggers.forEach((trigger)=>{
@@ -849,7 +888,8 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         makeScroll,
         onLeave
     ]);
-    _react.useEffect(()=>{
+    // gsap가 준비되면 스크롤트리거 생성 및 splitText 동작.
+    _reactDefault.default.useEffect(()=>{
         if (currentGsapState) {
             aboutDetailGsap();
             setSplitTextReady(true);
@@ -857,7 +897,8 @@ const AboutDetail = ({ onHover , onLeave  })=>{
     }, [
         currentGsapState
     ]);
-    _react.useEffect(()=>{
+    // splitText에 시간 차 동작 설정.
+    _reactDefault.default.useEffect(()=>{
         let firstTimer;
         let secondTimer;
         let thirdTimer;
@@ -891,9 +932,6 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             clearTimeout(firstTimer);
             clearTimeout(secondTimer);
             clearTimeout(thirdTimer);
-            firstTimer = null;
-            secondTimer = null;
-            thirdTimer = null;
         };
     }, [
         onScrollAboutFirst,
@@ -901,6 +939,8 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         onScrollAboutThird,
         splitTextReady, 
     ]);
+    // 반복되는 Text 정의.
+    const subTitleText = 'GROWTH\r\rBACKGROUND';
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'about-detail'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -961,9 +1001,9 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         className: 'background-title-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'col-12 col-m-7 off-m-5'
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h2", null, "GROWTH", /*#__PURE__*/ _reactDefault.default.createElement("br", null), "BACKGROUND"), /*#__PURE__*/ _reactDefault.default.createElement("h2", {
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h2", null, subTitleText), /*#__PURE__*/ _reactDefault.default.createElement("h2", {
         className: 'fill-black'
-    }, "GROWTH", /*#__PURE__*/ _reactDefault.default.createElement("br", null), "BACKGROUND"))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }, subTitleText))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'photo-area d-m-block d-xs-none'
     }, /*#__PURE__*/ _reactDefault.default.createElement("img", {
         width: '70%',
@@ -981,63 +1021,11 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         className: 'first-image',
         src: _childJpgDefault.default,
         alt: 'childhood'
-    }), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uD559\uC0DD\uC2DC\uC808"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, _introduceAboutJsonDefault.default.first)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uD559\uC0DD\uC2DC\uC808"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, introduceContent(firstIntroContent, TooltipContent(firstTooltipContent)))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'background-story-frame second-image-trigger'
-    }, width < 768 && growBackgroundImageSlider(growBackgroundImage2, 'shop'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC804\uC5ED \uD6C4"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "22\uC138\uC5D0 \uC804\uC5ED\uC744 \uD558\uACE0\uB294 \uB2E4\uC591\uD55C \uC77C\uC744 \uACBD\uD5D8\uD588\uC2B5\uB2C8\uB2E4. 2~30\uB300\uB85C \uC774\uB8E8\uC5B4\uC9C4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '시스템 동바리 (prefabricated shoring system)'
-    }, "\uAC74\uC124\uD300"), "\uC5D0 \uB4E4\uC5B4\uAC00 1\uB144 \uC815\uB3C4 \uBAB8\uC744 \uC4F0\uB294 \uC77C\uB3C4 \uD574\uBCF4\uC558\uACE0, 2\uB144 \uC815\uB3C4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: 'LED, LCD, Clalen (콘택트 렌즈), PCI'
-    }, "\uB2E4\uC591\uD55C \uACF5\uC7A5"), "\uC5D0\uC11C OP(Operator) \uC77C\uB3C4 \uD558\uC600\uC2B5\uB2C8\uB2E4. \uC774\uD6C4 \uD559\uC0DD \uC2DC\uC808\uC5D0 PC\uBC29 \uC544\uB974\uBC14\uC774\uD2B8 \uC77C\uC774 \uC990\uAC70\uC6E0\uB358 \uAE30\uC5B5\uC774 \uC788\uC5B4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '시즌아이(seasoni)'
-    }, "\uD504\uB79C\uCC28\uC774\uC988"), "PC\uBC29\uC5D0 \uC810\uC7A5\uC73C\uB85C \uCDE8\uC5C5\uD558\uC5EC 2\uB144\uAC04 \uC77C\uD588\uC2B5\uB2C8\uB2E4. \uD558\uB4DC\uC6E8\uC5B4\uC5D0 \uB300\uD55C \uACF5\uBD80\uB3C4 \uB9CE\uC774 \uD558\uC600\uACE0,", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '피카라이브 전국 비교 보고서 기준'
-    }, "\uC804\uAD6D \uB9E4\uCD9C \uC0C1\uC704 1%"), "\uC758 \uB9E4\uC7A5\uC774 \uB418\uC5B4 \uB610 \uB2E4\uB978 \uD504\uB79C\uCC28\uC774\uC988 \uAE30\uC5C5\uC5D0\uC11C \uC2A4\uCE74\uC6B0\uD2B8 \uC81C\uC758\uB97C \uBC1B\uC544", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '오산(2), 천안, 평택'
-    }, "\uC5EC\uB7EC \uB9E4\uC7A5"), "\uC744 \uC624\uD508 \uBC0F \uAD00\uB9AC \uD558\uC600\uC2B5\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uD574\uB2F9 \uBD84\uC57C\uC5D0\uC11C \uC88B\uC740 \uC5EC\uAC74\uC5D0 \uC788\uC5C8\uC74C\uC5D0\uB3C4 \uC55E\uC73C\uB85C \uC804\uB9DD\uC774 \uBC1D\uC9C0 \uC54A\uB2E4\uB294 \uD310\uB2E8\uC5D0 \uADF8\uB9CC\uB450\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC774\uD6C4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '일반기업 솔루션 쇼핑몰'
-    }, "\uC6F9 \uC0AC\uC774\uD2B8"), "\uB97C \uC6B4\uC601\uD558\uB824\uB294 \uC9C0\uC778\uC744 \uB3D5\uAC8C \uB418\uBA74\uC11C \uC6F9 \uAC1C\uBC1C\uC790\uC758 \uC601\uC5ED\uC744 \uC54C\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uB300\uBD80\uBD84 \uAD6C\uAE00\uACFC \uAC04\uB2E8\uD55C \uC11C\uC801\uC73C\uB85C \uB3C5\uD559\uD558\uC5EC \uD37C\uBE14\uB9AC\uC2F1\uC744 \uBC30\uC6B0\uACE0", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '본인, 디자이너, 계약담당의 3인'
-    }, "\uC9C0\uC778\uB4E4\uACFC \uD300"), "\uC744 \uAFB8\uB824 \uC678\uC8FC \uC5C5\uBB34\uB97C \uBC1B\uC544\uC11C \uCC98\uB9AC\uD558\uAE30 \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4.")), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }, width < 768 && growBackgroundImageSlider(growBackgroundImage2, 'shop'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC804\uC5ED \uD6C4"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, introduceContent(secondIntroContent, TooltipContent(secondTooltipContent)))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'background-story-frame third-image-trigger'
-    }, width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC6F9 \uAC1C\uBC1C\uC790 ~ \uD604\uC7AC"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, "\uD568\uAED8 \uC77C\uD558\uB294 \uD300\uC740 \uC810\uC810 \uC804\uBB38\uD654\uB418\uC5B4", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '크리에이티브코드'
-    }, "\uD68C\uC0AC"), "\uAC00 \uB418\uC5C8\uACE0, \uC800\uB294 \uC124\uB9BD \uBA64\uBC84\uB85C\uC11C \uAC1C\uBC1C\uACFC \uD68C\uC0AC \uC6B4\uC601\uC744 \uD568\uAED8 \uD574\uC654\uC2B5\uB2C8\uB2E4. \uC8FC\uB2C8\uC5B4 \uAC1C\uBC1C\uC790\uC600\uC9C0\uB9CC \uAE30\uD68D\uC790\uAC00 \uB530\uB85C \uC5C6\uC5C8\uC73C\uBBC0\uB85C \uC11C\uBE44\uC2A4\uC758 \uAC1C\uBC1C\uACFC \uAC1C\uC120 \uB4F1\uC744 \uAE30\uD68D\uBD80\uD130 \uD574\uC654\uACE0, \uD68C\uC0AC\uC758", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '채용, 면접, 휴가, 해고, 정부 혜택 처리 등'
-    }, "\uC778\uC0AC"), ",", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '계약, 기획, 기능명세, 업무 조율, 수금 등'
-    }, "\uACE0\uAC1D \uC751\uB300"), ",", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '급여 계산, 부가가치세, 연말 정산'
-    }, "\uC138\uBB34"), ",", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '시설 및 비품 구입, PC 관리 등'
-    }, "\uAD00\uB9AC"), "\uB97C \uC804\uBD80 \uB9E1\uC544 \uCC98\uB9AC\uD558\uC600\uC2B5\uB2C8\uB2E4.", /*#__PURE__*/ _reactDefault.default.createElement(_tooltipDefault.default, {
-        onHover: onHover,
-        onLeave: onLeave,
-        info: '프론트 2명, 백엔드 1명, 디자이너 1명, 대표'
-    }, "\uC801\uC740 \uC778\uC6D0"), "\uACFC \uC790\uBCF8\uC774\uC9C0\uB9CC \uC131\uC7A5\uD558\uB294 \uC2E4\uB825\uACFC \uD68C\uC0AC\uB97C \uBCF4\uACE0 \uC990\uAC81\uAC8C \uC77C\uD560 \uC218 \uC788\uC5C8\uC2B5\uB2C8\uB2E4. \uB2E4\uC591\uD55C \uC5C5\uBB34 \uACBD\uD5D8\uC73C\uB85C \uB113\uC740 \uC2DC\uAC01\uC774 \uC0DD\uACBC\uC9C0\uB9CC, \uC774\uB807\uAC8C \uC77C\uC744 \uD574\uC11C\uB294 \uC804\uBB38\uAC00\uAC00 \uB418\uAE30\uB294 \uC5B4\uB835\uACA0\uB2E4\uB294 \uC0DD\uAC01\uC5D0 \uD1F4\uC0AC\uD558\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC774\uD6C4 \uD504\uB9AC\uB79C\uC11C\uB85C \uC9E7\uC740 \uAE30\uAC04 \uC77C\uC744 \uD558\uC600\uACE0, \uC5BC\uB9C8 \uB4A4 \uACB0\uD63C\uC744 \uD558\uC600\uC2B5\uB2C8\uB2E4. \uADF8\uB9AC\uACE0 \uC544\uB0B4\uC758 \uC784\uC2E0\uBD80\uD130 \uC544\uB4E4\uC758 100\uC77C\uAE4C\uC9C0 \uC721\uC544\uC640 \uAC00\uC0AC\uB97C \uBCF4\uC870\uD558\uBA70 \uACF5\uBD80\uC640 \uD3EC\uD2B8\uD3F4\uB9AC\uC624 \uC791\uC5C5\uC744 \uBCD1\uD589\uD588\uACE0, \uD604\uC7AC \uCDE8\uC5C5\uC744 \uC900\uBE44\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.")))))));
+    }, width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC6F9 \uAC1C\uBC1C\uC790 ~ \uD604\uC7AC"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, introduceContent(thirdIntroContent, TooltipContent(thirdTooltipContent)))))))));
 };
 _s(AboutDetail, "ZBPPJ5NvtOXL4pkDANfW/eJSa9A=", false, function() {
     return [
@@ -1047,7 +1035,7 @@ _s(AboutDetail, "ZBPPJ5NvtOXL4pkDANfW/eJSa9A=", false, function() {
     ];
 });
 _c = AboutDetail;
-exports.default = /*#__PURE__*/ _c1 = _react.memo(AboutDetail);
+exports.default = /*#__PURE__*/ _c1 = _reactDefault.default.memo(AboutDetail);
 var _c, _c1;
 $RefreshReg$(_c, "AboutDetail");
 $RefreshReg$(_c1, "%default%");
@@ -1057,7 +1045,7 @@ $RefreshReg$(_c1, "%default%");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","swiper":"eH5h9","swiper/react/swiper-react.js":"eabGd","gsap":"2aTR0","gsap/ScrollTrigger":"41HI5","../../static/images/child.jpg":"9Cba2","../../static/images/shop1.jpg":"1CZzf","../../static/images/shop2.jpg":"1qAk8","../../static/images/shop3.jpg":"gHNI4","../../static/images/shop4.jpg":"8joFQ","../../static/images/current1.jpg":"bn565","../../static/images/current2.jpg":"fXsT1","../../static/images/current3.jpg":"eCkVm","./aboutDetail.scss":"4ubFp","swiper/swiper.scss":"3GX5N","swiper/modules/navigation/navigation.scss":"30lJ4","swiper/modules/pagination/pagination.scss":"1Gpfv","swiper/modules/effect-fade/effect-fade.scss":"iNnHv","smooth-scrollbar":"jRlDB","../../utils/useWindowSize":"4Wm0y","../../components/splitText":"6C3o4","../../components/tooltip":"bIqIv","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13","../../data/dataAbout/hashtagAbout.json":"5EcWp","../../data/dataAbout/introduceAbout.json":"66Txa"}],"eH5h9":[function(require,module,exports) {
+},{"react":"4mchR","react-redux":"lT3ms","../../Modules/commonValue":"l1RcA","swiper":"eH5h9","swiper/react/swiper-react.js":"eabGd","gsap":"2aTR0","gsap/ScrollTrigger":"41HI5","../../static/images/child.jpg":"9Cba2","../../static/images/shop1.jpg":"1CZzf","../../static/images/shop2.jpg":"1qAk8","../../static/images/shop3.jpg":"gHNI4","../../static/images/shop4.jpg":"8joFQ","../../static/images/current1.jpg":"bn565","../../static/images/current2.jpg":"fXsT1","../../static/images/current3.jpg":"eCkVm","./aboutDetail.scss":"4ubFp","swiper/swiper.scss":"3GX5N","swiper/modules/navigation/navigation.scss":"30lJ4","swiper/modules/pagination/pagination.scss":"1Gpfv","swiper/modules/effect-fade/effect-fade.scss":"iNnHv","../../utils/useWindowSize":"4Wm0y","../../components/splitText":"6C3o4","../../components/tooltip":"bIqIv","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"9pz13","../../data/dataAbout/hashtagAbout.json":"5EcWp","../../data/dataAbout/introduceAbout.json":"66Txa"}],"eH5h9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 /**
@@ -10405,7 +10393,7 @@ var _tooltipScss = require("./tooltip.scss");
 var _s = $RefreshSig$();
 const Tooltip = ({ onHover , onLeave , children , info  })=>{
     _s();
-    const [tooltipState, setTooltipState] = _react.useState(false);
+    const [tooltipState, setTooltipState] = _reactDefault.default.useState(false);
     const hoverTooltip = ()=>{
         onHover(' pagination-cursor');
         setTooltipState(true);
@@ -10438,7 +10426,7 @@ $RefreshReg$(_c, "Tooltip");
 module.exports = JSON.parse("{\"hashtagFirst\":[{\"id\":1,\"title\":\"# 애자일\",\"text\":\"'정해진 대로', '늘 하던 대로' 도 좋지만 작업 간에 알게 되는 다양한 방식과 변화를 유연하게 받아들이고 빠르게 검토하여 곧바로 적용하는 편입니다.\",\"back\":\"AGILE\"},{\"id\":2,\"title\":\"# 될 때까지\",\"text\":\"목표가 생기고 필요하다고 생각되면, 많은 노력과 시간이 들더라도 꿋꿋이 해내어 성취감을 얻는 걸 좋아합니다. 처음의 생각과 다르게 아주 많이 어렵고, 말도 안 되더라도 말입니다.\",\"back\":\"Until it works\"},{\"id\":3,\"title\":\"# 솔직한\",\"text\":\"당연한데 의외로 많은 사람이 못하고 있습니다. 잘못한 걸 잘했다고, 나쁜 것 을 좋다고 하지 않습니다. 단점과 잘못을 포장하지 않습니다. 양보를 영원히 할 수는 없고, 부끄러움 없이는 나아지기 어렵다고 생각합니다.\",\"back\":\"Honest\"}],\"hashtagSecond\":[{\"id\":4,\"title\":\"# 아이디어\",\"text\":\"항상 자신 있는 부분입니다. 아주 사소하고 작은 것부터 당연하다고 여기는 것까지 뻔한 것을 뻔하게 하기 싫어합니다. 남과 같이 해서는 남보다 나아질 수 없다고 생각합니다.\",\"back\":\"Idea\"},{\"id\":5,\"title\":\"# 계획적인\",\"text\":\"일의 순서와 계획을 논리적으로 잘 세우고, 갑작스러운 변수에 대한 대비도 잘 하는 편입니다. 메사에 침착하고 효율적일 수 있습니다.\",\"back\":\"Premeditated\"},{\"id\":6,\"title\":\"# 세심한\",\"text\":\"정리 정돈을 잘하며, 나의 행동과 주변 환경을 잘 인지하는 편입니다. 15세 이후 제 물건을 잃어버린 적이 없습니다. 차분하고 침착하게 생활합니다.\",\"back\":\"Meticulous\"}]}");
 
 },{}],"66Txa":[function(require,module,exports) {
-module.exports = JSON.parse("{\"introduce\":[{\"first\":\"초등학교부터 사용한 컴퓨터는 제게는 너무 신기하고 배울 것이 참 많은 기기였습니다. 학교에서 배우는 공부보다 컴퓨터의 탐색기를 하나하나 열어보고 윈도우의 기능과 타자 연습, 다양한 게임들을 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 당시 대학교수셨던 아버지의 $$책$$ 출간을 돕기도 했습니다. 이후 미술 전공을 준비했었지만, 보여주기식의 반복적이고 지루한 입시 미술이 적성에 맞지 않아 고등학교를 졸업하고 바로 입대하였습니다.\"}]}");
+module.exports = JSON.parse("{\"introduce\":{\"first\":\"초등학교부터 사용한 컴퓨터는 제게는 너무 신기하고 배울 것이 참 많은 기기였습니다. 학교에서 배우는 공부보다 컴퓨터의 탐색기를 하나하나 열어보고 윈도우의 기능과 타자 연습, 다양한 게임들을 해보는 게 가장 큰 재미였습니다. 일찍 배운 컴퓨터 타자로 당시 대학교수셨던 아버지의 $$책$$ 출간을 돕기도 했습니다. 이후 미술 전공을 준비했었지만, 보여주기식의 반복적이고 지루한 입시 미술이 적성에 맞지 않아 고등학교를 졸업하고 바로 입대하였습니다.\",\"second\":\"22세에 전역을 하고는 다양한 일을 경험했습니다. 2~30대로 이루어진 $$건설팀$$에 들어가 1년 정도 몸을 쓰는 일도 해보았고, 2년 정도 $$다양한 공장$$에서 OP(Operator) 일도 하였습니다. 이후 학생 시절에 PC방 아르바이트 일이 즐거웠던 기억이 있어 $$프랜차이즈$$PC방에 점장으로 취업하여 2년간 일했습니다. 하드웨어에 대한 공부도 많이 하였고, $$전국 매출 상위 1%$$의 매장이 되어 또 다른 프랜차이즈 기업에서 스카우트 제의를 받아 $$여러 매장$$을 오픈 및 관리 하였습니다. 하지만 해당 분야에서 좋은 여건에 있었음에도 앞으로 전망이 밝지 않다는 판단에 그만두게 되었습니다. 이후 $$웹 사이트$$를 운영하려는 지인을 돕게 되면서 웹 개발자의 영역을 알게 되었습니다. 대부분 구글과 간단한 서적으로 독학하여 퍼블리싱을 배우고 $$지인들과 팀$$을 꾸려 외주 업무를 받아서 처리하기 시작했습니다.\",\"third\":\"함께 일하는 팀은 점점 전문화되어 $$회사$$가 되었고, 저는 설립 멤버로서 개발과 회사 운영을 함께 해왔습니다. 주니어 개발자였지만 기획자가 따로 없었으므로 서비스의 개발과 개선 등을 기획부터 해왔고, 회사의 $$인사$$, $$고객 응대$$, $$세무$$, $$관리$$를 전부 맡아 처리하였습니다. $$적은 인원$$과 자본이지만 성장하는 실력과 회사를 보고 즐겁게 일할 수 있었습니다. 다양한 업무 경험으로 넓은 시각이 생겼지만, 이렇게 일을 해서는 전문가가 되기는 어렵겠다는 생각에 퇴사하게 되었습니다. 이후 프리랜서로 짧은 기간 일을 하였고, 얼마 뒤 결혼을 하였습니다. 그리고 아내의 임신부터 아들의 100일까지 육아와 가사를 보조하며 공부와 포트폴리오 작업을 병행했고, 현재 취업을 준비하고 있습니다.\"},\"tooltipInfo\":{\"first\":[{\"info\":\"도벽@환경도예\",\"text\":\"책\"}],\"second\":[{\"info\":\"시스템 동바리 (prefabricated shoring system)\",\"text\":\"건설팀\"},{\"info\":\"LED, LCD, Clalen (콘택트 렌즈), PCI\",\"text\":\"다양한 공장\"},{\"info\":\"시즌아이(seasoni)\",\"text\":\"프랜차이즈\"},{\"info\":\"피카라이브 전국 비교 보고서 기준\",\"text\":\"전국 매출 상위 1%\"},{\"info\":\"오산(2), 천안, 평택\",\"text\":\"여러 매장\"},{\"info\":\"일반기업 솔루션 쇼핑몰\",\"text\":\"웹 사이트\"},{\"info\":\"본인 외 디자이너, 계약담당 등 총 3인\",\"text\":\"지인들과 팀\"}],\"third\":[{\"info\":\"크리에이티브코드(CC)\",\"text\":\"회사\"},{\"info\":\"면접, 채용, 근태, 해고, 정부 혜택 처리 등\",\"text\":\"인사\"},{\"info\":\"계약, 기획, 기능명세, 회의, 수금 등\",\"text\":\"고객 응대\"},{\"info\":\"급여 명세, 연말 정산\",\"text\":\"세무\"},{\"info\":\"시설 및 비품 구입, PC 및 채굴기 관리 등\",\"text\":\"관리\"},{\"info\":\"프론트 2명, 백엔드 1명, 디자이너 1명, 대표\",\"text\":\"적은 인원\"}]}}");
 
 },{}]},["emU3S","cl2ti"], null, "parcelRequire2041")
 

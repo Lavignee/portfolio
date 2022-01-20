@@ -7436,15 +7436,15 @@ header .right-area .gnb-button .menu-img.invert path, .gnb-area .right-area .gnb
 .main-section .main-content-frame {
   position: relative;
 }
-.main-section .main-content-frame .test {
+.main-section .main-content-frame .video-delay-cover {
   position: fixed;
   left: 0;
   width: 100vw;
   height: 100%;
   background-color: #424242;
   pointer-events: none;
-  -webkit-animation: hide 3s 2s linear forwards;
-          animation: hide 3s 2s linear forwards;
+  -webkit-animation: hide 2s 1s linear forwards;
+          animation: hide 2s 1s linear forwards;
 }
 .main-section .main-content-frame .main-text-frame {
   text-align: center;
@@ -7459,8 +7459,8 @@ header .right-area .gnb-button .menu-img.invert path, .gnb-area .right-area .gnb
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  -webkit-animation: show 3s 0.5s linear forwards;
-          animation: show 3s 0.5s linear forwards;
+  -webkit-animation: show 3s linear forwards;
+          animation: show 3s linear forwards;
 }
 .main-section .main-content-frame .main-text-frame .main-text span {
   display: block;

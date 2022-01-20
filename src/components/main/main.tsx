@@ -170,7 +170,7 @@ const Main = ({ onHover, onLeaves }) => {
       </div>
 
       <div className='main-content-frame'>
-        <div className='test'></div>
+        <div className='video-delay-cover'></div>
         <div className='main-text-frame'>
           <div
             className='main-text'
