@@ -18,21 +18,21 @@ const Main = ({ onHover, onLeaves }) => {
   // const src1280 = new URL('../../static/videos/video1280.mp4', import.meta.url);
   const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
   const dispatch = useDispatch();
-  const onScrollIntro = useCallback(
-    () => dispatch(splitTextStart('intro')),
-    [dispatch]
-  );
-  const onScrollIntro2 = useCallback(
-    () => dispatch(splitTextStart('intro2')),
-    [dispatch]
-  );
+  const onScrollIntro = useCallback(() => dispatch(splitTextStart('intro')), [dispatch]);
+  const onScrollIntro2 = useCallback(() => dispatch(splitTextStart('intro2')), [dispatch]);
   // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
-  const [currentGsapState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentGsapState],
-    shallowEqual
+  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual
   );
 
   const [canvasReady, setCanvasReady] = useState(true);
+
+  // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
+  const delaySplit = (target: string) => {
+    const timeOut = setTimeout(() => {
+      target === 'intro' ? onScrollIntro() : onScrollIntro2();
+      clearTimeout(timeOut);
+    }, 0);
+  };
 
   const mainComponentGSAP = useCallback(() => {
     const canvasFrames = gsap.utils.toArray('.video-area .canvas-frame');
@@ -92,7 +92,8 @@ const Main = ({ onHover, onLeaves }) => {
       scrollTrigger: {
         trigger: '.intro-ment',
         start: 'top center',
-        onEnter: () => onScrollIntro(),
+        onEnter: () => delaySplit('intro'),
+        // onEnter: () => onScrollIntro(),
         // onEnterBack: () => onScrollIntro(),
         end: 'bottom center',
       },
@@ -102,7 +103,8 @@ const Main = ({ onHover, onLeaves }) => {
       scrollTrigger: {
         trigger: '.intro-ment',
         start: 'top center-=400',
-        onEnter: () => onScrollIntro2(),
+        onEnter: () => delaySplit('intro2'),
+        // onEnter: () => onScrollIntro2(),
         // onEnterBack: () => onScrollIntro2(),
         end: 'bottom center-=400',
       },
@@ -190,7 +192,7 @@ const Main = ({ onHover, onLeaves }) => {
                 scroll={'intro'}
                 index={'int'}
                 ready={canvasReady}
-                depth>
+              >
                 I've been a front developer for 4 years.
               </SplitText>
 
@@ -200,7 +202,7 @@ const Main = ({ onHover, onLeaves }) => {
                 scroll={'intro2'}
                 index={'intT'}
                 ready={canvasReady}
-                depth>
+              >
                 This is the portfolio that introduces me for the first time.
               </SplitText>
             </div>

@@ -4,6 +4,19 @@ import { RootState } from '../../Modules';
 
 import './splitText.scss';
 
+// Props로 받는 값들에 대한 interface 정의.
+interface SplitTextProps {
+  children: string;
+  scroll: string;
+  index: string;
+  animation: string;
+  setTime: number;
+  delay: boolean;
+  ready: boolean;
+  depth: boolean;
+  noContainer: boolean;
+}
+
 const SplitText = ({
   children,
   scroll,
@@ -14,20 +27,19 @@ const SplitText = ({
   ready,
   depth,
   noContainer,
-}) => {
-  const [currentSplitText] = useSelector(
-    (state: RootState) => [state.CommonValue.currentSplitText],
-    shallowEqual
-  );
+}: SplitTextProps) => {
+  // redux useSelector 정의.
+  const [currentSplitText] = useSelector((state: RootState) => [state.CommonValue.currentSplitText], shallowEqual);
 
   let childrenLength = 0;
-  const [willChange, setWillChange] = useState(false);
-  const [happen, setHappen] = useState([]);
-  const [split, setSplit] = useState([]);
-  const splittingTimer = useRef(null);
+  const [willChange, setWillChange] = React.useState(false);
+  const [happen, setHappen] = React.useState<string[]>([]);
+  const [split, setSplit] = React.useState<JSX.Element[]>([]);
+  const splittingTimer = React.useRef<any>(null);
 
-  const Splitting = useCallback(() => {
-    if (childrenLength < children.length + 1) {
+  // children의 length만큼 state에 
+  const Splitting = React.useCallback(() => {
+    if (childrenLength <= children.length) {
       childrenLength++
       depth
         ? setSplit(
@@ -63,15 +75,10 @@ const SplitText = ({
         },
         setTime ? setTime : 30
       );
-
-      return () => {
-        clearTimeout(splittingTimer.current);
-        splittingTimer.current = null;
-      };
     }
   }, [animation, children, childrenLength, depth, index, setTime]);
 
-  const SplittingReady = useCallback(() => {
+  const SplittingReady = React.useCallback(() => {
     if (
       (currentSplitText === scroll && !happen.includes(currentSplitText)) ||
       scroll === 'all'
@@ -81,21 +88,19 @@ const SplitText = ({
     }
   }, [Splitting, currentSplitText, happen, scroll]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       clearTimeout(splittingTimer.current);
       splittingTimer.current = null;
     };
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     splittingTimer.current = null;
     SplittingReady();
+  }, [SplittingReady, currentSplitText]);
 
-    return () => (splittingTimer.current = null);
-  }, [currentSplitText]);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (ready) {
       setWillChange(true);
     }
@@ -122,7 +127,8 @@ const SplitText = ({
 
 SplitText.defaultProps = {
   setTime: null,
-  delay: null,
+  depth: true,
+  delay: false,
   noContainer: false
 }
 

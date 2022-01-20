@@ -100,8 +100,7 @@ const Contact = ({ onHover, onLeave }) => {
                   animation={'up'}
                   scroll={'all'}
                   index={'con1'}
-                  ready={contactSplitTextReady}
-                  depth>
+                  ready={contactSplitTextReady} >
                   What should I do for you?
                 </SplitText>
               )}
@@ -110,8 +109,7 @@ const Contact = ({ onHover, onLeave }) => {
                   animation={'up'}
                   scroll={'all'}
                   index={'con2'}
-                  ready={contactSplitTextReady}
-                  depth>
+                  ready={contactSplitTextReady} >
                   Could you tell me about the project?
                 </SplitText>
               )}
@@ -120,8 +118,7 @@ const Contact = ({ onHover, onLeave }) => {
                   animation={'up'}
                   scroll={'all'}
                   index={'con3'}
-                  ready={contactSplitTextReady}
-                  depth>
+                  ready={contactSplitTextReady} >
                   I will reply by email as soon as possible.
                 </SplitText>
               )}

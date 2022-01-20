@@ -76,15 +76,15 @@
     opacity: 0;
     transform: translateX(-25%);
   }
-  
+
   5% {
     opacity: 1;
   }
-  
+
   95% {
     opacity: 1;
   }
-  
+
   100% {
     opacity: 0;
     transform: translateX(25%);
@@ -116,16 +116,16 @@
     opacity: 0;
     text-shadow: -30px 0px 10px $bl-3;
   }
-  
+
   5% {
     opacity: 1;
   }
-  
+
   95% {
     opacity: 1;
     text-shadow: -10px 0px 10px $bl-3;
   }
-  
+
   100% {
     opacity: 0;
     text-shadow: 10px 0px 30px $bl-1;
@@ -158,16 +158,16 @@
     opacity: 0;
     text-shadow: -15px 0px 5px $bl-2;
   }
-  
+
   5% {
     opacity: 1;
   }
-  
+
   95% {
     opacity: 1;
     text-shadow: -5px 0px 5px $bl-2;
   }
-  
+
   100% {
     opacity: 0;
     text-shadow: 5px 0px 10px $bl-1;
@@ -201,7 +201,7 @@
     opacity: 0;
     margin-left: -100%;
   }
-  
+
   100% {
     opacity: 0.2;
     margin-left: 30%;
@@ -219,7 +219,7 @@
     border-radius: 0%;
     transform: rotate(-320deg) translate(0%, -10%) scale(1.7);
   }
-  
+
   100% {
     border-radius: 10%;
     transform: rotate(-405deg) translate(-40%, -220%) scale(2);
@@ -236,7 +236,7 @@
     border-radius: 0%;
     transform: rotate(-320deg) translate(0%, -10%) scale(1.8);
   }
-  
+
   100% {
     border-radius: 10%;
     transform: rotate(-405deg) translate(-40%, -220%) scale(2);
@@ -253,7 +253,7 @@
     border-radius: 0%;
     transform: rotate(-320deg) translate(0%, -10%) scale(2);
   }
-  
+
   100% {
     border-radius: 10%;
     transform: rotate(-405deg) translate(-40%, -220%) scale(2);
@@ -270,7 +270,7 @@
     border-radius: 0%;
     transform: rotate(-320deg) translate(0%, -10%) scale(2.3);
   }
-  
+
   100% {
     border-radius: 10%;
     transform: rotate(-405deg) translate(-40%, -250%) scale(2);
@@ -287,7 +287,7 @@
     border-radius: 0%;
     transform: rotate(-320deg) translate(-50%, -70%) scale(2.8);
   }
-  
+
   100% {
     border-radius: 10%;
     transform: rotate(-405deg) translate(-40%, -300%) scale(1.1);
@@ -300,11 +300,11 @@
   0% {
     background-color: transparent;
   }
-  
+
   50% {
     background-color: $bl-2;
   }
-  
+
   100% {
     background-color: transparent;
   }
@@ -313,11 +313,11 @@
 // neonStyleTest
 @keyframes neon {
   from {
-    text-shadow: 0 0 10px $s-m, 0 0 20px $s-m
+    text-shadow: 0 0 10px $s-m, 0 0 20px $s-m;
     // text-shadow: 0 0 10px $s-l, 0 0 20px $s-l, 0 0 30px $s-l, 0 0 40px $p-m, 0 0 70px $p-m, 0 0 80px $p-m, 0 0 100px $p-m, 0 0 150px $p-m;
   }
   to {
-    text-shadow: 0 0 5px $s-m, 0 0 10px $s-m
+    text-shadow: 0 0 5px $s-m, 0 0 10px $s-m;
     // text-shadow: 0 0 5px $s-l, 0 0 10px $s-l, 0 0 15px $s-l, 0 0 20px $p-m, 0 0 35px $p-m, 0 0 40px $p-m, 0 0 50px $p-m, 0 0 75px $p-m;
   }
 }

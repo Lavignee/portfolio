@@ -46015,6 +46015,13 @@ const Main = ({ onHover , onLeaves  })=>{
         ]
     , _reactRedux.shallowEqual);
     const [canvasReady, setCanvasReady] = _react.useState(true);
+    // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
+    const delaySplit = (target)=>{
+        const timeOut = setTimeout(()=>{
+            target === 'intro' ? onScrollIntro() : onScrollIntro2();
+            clearTimeout(timeOut);
+        }, 0);
+    };
     const mainComponentGSAP = _react.useCallback(()=>{
         const canvasFrames = _gsap.gsap.utils.toArray('.video-area .canvas-frame');
         const targetToLefts = _gsap.gsap.utils.toArray('.video-area .left');
@@ -46069,8 +46076,9 @@ const Main = ({ onHover , onLeaves  })=>{
             scrollTrigger: {
                 trigger: '.intro-ment',
                 start: 'top center',
-                onEnter: ()=>onScrollIntro()
+                onEnter: ()=>delaySplit('intro')
                 ,
+                // onEnter: () => onScrollIntro(),
                 // onEnterBack: () => onScrollIntro(),
                 end: 'bottom center'
             }
@@ -46079,8 +46087,9 @@ const Main = ({ onHover , onLeaves  })=>{
             scrollTrigger: {
                 trigger: '.intro-ment',
                 start: 'top center-=400',
-                onEnter: ()=>onScrollIntro2()
+                onEnter: ()=>delaySplit('intro2')
                 ,
+                // onEnter: () => onScrollIntro2(),
                 // onEnterBack: () => onScrollIntro2(),
                 end: 'bottom center-=400'
             }
@@ -46172,15 +46181,13 @@ const Main = ({ onHover , onLeaves  })=>{
         setTime: 5,
         scroll: 'intro',
         index: 'int',
-        ready: canvasReady,
-        depth: true
+        ready: canvasReady
     }, "I've been a front developer for 4 years."), /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         setTime: 5,
         scroll: 'intro2',
         index: 'intT',
-        ready: canvasReady,
-        depth: true
+        ready: canvasReady
     }, "This is the portfolio that introduces me for the first time.")))))));
 };
 _s(Main, "EICE3KLLHk/otQCKUZmkMwrC1mI=", false, function() {
@@ -46476,17 +46483,19 @@ var _splitTextScss = require("./splitText.scss");
 var _s = $RefreshSig$();
 const SplitText = ({ children , scroll , index , animation , setTime , delay , ready , depth , noContainer ,  })=>{
     _s();
+    // redux useSelector 정의.
     const [currentSplitText] = _reactRedux.useSelector((state)=>[
             state.CommonValue.currentSplitText
         ]
     , _reactRedux.shallowEqual);
     let childrenLength = 0;
-    const [willChange, setWillChange] = useState(false);
-    const [happen, setHappen] = useState([]);
-    const [split1, setSplit] = useState([]);
-    const splittingTimer = useRef(null);
-    const Splitting = useCallback(()=>{
-        if (childrenLength < children.length + 1) {
+    const [willChange, setWillChange] = _reactDefault.default.useState(false);
+    const [happen, setHappen] = _reactDefault.default.useState([]);
+    const [split1, setSplit] = _reactDefault.default.useState([]);
+    const splittingTimer = _reactDefault.default.useRef(null);
+    // children의 length만큼 state에 
+    const Splitting = _reactDefault.default.useCallback(()=>{
+        if (childrenLength <= children.length) {
             childrenLength++;
             depth ? setSplit((split)=>[
                     ...split,
@@ -46508,10 +46517,6 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
             splittingTimer.current = setTimeout(()=>{
                 Splitting();
             }, setTime ? setTime : 30);
-            return ()=>{
-                clearTimeout(splittingTimer.current);
-                splittingTimer.current = null;
-            };
         }
     }, [
         animation,
@@ -46521,7 +46526,7 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         index,
         setTime
     ]);
-    const SplittingReady = useCallback(()=>{
+    const SplittingReady = _reactDefault.default.useCallback(()=>{
         if (currentSplitText === scroll && !happen.includes(currentSplitText) || scroll === 'all') {
             Splitting();
             setHappen([
@@ -46535,21 +46540,20 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         happen,
         scroll
     ]);
-    useEffect(()=>{
+    _reactDefault.default.useEffect(()=>{
         return ()=>{
             clearTimeout(splittingTimer.current);
             splittingTimer.current = null;
         };
     }, []);
-    useEffect(()=>{
+    _reactDefault.default.useEffect(()=>{
         splittingTimer.current = null;
         SplittingReady();
-        return ()=>splittingTimer.current = null
-        ;
     }, [
+        SplittingReady,
         currentSplitText
     ]);
-    useEffect(()=>{
+    _reactDefault.default.useEffect(()=>{
         if (ready) setWillChange(true);
         return ()=>setWillChange(false)
         ;
@@ -46574,7 +46578,8 @@ _s(SplitText, "+GRcs8LOGru/U5xYqfkIrokUCKg=", false, function() {
 _c = SplitText;
 SplitText.defaultProps = {
     setTime: null,
-    delay: null,
+    depth: true,
+    delay: false,
     noContainer: false
 };
 exports.default = SplitText;
@@ -47782,20 +47787,17 @@ const Contact = ({ onHover , onLeave  })=>{
         animation: 'up',
         scroll: 'all',
         index: 'con1',
-        ready: contactSplitTextReady,
-        depth: true
+        ready: contactSplitTextReady
     }, "What should I do for you?"), currentContactState && qnumberRef.current === 2 && /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         scroll: 'all',
         index: 'con2',
-        ready: contactSplitTextReady,
-        depth: true
+        ready: contactSplitTextReady
     }, "Could you tell me about the project?"), currentContactState && qnumberRef.current === 3 && /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         scroll: 'all',
         index: 'con3',
-        ready: contactSplitTextReady,
-        depth: true
+        ready: contactSplitTextReady
     }, "I will reply by email as soon as possible."))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'contact-content-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {

@@ -868,6 +868,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
     };
     // 화면 진입 후 DOM 랜더 시,
     _reactDefault.default.useEffect(()=>{
+        gsapReady(false);
         // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
         filmReady(true);
         // 현재 컨텐츠를 기준으로 스크롤 재생성.
@@ -963,8 +964,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             scroll: textCondition1.scroll,
             setTime: 100,
             index: textCondition1.index1,
-            ready: splitTextReady,
-            depth: true
+            ready: splitTextReady
         }, _hashtagAboutJsonDefault.default.hashtagFirst[idx].title)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'type-p'
         }, /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
@@ -972,8 +972,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             scroll: textCondition1.scroll,
             setTime: 15,
             index: textCondition1.index2,
-            ready: splitTextReady,
-            depth: true
+            ready: splitTextReady
         }, _hashtagAboutJsonDefault.default.hashtagFirst[idx].text)))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: `back-keyword ${textCondition1.align}`
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, _hashtagAboutJsonDefault.default.hashtagFirst[idx].back)))

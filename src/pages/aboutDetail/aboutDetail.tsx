@@ -334,6 +334,7 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
 
   // 화면 진입 후 DOM 랜더 시,
   React.useEffect(() => {
+    gsapReady(false);
     // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
     filmReady(true);
     // 현재 컨텐츠를 기준으로 스크롤 재생성.
@@ -422,8 +423,7 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
                         scroll={textCondition.scroll}
                         setTime={100}
                         index={textCondition.index1}
-                        ready={splitTextReady}
-                        depth>
+                        ready={splitTextReady} >
                         {hashtag.hashtagFirst[idx].title}
                       </SplitText>
                     </h2>
@@ -434,8 +434,7 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
                         scroll={textCondition.scroll}
                         setTime={15}
                         index={textCondition.index2}
-                        ready={splitTextReady}
-                        depth>
+                        ready={splitTextReady} >
                         {hashtag.hashtagFirst[idx].text}
                       </SplitText>
                     </div>
