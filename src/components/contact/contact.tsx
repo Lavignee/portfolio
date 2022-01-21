@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 // import { changeContactState, changeContactButtonDelay } from '../../Modules/commonValue';
 import { isMobile } from 'react-device-detect';
@@ -20,12 +20,8 @@ const Contact = ({ onHover, onLeave }) => {
   // const dispatch = useDispatch();
   // const onChangeContactState = () => dispatch(changeContactState());
   // const onChangeContactButtonDelay = (value) => dispatch(changeContactButtonDelay(value));
-  const [currentContactState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentContactState],
-    shallowEqual
-  );
+  const [currentContactState] = useSelector((state: RootState) => [state.CommonValue.currentContactState], shallowEqual);
   // const [currentContactButtonDelay] = useSelector(state => [state.CommonValue.currentContactButtonDelay], shallowEqual);
-  const [contactSplitTextReady, setContactSplitTextReady] = useState(false);
   const [qnumber, setQnumber] = useState(1);
   const qnumberRef = useRef(qnumber);
   qnumberRef.current = qnumber;
@@ -39,14 +35,12 @@ const Contact = ({ onHover, onLeave }) => {
   // }
 
   const contactAnimation = () => {
-    if (currentContactState) {
-      if (qnumberRef.current === 1) {
-        setQnumber(2);
-      } else if (qnumberRef.current === 2) {
-        setQnumber(3);
-      } else if (qnumberRef.current === 3) {
-        setQnumber(1);
-      }
+    if (qnumberRef.current === 1) {
+      setQnumber(2);
+    } else if (qnumberRef.current === 2) {
+      setQnumber(3);
+    } else if (qnumberRef.current === 3) {
+      setQnumber(1);
     }
   };
 
@@ -54,17 +48,11 @@ const Contact = ({ onHover, onLeave }) => {
   // ContactButtonDelay();
   // }, [currentContactState]);
 
-  useEffect(() => {
-    if (currentContactState) {
-      setContactSplitTextReady(true);
-    }
-  }, [currentContactState]);
-
   useInterval(
     () => {
       contactAnimation();
     },
-    contactSplitTextReady ? 6000 : null
+    currentContactState ? 6000 : null
   );
 
   return (
@@ -100,7 +88,7 @@ const Contact = ({ onHover, onLeave }) => {
                   animation={'up'}
                   scroll={'all'}
                   index={'con1'}
-                  ready={contactSplitTextReady} >
+                >
                   What should I do for you?
                 </SplitText>
               )}
@@ -109,7 +97,7 @@ const Contact = ({ onHover, onLeave }) => {
                   animation={'up'}
                   scroll={'all'}
                   index={'con2'}
-                  ready={contactSplitTextReady} >
+                >
                   Could you tell me about the project?
                 </SplitText>
               )}
@@ -118,7 +106,7 @@ const Contact = ({ onHover, onLeave }) => {
                   animation={'up'}
                   scroll={'all'}
                   index={'con3'}
-                  ready={contactSplitTextReady} >
+                >
                   I will reply by email as soon as possible.
                 </SplitText>
               )}

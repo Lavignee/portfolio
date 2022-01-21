@@ -11,8 +11,6 @@ interface SplitTextProps {
   index: string;
   animation: string;
   setTime: number;
-  delay: boolean;
-  ready: boolean;
   depth: boolean;
   noContainer: boolean;
 }
@@ -23,8 +21,6 @@ const SplitText = ({
   index,
   animation,
   setTime,
-  delay,
-  ready,
   depth,
   noContainer,
 }: SplitTextProps) => {
@@ -32,83 +28,60 @@ const SplitText = ({
   const [currentSplitText] = useSelector((state: RootState) => [state.CommonValue.currentSplitText], shallowEqual);
 
   let childrenLength = 0;
-  const [willChange, setWillChange] = React.useState(false);
-  const [happen, setHappen] = React.useState<string[]>([]);
+  const [willChange, setWillChange] = React.useState(true);
+  // const [happen, setHappen] = React.useState<string[]>([]);
   const [split, setSplit] = React.useState<JSX.Element[]>([]);
   const splittingTimer = React.useRef<any>(null);
 
-  // children의 length만큼 state에 
+  // children으로 들어온 string을 각각 DOM으로 감싸서 배열에 입력.
   const Splitting = React.useCallback(() => {
     if (childrenLength <= children.length) {
       childrenLength++
-      depth
-        ? setSplit(
-          (split) => [
-            ...split,
+      setSplit((split) => [...split,
+      <div
+        key={index + (childrenLength - 1)}
+        className={`${depth ? 'split-depth-frame' : `split-target ${animation ? animation : 'default'}`}`}>
+        {depth ? (
+          <>
+            <span>
+              {children.substring(childrenLength - 1, childrenLength)}
+            </span>
             <div
-              key={index + (childrenLength - 1)}
-              className='split-depth-frame'>
-              <span>
-                {children.substring(childrenLength - 1, childrenLength)}
-              </span>
-              <div
-                className={`split-target ${animation ? animation : 'default'}`}>
-                {children.substring(childrenLength - 1, childrenLength)}
-              </div>
-            </div>,
-          ],
-        )
-        : setSplit(
-          (split) => [
-            ...split,
-            <div
-              key={index + (childrenLength - 1)}
               className={`split-target ${animation ? animation : 'default'}`}>
               {children.substring(childrenLength - 1, childrenLength)}
-            </div>,
-          ],
-        );
+            </div>
+          </>
+        ) : (
+          children.substring(childrenLength - 1, childrenLength)
+        )}
+      </div>
+      ])
 
-      splittingTimer.current = setTimeout(
-        () => {
-          Splitting();
-        },
-        setTime ? setTime : 30
-      );
+      splittingTimer.current = setTimeout(() => {
+        Splitting();
+      }, setTime ? setTime : 30);
+    } else {
+      setWillChange(false);
     }
   }, [animation, children, childrenLength, depth, index, setTime]);
 
-  const SplittingReady = React.useCallback(() => {
-    if (
-      (currentSplitText === scroll && !happen.includes(currentSplitText)) ||
-      scroll === 'all'
-    ) {
-      Splitting();
-      setHappen([...happen, currentSplitText]);
-    }
-  }, [Splitting, currentSplitText, happen, scroll]);
-
+  // 화면 벗어날 시 타이머 삭제.
   React.useEffect(() => {
     return () => {
       clearTimeout(splittingTimer.current);
-      splittingTimer.current = null;
+      setWillChange(false);
     };
   }, []);
 
+  // currentSplitText가 prop으로 들어온 param과 일치하거나 all(항상)인 경우 split 동작.
   React.useEffect(() => {
-    splittingTimer.current = null;
-    SplittingReady();
-  }, [SplittingReady, currentSplitText]);
-
-  React.useEffect(() => {
-    if (ready) {
-      setWillChange(true);
+    if (currentSplitText === scroll || scroll === 'all') {
+      Splitting();
     }
-    return () => setWillChange(false);
-  }, [ready]);
+  }, [Splitting, currentSplitText, scroll]);
 
   return (
-    <div className={`split-frame${delay ? ` delay-${delay}` : ''}`}>
+    <div className='split-frame'>
       {noContainer ? (
         { split }
       ) : (
@@ -128,7 +101,6 @@ const SplitText = ({
 SplitText.defaultProps = {
   setTime: null,
   depth: true,
-  delay: false,
   noContainer: false
 }
 

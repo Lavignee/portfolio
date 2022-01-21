@@ -51,14 +51,6 @@ export const smoothTop = (currentSmoothTopState: boolean) => ({
   type: SMOOTH_TOP,
   currentSmoothTopState
 });
-export const changeSmoothScrollState = (currentScrollState: boolean) => ({
-  type: SMOOTH_SCROLL_STATE,
-  currentScrollState
-});
-export const changeSmoothScrollStateFast = (currentScrollStateFast: boolean) => ({
-  type: SMOOTH_SCROLL_STATE_FAST,
-  currentScrollStateFast
-});
 export const makeSmoothScroll = (makeScrollState: boolean) => ({
   type: MAKE_SCROLL_STATE,
   makeScrollState
@@ -91,8 +83,6 @@ type CommonAction =
   | ReturnType<typeof changeSwitchAnimation>
   | ReturnType<typeof changeFilmState>
   | ReturnType<typeof smoothTop>
-  | ReturnType<typeof changeSmoothScrollState>
-  | ReturnType<typeof changeSmoothScrollStateFast>
   | ReturnType<typeof makeSmoothScroll>
   | ReturnType<typeof checkScrollValue>
   | ReturnType<typeof checkScrollLimit>
@@ -111,10 +101,10 @@ interface CommonState {
   currentSwitchAnimation: boolean;
   currentFilmState: boolean;
   currentSmoothTopState: boolean;
-  currentScrollState: boolean;
-  currentScrollStateFast: boolean;
   makeScrollState: boolean;
+  // currentScrollValue: 스크롤 퍼센트 계산을 위한 현재 값.
   currentScrollValue: number;
+  // currentScrollLimit: 스크롤 퍼센트 계산을 위한 max 값.
   currentScrollLimit: number;
   currentGsapState: boolean;
   currentSplitText: string;
@@ -129,8 +119,6 @@ const initialState: CommonState = {
   currentSwitchAnimation: false,
   currentFilmState: false,
   currentSmoothTopState: false,
-  currentScrollState: false,
-  currentScrollStateFast: false,
   makeScrollState: false,
   currentScrollValue: 0,
   currentScrollLimit: 0,
@@ -184,16 +172,6 @@ const CommonValue = (state: CommonState = initialState, action: CommonAction) =>
       return {
         ...state,
         currentSmoothTopState: action.currentSmoothTopState
-      };
-    case SMOOTH_SCROLL_STATE:
-      return {
-        ...state,
-        currentScrollState: action.currentScrollState
-      };
-    case SMOOTH_SCROLL_STATE_FAST:
-      return {
-        ...state,
-        currentScrollStateFast: action.currentScrollStateFast
       };
     case MAKE_SCROLL_STATE:
       return {

@@ -102,19 +102,15 @@ interface AboutDetailProps {
 const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const onScrollAboutFirst = React.useCallback(() => dispatch(splitTextStart('aboutFirst')), [dispatch]);
-  const onScrollAboutSecond = React.useCallback(() => dispatch(splitTextStart('aboutSecond')), [dispatch]);
-  const onScrollAboutThird = React.useCallback(() => dispatch(splitTextStart('aboutThird')), [dispatch]);
+  const onScrollAbout = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
   const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
   const filmReady = React.useCallback((value) => dispatch(changeFilmState(value)), [dispatch]);
   const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
   // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
+  const [currentGsapState, currentFilmState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState, state.CommonValue.currentFilmState], shallowEqual);
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
   const { width } = useWindowSize();
-
-  const [splitTextReady, setSplitTextReady] = React.useState(false);
 
   // 이미지 슬라이드 템플릿.
   const growBackgroundImageSlider = (target: any[], kind: string) => {
@@ -334,6 +330,7 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
 
   // 화면 진입 후 DOM 랜더 시,
   React.useEffect(() => {
+    // 스크롤 트리거 연결 해제.
     gsapReady(false);
     // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
     filmReady(true);
@@ -349,59 +346,42 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
 
       onLeave();
       filmReady(false);
-      setSplitTextReady(false);
     };
   }, [filmReady, gsapReady, makeScroll, onLeave]);
 
-  // gsap가 준비되면 스크롤트리거 생성 및 splitText 동작.
-  React.useEffect(() => {
-    if (currentGsapState) {
-      aboutDetailGsap();
-      setSplitTextReady(true);
-    }
-  }, [currentGsapState]);
-
-  // splitText에 시간 차 동작 설정.
+  // gsap 및 추가 Film이 준비되면 스크롤트리거 생성 및 splitText 동작.
   React.useEffect(() => {
     let firstTimer: ReturnType<typeof setTimeout>;
     let secondTimer: ReturnType<typeof setTimeout>;
     let thirdTimer: ReturnType<typeof setTimeout>;
-    const firstText = () => {
+    if (currentGsapState && currentFilmState) {
+      aboutDetailGsap();
+
       firstTimer = setTimeout(() => {
-        onScrollAboutFirst();
+        onScrollAbout('aboutFirst');
+        clearTimeout(firstTimer);
       }, 100);
-      return () => clearTimeout(firstTimer);
-    };
-    const secondText = () => {
       secondTimer = setTimeout(() => {
-        onScrollAboutSecond();
+        onScrollAbout('aboutSecond');
+        clearTimeout(secondTimer);
       }, 700);
-      return () => clearTimeout(secondTimer);
-    };
-    const thirdText = () => {
       thirdTimer = setTimeout(() => {
-        onScrollAboutThird();
+        onScrollAbout('aboutThird');
+        clearTimeout(thirdTimer);
       }, 1400);
-      return () => clearTimeout(thirdTimer);
-    };
-
-    if (splitTextReady) {
-      firstText();
-      secondText();
-      thirdText();
     }
-
     return () => {
       clearTimeout(firstTimer);
       clearTimeout(secondTimer);
       clearTimeout(thirdTimer);
+      onScrollAbout('');
     };
-  }, [
-    onScrollAboutFirst,
-    onScrollAboutSecond,
-    onScrollAboutThird,
-    splitTextReady,
-  ]);
+  }, [currentFilmState, currentGsapState, onScrollAbout]);
+
+  // splitText에 시간 차 동작 설정.
+  React.useEffect(() => {
+
+  }, [onScrollAbout]);
 
   // 반복되는 Text 정의.
   const subTitleText = 'GROWTH\r\rBACKGROUND';
@@ -423,7 +403,7 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
                         scroll={textCondition.scroll}
                         setTime={100}
                         index={textCondition.index1}
-                        ready={splitTextReady} >
+                      >
                         {hashtag.hashtagFirst[idx].title}
                       </SplitText>
                     </h2>
@@ -434,7 +414,7 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
                         scroll={textCondition.scroll}
                         setTime={15}
                         index={textCondition.index2}
-                        ready={splitTextReady} >
+                      >
                         {hashtag.hashtagFirst[idx].text}
                       </SplitText>
                     </div>

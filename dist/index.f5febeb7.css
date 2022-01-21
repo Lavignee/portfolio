@@ -9117,14 +9117,6 @@ header .right-area .gnb-button .menu-img.invert path, .gnb-area .right-area .gnb
   -webkit-animation-name: move-right;
           animation-name: move-right;
 }
-.split-frame.delay-5 .split-target {
-  -webkit-animation-delay: 500ms;
-          animation-delay: 500ms;
-}
-.split-frame.delay-10 .split-target {
-  -webkit-animation-delay: 1000ms;
-          animation-delay: 1000ms;
-}
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);

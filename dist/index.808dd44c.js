@@ -29987,8 +29987,6 @@ const App = ()=>{
     const dispatch = _reactRedux.useDispatch();
     const onSmoothTop = (value)=>dispatch(_commonValue.smoothTop(value))
     ;
-    const changecrollState = (value)=>dispatch(_commonValue.changeSmoothScrollState(value))
-    ;
     const cursorClass = (value)=>dispatch(_cursor.changeFirstClassName(value))
     ;
     const cursorSecondClass = (value)=>dispatch(_cursor.changeSecondClassName(value))
@@ -30016,7 +30014,6 @@ const App = ()=>{
         // 스크린 커버 애니메이션 동작.
         screenCover(true);
         // 스크린 커버 시간에 맞는 스무스 스크롤 제거 활성.
-        changecrollState(true);
         screenCoverTimer();
         pageTimer(path, 1000);
     };
@@ -39521,8 +39518,6 @@ const Header = ({ onHover , onClick , onLeave , pageTimer , scrollTop  })=>{
     ;
     const onChangeGnbState = ()=>dispatch(_commonValue.changeGnbState(false))
     ;
-    const changecrollStateFast = (value)=>dispatch(_commonValue.changeSmoothScrollStateFast(value))
-    ;
     const [currentContactState, currentGnbState] = _reactRedux.useSelector((state)=>[
             state.CommonValue.currentContactState,
             state.CommonValue.currentGnbState, 
@@ -39535,10 +39530,7 @@ const Header = ({ onHover , onClick , onLeave , pageTimer , scrollTop  })=>{
     };
     const listClick = (path)=>{
         onGnbListClick();
-        if (location.pathname !== path) {
-            changecrollStateFast(true);
-            pageTimer(path, 100);
-        }
+        if (location.pathname !== path) pageTimer(path, 100);
     };
     const gnbButtonHover = ()=>{
         currentGnbState ? onHover(' wh-cursor', 'Close?') : onHover(' bl-cursor', 'Open?');
@@ -39765,10 +39757,6 @@ parcelHelpers.export(exports, "changeFilmState", ()=>changeFilmState
 );
 parcelHelpers.export(exports, "smoothTop", ()=>smoothTop
 );
-parcelHelpers.export(exports, "changeSmoothScrollState", ()=>changeSmoothScrollState
-);
-parcelHelpers.export(exports, "changeSmoothScrollStateFast", ()=>changeSmoothScrollStateFast
-);
 parcelHelpers.export(exports, "makeSmoothScroll", ()=>makeSmoothScroll
 );
 parcelHelpers.export(exports, "checkScrollValue", ()=>checkScrollValue
@@ -39840,16 +39828,6 @@ const smoothTop = (currentSmoothTopState)=>({
         currentSmoothTopState
     })
 ;
-const changeSmoothScrollState = (currentScrollState)=>({
-        type: SMOOTH_SCROLL_STATE,
-        currentScrollState
-    })
-;
-const changeSmoothScrollStateFast = (currentScrollStateFast)=>({
-        type: SMOOTH_SCROLL_STATE_FAST,
-        currentScrollStateFast
-    })
-;
 const makeSmoothScroll = (makeScrollState)=>({
         type: MAKE_SCROLL_STATE,
         makeScrollState
@@ -39884,8 +39862,6 @@ const initialState = {
     currentSwitchAnimation: false,
     currentFilmState: false,
     currentSmoothTopState: false,
-    currentScrollState: false,
-    currentScrollStateFast: false,
     makeScrollState: false,
     currentScrollValue: 0,
     currentScrollLimit: 0,
@@ -39938,16 +39914,6 @@ const CommonValue = (state = initialState, action)=>{
             return {
                 ...state,
                 currentSmoothTopState: action.currentSmoothTopState
-            };
-        case SMOOTH_SCROLL_STATE:
-            return {
-                ...state,
-                currentScrollState: action.currentScrollState
-            };
-        case SMOOTH_SCROLL_STATE_FAST:
-            return {
-                ...state,
-                currentScrollStateFast: action.currentScrollStateFast
             };
         case MAKE_SCROLL_STATE:
             return {
@@ -40008,13 +39974,15 @@ var _navmenuScss = require("./navmenu.scss");
 var _s = $RefreshSig$();
 const Navmenu = ({ onlogoHover , onClick , onHeaderLeave , onGnbButtonClick , onGnbButtonHover , onDown , onUp , scrollTop ,  })=>{
     _s();
-    const [currentButtonDelay] = _reactRedux.useSelector((state)=>[
-            state.CommonValue.currentButtonDelay
+    const [currentButtonDelay, currentSmoothTopState] = _reactRedux.useSelector((state)=>[
+            state.CommonValue.currentButtonDelay,
+            state.CommonValue.currentSmoothTopState
         ]
     , _reactRedux.shallowEqual);
     let location = _reactRouterDom.useLocation();
     const logoClick = ()=>{
-        location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?');
+        if (!currentSmoothTopState) location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?');
+        else return false;
     };
     return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: `link-button${currentButtonDelay ? ' delay' : ''}`,
@@ -40121,7 +40089,7 @@ const Navmenu = ({ onlogoHover , onClick , onHeaderLeave , onGnbButtonClick , on
         fill: '#1b1b1b'
     }))))));
 };
-_s(Navmenu, "YmngvPorrDimxGIjaWE8NPe7mCg=", false, function() {
+_s(Navmenu, "zDTrJSotFv2blZr8Nk2a6mvpskE=", false, function() {
     return [
         _reactRedux.useSelector,
         _reactRouterDom.useLocation
@@ -40176,139 +40144,95 @@ const SmoothScroll = ({ children  })=>{
     _s();
     // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
     let location = _reactRouterDom.useLocation();
+    // redux dispatch 정의.
     const dispatch = _reactRedux.useDispatch();
-    const gsapReady = _react.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
+    const gsapReady = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.changeGsapState(value))
     , [
         dispatch
     ]);
-    const makeScroll = _react.useCallback((value)=>dispatch(_commonValue.makeSmoothScroll(value))
+    const makeScroll = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.makeSmoothScroll(value))
     , [
         dispatch
     ]);
-    const checkScroll = _react.useCallback((value)=>dispatch(_commonValue.checkScrollValue(value))
+    const checkScroll = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.checkScrollValue(value))
     , [
         dispatch
     ]);
-    const checkLimit = _react.useCallback((value)=>dispatch(_commonValue.checkScrollLimit(value))
+    const checkLimit = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.checkScrollLimit(value))
     , [
         dispatch
     ]);
-    const onSmoothTop = _react.useCallback((value)=>dispatch(_commonValue.smoothTop(value))
+    const onSmoothTop = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.smoothTop(value))
     , [
         dispatch
     ]);
-    const changecrollState = _react.useCallback((value)=>dispatch(_commonValue.changeSmoothScrollState(value))
-    , [
-        dispatch
-    ]);
-    const changecrollStateFast = _react.useCallback((value)=>dispatch(_commonValue.changeSmoothScrollStateFast(value))
-    , [
-        dispatch
-    ]);
-    const onChangeContactStateFalse = _react.useCallback((value)=>dispatch(_commonValue.changeContactStateFalse(value))
-    , [
-        dispatch
-    ]);
-    const onChangeGnbState = _react.useCallback(()=>dispatch(_commonValue.changeGnbState(false))
-    , [
-        dispatch
-    ]);
-    const [currentSmoothTopState, currentScrollState, currentScrollStateFast, makeScrollState, ] = _reactRedux.useSelector((state)=>[
+    // redux useSelector 정의.
+    const [currentSmoothTopState, makeScrollState] = _reactRedux.useSelector((state)=>[
             state.CommonValue.currentSmoothTopState,
-            state.CommonValue.currentScrollState,
-            state.CommonValue.currentScrollStateFast,
-            state.CommonValue.makeScrollState, 
+            state.CommonValue.makeScrollState
         ]
     , _reactRedux.shallowEqual);
-    const smoothScroller = _react.useRef();
-    const [currentScroller, setCurrentScroller] = _react.useState(null);
-    const makeSmoothScrollbar = _react.useCallback(()=>{
-        const scroller = smoothScroller.current;
-        let bodyScrollBar;
-        if (_reactDeviceDetect.isDesktop) bodyScrollBar = _smoothScrollbarDefault.default.init(scroller, {
-            damping: 0.03,
+    const smoothScroller = _reactDefault.default.useRef(null);
+    const smoothScrollerTarget = _reactDefault.default.useRef(null);
+    const [currentScroller, setCurrentScroller] = _reactDefault.default.useState(null);
+    // 스무스 스크롤 생성
+    const makeSmoothScrollbar = _reactDefault.default.useCallback(()=>{
+        let scrollDamping;
+        if (_reactDeviceDetect.isDesktop) scrollDamping = 0.03;
+        else scrollDamping = 0.1;
+        smoothScrollerTarget.current = _smoothScrollbarDefault.default.init(smoothScroller.current, {
+            damping: scrollDamping,
             alwaysShowTracks: true
         });
-        else bodyScrollBar = _smoothScrollbarDefault.default.init(scroller, {
-            damping: 0.1,
-            alwaysShowTracks: true
-        });
-        bodyScrollBar.addListener(()=>checkScroll(bodyScrollBar.scrollTop)
+        // 스크롤 퍼센트 출력을 위해 max 및 현재 scroll 저장.
+        smoothScrollerTarget.current.addListener(()=>checkScroll(smoothScrollerTarget.current.scrollTop)
         );
-        bodyScrollBar.addListener(()=>checkLimit(bodyScrollBar.limit.y)
+        smoothScrollerTarget.current.addListener(()=>checkLimit(smoothScrollerTarget.current.limit.y)
         );
-        _scrollTrigger.ScrollTrigger.scrollerProxy(scroller, {
+        //스크롤 트리거와 연계.
+        _scrollTrigger.ScrollTrigger.scrollerProxy(smoothScroller.current, {
             scrollTop (value) {
-                if (arguments.length) bodyScrollBar.scrollTop = value;
-                return bodyScrollBar.scrollTop;
+                if (arguments.length) smoothScrollerTarget.current.scrollTop = value;
+                return smoothScrollerTarget.current.scrollTop;
             }
         });
         _scrollTrigger.ScrollTrigger.defaults({
-            scroller: scroller
+            scroller: smoothScroller.current
         });
-        bodyScrollBar.addListener(_scrollTrigger.ScrollTrigger.update);
-        checkScroll(bodyScrollBar.scrollTop);
-        checkLimit(bodyScrollBar.limit.y);
+        smoothScrollerTarget.current.addListener(_scrollTrigger.ScrollTrigger.update);
         gsapReady(true);
-        setCurrentScroller(bodyScrollBar);
+        setCurrentScroller(smoothScrollerTarget.current);
     }, [
         checkLimit,
         checkScroll,
         gsapReady
     ]);
-    _react.useEffect(()=>{
+    // 컨텐츠 DOM이 모두 렌더 된 후 스크롤 생성 동작.
+    _reactDefault.default.useEffect(()=>{
         makeSmoothScrollbar();
-    }, [
-        makeSmoothScrollbar
-    ]);
-    _react.useEffect(()=>{
         if (makeScrollState) {
-            makeSmoothScrollbar();
             currentScroller.setPosition(0, 0);
             makeScroll(false);
         }
-        onChangeContactStateFalse(false);
+        // 초기화 시, 퍼센트 및 스크롤 트리거 리스너 삭제.
+        return ()=>{
+            smoothScrollerTarget.current.removeListener(()=>checkScroll(smoothScrollerTarget.current.scrollTop)
+            );
+            smoothScrollerTarget.current.removeListener(()=>checkLimit(smoothScrollerTarget.current.limit.y)
+            );
+            smoothScrollerTarget.current.removeListener(_scrollTrigger.ScrollTrigger.update);
+        };
     }, [
+        checkLimit,
+        checkScroll,
         currentScroller,
         makeScroll,
         makeScrollState,
-        makeSmoothScrollbar,
-        onChangeContactStateFalse,
-        onChangeGnbState, 
+        makeSmoothScrollbar
     ]);
-    _react.useEffect(()=>{
-        if (currentScrollState) {
-            const destroyScrollTimer = setTimeout(()=>{
-                _smoothScrollbarDefault.default.destroyAll();
-                gsapReady(false);
-                changecrollState(false);
-            }, 600);
-            return ()=>clearTimeout(destroyScrollTimer)
-            ;
-        }
-    }, [
-        changecrollState,
-        currentScrollState,
-        gsapReady
-    ]);
-    _react.useEffect(()=>{
-        if (currentScrollStateFast) {
-            _smoothScrollbarDefault.default.destroyAll();
-            gsapReady(false);
-            changecrollStateFast(false);
-        }
-    }, [
-        changecrollStateFast,
-        currentScrollStateFast,
-        gsapReady
-    ]);
-    _react.useEffect(()=>{
-        const scrollToTop = setTimeout(()=>{
-            if (currentScroller) currentScroller.scrollTo(0, 0, 600);
-        }, 10);
+    _reactDefault.default.useEffect(()=>{
+        if (currentScroller && smoothScrollerTarget.current.scrollTop !== 0) currentScroller.scrollTo(0, 0, 600);
         onSmoothTop(false);
-        return ()=>clearTimeout(scrollToTop)
-        ;
     }, [
         currentScroller,
         currentSmoothTopState,
@@ -40319,7 +40243,7 @@ const SmoothScroll = ({ children  })=>{
         ref: smoothScroller
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", null, children)));
 };
-_s(SmoothScroll, "MFAtx7lonQ9zpQMa9kQoZIy7MiM=", false, function() {
+_s(SmoothScroll, "JBxMQHtMPfz8DupcsDnphc1Tpzw=", false, function() {
     return [
         _reactRouterDom.useLocation,
         _reactRedux.useDispatch,
@@ -46001,11 +45925,7 @@ const Main = ({ onHover , onLeaves  })=>{
     // const src1280 = new URL('../../static/videos/video1280.mp4', import.meta.url);
     const src640 = new URL(require("ae19c2cfce63407"));
     const dispatch = _reactRedux.useDispatch();
-    const onScrollIntro = _react.useCallback(()=>dispatch(_commonValue.splitTextStart('intro'))
-    , [
-        dispatch
-    ]);
-    const onScrollIntro2 = _react.useCallback(()=>dispatch(_commonValue.splitTextStart('intro2'))
+    const onScrollIntro = _react.useCallback((value)=>dispatch(_commonValue.splitTextStart(value))
     , [
         dispatch
     ]);
@@ -46016,12 +45936,14 @@ const Main = ({ onHover , onLeaves  })=>{
     , _reactRedux.shallowEqual);
     const [canvasReady, setCanvasReady] = _react.useState(true);
     // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
-    const delaySplit = (target)=>{
+    const delaySplit = _reactDefault.default.useCallback((target)=>{
         const timeOut = setTimeout(()=>{
-            target === 'intro' ? onScrollIntro() : onScrollIntro2();
+            target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
             clearTimeout(timeOut);
         }, 0);
-    };
+    }, [
+        onScrollIntro
+    ]);
     const mainComponentGSAP = _react.useCallback(()=>{
         const canvasFrames = _gsap.gsap.utils.toArray('.video-area .canvas-frame');
         const targetToLefts = _gsap.gsap.utils.toArray('.video-area .left');
@@ -46078,8 +46000,8 @@ const Main = ({ onHover , onLeaves  })=>{
                 start: 'top center',
                 onEnter: ()=>delaySplit('intro')
                 ,
-                // onEnter: () => onScrollIntro(),
-                // onEnterBack: () => onScrollIntro(),
+                // onEnter: () => onScrollIntro('intro'),
+                // onEnterBack: () => onScrollIntro('intro2'),
                 end: 'bottom center'
             }
         });
@@ -46089,8 +46011,8 @@ const Main = ({ onHover , onLeaves  })=>{
                 start: 'top center-=400',
                 onEnter: ()=>delaySplit('intro2')
                 ,
-                // onEnter: () => onScrollIntro2(),
-                // onEnterBack: () => onScrollIntro2(),
+                // onEnter: () => onScrollIntro2('intro'),
+                // onEnterBack: () => onScrollIntro2('intro2'),
                 end: 'bottom center-=400'
             }
         });
@@ -46132,12 +46054,12 @@ const Main = ({ onHover , onLeaves  })=>{
             }
         });
     }, [
-        onScrollIntro,
-        onScrollIntro2
+        delaySplit
     ]);
     _react.useEffect(()=>{
         currentGsapState && mainComponentGSAP();
         return ()=>{
+            onScrollIntro('');
             let triggers = _scrollTrigger.ScrollTrigger.getAll();
             triggers.forEach((trigger)=>{
                 trigger.kill();
@@ -46145,7 +46067,8 @@ const Main = ({ onHover , onLeaves  })=>{
         };
     }, [
         currentGsapState,
-        mainComponentGSAP
+        mainComponentGSAP,
+        onScrollIntro
     ]);
     return(/*#__PURE__*/ _reactDefault.default.createElement("section", {
         id: 'main',
@@ -46180,17 +46103,15 @@ const Main = ({ onHover , onLeaves  })=>{
         animation: 'up',
         setTime: 5,
         scroll: 'intro',
-        index: 'int',
-        ready: canvasReady
+        index: 'int'
     }, "I've been a front developer for 4 years."), /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         setTime: 5,
         scroll: 'intro2',
-        index: 'intT',
-        ready: canvasReady
+        index: 'intT'
     }, "This is the portfolio that introduces me for the first time.")))))));
 };
-_s(Main, "EICE3KLLHk/otQCKUZmkMwrC1mI=", false, function() {
+_s(Main, "H57BJ7r765JEi1uBOcVqdm+6IlA=", false, function() {
     return [
         _reactRedux.useDispatch,
         _reactRedux.useSelector
@@ -46481,7 +46402,7 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRedux = require("react-redux");
 var _splitTextScss = require("./splitText.scss");
 var _s = $RefreshSig$();
-const SplitText = ({ children , scroll , index , animation , setTime , delay , ready , depth , noContainer ,  })=>{
+const SplitText = ({ children , scroll , index , animation , setTime , depth , noContainer ,  })=>{
     _s();
     // redux useSelector 정의.
     const [currentSplitText] = _reactRedux.useSelector((state)=>[
@@ -46489,35 +46410,28 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         ]
     , _reactRedux.shallowEqual);
     let childrenLength = 0;
-    const [willChange, setWillChange] = _reactDefault.default.useState(false);
-    const [happen, setHappen] = _reactDefault.default.useState([]);
+    const [willChange, setWillChange] = _reactDefault.default.useState(true);
+    // const [happen, setHappen] = React.useState<string[]>([]);
     const [split1, setSplit] = _reactDefault.default.useState([]);
     const splittingTimer = _reactDefault.default.useRef(null);
-    // children의 length만큼 state에 
+    // children으로 들어온 string을 각각 DOM으로 감싸서 배열에 입력.
     const Splitting = _reactDefault.default.useCallback(()=>{
         if (childrenLength <= children.length) {
             childrenLength++;
-            depth ? setSplit((split)=>[
+            setSplit((split)=>[
                     ...split,
                     /*#__PURE__*/ _reactDefault.default.createElement("div", {
                         key: index + (childrenLength - 1),
-                        className: 'split-depth-frame'
-                    }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, children.substring(childrenLength - 1, childrenLength)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+                        className: `${depth ? 'split-depth-frame' : `split-target ${animation ? animation : 'default'}`}`
+                    }, depth ? /*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("span", null, children.substring(childrenLength - 1, childrenLength)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
                         className: `split-target ${animation ? animation : 'default'}`
-                    }, children.substring(childrenLength - 1, childrenLength))), 
-                ]
-            ) : setSplit((split)=>[
-                    ...split,
-                    /*#__PURE__*/ _reactDefault.default.createElement("div", {
-                        key: index + (childrenLength - 1),
-                        className: `split-target ${animation ? animation : 'default'}`
-                    }, children.substring(childrenLength - 1, childrenLength)), 
+                    }, children.substring(childrenLength - 1, childrenLength))) : children.substring(childrenLength - 1, childrenLength))
                 ]
             );
             splittingTimer.current = setTimeout(()=>{
                 Splitting();
             }, setTime ? setTime : 30);
-        }
+        } else setWillChange(false);
     }, [
         animation,
         children,
@@ -46526,42 +46440,23 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         index,
         setTime
     ]);
-    const SplittingReady = _reactDefault.default.useCallback(()=>{
-        if (currentSplitText === scroll && !happen.includes(currentSplitText) || scroll === 'all') {
-            Splitting();
-            setHappen([
-                ...happen,
-                currentSplitText
-            ]);
-        }
-    }, [
-        Splitting,
-        currentSplitText,
-        happen,
-        scroll
-    ]);
+    // 화면 벗어날 시 타이머 삭제.
     _reactDefault.default.useEffect(()=>{
         return ()=>{
             clearTimeout(splittingTimer.current);
-            splittingTimer.current = null;
+            setWillChange(false);
         };
     }, []);
+    // currentSplitText가 prop으로 들어온 param과 일치하거나 all(항상)인 경우 split 동작.
     _reactDefault.default.useEffect(()=>{
-        splittingTimer.current = null;
-        SplittingReady();
+        if (currentSplitText === scroll || scroll === 'all') Splitting();
     }, [
-        SplittingReady,
-        currentSplitText
-    ]);
-    _reactDefault.default.useEffect(()=>{
-        if (ready) setWillChange(true);
-        return ()=>setWillChange(false)
-        ;
-    }, [
-        ready
+        Splitting,
+        currentSplitText,
+        scroll
     ]);
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: `split-frame${delay ? ` delay-${delay}` : ''}`
+        className: 'split-frame'
     }, noContainer ? {
         split: split1
     } : /*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -46570,7 +46465,7 @@ const SplitText = ({ children , scroll , index , animation , setTime , delay , r
         className: `animation-container${willChange ? ' will-change' : ''}`
     }, split1))));
 };
-_s(SplitText, "+GRcs8LOGru/U5xYqfkIrokUCKg=", false, function() {
+_s(SplitText, "yb9PzTunONoie5E5p2TAjLkrj1s=", false, function() {
     return [
         _reactRedux.useSelector
     ];
@@ -46579,7 +46474,6 @@ _c = SplitText;
 SplitText.defaultProps = {
     setTime: null,
     depth: true,
-    delay: false,
     noContainer: false
 };
 exports.default = SplitText;
@@ -47728,7 +47622,6 @@ const Contact = ({ onHover , onLeave  })=>{
         ]
     , _reactRedux.shallowEqual);
     // const [currentContactButtonDelay] = useSelector(state => [state.CommonValue.currentContactButtonDelay], shallowEqual);
-    const [contactSplitTextReady, setContactSplitTextReady] = _react.useState(false);
     const [qnumber, setQnumber] = _react.useState(1);
     const qnumberRef = _react.useRef(qnumber);
     qnumberRef.current = qnumber;
@@ -47740,23 +47633,16 @@ const Contact = ({ onHover , onLeave  })=>{
     //   return () => clearTimeout(buttonDelayTimer);
     // }
     const contactAnimation = ()=>{
-        if (currentContactState) {
-            if (qnumberRef.current === 1) setQnumber(2);
-            else if (qnumberRef.current === 2) setQnumber(3);
-            else if (qnumberRef.current === 3) setQnumber(1);
-        }
+        if (qnumberRef.current === 1) setQnumber(2);
+        else if (qnumberRef.current === 2) setQnumber(3);
+        else if (qnumberRef.current === 3) setQnumber(1);
     };
     // useEffect(() => {
     // ContactButtonDelay();
     // }, [currentContactState]);
-    _react.useEffect(()=>{
-        if (currentContactState) setContactSplitTextReady(true);
-    }, [
-        currentContactState
-    ]);
     _useIntervalDefault.default(()=>{
         contactAnimation();
-    }, contactSplitTextReady ? 6000 : null);
+    }, currentContactState ? 6000 : null);
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'contact-area'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -47786,18 +47672,15 @@ const Contact = ({ onHover , onLeave  })=>{
     }, currentContactState && qnumberRef.current === 1 && /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         scroll: 'all',
-        index: 'con1',
-        ready: contactSplitTextReady
+        index: 'con1'
     }, "What should I do for you?"), currentContactState && qnumberRef.current === 2 && /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         scroll: 'all',
-        index: 'con2',
-        ready: contactSplitTextReady
+        index: 'con2'
     }, "Could you tell me about the project?"), currentContactState && qnumberRef.current === 3 && /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
         animation: 'up',
         scroll: 'all',
-        index: 'con3',
-        ready: contactSplitTextReady
+        index: 'con3'
     }, "I will reply by email as soon as possible."))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'contact-content-frame'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
@@ -47854,7 +47737,7 @@ const Contact = ({ onHover , onLeave  })=>{
         target: '_black'
     }, "github.com/Lavignee")))))))))));
 };
-_s(Contact, "XDi9gVPXcIuelwFOMUIYlmDR7PI=", false, function() {
+_s(Contact, "X+21fNTWH8r9nX3fRu9iIfEZnpA=", false, function() {
     return [
         _reactRedux.useSelector,
         _useIntervalDefault.default
@@ -48046,37 +47929,40 @@ const ScrollValueAnimation = ()=>{
     const [currentGnbState, currentScrollValue, currentScrollLimit] = _reactRedux.useSelector((state)=>[
             state.CommonValue.currentGnbState,
             state.CommonValue.currentScrollValue,
-            state.CommonValue.currentScrollLimit, 
+            state.CommonValue.currentScrollLimit
         ]
     , _reactRedux.shallowEqual);
     // react-router-dom으로 url 확인.
     let location = _reactRouterDom.useLocation();
     // 스크롤 퍼센트 계산값을 담기 위한 로컬 변수 용도.
-    const scrollPercentRef = _reactDefault.default.useRef(0);
     // 스크롤 퍼센트의 랜더 여부.
     const [percentView, setPercentView] = _reactDefault.default.useState(false);
+    const [percentCalc, setpercentCalc] = _reactDefault.default.useState(0);
     _reactDefault.default.useEffect(()=>{
         // 화면 로드 시 스크롤 퍼센트 계산.
         const scrollPercentCalc = (+currentScrollValue / +currentScrollLimit * 100).toFixed(0);
-        const scrollPercentResult = typeof scrollPercentCalc !== 'number' ? 0 : scrollPercentCalc;
-        scrollPercentRef.current = scrollPercentResult;
+        setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === Infinity ? 0 : scrollPercentCalc);
     }, [
         currentScrollLimit,
-        currentScrollValue
+        currentScrollValue,
+        setpercentCalc
     ]);
     _reactDefault.default.useEffect(()=>{
         // 화면 로드 시 url에 따라 스크롤 퍼센트의 랜더 여부 변경.
         if (location.pathname === '/' || location.pathname === '/about' || location.pathname === '/footprint' && _reactDeviceDetect.isMobile) setPercentView(true);
         else setPercentView(false);
+        return ()=>{
+            setpercentCalc(0);
+        };
     }, [
         currentGnbState,
         location
     ]);
     return percentView ? /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'scroll-percent'
-    }, scrollPercentRef.current + '%') : null;
+    }, percentCalc, "%") : null;
 };
-_s(ScrollValueAnimation, "uxwDbILsUjyMu7VBn/6h9MIgYjE=", false, function() {
+_s(ScrollValueAnimation, "MBecUxJj/dkwauPT5WL5omblxoY=", false, function() {
     return [
         _reactRedux.useSelector,
         _reactRouterDom.useLocation

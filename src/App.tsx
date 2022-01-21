@@ -7,7 +7,6 @@ import {
   changeSwitchAnimation,
   changeButtonDelay,
   smoothTop,
-  changeSmoothScrollState,
 } from './Modules/commonValue';
 import {
   changeFirstClassName,
@@ -30,7 +29,6 @@ const App = () => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
   const onSmoothTop = (value: boolean) => dispatch(smoothTop(value));
-  const changecrollState = (value: boolean) => dispatch(changeSmoothScrollState(value));
   const cursorClass = (value: string) => dispatch(changeFirstClassName(value));
   const cursorSecondClass = (value: string) => dispatch(changeSecondClassName(value));
   const cursorText = (value: string) => dispatch(changeText(value));
@@ -56,7 +54,6 @@ const App = () => {
     // 스크린 커버 애니메이션 동작.
     screenCover(true);
     // 스크린 커버 시간에 맞는 스무스 스크롤 제거 활성.
-    changecrollState(true);
     screenCoverTimer();
     pageTimer(path, 1000);
   };

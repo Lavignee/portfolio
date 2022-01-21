@@ -4,7 +4,6 @@ import {
   changeContactState,
   changeContactStateFalse,
   changeGnbState,
-  changeSmoothScrollStateFast,
 } from '../../Modules/commonValue';
 import { useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -23,8 +22,6 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
   const onChangeContactStateFalse = () =>
     dispatch(changeContactStateFalse(false));
   const onChangeGnbState = () => dispatch(changeGnbState(false));
-  const changecrollStateFast = (value) =>
-    dispatch(changeSmoothScrollStateFast(value));
   const [currentContactState, currentGnbState] = useSelector(
     (state: RootState) => [
       state.CommonValue.currentContactState,
@@ -46,7 +43,6 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
     onGnbListClick();
 
     if (location.pathname !== path) {
-      changecrollStateFast(true);
       pageTimer(path, 100);
     }
   };

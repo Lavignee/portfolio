@@ -24,7 +24,7 @@
 
     &.will-change {
       will-change: contents;
-      
+
       .split-target {
         will-change: transform;
       }
@@ -80,23 +80,4 @@
       animation-name: move-right;
     }
   }
-
-  &.delay-5 {
-    .split-target {
-      animation-delay: 500ms;
-    }
-  }
-  &.delay-10 {
-    .split-target {
-      animation-delay: 1000ms;
-    }
-  }
-
-  // @for $i from 1 through 10 {
-  //   &.delay-#{$i} {
-  //     .split-target {
-  //       animation-delay: calc(#{$i} * 100ms);
-  //     }
-  //   }
-  // }
 }

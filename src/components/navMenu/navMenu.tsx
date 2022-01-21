@@ -15,15 +15,19 @@ const Navmenu = ({
   onUp,
   scrollTop,
 }) => {
-  const [currentButtonDelay] = useSelector(
-    (state: RootState) => [state.CommonValue.currentButtonDelay],
+  const [currentButtonDelay, currentSmoothTopState] = useSelector(
+    (state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentSmoothTopState],
     shallowEqual
   );
 
   let location = useLocation();
 
   const logoClick = () => {
-    location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?');
+    if (!currentSmoothTopState) {
+      location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?');
+    } else {
+      return false;
+    }
   };
 
   return (

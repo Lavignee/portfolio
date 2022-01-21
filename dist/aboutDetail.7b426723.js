@@ -649,15 +649,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
     _s();
     // redux dispatch 정의.
     const dispatch = _reactRedux.useDispatch();
-    const onScrollAboutFirst = _reactDefault.default.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutFirst'))
-    , [
-        dispatch
-    ]);
-    const onScrollAboutSecond = _reactDefault.default.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutSecond'))
-    , [
-        dispatch
-    ]);
-    const onScrollAboutThird = _reactDefault.default.useCallback(()=>dispatch(_commonValue.splitTextStart('aboutThird'))
+    const onScrollAbout = _reactDefault.default.useCallback((value)=>dispatch(_commonValue.splitTextStart(value))
     , [
         dispatch
     ]);
@@ -674,13 +666,13 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         dispatch
     ]);
     // redux useSelector 정의.
-    const [currentGsapState] = _reactRedux.useSelector((state)=>[
-            state.CommonValue.currentGsapState
+    const [currentGsapState, currentFilmState] = _reactRedux.useSelector((state)=>[
+            state.CommonValue.currentGsapState,
+            state.CommonValue.currentFilmState
         ]
     , _reactRedux.shallowEqual);
     // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
     const { width  } = _useWindowSizeDefault.default();
-    const [splitTextReady, setSplitTextReady] = _reactDefault.default.useState(false);
     // 이미지 슬라이드 템플릿.
     const growBackgroundImageSlider = (target1, kind)=>{
         return(/*#__PURE__*/ _reactDefault.default.createElement(_swiperReactJs.Swiper, {
@@ -868,6 +860,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
     };
     // 화면 진입 후 DOM 랜더 시,
     _reactDefault.default.useEffect(()=>{
+        // 스크롤 트리거 연결 해제.
         gsapReady(false);
         // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
         filmReady(true);
@@ -881,7 +874,6 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             });
             onLeave();
             filmReady(false);
-            setSplitTextReady(false);
         };
     }, [
         filmReady,
@@ -889,56 +881,41 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         makeScroll,
         onLeave
     ]);
-    // gsap가 준비되면 스크롤트리거 생성 및 splitText 동작.
-    _reactDefault.default.useEffect(()=>{
-        if (currentGsapState) {
-            aboutDetailGsap();
-            setSplitTextReady(true);
-        }
-    }, [
-        currentGsapState
-    ]);
-    // splitText에 시간 차 동작 설정.
+    // gsap 및 추가 Film이 준비되면 스크롤트리거 생성 및 splitText 동작.
     _reactDefault.default.useEffect(()=>{
         let firstTimer;
         let secondTimer;
         let thirdTimer;
-        const firstText = ()=>{
+        if (currentGsapState && currentFilmState) {
+            aboutDetailGsap();
             firstTimer = setTimeout(()=>{
-                onScrollAboutFirst();
+                onScrollAbout('aboutFirst');
+                clearTimeout(firstTimer);
             }, 100);
-            return ()=>clearTimeout(firstTimer)
-            ;
-        };
-        const secondText = ()=>{
             secondTimer = setTimeout(()=>{
-                onScrollAboutSecond();
+                onScrollAbout('aboutSecond');
+                clearTimeout(secondTimer);
             }, 700);
-            return ()=>clearTimeout(secondTimer)
-            ;
-        };
-        const thirdText = ()=>{
             thirdTimer = setTimeout(()=>{
-                onScrollAboutThird();
+                onScrollAbout('aboutThird');
+                clearTimeout(thirdTimer);
             }, 1400);
-            return ()=>clearTimeout(thirdTimer)
-            ;
-        };
-        if (splitTextReady) {
-            firstText();
-            secondText();
-            thirdText();
         }
         return ()=>{
             clearTimeout(firstTimer);
             clearTimeout(secondTimer);
             clearTimeout(thirdTimer);
+            onScrollAbout('');
         };
     }, [
-        onScrollAboutFirst,
-        onScrollAboutSecond,
-        onScrollAboutThird,
-        splitTextReady, 
+        currentFilmState,
+        currentGsapState,
+        onScrollAbout
+    ]);
+    // splitText에 시간 차 동작 설정.
+    _reactDefault.default.useEffect(()=>{
+    }, [
+        onScrollAbout
     ]);
     // 반복되는 Text 정의.
     const subTitleText = 'GROWTH\r\rBACKGROUND';
@@ -963,16 +940,14 @@ const AboutDetail = ({ onHover , onLeave  })=>{
             animation: 'up',
             scroll: textCondition1.scroll,
             setTime: 100,
-            index: textCondition1.index1,
-            ready: splitTextReady
+            index: textCondition1.index1
         }, _hashtagAboutJsonDefault.default.hashtagFirst[idx].title)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: 'type-p'
         }, /*#__PURE__*/ _reactDefault.default.createElement(_splitTextDefault.default, {
             animation: 'up',
             scroll: textCondition1.scroll,
             setTime: 15,
-            index: textCondition1.index2,
-            ready: splitTextReady
+            index: textCondition1.index2
         }, _hashtagAboutJsonDefault.default.hashtagFirst[idx].text)))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: `back-keyword ${textCondition1.align}`
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", null, _hashtagAboutJsonDefault.default.hashtagFirst[idx].back)))
@@ -1026,7 +1001,7 @@ const AboutDetail = ({ onHover , onLeave  })=>{
         className: 'background-story-frame third-image-trigger'
     }, width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current'), /*#__PURE__*/ _reactDefault.default.createElement("h3", null, "\uC6F9 \uAC1C\uBC1C\uC790 ~ \uD604\uC7AC"), /*#__PURE__*/ _reactDefault.default.createElement("p", null, introduceContent(thirdIntroContent, TooltipContent(thirdTooltipContent)))))))));
 };
-_s(AboutDetail, "ZBPPJ5NvtOXL4pkDANfW/eJSa9A=", false, function() {
+_s(AboutDetail, "QzLk5QI5ahc29iIDbRKt5+1djsk=", false, function() {
     return [
         _reactRedux.useDispatch,
         _reactRedux.useSelector,
