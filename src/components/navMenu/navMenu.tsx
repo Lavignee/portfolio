@@ -1,30 +1,52 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { smoothTop } from '../../Modules/commonValue';
 
-import './navmenu.scss';
+// import HeaderLogo from 'jsx:../../static/images/logo.svg';
+
+import './navMenu.scss';
 import { RootState } from '../../Modules';
 
-const Navmenu = ({
-  onlogoHover,
-  onClick,
+// Props로 받는 이벤트들에 대한 interface 정의.
+interface NavMenuProps {
+  _onHover: (path: string, hoverText: string) => void;
+  _onClick: (path: string, hoverText: string) => void;
+  onHeaderLeave: () => void;
+  onGnbButtonClick: () => void;
+  onGnbButtonHover: () => void;
+}
+
+const NavMenu = ({
+  _onHover,
+  _onClick,
   onHeaderLeave,
   onGnbButtonClick,
   onGnbButtonHover,
-  onDown,
-  onUp,
-  scrollTop,
-}) => {
-  const [currentButtonDelay, currentSmoothTopState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentSmoothTopState],
-    shallowEqual
-  );
+}: NavMenuProps) => {
+  // redux dispatch 정의.
+  const dispatch = useDispatch();
+  const onSmoothTop = (value: boolean) => dispatch(smoothTop(value));
 
+  // redux useSelector 정의.
+  const [currentButtonDelay, currentSmoothTopState] = useSelector((state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentSmoothTopState], shallowEqual);
+
+  // react-router-dom으로 url 확인.
   let location = useLocation();
 
+  // 로고 마우스 오버 시,
+  const onlogoHover = () => {
+    // home 화면에서는 top text 출력 이외 화면에서는 home text 출력.
+    location.pathname === '/'
+      ? _onHover(' bl-cursor', 'top?')
+      : _onHover(' bl-cursor', 'Home?');
+  };
+
+  // 로고 클릭 시,
   const logoClick = () => {
     if (!currentSmoothTopState) {
-      location.pathname === '/' ? scrollTop(true) : onClick('/', 'top?');
+      // home 화면에서는 최상위로 이외 화면에서는 home으로 이동.
+      location.pathname === '/' ? onSmoothTop(true) : _onClick('/', 'top?');
     } else {
       return false;
     }
@@ -32,13 +54,14 @@ const Navmenu = ({
 
   return (
     <>
+      {/* 로고 영역 */}
       <div
         className={`link-button${currentButtonDelay ? ' delay' : ''}`}
         onClick={logoClick}
         onMouseEnter={onlogoHover}
         onMouseLeave={onHeaderLeave}
-        onMouseDown={onDown}
-        onMouseUp={onUp}>
+      >
+        {/* TODO: "@parcel/transformer-svg-react" Bug로 인해 svg 수동 호출. 추후 수정 필요. */}
         <svg
           className='header-logo'
           width='58'
@@ -59,16 +82,18 @@ const Navmenu = ({
             fill='#1b1b1b'
           />
         </svg>
+        {/* {HeaderLogo} */}
       </div>
 
+      {/* Heeader gnb Button 영역 */}
       <div className='right-area'>
         <div
           className='gnb-button'
           onClick={onGnbButtonClick}
           onMouseEnter={onGnbButtonHover}
           onMouseLeave={onHeaderLeave}
-          onMouseDown={onDown}
-          onMouseUp={onUp}>
+        >
+          {/* TODO: "@parcel/transformer-svg-react" Bug로 인해 svg 수동 호출. 추후 수정 필요. */}
           <svg
             className='menu-img'
             width='133'
@@ -167,10 +192,10 @@ const Navmenu = ({
   );
 };
 
-Navmenu.defaultProps = {
+NavMenu.defaultProps = {
   onDown: null,
   onUp: null
 }
 
 
-export default memo(Navmenu);
+export default React.memo(NavMenu);

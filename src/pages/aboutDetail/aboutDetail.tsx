@@ -95,11 +95,11 @@ const growBackgroundImage3: any[] = [current1, current2, current3];
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface AboutDetailProps {
-  onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  onLeave: (hoverText?: string | null) => void;
+  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  _onLeave: (hoverText?: string | null) => void;
 }
 
-const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
+const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
   const onScrollAbout = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
@@ -138,12 +138,12 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
         ))}
         <div
           className='swiper-button-next'
-          onMouseEnter={() => onHover(' bl-cursor', 'next')}
-          onMouseLeave={() => onLeave()}></div>
+          onMouseEnter={() => _onHover(' bl-cursor', 'next')}
+          onMouseLeave={() => _onLeave()}></div>
         <div
           className='swiper-button-prev'
-          onMouseEnter={() => onHover(' bl-cursor', 'prev')}
-          onMouseLeave={() => onLeave()}></div>
+          onMouseEnter={() => _onHover(' bl-cursor', 'prev')}
+          onMouseLeave={() => _onLeave()}></div>
       </Swiper>
     );
   };
@@ -305,8 +305,8 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
       return (
         <Tooltip
           key={item.text + idx}
-          onHover={onHover}
-          onLeave={onLeave}
+          _onHover={_onHover}
+          _onLeave={_onLeave}
           info={item.info}>
           {item.text}
         </Tooltip>
@@ -344,10 +344,10 @@ const AboutDetail = ({ onHover, onLeave }: AboutDetailProps) => {
         trigger.kill();
       });
 
-      onLeave();
+      _onLeave();
       filmReady(false);
     };
-  }, [filmReady, gsapReady, makeScroll, onLeave]);
+  }, [filmReady, gsapReady, makeScroll, _onLeave]);
 
   // gsap 및 추가 Film이 준비되면 스크롤트리거 생성 및 splitText 동작.
   React.useEffect(() => {

@@ -4,20 +4,20 @@ import './tooltip.scss';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface TooltipProps {
-  onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  onLeave: (hoverText?: string | null) => void;
+  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  _onLeave: (hoverText?: string | null) => void;
   children: string;
   info: string;
 }
 
-const Tooltip = ({ onHover, onLeave, children, info }: TooltipProps) => {
+const Tooltip = ({ _onHover, _onLeave, children, info }: TooltipProps) => {
   const [tooltipState, setTooltipState] = React.useState(false)
   const hoverTooltip = () => {
-    onHover(' pagination-cursor')
+    _onHover(' pagination-cursor')
     setTooltipState(true);
   }
   const leaveTooltip = () => {
-    onLeave();
+    _onLeave();
     setTooltipState(false);
   }
 

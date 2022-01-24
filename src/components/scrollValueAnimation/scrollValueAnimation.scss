@@ -7,4 +7,5 @@
   @include f-b(5rem, transparent);
   -webkit-text-stroke: 1px $s-m;
   opacity: 0.3;
+  pointer-events: none;
 }

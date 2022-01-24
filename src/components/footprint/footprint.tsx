@@ -12,7 +12,7 @@ import './footprint.scss';
 import Footer from '../footer';
 import { RootState } from '../../Modules';
 
-const Footprint = ({ onHover, onClick, onLeave }) => {
+const Footprint = ({ _onHover, _onClick, _onLeave }) => {
   const [currentButtonDelay] = useSelector(
     (state: RootState) => [state.CommonValue.currentButtonDelay],
     shallowEqual
@@ -70,9 +70,9 @@ const Footprint = ({ onHover, onClick, onLeave }) => {
           </div>
           <div
             className={`link-button${currentButtonDelay ? ' delay' : ''}`}
-            onMouseEnter={() => onHover(' go-cursor')}
-            onMouseLeave={() => onLeave()}
-            onClick={() => onClick('/footprint')}></div>
+            onMouseEnter={() => _onHover(' go-cursor')}
+            onMouseLeave={() => _onLeave()}
+            onClick={() => _onClick('/footprint')}></div>
         </div>
 
         <div className='footprint-back-text'>FOOTPRINT</div>

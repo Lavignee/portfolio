@@ -85,11 +85,11 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
         virtualVideo.current.muted = true;
         virtualVideo.current.loop = true;
 
-        virtualVideo.current.addEventListener('pause', () => draw(virtualVideo.current, context, timeOutRef, numbers));
-        virtualVideo.current.addEventListener('play', () => draw(virtualVideo.current, context, timeOutRef, numbers));
+        virtualVideo.current?.addEventListener('play', () => draw(virtualVideo.current, context, timeOutRef, numbers));
+        virtualVideo.current?.addEventListener('pause', () => draw(virtualVideo.current, context, timeOutRef, numbers));
       } else {
-        virtualVideo.current.removeEventListener('pause', () => draw(virtualVideo.current, context, timeOutRef, numbers));
-        virtualVideo.current.removeEventListener('play', () => draw(virtualVideo.current, context, timeOutRef, numbers));
+        virtualVideo.current?.removeEventListener('play', () => draw(virtualVideo.current, context, timeOutRef, numbers));
+        virtualVideo.current?.removeEventListener('pause', () => draw(virtualVideo.current, context, timeOutRef, numbers));
       }
     }, [draw])
 
@@ -119,10 +119,10 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
   React.useEffect(() => {
     if (canvasReady) {
       canvasPlay.current = true;
-      virtualVideo.current.play();
+      virtualVideo.current?.play();
     } else {
       canvasPlay.current = false;
-      virtualVideo.current.pause();
+      virtualVideo.current?.pause();
       drawCanvas(canvasRef1.current, timeOutRef1.current, 0, false);
     }
   }, [canvasReady]);

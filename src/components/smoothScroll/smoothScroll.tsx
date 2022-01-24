@@ -40,7 +40,7 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
   const [currentSmoothTopState, makeScrollState] = useSelector((state: RootState) => [state.CommonValue.currentSmoothTopState, state.CommonValue.makeScrollState], shallowEqual);
 
   const smoothScroller = React.useRef<any>(null);
-  const smoothScrollerTarget = React.useRef<any>(null);
+  const smoothScrollTarget = React.useRef<any>(null);
   const [currentScroller, setCurrentScroller] = React.useState<any>(null);
 
   // 스무스 스크롤 생성
@@ -51,29 +51,29 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
     } else {
       scrollDamping = 0.1;
     }
-    smoothScrollerTarget.current = Scrollbar.init(smoothScroller.current, {
+    smoothScrollTarget.current = Scrollbar.init(smoothScroller.current, {
       damping: scrollDamping,
       alwaysShowTracks: true,
     });
 
     // 스크롤 퍼센트 출력을 위해 max 및 현재 scroll 저장.
-    smoothScrollerTarget.current.addListener(() => checkScroll(smoothScrollerTarget.current.scrollTop));
-    smoothScrollerTarget.current.addListener(() => checkLimit(smoothScrollerTarget.current.limit.y));
+    smoothScrollTarget.current.addListener(() => checkScroll(smoothScrollTarget.current.scrollTop));
+    smoothScrollTarget.current.addListener(() => checkLimit(smoothScrollTarget.current.limit.y));
 
     //스크롤 트리거와 연계.
     ScrollTrigger.scrollerProxy(smoothScroller.current, {
       scrollTop(value) {
         if (arguments.length) {
-          smoothScrollerTarget.current.scrollTop = value;
+          smoothScrollTarget.current.scrollTop = value;
         }
-        return smoothScrollerTarget.current.scrollTop;
+        return smoothScrollTarget.current.scrollTop;
       },
     });
     ScrollTrigger.defaults({ scroller: smoothScroller.current });
-    smoothScrollerTarget.current.addListener(ScrollTrigger.update);
+    smoothScrollTarget.current.addListener(ScrollTrigger.update);
 
     gsapReady(true);
-    setCurrentScroller(smoothScrollerTarget.current);
+    setCurrentScroller(smoothScrollTarget.current);
   }, [checkLimit, checkScroll, gsapReady]);
 
   // 컨텐츠 DOM이 모두 렌더 된 후 스크롤 생성 동작.
@@ -86,17 +86,21 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
 
     // 초기화 시, 퍼센트 및 스크롤 트리거 리스너 삭제.
     return () => {
-      smoothScrollerTarget.current.removeListener(() => checkScroll(smoothScrollerTarget.current.scrollTop));
-      smoothScrollerTarget.current.removeListener(() => checkLimit(smoothScrollerTarget.current.limit.y));
-      smoothScrollerTarget.current.removeListener(ScrollTrigger.update);
+      smoothScrollTarget.current.removeListener(() => checkScroll(smoothScrollTarget.current.scrollTop));
+      smoothScrollTarget.current.removeListener(() => checkLimit(smoothScrollTarget.current.limit.y));
+      smoothScrollTarget.current.removeListener(ScrollTrigger.update);
     }
-  }, [checkLimit, checkScroll, currentScroller, makeScroll, makeScrollState, makeSmoothScrollbar]);
+  }, [checkLimit, checkScroll, currentScroller, gsapReady, makeScroll, makeScrollState, makeSmoothScrollbar]);
 
+  // 스크롤러가 있고, currentSmoothTopState이 true로 들어오면 스크롤 위치 초기화.
   React.useEffect(() => {
-    if (currentScroller && smoothScrollerTarget.current.scrollTop !== 0) {
+    if (currentScroller && currentSmoothTopState) {
       currentScroller.scrollTo(0, 0, 600);
+      const reset = setTimeout(() => {
+        onSmoothTop(false);
+        clearTimeout(reset);
+      }, 600);
     }
-    onSmoothTop(false);
   }, [currentScroller, currentSmoothTopState, onSmoothTop]);
 
   return (

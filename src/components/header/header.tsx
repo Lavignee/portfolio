@@ -16,7 +16,7 @@ import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
+const Header = ({ _onHover, _onClick, _onLeave, pageTimer }) => {
   const dispatch = useDispatch();
   const onChangeContactState = () => dispatch(changeContactState(false));
   const onChangeContactStateFalse = () =>
@@ -33,12 +33,6 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
   let location = useLocation();
   const [blur, setBlur] = useState('');
 
-  const onlogoHover = () => {
-    location.pathname === '/'
-      ? onHover(' bl-cursor', 'top?')
-      : onHover(' bl-cursor', 'Home?');
-  };
-
   const listClick = (path) => {
     onGnbListClick();
 
@@ -49,41 +43,41 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
 
   const gnbButtonHover = () => {
     currentGnbState
-      ? onHover(' wh-cursor', 'Close?')
-      : onHover(' bl-cursor', 'Open?');
+      ? _onHover(' wh-cursor', 'Close?')
+      : _onHover(' bl-cursor', 'Open?');
   };
 
   const gnbListHover = () => {
-    onHover(' go-cursor');
+    _onHover(' go-cursor');
     setBlur('blur');
   };
 
   const onHeaderLeave = () => {
-    onLeave('');
+    _onLeave('');
     setBlur('');
   };
 
   const onGnbButtonClick = () => {
     onChangeContactStateFalse();
     onChangeGnbState();
-    onHover(' wh-cursor', 'Close?');
+    _onHover(' wh-cursor', 'Close?');
   };
 
   const onGnbCloseButtonClick = () => {
     onChangeContactStateFalse();
     onChangeGnbState();
-    onHover(' bl-cursor', 'Open?');
+    _onHover(' bl-cursor', 'Open?');
   };
 
   const onGnbListClick = () => {
     onChangeContactStateFalse();
     onChangeGnbState();
-    onLeave('');
+    _onLeave('');
   };
 
   const gnbContact = () => {
     onChangeContactState();
-    onLeave('');
+    _onLeave('');
   };
 
   return (
@@ -91,12 +85,11 @@ const Header = ({ onHover, onClick, onLeave, pageTimer, scrollTop }) => {
       <header>
         <section className='container relative between'>
           <NavMenu
-            onlogoHover={onlogoHover}
-            onClick={onClick}
+            _onHover={_onHover}
+            _onClick={_onClick}
             onGnbButtonClick={onGnbButtonClick}
             onGnbButtonHover={gnbButtonHover}
             onHeaderLeave={onHeaderLeave}
-            scrollTop={scrollTop}
           />
         </section>
       </header>

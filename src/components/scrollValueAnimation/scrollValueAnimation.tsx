@@ -7,14 +7,14 @@ import { isMobile } from 'react-device-detect';
 
 const ScrollValueAnimation = () => {
   // redux useSelector 정의.
-  const [currentGnbState, currentScrollValue, currentScrollLimit] = useSelector((state: RootState) => [state.CommonValue.currentGnbState, state.CommonValue.currentScrollValue, state.CommonValue.currentScrollLimit], shallowEqual);
+  const [currentScrollValue, currentScrollLimit] = useSelector((state: RootState) => [state.CommonValue.currentScrollValue, state.CommonValue.currentScrollLimit], shallowEqual);
 
   // react-router-dom으로 url 확인.
   let location = useLocation();
 
-  // 스크롤 퍼센트 계산값을 담기 위한 로컬 변수 용도.
   // 스크롤 퍼센트의 랜더 여부.
   const [percentView, setPercentView] = React.useState(false);
+  // 스크롤 퍼센트 계산값을 담기 위한 로컬 변수 용도.
   const [percentCalc, setpercentCalc] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -31,10 +31,11 @@ const ScrollValueAnimation = () => {
       setPercentView(false);
     }
 
+    // 화면 벗어날 시 퍼센트 초기화.
     return () => {
       setpercentCalc(0);
     }
-  }, [currentGnbState, location]);
+  }, [location]);
 
   return (
     percentView ? <div className='scroll-percent'>{percentCalc}%</div> : null

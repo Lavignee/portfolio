@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import {
   changeSwitchAnimation,
   changeButtonDelay,
-  smoothTop,
 } from './Modules/commonValue';
 import {
   changeFirstClassName,
@@ -28,7 +27,6 @@ gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const onSmoothTop = (value: boolean) => dispatch(smoothTop(value));
   const cursorClass = (value: string) => dispatch(changeFirstClassName(value));
   const cursorSecondClass = (value: string) => dispatch(changeSecondClassName(value));
   const cursorText = (value: string) => dispatch(changeText(value));
@@ -39,16 +37,16 @@ const App = () => {
   let navigate = useNavigate();
 
   // 마우스 오버 시 
-  const onHover = (hoverCursor: string, hoverText?: string | null) => {
+  const _onHover = (hoverCursor: string, hoverText?: string | null) => {
     // 커서 형태 변경.
     cursorClass(hoverCursor);
     // 텍스트 파람 존재 시 커서 텍스트 변경.
     hoverText && cursorText(hoverText);
   };
 
-  // 마우스 좌 클릭 시
-  const onClick = (path: string, hoverText: string) => {
-    onLeave(hoverText);
+  // 마우스 좌 클릭 시f
+  const _onClick = (path: string, hoverText?: string | null) => {
+    hoverText && _onLeave(hoverText);
     // 버튼 연속 클릭 방지 딜레이 활성.
     onChangeButtonDelay(true);
     // 스크린 커버 애니메이션 동작.
@@ -59,7 +57,7 @@ const App = () => {
   };
 
   // 커서 형태 초기화, 텍스트 파람 존재 시 텍스트 변경.
-  const onLeave = (hoverText?: string | null) => {
+  const _onLeave = (hoverText?: string | null) => {
     cursorClass('');
     cursorSecondClass('');
     hoverText && cursorText(hoverText);
@@ -87,19 +85,18 @@ const App = () => {
     <CustomCursor>
       {/* 헤더 */}
       <Header
-        onHover={onHover}
-        onClick={onClick}
-        onLeave={onLeave}
+        _onHover={_onHover}
+        _onClick={_onClick}
+        _onLeave={_onLeave}
         pageTimer={pageTimer}
-        scrollTop={onSmoothTop}
       />
       {/* 스크롤 영역 */}
       <SmoothScroll>
         {/* 컨텐츠 */}
         <ContentSwitcher
-          onHover={onHover}
-          onClick={onClick}
-          onLeave={onLeave}
+          _onHover={_onHover}
+          _onClick={_onClick}
+          _onLeave={_onLeave}
           pageTimer={pageTimer}
         />
       </SmoothScroll>
@@ -108,7 +105,7 @@ const App = () => {
       {/* 필름 그레인 효과*/}
       <FilmEffect />
       {/* 컨텍트 컨텐츠 */}
-      <Contact onHover={onHover} onLeave={onLeave} />
+      <Contact _onHover={_onHover} _onLeave={_onLeave} />
       {/* 스크린 커버 */}
       <SwitchAnimation />
     </CustomCursor>

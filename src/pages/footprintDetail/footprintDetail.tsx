@@ -63,11 +63,11 @@ const ContentText = ({
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface FootprintDetailProps {
-  onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  onLeave: (hoverText?: string | null) => void;
+  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  _onLeave: (hoverText?: string | null) => void;
 }
 
-const FootprintDetail = ({ onHover, onLeave }: FootprintDetailProps) => {
+const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
   const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
@@ -113,16 +113,16 @@ const FootprintDetail = ({ onHover, onLeave }: FootprintDetailProps) => {
         ))}
         <div
           className={`swiper-pagination ${kind}-pagination`}
-          onMouseEnter={() => onHover(' pagination-cursor')}
-          onMouseLeave={() => onLeave()}></div>
+          onMouseEnter={() => _onHover(' pagination-cursor')}
+          onMouseLeave={() => _onLeave()}></div>
         <div
           className='swiper-button-next'
-          onMouseEnter={() => onHover(' bl-cursor', 'past')}
-          onMouseLeave={() => onLeave()}></div>
+          onMouseEnter={() => _onHover(' bl-cursor', 'past')}
+          onMouseLeave={() => _onLeave()}></div>
         <div
           className='swiper-button-prev'
-          onMouseEnter={() => onHover(' bl-cursor', 'recent')}
-          onMouseLeave={() => onLeave()}></div>
+          onMouseEnter={() => _onHover(' bl-cursor', 'recent')}
+          onMouseLeave={() => _onLeave()}></div>
       </Swiper>
     );
   };
@@ -202,13 +202,20 @@ const FootprintDetail = ({ onHover, onLeave }: FootprintDetailProps) => {
         trigger.kill();
       });
 
-      onLeave();
+      _onLeave();
     };
-  }, [makeScroll, onLeave]);
+  }, [makeScroll, _onLeave]);
 
   // 스무스 스크롤 생성 이후 스크롤 트리거 연동.
   React.useEffect(() => {
     currentGsapState && FootprintDetailGsap();
+
+    return () => {
+      let triggers = ScrollTrigger.getAll();
+      triggers.forEach((trigger) => {
+        trigger.kill();
+      });
+    };
   }, [currentGsapState]);
 
   return (

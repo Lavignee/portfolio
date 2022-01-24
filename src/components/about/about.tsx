@@ -13,7 +13,7 @@ import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const About = ({ onHover, onClick, onLeaves }) => {
+const About = ({ _onHover, _onClick, _onLeaves }) => {
   const [currentGsapState, currentButtonDelay] = useSelector(
     (state: RootState) => [
       state.CommonValue.currentGsapState,
@@ -410,6 +410,13 @@ const About = ({ onHover, onClick, onLeaves }) => {
 
   useEffect(() => {
     currentGsapState && aboutComponentGSAP();
+
+    return () => {
+      let triggers = ScrollTrigger.getAll();
+      triggers.forEach((trigger) => {
+        trigger.kill();
+      });
+    };
   }, [currentGsapState]);
 
   return (
@@ -497,9 +504,9 @@ const About = ({ onHover, onClick, onLeaves }) => {
           <button
             className={`${isDesktop && aboutAnimationReady ? 'will-change' : ''
               }${isMobile ? ' mobile' : ''}${currentButtonDelay ? ' delay' : ''}`}
-            onMouseEnter={() => onHover(' go-cursor')}
-            onMouseLeave={() => onLeaves()}
-            onClick={() => onClick('/about')}>
+            onMouseEnter={() => _onHover(' go-cursor')}
+            onMouseLeave={() => _onLeaves()}
+            onClick={() => _onClick('/about')}>
             <span className='shadow-inset'></span>
             <span className='shadow-inset-deep'></span>
             <span className='shadow-inset-deep2'></span>

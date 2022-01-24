@@ -21,11 +21,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface SkillDetailProps {
-  onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  onLeave: (hoverText?: string | null) => void;
+  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  _onLeave: (hoverText?: string | null) => void;
 }
 
-const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
+const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
   const gsapReady = React.useCallback((value: boolean) => dispatch(changeGsapState(value)), [dispatch]);
@@ -87,7 +87,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   // skill 세부 목록에 마우스 오버 시,
   const listHover = (number: number) => {
     // 커서 형태 변경.
-    onHover(' focus-cursor');
+    _onHover(' focus-cursor');
     // 마우스 오버 된 컨텐츠의 위치(위, 아래)에 따라 애니메이션 동작.
     if (currentTarget + 1 > number) {
       setListHoverMotion('top');
@@ -99,10 +99,10 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
   // skill 세부 목록에서 마우스 벗어날 시,
   const onListLeave = React.useCallback(() => {
     // 커서 형태 초기화.
-    onLeave();
+    _onLeave();
     // 마우스 오버 애니메이션 제거.
     setListHoverMotion('');
-  }, [onLeave]);
+  }, [_onLeave]);
 
   // skill 목록에 클릭 시
   const changeList = (e: any) => {
@@ -222,7 +222,7 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
         <button
           className={currentUrl === targetUrl ? 'active' : ''}
           onClick={(e) => changeList(e)}
-          onMouseEnter={() => onHover(' focus-cursor')}
+          onMouseEnter={() => _onHover(' focus-cursor')}
           onMouseLeave={onListLeave}
           data-list={targetUrl}>
           {text}
@@ -317,9 +317,9 @@ const SkillDetail = ({ onHover, onLeave }: SkillDetailProps) => {
         item.kill();
       });
 
-      onLeave();
+      _onLeave();
     };
-  }, [gsapReady, makeSmoothScrollbarforSkill, onLeave]);
+  }, [gsapReady, makeSmoothScrollbarforSkill, _onLeave]);
 
   // gsap준비된 경우 스크롤 트리커 연결.
   React.useEffect(() => {

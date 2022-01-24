@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart } from '../../Modules/commonValue';
+import { splitTextStart, changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
 // import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,17 +13,28 @@ import { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Main = ({ onHover, onLeaves }) => {
-  // const src1920 = new URL('../../static/videos/video1920.mp4', import.meta.url);
-  // const src1280 = new URL('../../static/videos/video1280.mp4', import.meta.url);
+// Props로 받는 이벤트들에 대한 interface 정의.
+interface MainProps {
+  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
+  _onLeave: (hoverText?: string | null) => void;
+}
+
+const Main = ({ _onHover, _onLeave }: MainProps) => {
+  // 배경에 사용 될 영상 파일.
   const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
+
+  // redux dispatch 정의.
   const dispatch = useDispatch();
-  const onScrollIntro = useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
+  const onScrollIntro = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
+  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
+  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
   // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
+
+  // redux useSelector 정의.
   const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual
   );
-
-  const [canvasReady, setCanvasReady] = useState(true);
+  const [videoReady, setVideoReady] = React.useState(false);
+  const [canvasReady, setCanvasReady] = React.useState(true);
 
   // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
   const delaySplit = React.useCallback((target: string) => {
@@ -33,7 +44,8 @@ const Main = ({ onHover, onLeaves }) => {
     }, 0);
   }, [onScrollIntro]);
 
-  const mainComponentGSAP = useCallback(() => {
+  // 스크롤 트리거 설정.
+  const mainComponentGSAP = React.useCallback(() => {
     const canvasFrames = gsap.utils.toArray('.video-area .canvas-frame');
     const targetToLefts = gsap.utils.toArray('.video-area .left');
     const targetToRights = gsap.utils.toArray('.video-area .right');
@@ -44,7 +56,7 @@ const Main = ({ onHover, onLeaves }) => {
       scrub: 1,
     };
 
-    canvasFrames.forEach((target: HTMLElement) => {
+    canvasFrames.forEach((target: any) => {
       gsap.to(target, {
         scale: 0.8,
         y: -300,
@@ -59,7 +71,7 @@ const Main = ({ onHover, onLeaves }) => {
       });
     });
 
-    targetToLefts.forEach((target: HTMLElement) => {
+    targetToLefts.forEach((target: any) => {
       gsap.to(target, {
         x: -50,
         modifiers: {
@@ -73,7 +85,7 @@ const Main = ({ onHover, onLeaves }) => {
       });
     });
 
-    targetToRights.forEach((target: HTMLElement) => {
+    targetToRights.forEach((target: any) => {
       gsap.to(target, {
         x: 50,
         modifiers: {
@@ -140,8 +152,12 @@ const Main = ({ onHover, onLeaves }) => {
     });
   }, [delaySplit]);
 
-  useEffect(() => {
-    currentGsapState && mainComponentGSAP();
+  // gsap가 준비된 후 애니메이션 동작.
+  React.useEffect(() => {
+    makeScroll(true);
+    setVideoReady(true);
+    videoReady && mainComponentGSAP();
+    // gsapReady(true);
 
     return () => {
       onScrollIntro('');
@@ -150,19 +166,13 @@ const Main = ({ onHover, onLeaves }) => {
         trigger.kill();
       });
     };
-  }, [currentGsapState, mainComponentGSAP, onScrollIntro]);
+  }, [videoReady, gsapReady, mainComponentGSAP, onScrollIntro, makeScroll, currentGsapState]);
 
   return (
     <section id='main' className='container main-section'>
       <div className='main-background'>
         <div className='background'></div>
-        {/* TODO: 해상도별 영상 성능테스트 후 적용(용량, 버퍼) */}
-        {/* {matchMedia('screen and (min-width: 985px)').matches ? (
-          // <VideoToCanvasComponent VideoSource={src1920} resolX={1920} resolY={1080} />
-          <VideoToCanvas src={src1280} resolX={1280} resolY={720} canvasReady={canvasReady} />
-        ) : (
-          <VideoToCanvas src={src640} resolX={640} resolY={360} canvasReady={canvasReady} />
-          )} */}
+        {/* Canvas 영역. */}
         <VideoToCanvas
           src={src640}
           resolX={640}
@@ -172,17 +182,20 @@ const Main = ({ onHover, onLeaves }) => {
       </div>
 
       <div className='main-content-frame'>
+        {/* video 로드 시간을 벌기 위한 커버. */}
         <div className='video-delay-cover'></div>
+        {/* 센터 텍스트 영역 */}
         <div className='main-text-frame'>
           <div
             className='main-text'
-            onMouseEnter={() => onHover(' reverse-cursor')}
-            onMouseLeave={() => onLeaves()}>
+            onMouseEnter={() => _onHover(' reverse-cursor')}
+            onMouseLeave={() => _onLeave()}>
             <span>FRONT - END DEVELOPER</span>
             <p>Doyoung Lee</p>
           </div>
         </div>
 
+        {/* 하단 intro splitText. */}
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
@@ -212,4 +225,4 @@ const Main = ({ onHover, onLeaves }) => {
 };
 
 // export default memo(withTranslation('translations')(Main));
-export default memo(Main);
+export default React.memo(Main);

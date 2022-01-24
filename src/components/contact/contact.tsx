@@ -1,6 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-// import { changeContactState, changeContactButtonDelay } from '../../Modules/commonValue';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import {
+  splitTextStart,
+  // changeContactState,
+  // changeContactButtonDelay,
+} from '../../Modules/commonValue';
 import { isMobile } from 'react-device-detect';
 
 import kakaoIcon from '../../static/images/kakao-icon.svg';
@@ -16,10 +20,13 @@ import SplitText from '../splitText';
 import useInterval from '../../utils/useInterval';
 import { RootState } from '../../Modules';
 
-const Contact = ({ onHover, onLeave }) => {
-  // const dispatch = useDispatch();
+const Contact = ({ _onHover, _onLeave }) => {
+  // redux dispatch 정의.
+  const dispatch = useDispatch();
   // const onChangeContactState = () => dispatch(changeContactState());
   // const onChangeContactButtonDelay = (value) => dispatch(changeContactButtonDelay(value));
+  const onScrollIntro = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
+
   const [currentContactState] = useSelector((state: RootState) => [state.CommonValue.currentContactState], shallowEqual);
   // const [currentContactButtonDelay] = useSelector(state => [state.CommonValue.currentContactButtonDelay], shallowEqual);
   const [qnumber, setQnumber] = useState(1);
@@ -55,6 +62,12 @@ const Contact = ({ onHover, onLeave }) => {
     currentContactState ? 6000 : null
   );
 
+  React.useEffect(() => {
+    return () => {
+      onScrollIntro('');
+    }
+  }, [currentContactState, onScrollIntro]);
+
   return (
     <div className='contact-area'>
       {/* <div className={`contact-button${currentContactButtonDelay ? ' delay' : ''}${currentContactState ? ' open' : ''}`} onClick={onChangeContactState}>
@@ -81,9 +94,8 @@ const Contact = ({ onHover, onLeave }) => {
 
           <div className='container'>
             <div
-              className={`back-text${currentContactState ? ' open' : ' close'
-                }`}>
-              {currentContactState && qnumberRef.current === 1 && (
+              className={'back-text'}>
+              {qnumberRef.current === 1 && (
                 <SplitText
                   animation={'up'}
                   scroll={'all'}
@@ -92,7 +104,7 @@ const Contact = ({ onHover, onLeave }) => {
                   What should I do for you?
                 </SplitText>
               )}
-              {currentContactState && qnumberRef.current === 2 && (
+              {qnumberRef.current === 2 && (
                 <SplitText
                   animation={'up'}
                   scroll={'all'}
@@ -101,7 +113,7 @@ const Contact = ({ onHover, onLeave }) => {
                   Could you tell me about the project?
                 </SplitText>
               )}
-              {currentContactState && qnumberRef.current === 3 && (
+              {qnumberRef.current === 3 && (
                 <SplitText
                   animation={'up'}
                   scroll={'all'}
@@ -147,8 +159,8 @@ const Contact = ({ onHover, onLeave }) => {
                     {isMobile ? (
                       <div
                         className='link'
-                        onMouseEnter={() => onHover(' go-cursor')}
-                        onMouseLeave={() => onLeave()}>
+                        onMouseEnter={() => _onHover(' go-cursor')}
+                        onMouseLeave={() => _onLeave()}>
                         <span>
                           <img
                             width='100%'
@@ -194,8 +206,8 @@ const Contact = ({ onHover, onLeave }) => {
                     </div>
                     <div
                       className='link'
-                      onMouseEnter={() => onHover(' go-cursor')}
-                      onMouseLeave={() => onLeave()}>
+                      onMouseEnter={() => _onHover(' go-cursor')}
+                      onMouseLeave={() => _onLeave()}>
                       <span>
                         <img
                           width='100%'

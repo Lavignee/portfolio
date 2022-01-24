@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { changeLanguage } from '../../Modules/commonValue';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
@@ -22,15 +22,15 @@ const languages = [
 
 const LanguageSelectors = () => {
   const dispatch = useDispatch();
-  const onChangeLanguage = (lang) => dispatch(changeLanguage(lang));
+  const onChangeLanguage = React.useCallback((lang) => dispatch(changeLanguage(lang)), []);
   const [language] = useSelector(
     (state: RootState) => [state.CommonValue.language],
     shallowEqual
   );
 
-  const [currentLang, setCurrentLang] = useState('');
-  const [LangList, setLangList] = useState(false);
-  const changeLanguages = (e) => {
+  const [currentLang, setCurrentLang] = React.useState('');
+  const [LangList, setLangList] = React.useState(false);
+  const changeLanguages = (e: any) => {
     i18n.changeLanguage(e.target.dataset.lang);
     onChangeLanguage(e.target.dataset.lang);
   };
@@ -39,7 +39,7 @@ const LanguageSelectors = () => {
     setLangList(!LangList);
   };
 
-  const currentLangCheck = (value) => {
+  const currentLangCheck = (value: string) => {
     switch (value) {
       case 'ko':
         return setCurrentLang('한국어');
@@ -50,7 +50,7 @@ const LanguageSelectors = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     currentLangCheck(language);
   }, [language]);
 

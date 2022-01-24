@@ -15,33 +15,33 @@ const SkillDetail = lazy(() => import('../../pages/skillDetail'));
 const FootprintDetail = lazy(() => import('../../pages/footprintDetail'));
 const NotFound = lazy(() => import('../../pages/notFound'));
 
-const ContentSwitcher = ({ onHover, onClick, onLeave, pageTimer }) => {
+const ContentSwitcher = ({ _onHover, _onClick, _onLeave, pageTimer }) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route
           path='/'
           element={
-            <Home onHover={onHover} onClick={onClick} onLeave={onLeave} />
+            <Home _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} />
           }
         />
         <Route
           path='/about'
-          element={<AboutDetail onHover={onHover} onLeave={onLeave} />}
+          element={<AboutDetail _onHover={_onHover} _onLeave={_onLeave} />}
         />
         <Route
           path='/skill/:list'
           element={
             <SkillDetail
-              onHover={onHover}
-              onLeave={onLeave}
+              _onHover={_onHover}
+              _onLeave={_onLeave}
               pageTimer={pageTimer}
             />
           }
         />
         <Route
           path='/footprint'
-          element={<FootprintDetail onHover={onHover} onLeave={onLeave} />}
+          element={<FootprintDetail _onHover={_onHover} _onLeave={_onLeave} />}
         />
         <Route element={NotFound} />
       </Routes>
