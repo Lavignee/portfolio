@@ -10353,7 +10353,47 @@ module.exports = require('./helpers/bundle-url').getBundleURL('3IHNx') + "curren
 },{"./helpers/bundle-url":"lgJ39"}],"ekyt3":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('3IHNx') + "current3.92b1367f.jpg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"aWf3O":[function() {},{}],"iXKG4":[function() {},{}],"bghXC":[function() {},{}],"awB7C":[function() {},{}],"9FhdL":[function() {},{}],"8jxEu":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"aWf3O":[function() {},{}],"iXKG4":[function() {},{}],"bghXC":[function() {},{}],"awB7C":[function() {},{}],"9FhdL":[function() {},{}],"8ocw7":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$a474 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$a474.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _s = $RefreshSig$();
+const useWindowSize = ()=>{
+    _s();
+    const isSSR = typeof window !== 'undefined';
+    const [windowSize, setWindowSize] = _reactDefault.default.useState({
+        width: isSSR ? window.innerWidth : 1200,
+        height: isSSR ? window.innerHeight : 800
+    });
+    const changeWindowSize = ()=>{
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    };
+    _reactDefault.default.useEffect(()=>{
+        window.addEventListener('resize', changeWindowSize);
+        return ()=>window.removeEventListener('resize', changeWindowSize)
+        ;
+    }, []);
+    return windowSize;
+};
+_s(useWindowSize, "hQ0mXtDtgFkFk1RKPNRRgLncxTo=");
+exports.default = useWindowSize;
+
+  $parcel$ReactRefreshHelpers$a474.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"8jxEu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>_tooltipDefault.default

@@ -1,4 +1,4 @@
-import React, { memo, useState, useRef } from 'react';
+import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
@@ -12,21 +12,25 @@ import './footprint.scss';
 import Footer from '../footer';
 import { RootState } from '../../Modules';
 
-const Footprint = ({ _onHover, _onClick, _onLeave }) => {
-  const [currentButtonDelay] = useSelector(
-    (state: RootState) => [state.CommonValue.currentButtonDelay],
-    shallowEqual
-  );
+// Props로 받는 이벤트들에 대한 interface 정의.
+interface FootprintProps {
+  _onHover: (path: string, hoverText?: string | null) => void;
+  _onClick: (path: string, hoverText?: string | null) => void;
+  _onLeave: (hoverText?: string | null) => void;
+}
 
-  const footprintCursorRef = useRef(null);
-  const [clipPathReady, setClipPathReady] = useState(false);
+const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
+  // redux useSelector 정의.
+  const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useSelector((state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentScrollLimit, state.CommonValue.currentScrollValue], shallowEqual);
 
-  const footprintMoveCircle = (e) => {
-    gsap.to(footprintCursorRef.current, 0.3, {
-      css: {
-        clipPath: `circle(15% at ${e.pageX}px ${e.pageY - window.innerHeight / 2
-          }px)`,
-      },
+  const footprintCursorRef = React.useRef(null);
+  const [clipPathReady, setClipPathReady] = React.useState(false);
+
+  // 클립패스 위치 계산.
+  const footprintMoveCircle = (e: React.MouseEvent) => {
+    gsap.to(footprintCursorRef.current, {
+      duration: 0.3,
+      css: { clipPath: `circle(20% at ${e.pageX}px ${e.pageY - (window.innerHeight / 2 + (+currentScrollLimit - +currentScrollValue))}px)` },
     });
   };
 
@@ -39,8 +43,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }) => {
         onMouseMove={(e) => footprintMoveCircle(e)}
         onMouseLeave={() => setClipPathReady(false)}>
         <div
-          className={`footprint-image-mask${clipPathReady ? ' will-change' : ''
-            }`}
+          className={`footprint-image-mask${clipPathReady ? ' will-change' : ''}`}
           ref={footprintCursorRef}>
           <img src={footprint} alt='footprint' />
         </div>
@@ -57,6 +60,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }) => {
                 />
               )}
             </div>
+
             <h2>Footprint</h2>
             <span>프로젝트 / 경력사항 / 외부수주</span>
             <div className='footprint-arrow-area'>
@@ -68,6 +72,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }) => {
               />
             </div>
           </div>
+
           <div
             className={`link-button${currentButtonDelay ? ' delay' : ''}`}
             onMouseEnter={() => _onHover(' go-cursor')}
@@ -82,4 +87,4 @@ const Footprint = ({ _onHover, _onClick, _onLeave }) => {
   );
 };
 
-export default memo(Footprint);
+export default React.memo(Footprint);

@@ -151,9 +151,6 @@
       padding-right: 10px;
       opacity: 0;
       animation-duration: 1s;
-      animation-name: show;
-      animation-fill-mode: forwards;
-      animation-delay: 0.5s;
       @include f-b(8rem, $p-d);
 
       @media (max-width: $bp-m) {
@@ -178,6 +175,16 @@
         span {
           font-family: Syncopate;
         }
+      }
+
+      &.open {
+        animation-name: show;
+        animation-fill-mode: forwards;
+        animation-delay: 0.5s;
+      }
+
+      &.close {
+        animation-name: hide;
       }
     }
 

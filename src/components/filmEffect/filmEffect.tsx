@@ -4,6 +4,7 @@ import { RootState } from '../../Modules';
 import './filmEffect.scss';
 
 const FilmEffect = () => {
+  // redux useSelector 정의.
   const [currentFilmState] = useSelector((state: RootState) => [state.CommonValue.currentFilmState], shallowEqual);
 
   return (

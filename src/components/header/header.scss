@@ -10,8 +10,8 @@ header {
   &.invert {
     .header-logo {
       path {
-        fill:$s-l;
-      } 
+        fill: $s-l;
+      }
     }
 
     // .language-selectors-frame {
@@ -46,20 +46,20 @@ header {
     border-radius: 10%;
     transform: rotate(-60deg) translate(220%, -40%) scale(2);
     transition: border-radius $transition-slow22, transform $transition-slow22;
-  
+
     @media (max-width: $bp-m) {
       transform: rotate(-60deg) translate(250%, -40%) scale(2);
     }
-  
+
     @media (max-width: $bp-s) {
       transform: rotate(-60deg) translate(300%, -40%) scale(1.1);
     }
-  
+
     &.active {
       border-radius: 0%;
       transform: rotate(25deg) translate(10%, 0%) scale(1.7);
       transition: border-radius $transition-slow2, transform $transition-slow2;
-  
+
       @media (max-width: $bp-xl) {
         transform: rotate(25deg) translate(10%, 0%) scale(1.8);
       }
@@ -74,7 +74,7 @@ header {
       }
     }
   }
-  
+
   .fixed-frame {
     position: fixed;
     width: 100%;
@@ -85,7 +85,7 @@ header {
     pointer-events: none;
     z-index: 102;
     visibility: hidden;
-      
+
     .gnb-container {
       .gnb-close-button {
         position: relative;
@@ -95,7 +95,7 @@ header {
         pointer-events: initial;
         display: flex;
         justify-content: flex-end;
-        
+
         .close-img {
           width: 100%;
           height: 100%;
@@ -114,13 +114,13 @@ header {
         }
       }
     }
-  
+
     &.view {
       opacity: 1;
       visibility: visible;
     }
   }
-  
+
   .menu-frame {
     position: fixed;
     width: 100vw;
@@ -130,36 +130,55 @@ header {
     opacity: 0;
     transition: opacity $transition;
     pointer-events: none;
-  
+
     .menu-content {
       @include vertical-align;
       width: 100%;
       display: block;
-  
+
       div {
         transition: padding $transition-slow2;
       }
-  
-        li {
-          position: relative;
-          font-family: 'Syncopate';
-          transform: translate(250px, -50px) rotate(-10deg) skew(0deg , -0.14deg);
-          transition: transform $transition-slow2;
 
-          &.line-up {
-            transition-delay: 100ms;
-            transform: skew( 0deg , -0.14deg );
+      li {
+        position: relative;
+        font-family: 'Syncopate';
+        transform: translate(250px, -50px) rotate(-10deg) skew(0deg, -0.14deg);
+        transition: transform $transition-slow2;
+
+        &.line-up {
+          transition-delay: 100ms;
+          transform: skew(0deg, -0.14deg);
+        }
+
+        a,
+        .list-contact,
+        .link-button {
+          position: relative;
+          display: inline-block;
+          padding-top: 2rem;
+          padding-bottom: 2rem;
+          font-family: 'Syncopate';
+          @include f-b(7.2rem, transparent);
+          transition: padding $transition-slow2, font-size $transition-slow2;
+
+          @media (max-width: $bp-m) {
+            font-size: 6.2rem;
           }
-  
-          a, .list-contact, .link-button {
-            position: relative;
-            display: inline-block;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
+          @media (max-width: $bp-s) {
+            font-size: 5.2rem;
+          }
+          @media (max-width: $bp-xs) {
+            font-size: 4.2rem;
+          }
+
+          span {
+            position: absolute;
+            left: 0;
             font-family: 'Syncopate';
-            @include f-b(7.2rem, transparent);
-            transition: padding $transition-slow2, font-size $transition-slow2;
-  
+            @include f-b(7.2rem, $wh);
+            transition: transform $transition, letter-spacing $transition, opacity $transition;
+
             @media (max-width: $bp-m) {
               font-size: 6.2rem;
             }
@@ -169,71 +188,56 @@ header {
             @media (max-width: $bp-xs) {
               font-size: 4.2rem;
             }
-
-            span {
-              position: absolute;
-              left:0;
-              font-family: 'Syncopate';
-              @include f-b(7.2rem, $wh);
-              transition: transform $transition, letter-spacing $transition, opacity $transition;
-  
-              @media (max-width: $bp-m) {
-                font-size: 6.2rem;
-              }
-              @media (max-width: $bp-s) {
-                font-size: 5.2rem;
-              }
-              @media (max-width: $bp-xs) {
-                font-size: 4.2rem;
-              }
-            }
-
-            &:hover {
-              span {
-                opacity: 1;
-                transform: scale(1.1);
-                letter-spacing: 0.5rem;
-                // animation: neon 2s ease-in-out infinite alternate;
-              }
-            }
           }
 
-          &.blur {
+          &:hover {
             span {
-              opacity: 0.3;
+              opacity: 1;
+              transform: scale(1.1);
+              letter-spacing: 0.5rem;
+              // animation: neon 2s ease-in-out infinite alternate;
             }
           }
         }
-  
-        .first-content {
-          padding-left: 20%;
-          
-          li {
-            display: inline-block;
-          }
-  
-          @media (max-width: $bp-xl) {
-            padding-left: 15%;
-          }
-          @media (max-width: $bp-l) {
-            padding-left: 10%;
-          }
-          @media (max-width: $bp-m) {
-            padding-left: 5%;
-          }
-          @media (max-width: $bp-s) {
-            padding-left: 10px;
+
+        &.blur {
+          span {
+            opacity: 0.3;
           }
         }
-  
+      }
+
+      .first-content {
+        padding-left: 20%;
+
+        li {
+          display: inline-block;
+        }
+
+        @media (max-width: $bp-xl) {
+          padding-left: 15%;
+        }
+        @media (max-width: $bp-l) {
+          padding-left: 10%;
+        }
+        @media (max-width: $bp-m) {
+          padding-left: 5%;
+        }
+        @media (max-width: $bp-s) {
+          padding-left: 10px;
+        }
+      }
+
       .center-content {
         display: inline-block;
         @include horizontal-align(relative);
 
         li {
-          &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+          &:nth-child(1),
+          &:nth-child(2),
+          &:nth-child(3) {
             position: relative;
-            
+
             &:before {
               position: absolute;
               left: 0;
@@ -241,10 +245,12 @@ header {
               -webkit-text-stroke: 1px $p-m;
               @include f-b(3rem, transparent);
             }
-            
-            a, .list-contact, .link-button {
+
+            a,
+            .list-contact,
+            .link-button {
               padding-left: 10rem;
-  
+
               @media (max-width: $bp-xl) {
                 padding-left: 8rem;
               }
@@ -260,45 +266,44 @@ header {
 
               span {
                 padding-left: 10rem;
-  
-              @media (max-width: $bp-xl) {
-                padding-left: 8rem;
-              }
-              @media (max-width: $bp-l) {
-                padding-left: 6rem;
-              }
-              @media (max-width: $bp-m) {
-                padding-left: 4rem;
-              }
-              @media (max-width: $bp-s) {
-                padding-left: 2rem;
-              }
+
+                @media (max-width: $bp-xl) {
+                  padding-left: 8rem;
+                }
+                @media (max-width: $bp-l) {
+                  padding-left: 6rem;
+                }
+                @media (max-width: $bp-m) {
+                  padding-left: 4rem;
+                }
+                @media (max-width: $bp-s) {
+                  padding-left: 2rem;
+                }
               }
             }
           }
           &:nth-child(1) {
             &:before {
-              content:'01';
+              content: '01';
             }
           }
           &:nth-child(2) {
             &:before {
-              content:'02';
-    
+              content: '02';
             }
           }
           &:nth-child(3) {
             &:before {
-              content:'03';
+              content: '03';
             }
           }
         }
       }
-  
+
       .last-content {
         text-align: right;
         padding-right: 20%;
-  
+
         @media (max-width: $bp-xl) {
           padding-right: 15%;
         }
@@ -313,11 +318,80 @@ header {
         }
       }
     }
-  
+
     &.view {
       opacity: 1;
       transition-delay: 250ms;
       pointer-events: initial;
+    }
+  }
+}
+
+header,
+.gnb-area {
+  a,
+  .link-button {
+    display: inline-flex;
+
+    svg {
+      display: inline;
+      width: 100%;
+      max-width: 58px;
+      @include vertical-align(relative);
+      transition: width $transition-slow;
+
+      @media (max-width: $bp-l) {
+        width: 95%;
+      }
+      @media (max-width: $bp-m) {
+        width: 90%;
+      }
+      @media (max-width: $bp-s) {
+        width: 85%;
+      }
+    }
+
+    &.delay {
+      pointer-events: none;
+    }
+  }
+
+  .right-area {
+    position: absolute;
+    top: 1.5rem;
+    right: 10px;
+    width: 10.3rem;
+    height: 10.5rem;
+    display: inline-flex;
+    justify-content: flex-end;
+    transition: top $transition-slow;
+
+    .gnb-button {
+      width: 100%;
+      transition: width $transition-slow;
+      mix-blend-mode: difference;
+
+      &.delay {
+        pointer-events: none;
+      }
+
+      svg {
+        position: absolute;
+        left: 0;
+      }
+
+      .menu-img {
+        width: 100%;
+        height: 100%;
+        transition: width $transition-slow;
+        animation: rotate 25s linear infinite;
+
+        &.invert {
+          path {
+            fill: $s-l;
+          }
+        }
+      }
     }
   }
 }
