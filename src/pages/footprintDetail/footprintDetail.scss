@@ -287,8 +287,11 @@
 
               p {
                 width: 100%;
-                padding-top: 4rem;
                 @include f-l(1.8rem, $bl, 4rem);
+
+                &:first-child {
+                  padding-top: 4rem;
+                }
               }
             }
           }

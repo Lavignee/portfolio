@@ -26552,8 +26552,6 @@ parcelHelpers.export(exports, "changeContactState", ()=>changeContactState
 );
 parcelHelpers.export(exports, "changeContactStateFalse", ()=>changeContactStateFalse
 );
-parcelHelpers.export(exports, "changeContactButtonDelay", ()=>changeContactButtonDelay
-);
 parcelHelpers.export(exports, "changeButtonDelay", ()=>changeButtonDelay
 );
 parcelHelpers.export(exports, "changeGnbState", ()=>changeGnbState
@@ -26577,7 +26575,6 @@ parcelHelpers.export(exports, "splitTextStart", ()=>splitTextStart
 const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 const CONTACT_STATE = 'CONTACT_STATE';
 const CONTACT_STATE_FALSE = 'CONTACT_STATE_FALSE';
-const CONTACT_BUTTON_DELAY = 'BUTTON_DELAY2';
 const BUTTON_DELAY = 'BUTTON_DELAY';
 const GNB_STATE = 'GNB_STATE';
 const SWITCH_ANIMATION = 'SWITCH_ANIMATION';
@@ -26601,11 +26598,6 @@ const changeContactState = (currentContactState)=>({
 const changeContactStateFalse = (currentContactState)=>({
         type: CONTACT_STATE_FALSE,
         currentContactState
-    })
-;
-const changeContactButtonDelay = (currentContactButtonDelay)=>({
-        type: CONTACT_BUTTON_DELAY,
-        currentContactButtonDelay
     })
 ;
 const changeButtonDelay = (currentButtonDelay)=>({
@@ -26661,7 +26653,6 @@ const splitTextStart = (currentSplitText)=>({
 const initialState = {
     language: 'ko',
     currentContactState: false,
-    currentContactButtonDelay: false,
     currentButtonDelay: false,
     currentGnbState: false,
     currentSwitchAnimation: false,
@@ -26689,11 +26680,6 @@ const CommonValue = (state = initialState, action)=>{
             return {
                 ...state,
                 currentContactState: action.currentContactState
-            };
-        case CONTACT_BUTTON_DELAY:
-            return {
-                ...state,
-                currentContactButtonDelay: action.currentContactButtonDelay
             };
         case BUTTON_DELAY:
             return {
@@ -42975,7 +42961,7 @@ $RefreshReg$(_c, "ContentSwitcher");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-router-dom":"fdOAw","./contentSwitcher.scss":"a126U","../../pages/home":"1D8Ll","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../../pages/aboutDetail":"fIFZg","../../pages/skillDetail":"e5j1B","../../pages/footprintDetail":"g20tr","../../pages/notFound":"bvfN0"}],"a126U":[function() {},{}],"1D8Ll":[function(require,module,exports) {
+},{"react":"21dqq","react-router-dom":"fdOAw","./contentSwitcher.scss":"a126U","../../pages/home":"1D8Ll","../../pages/aboutDetail":"fIFZg","../../pages/skillDetail":"e5j1B","../../pages/footprintDetail":"g20tr","../../pages/notFound":"bvfN0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"a126U":[function() {},{}],"1D8Ll":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>_homeDefault.default
@@ -43707,18 +43693,20 @@ var _aboutThreeJpgDefault = parcelHelpers.interopDefault(_aboutThreeJpg);
 var _aboutScss = require("./about.scss");
 var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
-const About = ({ _onHover , _onClick , _onLeaves  })=>{
+const About = ({ _onHover , _onClick , _onLeave  })=>{
     _s();
+    // redux useSelector 정의.
     const [currentGsapState, currentButtonDelay] = _reactRedux.useSelector((state)=>[
             state.CommonValue.currentGsapState,
-            state.CommonValue.currentButtonDelay, 
+            state.CommonValue.currentButtonDelay
         ]
     , _reactRedux.shallowEqual);
-    const [nextText, setNextText] = _react.useState(true);
-    const [aboutAnimationReady, setAboutAnimationReady] = _react.useState(false);
-    const [aboutAnimationTrigger, setAboutAnimationTrigger] = _react.useState(false);
-    const savedChangeTarget = _react.useRef(null);
+    const [nextText, setNextText] = _reactDefault.default.useState(true);
+    const [aboutAnimationReady, setAboutAnimationReady] = _reactDefault.default.useState(false);
+    const savedChangeTarget = _reactDefault.default.useRef(null);
+    // gasp 애니메이션 정의.
     const aboutComponentGSAP = ()=>{
+        // 모어 버튼 트리거
         const aboutDetailButtonTopTrigger = {
             trigger: '.about-detail-button button',
             start: 'top-=250% center',
@@ -43731,12 +43719,14 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
             end: 'bottom+=350% center',
             scrub: true
         };
+        // 어바웃 타이틀 트리거.
         const aboutTitleTrigger = {
             trigger: '.about-section',
             start: 'top+=100 bottom',
             end: 'top+=1000 bottom',
             scrub: 2
         };
+        // 슬라이드 텍스트 트리거
         const firstChangeTextTrigger = {
             trigger: '.text-animation-frame',
             start: 'top-=50% center',
@@ -43755,6 +43745,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
             end: 'bottom+=101% center',
             scrub: true
         };
+        // 슬라이드 텍스트 그림자 설정.
         const changeTextParseIntModifiers = {
             y: (y)=>{
                 y = parseInt(y);
@@ -43762,6 +43753,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
                 return newY + 'px';
             }
         };
+        // 어바웃 타이틀 그림자 설정.
         const yPercentParseIntModifiers = {
             y: (y)=>{
                 y = parseInt(y);
@@ -43769,6 +43761,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
                 return newY + '%';
             }
         };
+        // 어바웃 이미지 설정.
         _gsap.gsap.fromTo('.two', {
             opacity: 0
         }, {
@@ -43802,6 +43795,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
                 scrub: 1
             }
         });
+        // 슬라이드 텍스트 애니메이션 동작 여부.
         _gsap.gsap.to('.text-animation-frame', {
             scrollTrigger: {
                 trigger: '.about-section',
@@ -43817,6 +43811,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
                 end: 'bottom top'
             }
         });
+        // 모어 버튼 그림자 설정.
         if (_reactDeviceDetect.isDesktop) {
             _gsap.gsap.fromTo('.shadow-inset', {
                 boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)'
@@ -43891,6 +43886,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
                 scrollTrigger: aboutDetailButtonTopTrigger
             });
         }
+        // 뷰포트에 따라 위치값 조정.
         _scrollTrigger.ScrollTrigger.matchMedia({
             '(min-width: 769px)': ()=>{
                 _gsap.gsap.fromTo('.about-title', {
@@ -43960,31 +43956,25 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
             }
         });
     };
-    const autoChangeText = ()=>{
+    const autoChangeText = _reactDefault.default.useCallback(()=>{
         setNextText(!nextText);
-    };
-    _react.useEffect(()=>{
-        if (aboutAnimationReady) setAboutAnimationTrigger(true);
     }, [
-        aboutAnimationReady
+        nextText
     ]);
-    _react.useEffect(()=>{
-        if (aboutAnimationTrigger) {
-            const changeTextInterval = setInterval(()=>{
-                savedChangeTarget.current();
-            }, 5000);
-            return ()=>clearInterval(changeTextInterval)
-            ;
-        }
-        return ()=>savedChangeTarget.current()
+    // 화면에 어바웃 세션이 들어온 경우에 따라 동적 효과 동작 및 정지.
+    _reactDefault.default.useEffect(()=>{
+        if (aboutAnimationReady) savedChangeTarget.current = setInterval(()=>{
+            autoChangeText();
+        }, 5000);
+        else savedChangeTarget.current && clearInterval(savedChangeTarget.current);
+        return ()=>clearInterval(savedChangeTarget.current)
         ;
     }, [
-        aboutAnimationTrigger
+        aboutAnimationReady,
+        autoChangeText
     ]);
-    _react.useEffect(()=>{
-        savedChangeTarget.current = autoChangeText;
-    });
-    _react.useEffect(()=>{
+    // gasp가 준비된 경우 트리거 및 설정 진행.
+    _reactDefault.default.useEffect(()=>{
         currentGsapState && aboutComponentGSAP();
         return ()=>{
             let triggers = _scrollTrigger.ScrollTrigger.getAll();
@@ -44039,7 +44029,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
         className: `first-line${_reactDeviceDetect.isDesktop && aboutAnimationReady ? ' desktop will-change' : ''}${_reactDeviceDetect.isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`
     }, nextText ? /*#__PURE__*/ _reactDefault.default.createElement("div", null, "Idea", /*#__PURE__*/ _reactDefault.default.createElement("span", {
         className: 'first-span'
-    }, "Idea"), ' ') : /*#__PURE__*/ _reactDefault.default.createElement("div", null, "AGILE", /*#__PURE__*/ _reactDefault.default.createElement("span", {
+    }, "Idea")) : /*#__PURE__*/ _reactDefault.default.createElement("div", null, "AGILE", /*#__PURE__*/ _reactDefault.default.createElement("span", {
         className: 'first-span'
     }, "AGILE"))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: `second-line${_reactDeviceDetect.isDesktop && aboutAnimationReady ? ' desktop will-change' : ''}${_reactDeviceDetect.isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`
@@ -44059,7 +44049,7 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
         className: `${_reactDeviceDetect.isDesktop && aboutAnimationReady ? 'will-change' : ''}${_reactDeviceDetect.isMobile ? ' mobile' : ''}${currentButtonDelay ? ' delay' : ''}`,
         onMouseEnter: ()=>_onHover(' go-cursor')
         ,
-        onMouseLeave: ()=>_onLeaves()
+        onMouseLeave: ()=>_onLeave()
         ,
         onClick: ()=>_onClick('/about')
     }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
@@ -44076,13 +44066,13 @@ const About = ({ _onHover , _onClick , _onLeaves  })=>{
         className: 'shadow-deep2'
     }))))));
 };
-_s(About, "dfBxEQNCLrbcGwOjNTCHku3AsOg=", false, function() {
+_s(About, "Doo1HtyIcC+PhhDwxxwDql2Y6RI=", false, function() {
     return [
         _reactRedux.useSelector
     ];
 });
 _c = About;
-exports.default = /*#__PURE__*/ _c1 = _react.memo(About);
+exports.default = /*#__PURE__*/ _c1 = _reactDefault.default.memo(About);
 var _c, _c1;
 $RefreshReg$(_c, "About");
 $RefreshReg$(_c1, "%default%");
@@ -54738,7 +54728,11 @@ const SkillDetail = ({ _onHover , _onLeave  })=>{
             className: opacity
         }, content1[currentTarget].name)), /*#__PURE__*/ _reactDefault.default.createElement("p", {
             className: `${opacity}${content1[currentTarget].workmanship}`
-        }, content1[currentTarget].summary)), /*#__PURE__*/ _reactDefault.default.createElement("span", {
+        }, content1[currentTarget].summary.split('\n').map((item, idx)=>{
+            return(/*#__PURE__*/ _reactDefault.default.createElement("span", {
+                key: idx
+            }, item, /*#__PURE__*/ _reactDefault.default.createElement("br", null)));
+        }))), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: `back-text ${opacity}`
         }, content1[currentTarget].name));
     };
@@ -54836,16 +54830,16 @@ $RefreshReg$(_c, "SkillDetail");
   window.$RefreshSig$ = prevRefreshSig;
 }
 },{"react":"21dqq","react-redux":"bdVon","react-router-dom":"fdOAw","../../Modules/commonValue":"lRfSx","react-device-detect":"ldsxW","gsap":"fPSuC","gsap/ScrollTrigger":"7wnFk","../../data/dataSkill/languageSkill.json":"iQsNl","../../data/dataSkill/libSkill.json":"9IDfo","../../data/dataSkill/toolSkill.json":"3Enrb","../../data/dataSkill/interestSkill.json":"91PDA","../../static/images/icon-svg.json":"dOzGB","./skillDetail.scss":"7qH6s","smooth-scrollbar":"7azJf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iQsNl":[function(require,module,exports) {
-module.exports = JSON.parse("{\"language\":[{\"number\":1,\"id\":\"html\",\"name\":\"HTML\",\"workmanship\":5,\"summary\":\"대부분 목적에 맞는 올바른 태그를 사용하고 있습니다. 스크린리더의 적용 여부에 따라 더 까다롭게 신경 써 볼 수 있겠지만 현재는 웹 표준과 가이드가 너무 잘 나와 있기 때문에 완전히 자유롭고 다양하게 사용할 수 있습니다\"},{\"number\":2,\"id\":\"css\",\"name\":\"CSS\",\"workmanship\":4,\"summary\":\"대부분의 style 종류와 우선순위, 상관관계를 파악하고 있습니다. 이전에는 'Internet Explorer 8~9' 까지 Cross Browsing 하는 개발 조건을 많이 겪어 보기도 했습니다. 3D Animation을 곧바로 작성하는 수준까지는 경험이 더 필요할 것 같습니다.\"},{\"number\":3,\"id\":\"javascript\",\"name\":\"JavaScript\",\"workmanship\":4,\"summary\":\"MDN을 통째로 외우는 수준은 멀었지만, 언어 사용에 제한은 없는 수준입니다.\"}]}");
+module.exports = JSON.parse("{\"language\":[{\"number\":1,\"id\":\"html\",\"name\":\"HTML\",\"workmanship\":5,\"summary\":\"대부분 목적에 맞는 올바른 태그를 사용하고 있습니다.\\n스크린리더의 적용 여부에 따라 더 까다롭게 신경 써 볼 수 있겠지만 현재는 웹 표준과 가이드가 너무 잘 나와 있기 때문에 완전히 자유롭고 다양하게 사용할 수 있습니다.\"},{\"number\":2,\"id\":\"css\",\"name\":\"CSS\",\"workmanship\":5,\"summary\":\"대부분의 style 종류와 우선순위, 상관관계를 파악하고 있습니다.\\n이전에는 'Internet Explorer 8~9'까지 Cross Browsing 하는 개발 조건을 많이 겪어 보기도 했습니다.\\n 원하는 3D Animation을 자유롭게 작성하는 수준까지는 경험이 더 필요할 것 같습니다.\"},{\"number\":3,\"id\":\"javascript\",\"name\":\"JavaScript\",\"workmanship\":4,\"summary\":\"대부분의 상황에서 필요한 함수를 잘 떠올리고 사용합니다.\\n아직 전부 외우지는 못해서 MDN은 종종 읽어가며 사용하고 있습니다.\"},{\"number\":4,\"id\":\"typescript\",\"name\":\"TypeScript\",\"workmanship\":3,\"summary\":\"현재 포트폴리오에서 strict 모드까지 적용해 보았습니다.\\n더 다양한 실무 환경에서 다뤄보며 다음을 필요가 있습니다.\"}]}");
 
 },{}],"9IDfo":[function(require,module,exports) {
-module.exports = JSON.parse("{\"lib\":[{\"number\":1,\"id\":\"react\",\"name\":\"React\",\"workmanship\":4,\"summary\":\"Class 기반일 때부터 React를 익히고 있었지만, 실무에서 사용해볼 기회가 없었습니다. 커스터디 프로젝트에서 Hooks를 주로 사용하며 실무를 겪어보았고, 이번 포트폴리오는 Hooks 기반으로 제작하였습니다. 초기부터 지금까지 React에 변화가 많아 학습 시에 혼란이 많았지만 개발 및 설계는 이제 익숙합니다.\"},{\"number\":2,\"id\":\"redux\",\"name\":\"Redux\",\"workmanship\":3,\"summary\":\"간단한 상태 값과 트리거등의 역할로 이번 포트폴리오부터 사용하였습니다. 다양한 미들웨어들과 효율적인 사용은 경험이 더 필요할 것 같습니다.\"},{\"number\":3,\"id\":\"webpack\",\"name\":\"Webpack\",\"workmanship\":3,\"summary\":\"React를 처음 익히면서 Webpack을 배우게 되었습니다. 최근에는 개인 프로젝트를 진행하기 위해 webpack 5를 직접 세팅하여 사용해 보았습니다.\"},{\"number\":4,\"id\":\"parcel\",\"name\":\"Parcel\",\"workmanship\":4,\"summary\":\"이번 포트폴리오 개발에 사용한 번들러입니다. Webpack과 비교하여 Learning curve가 적고 바로 사용이 쉬우나 아직 관련 정보나 사례가 좀 적다는 단점을 겪었습니다.\"},{\"number\":5,\"id\":\"sass\",\"name\":\"SASS(SCSS)\",\"workmanship\":5,\"summary\":\"CSS보다 작성에서 오는 피로도가 적고 약간의 함수나 변수 사용이 꽤 편리합니다. 다루는데 큰 이해가 필요하진 않습니다.\"},{\"number\":6,\"id\":\"gsap\",\"name\":\"GSAP\",\"workmanship\":4,\"summary\":\"순수 CSS로 작성해서 만들어지는 애니메이션보다 시각적, 성능적으로 월등한 동적 효과를 표현할 수 있습니다. 유료 버전은 다뤄보지 않았지만 대부분의 기능이 무료이며, 응용에 무리가 없다고 생각합니다.\"},{\"number\":7,\"id\":\"i18next\",\"name\":\"I18next\",\"workmanship\":5,\"summary\":\"html이나 Javascript 환경, 서버에서 오는 텍스트 등 다양한 번역을 개발해보았습니다.\"},{\"number\":8,\"id\":\"jquery\",\"name\":\"Jquery\",\"workmanship\":4,\"summary\":\"Javascript를 처음 익힐 때 JQuery는 Learning curve를 줄여주는 좋은 도구였습니다. 사용하지 않은지 오래되긴 했지만 여전히 다루는 데는 문제가 없을 것 같습니다.\"},{\"number\":9,\"id\":\"bootstrap\",\"name\":\"Bootstrap\",\"workmanship\":5,\"summary\":\"반응형 사이트를 처음 접하고 개발할 당시 자주 사용하였던 프레임워크입니다, 현재도 BreakPoint 등을 참고하고, Grid 커스텀에도 응용하여 사용합니다.\"},{\"number\":10,\"id\":\"materialui\",\"name\":\"Material-UI\",\"workmanship\":4,\"summary\":\"커스터디 프로젝트에서 접하게 되었습니다. Bootstrap처럼 React에서 사용되는 프레임워크로 사용이나 커스텀의 방식도 꽤 익숙했다고 생각합니다.\"},{\"number\":11,\"id\":\"axios\",\"name\":\"Axios\",\"workmanship\":3,\"summary\":\"개인 프로젝트에서 주로 다루어보았고, 실무에서는 깊게 사용해볼 기회는 아직 없었습니다. 익히기 쉬웠고 사용도 간편했습니다.\"},{\"number\":12,\"id\":\"storoybook\",\"name\":\"Storybook\",\"workmanship\":4,\"summary\":\"삼성의 차세대 Knox Portal 프로젝트에서 공통 컴포넌트를 개발하며 다른 개발팀에 사용법을 공유하기 위해 개발하였습니다. 라이브러리 개발에는 적합한 도구입니다.\"}]}");
+module.exports = JSON.parse("{\"lib\":[{\"number\":1,\"id\":\"react\",\"name\":\"React\",\"workmanship\":4,\"summary\":\"Class 기반일 때부터 React를 익히고 있었지만, 실무에서 사용해 볼 기회는 없었습니다.\\n이후 겪은 실무 환경들에서도 Hook 형태로 작업을 해왔습니다.\\n워낙 인터넷상에 정보가 많기 때문에 이슈 처리나 성능 개선 등이 현재는 꽤 익숙합니다.\"},{\"number\":2,\"id\":\"redux\",\"name\":\"Redux\",\"workmanship\":3,\"summary\":\"가장 베이스 형태의 작성 방식으로 현재 포트폴리오에서 사용했습니다.\\n아직까지 미들웨어의 필요성이 있는 실무 환경을 접해보지는 못했습니다.\\n추후 'Redux Toolkit'을 최우선으로 학습할 예정입니다.\"},{\"number\":3,\"id\":\"webpack\",\"name\":\"Webpack\",\"workmanship\":3,\"summary\":\"React를 처음 학습할 당시 CRA가 아닌 webpack으로 개발 환경을 먼저 공부했었습니다.\\n 최근에는 webpack5로 개인 프로젝트에서 설정해 본 일이 있습니다.\"},{\"number\":4,\"id\":\"parcel\",\"name\":\"Parcel\",\"workmanship\":4,\"summary\":\"현재 포트폴리오 작업을 하면서 사용해 보았습니다.\\n초기 설정은 크게 손댈 일이 없었지만, 특수한 케이스에서 이슈를 처리하기 위한 사용자 정보가 적은 게 아쉬웠습니다.\\n그래도 자체 Learning curve가 적고 성능이 뛰어나서 좋았습니다.\"},{\"number\":5,\"id\":\"sass\",\"name\":\"SASS(SCSS)\",\"workmanship\":5,\"summary\":\"더 이상은 CSS를 직접 작업하는 일은 없을 것 같습니다.\\n꼭 필요하다면 SCSS로 작성 후 압축된 CSS를 빌드 하는 게 좋다고 생각합니다.\\n그만큼 스타일 작업에서는 필수적인 스킬입니다.\\nmixin 및 변수 등을 적극 활용하여 작업할 수 있습니다.\"},{\"number\":6,\"id\":\"gsap\",\"name\":\"GSAP\",\"workmanship\":4,\"summary\":\"일반적인 스타일로 작업한 동적 효과보다 성능이나 퍼포먼스가 더 뛰어난 라이브러리입니다.\\n제공되는 기능 외에 커스텀을 통해 다양하게 응용이 가능합니다.\"},{\"number\":7,\"id\":\"i18next\",\"name\":\"I18next\",\"workmanship\":5,\"summary\":\"다양한 환경에서 다양한 언어를 적용해보았습니다.\"},{\"number\":8,\"id\":\"jquery\",\"name\":\"Jquery\",\"workmanship\":4,\"summary\":\"javascript보다 먼저 익혔고, 상당 기간 사용했었습니다.\\n최근에는 React 내에서 쓰이기 어렵기 때문에 다뤄본 적이 없습니다.\"},{\"number\":9,\"id\":\"bootstrap\",\"name\":\"Bootstrap\",\"workmanship\":5,\"summary\":\"반응형 사이트를 처음 접하고 개발할 당시 자주 사용하였던 프레임워크입니다, 현재도 BreakPoint 등을 참고하고, Grid 커스텀에도 응용하여 사용합니다.\"},{\"number\":10,\"id\":\"materialui\",\"name\":\"Material-UI\",\"workmanship\":4,\"summary\":\"Bootstrap처럼 React에서 사용되는 프레임워크로 기본적인 사용 외에 필요에 따라 커스텀 하여 사용하기도 했습니다.\"},{\"number\":11,\"id\":\"axios\",\"name\":\"Axios\",\"workmanship\":3,\"summary\":\"사용방법은 매우 간편하여 배움에 어려움은 없었습니다.\\n다만, 아직 실무에서 제가 통신 관련 작업을 할 기회가 없었습니다.\\n다양한 환경에서 사용해 보고 싶습니다.\"},{\"number\":12,\"id\":\"storoybook\",\"name\":\"Storybook\",\"workmanship\":4,\"summary\":\"다양한 표현방식이나 애드온까지는 사용할 기회가 없었지만, 이후 다루는 일이 생겨도 어려움은 없을 것 같습니다.\"}]}");
 
 },{}],"3Enrb":[function(require,module,exports) {
-module.exports = JSON.parse("{\"tool\":[{\"number\":1,\"id\":\"git\",\"name\":\"Git\",\"workmanship\":4,\"summary\":\"개발자에게는 필수이고 당연히, 또 오랜 시간 사용하고 있지만 터미널에서 cli로 써본 적은 별로 없는 것 같습니다.\"},{\"number\":2,\"id\":\"github\",\"name\":\"Github\",\"workmanship\":4,\"summary\":\"대표적인 서비스지만 공개적인 형태라는 점에서 사용빈도가 낮았습니다. 이번 포트폴리오 프로젝트부터는 Github를 사용하려고 합니다.\"},{\"number\":3,\"id\":\"bitbucket\",\"name\":\"Bitbucket\",\"workmanship\":4,\"summary\":\"대부분의 Git 관련 프로젝트들이 직장과 관계되어 있고 소규모 팀에서 무료 Private 프로젝트를 만들 수 있었으므로 가장 많이 사용했습니다.\"},{\"number\":4,\"id\":\"sourcetree\",\"name\":\"Sourcetree\",\"workmanship\":3,\"summary\":\"GUI가 한눈에 들어오기도 하고 Bitbucket을 오래 사용하였기에 지금까지 사용하고 있는 Git 형상관리 툴입니다. 기능이 많지만 느리고 버그가 좀 잦다는 단점이 있습니다.\"},{\"number\":5,\"id\":\"jira\",\"name\":\"Jira\",\"workmanship\":4,\"summary\":\"처음부터 끝까지 세팅해본적은 없지만, 멤버로서 사용에는 아주 익숙합니다. 삼성에서 PL의 역할로써 사용해보기도 했습니다.\"},{\"number\":6,\"id\":\"figma\",\"name\":\"Figma\",\"workmanship\":4,\"summary\":\"예전 초기 프로젝트에서 PSD나 AI를 받아서 작업할 때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. \"},{\"number\":7,\"id\":\"zeplin\",\"name\":\"Zeplin\",\"workmanship\":4,\"summary\":\"예전 초기 프로젝트에서 PSD나 AI를 받아서 작업할 때와 삼성 Knox포털 작업 시 기획서의 대용으로 사용하였습니다.\"},{\"number\":8,\"id\":\"netlify\",\"name\":\"Netlify\",\"workmanship\":3,\"summary\":\"이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드는 에러가 많아, 빌드는 local에서 진행하고 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다.\"},{\"number\":9,\"id\":\"lighthouse\",\"name\":\"Lighthouse\",\"workmanship\":3,\"summary\":\"이번 포트폴리오를 개발하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용이 편했습니다.\"}]}");
+module.exports = JSON.parse("{\"tool\":[{\"number\":1,\"id\":\"git\",\"name\":\"Git\",\"workmanship\":4,\"summary\":\"각 프로젝트에 맞는 브렌치 분기 방식을 따라가는 편이며, rebase 활용 및 conflict 해결 등 관리도 어느 정도 할 수 있습니다.\"},{\"number\":2,\"id\":\"github\",\"name\":\"Github\",\"workmanship\":4,\"summary\":\"사용에 문제는 없지만, sourcetree를 주로 사용하고 있습니다.\"},{\"number\":3,\"id\":\"bitbucket\",\"name\":\"Bitbucket\",\"workmanship\":4,\"summary\":\"private git이 필요한 소규모 프로젝트의 경우에 쓰일 일이 많습니다.\\n생성, 권한, 프로젝트 관리 등 다양하게 사용해왔습니다.\"},{\"number\":4,\"id\":\"sourcetree\",\"name\":\"Sourcetree\",\"workmanship\":3,\"summary\":\"gitHub에 비해 확실히 느리다는 단점은 있지만 GUI 더 직관적이고 다양한 기능을 지원해서 오랫동안 사용하고 있습니다.\"},{\"number\":5,\"id\":\"jira\",\"name\":\"Jira\",\"workmanship\":4,\"summary\":\"처음 설정 단계부터 다뤄보지는 못했지만, 사용자로서 중간 관리자로서는 자주 사용했습니다.\"},{\"number\":6,\"id\":\"figma\",\"name\":\"Figma\",\"workmanship\":4,\"summary\":\"퍼블리셔로서, 개발자로서는 충분할 만큼 사용했습니다.\\n잘못되거나 불편한 가이드가 보이면 담당자에게 잘 전달하는 편입니다.\"},{\"number\":7,\"id\":\"zeplin\",\"name\":\"Zeplin\",\"workmanship\":4,\"summary\":\"PSD로 된 디자인을 받게 되는 경우 사용합니다.\"},{\"number\":8,\"id\":\"netlify\",\"name\":\"Netlify\",\"workmanship\":3,\"summary\":\"현재 포트폴리오를 배포하며 사용했습니다.\\n소규모 프로젝트나 테스트 용도로 많이 사용합니다.\"},{\"number\":9,\"id\":\"lighthouse\",\"name\":\"Lighthouse\",\"workmanship\":3,\"summary\":\"사이트의 성능 개선을 위해 많이 참고하고 있습니다.\"}]}");
 
 },{}],"91PDA":[function(require,module,exports) {
-module.exports = JSON.parse("{\"interest\":[{\"number\":1,\"id\":\"typescript\",\"name\":\"TypeScript\",\"workmanship\":2,\"summary\":\"어느 정도 학습을 진행하였지만, 아직 직접적으로 프로젝트에 적용해본 적은 없습니다. 현재 가장 많이 쓰이고 있는듯하여 최우선으로 숙달할 예정입니다.\"},{\"number\":2,\"id\":\"graphql\",\"name\":\"GraphQL\",\"workmanship\":2,\"summary\":\"개념과 기본 사용법은 익혀두었지만, 실무에서 사용해보진 못했습니다.\"},{\"number\":3,\"id\":\"mobx\",\"name\":\"MobX\",\"workmanship\":1,\"summary\":\"이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다. Redux보다는 편리하다고 들었는데, 시간이 나면 다뤄볼 생각입니다.\"},{\"number\":4,\"id\":\"nextjs\",\"name\":\"Next.js\",\"workmanship\":1,\"summary\":\"이미 적용된 프로젝트는 종종 있었으나, 직접적으로 다뤄보진 않았습니다.\"},{\"number\":5,\"id\":\"express\",\"name\":\"Express.js\",\"workmanship\":1,\"summary\":\"아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.\"},{\"number\":6,\"id\":\"nginx\",\"name\":\"Nginx\",\"workmanship\":1,\"summary\":\"아직 직접 다룰 기회가 없었지만 쓰이는 곳이 많아, 시간 나는 대로 익혀둘 생각입니다.\"},{\"number\":7,\"id\":\"webgl\",\"name\":\"WebGL\",\"workmanship\":1,\"summary\":\"나중에 꼭 다뤄보고 싶은 생각이 있습니다.\"},{\"number\":8,\"id\":\"analytics\",\"name\":\"Google Analytics\",\"workmanship\":0,\"summary\":\"\"}]}");
+module.exports = JSON.parse("{\"interest\":[{\"number\":1,\"id\":\"graphql\",\"name\":\"GraphQL\",\"workmanship\":2,\"summary\":\"개념과 기본 사용법은 익혀두었지만, 실무에서 사용해보진 못했습니다.\"},{\"number\":2,\"id\":\"mobx\",\"name\":\"MobX\",\"workmanship\":1,\"summary\":\"이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다.\"},{\"number\":3,\"id\":\"nextjs\",\"name\":\"Next.js\",\"workmanship\":1,\"summary\":\"아쉽게도 서버/통신 관련 경험이 아직 없습니다. 지금까지 실무 환경에서는 백엔드 포지션에서 맡아주셨습니다.\"},{\"number\":4,\"id\":\"express\",\"name\":\"Express.js\",\"workmanship\":1,\"summary\":\"아쉽게도 서버/통신 관련 경험이 아직 없습니다. 지금까지 실무 환경에서는 백엔드 포지션에서 맡아주셨습니다.\"},{\"number\":5,\"id\":\"nginx\",\"name\":\"Nginx\",\"workmanship\":1,\"summary\":\"아쉽게도 서버/통신 관련 경험이 아직 없습니다. 지금까지 실무 환경에서는 백엔드 포지션에서 맡아주셨습니다.\"},{\"number\":6,\"id\":\"webgl\",\"name\":\"WebGL\",\"workmanship\":1,\"summary\":\"간단한 작업을 바닐라 자바스크립트로 작성해 본 적이 있습니다.\"},{\"number\":7,\"id\":\"analytics\",\"name\":\"Google Analytics\",\"workmanship\":1,\"summary\":\"나중에 꼭 다뤄보고 싶은 생각이 있습니다.\"}]}");
 
 },{}],"7qH6s":[function() {},{}],"g20tr":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -54886,14 +54880,14 @@ var _textSliderDefault = parcelHelpers.interopDefault(_textSlider);
 var _s = $RefreshSig$();
 _gsap.gsap.registerPlugin(_scrollTrigger.ScrollTrigger);
 // 슬라이드로 출력할 컨텐츠 템플릿.
-const ContentText = ({ isActive , idx , keyword , title , date , summary , text ,  })=>{
+const ContentText = ({ isActive , idx: idx1 , keyword , title , date , summary , text ,  })=>{
     const summarys = [];
     summary.forEach((item, i)=>summarys.push(/*#__PURE__*/ _reactDefault.default.createElement("span", {
             key: item + i
         }, item))
     );
     return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-        key: idx,
+        key: idx1,
         className: `content-frame${isActive ? ' active' : ''}`
     }, /*#__PURE__*/ _reactDefault.default.createElement("ul", {
         className: 'content'
@@ -54907,7 +54901,11 @@ const ContentText = ({ isActive , idx , keyword , title , date , summary , text 
         className: 'summarys division'
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: 'line'
-    }), summarys), text && /*#__PURE__*/ _reactDefault.default.createElement("p", null, text))));
+    }), summarys), /*#__PURE__*/ _reactDefault.default.createElement("li", null, text && text.split('\n').map((item, idx)=>{
+        return(/*#__PURE__*/ _reactDefault.default.createElement("p", {
+            key: idx
+        }, item, /*#__PURE__*/ _reactDefault.default.createElement("br", null)));
+    })))));
 };
 _c = ContentText;
 const FootprintDetail = ({ _onHover , _onLeave  })=>{
@@ -55104,10 +55102,10 @@ $RefreshReg$(_c1, "FootprintDetail");
   window.$RefreshSig$ = prevRefreshSig;
 }
 },{"react":"21dqq","react-redux":"bdVon","../../Modules/commonValue":"lRfSx","swiper":"cCbRx","swiper/react/swiper-react.js":"273KY","gsap":"fPSuC","gsap/ScrollTrigger":"7wnFk","../../data/dataFootprint/careerFootprint.json":"dzqqP","../../data/dataFootprint/projectFootprint.json":"aayGY","./footprintDetail.scss":"dCcgx","swiper/swiper.scss":"iXKG4","swiper/modules/navigation/navigation.scss":"bghXC","swiper/modules/pagination/pagination.scss":"awB7C","swiper/modules/effect-fade/effect-fade.scss":"9FhdL","../../components/textSlider":"4B1Gh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dzqqP":[function(require,module,exports) {
-module.exports = JSON.parse("{\"career\":[{\"id\":3,\"keyword\":\"# Career\",\"title\":\"젠나인소프트시스템 (SI 파견 회사)\",\"date\":\"2021.05 ~ 재직중\",\"summary\":[\"프론트 개발\"],\"text\":\"\"},{\"id\":2,\"keyword\":\"# Career\",\"title\":\"볼트러스트 (상주 프리랜서)\",\"date\":\"2019.12 ~ 2020.04\",\"summary\":[\"퍼블리싱\",\"프론트 개발\"],\"text\":\"\"},{\"id\":1,\"keyword\":\"# Career\",\"title\":\"크리에이티브코드 (설립 멤버)\",\"date\":\"2016.07 ~ 2019.10\",\"summary\":[\"웹 서비스 기획\",\"UX기획\",\"디자인 검수\",\"퍼블리싱\",\"프론트 개발\",\"회사 운영 및 인사 관리.\"],\"text\":\"\"}]}");
+module.exports = JSON.parse("{\"career\":[{\"id\":3,\"keyword\":\"# Career\",\"title\":\"젠나인소프트시스템\",\"date\":\"2021.05 ~ 재직중\",\"summary\":[\"프론트 개발\"],\"text\":\"SI 파견 회사입니다.\\n삼성 프로젝트의 정규직 인원 충원을 위해 입사하였습니다, 현재는 해당 프로젝트 마무리 후 대기중입니다.\"},{\"id\":2,\"keyword\":\"# Career\",\"title\":\"볼트러스트\",\"date\":\"2019.12 ~ 2020.04\",\"summary\":[\"퍼블리싱\",\"프론트 개발\"],\"text\":\"지인의 소개로 기간 계약을 맺고 상주 프리랜서 근무했습니다.\\n계속 오픈이 지연되고 있던 서비스에 투입되어 담당된 부분을 잘 마치고 나왔습니다.\"},{\"id\":1,\"keyword\":\"# Career\",\"title\":\"크리에이티브코드\",\"date\":\"2016.07 ~ 2019.10\",\"summary\":[\"웹 서비스 기획\",\"UX기획\",\"디자인 검수\",\"퍼블리싱\",\"프론트 개발\",\"회사 운영 및 인사 관리.\"],\"text\":\"지인 몇 명과 함께 웹 관련 외주작업을 처리하며 경험을 쌓다가 만든 회사입니다.\\n이후 암호화폐가 가장 관심이 뜨겁던 때, 관련 프로젝트들을 전문적으로 하는 회사가 되었습니다. \"}]}");
 
 },{}],"aayGY":[function(require,module,exports) {
-module.exports = JSON.parse("{\"project\":[{\"id\":8,\"keyword\":\"# Project\",\"title\":\"삼성SDS 차세대 Knox Portal 개발(현장관리자)\",\"date\":\"2021.05.26 ~ 2021.12.31\",\"summary\":[\"React 개발\",\"Storybook 개발\",\"공통 컴포넌트 및 모듈 개발\",\"개발팀 현장관리자 (PL)\"],\"text\":\"삼성의 전 직원이 사용하는 기존 Knox Portal을 React를 사용하여 새롭게 개발하는 프로젝트입니다. Material-UI를 지향하는 Knox 전용 공통 컴포넌트들과 해당 컴포넌트로 이루어진 일부 모듈들을 개발하였습니다. 기존의 삼성SDS의 Knox Portal 팀은 React 및 컴포넌트 형식의 디자인/개발 경험이 전혀 없었기 때문에 현장관리자로서 UX와 개발 방향을 짚어드리며 작업하였습니다.\"},{\"id\":7,\"keyword\":\"# Project\",\"title\":\"개인 포트폴리오 개발\",\"date\":\"2020.10 ~ 2021.04 (476시간)\",\"summary\":[\"React 개발\",\"반응형 사이트\",\"Parcel 사용\",\"GSAP로 동적효과 구현\",\"Video to canvas 구현\",\"다양한 애니메이션 구현\"],\"text\":\"React 개발 경험이 많지 않아 좀 더 익숙해질 겸 지루하지 않고, 다양한 표현방식을 가진 포트폴리오를 만들고 싶었습니다. 일부 이미지 파일과 SVG 아이콘 등을 제외하고 구성 및 UX 기획부터 디자인, 개발까지 모두 직접 하였습니다. 최초 기획에는 다국어 번역, 메일 발송 기능과 FHD 이상의 화면에서 추가 애니메이션 등도 포함되었지만, 이미 육아와 가사를 병행하다 보니 애초 완성보다 많이 지체되어 우선 마무리(추후 계속 개발 예정)하게 되었습니다. 개발 기간 자체는 꽤 길지만 매번 작업 시 작성한 개발 시간은 476시간으로 주 40시간 근로제 기준으로 59.5일 (약 두달 보름)입니다.\"},{\"id\":6,\"keyword\":\"# Project\",\"title\":\"커스터디 서비스 기획 및 개발\",\"date\":\"2019.12 ~ 2020.04\",\"summary\":[\"React 개발\",\"반응형 사이트\",\"Material-UI 사용\",\"기간별 자산 변동량 Chart 개발\",\"보유 자산 비율 Chart 개발\",\"사이트 번역 및 개발\",\"이메일 폼 퍼블리싱 작업\"],\"text\":\"Online과 Offline의 분리가 명확하고 다양한 권한 관리와 보안정책이 도입된 암호화폐 관리 서비스입니다. 프로젝트 초기에는 디자이너 없이 Material-UI 기능과 디자인을 그대로 사용하여 개발되었으나, 제가 계약된 당시에는 디자이너가 와서 디자인을 적용해야 했습니다. 기존에 작성된 코드는 이미 대부분 Material-UI에서 제공되는 컴포넌트들로 구성되어 있었기 때문에 해당 컴포넌트들에서 디자인 요소를 제거한 뒤 새로 스타일을 입히거나 오버라이드 하여 작업하였습니다.\"},{\"id\":5,\"keyword\":\"# Project\",\"title\":\"암호화폐 웹 레그/전산관리 솔루션 기획 및 개발\",\"date\":\"2019.06 ~ 2019.10\",\"summary\":[\"해당 기간에 동일 서비스 3개 개발\",\"Bootstrap 기반 반응형 레이아웃\",\"JQuery로 개발\",\"회원 조직도 출력 및 검색 기능 개발\",\"기간 지정 달력 기능 도입\",\"세밀하고 다양한 계산식 개발\"],\"text\":\"클라이언트의 요청으로 회원 및 보유 암호화폐를 관리하는 웹 사이트를 개발하였습니다. 회원 간의 조직도를 웹상에서 표현하기 위해 OrgChart 기능을 도입하였고 조직도가 상당한 분량의 데이터를 표현해야 하므로 Zoom In/Out 기능과 Drag 기능을 추가로 개발했습니다.\"},{\"id\":4,\"keyword\":\"# Project\",\"title\":\"회사 소개 홈페이지 및 데모 웹 지갑 기획\",\"date\":\"2019.06 ~ 2019.10\",\"summary\":[\"사이트 구조 및 UX 기획\",\"사이트 내부 컨텐츠 기획\"],\"text\":\"설립되고 몇 년이나 흘렀지만 회사를 소개하는 웹 사이트가 없었습니다. 대표와 상의하여 다양한 문구를 직접 작성하고 메인화면부터 페이지 구성, 자잘한 동적 효과 등을 기획하였습니다. 당시 솔루션 개발을 동시에 하고 있었으므로 개발 자체는 직접 하지 않았습니다.\"},{\"id\":3,\"keyword\":\"# Project\",\"title\":\"암호화폐 웹 소개/웹 판매 사이트 기획 및 개발\",\"date\":\"2019.03 ~ 2019.06\",\"summary\":[\"웹 소개 사이트 2개 / 웹 판매 사이트 2개\",\"Bootstrap 기반 반응형 레이아웃\",\"JQuery로 개발\",\"GSAP로 동적효과 구현\",\"타이머 및 프로그레스 바 기능 도입\"],\"text\":\"클라이언트의 요청으로 ICO(Initial Coin Offering), IEO(Initial Exchange Offering) 기능의 웹 사이트를 개발하였습니다. 매끄러운 Parallax 효과를 위해 GSAP를 사용하였고 작은 기기에서도 테이블 형태의 정보를 쉽게 편하게 확인하기 위해 이중 스크롤 레이아웃으로 개발한 특이점이 있습니다.\"},{\"id\":2,\"keyword\":\"# Project\",\"title\":\"암호화폐 웹 거래소/지갑 기획 및 개발\",\"date\":\"2017 ~ 2019.03\",\"summary\":[\"웹 거래소 9개 / 웹 지갑 6개\",\"Bootstrap 기반 반응형 레이아웃\",\"JQuery로 개발\",\"Google reCaptcha 기능 도입\",\"암호화폐 시간/기간별 시세 Chart 개발\",\"사이트 번역 및 개발\",\"웹 QR Code Generator 개발\",\"웹 QR Code Scanner 개발\",\"세밀하고 다양한 계산식 개발\"],\"text\":\"오픈소스 기반의 암호화폐 웹 지갑과 거래소 소스를 지속적으로 개선하여 다양한 기업에 판매하였습니다. 처음에는 프랑스어 주석만 가득하고 기본 거래 기능만 있던 소스를 CodeIgniter로 옮겨와서 Front 단과 Back 단으로 구분하여 개선했습니다. 이후 차트와 새로운 코인 연동, 성능 개선 등을 반복하고, 고객 요청에 따라 다양한 추가 기능을 개발하다 보니 해당 기능들을 옵션 형태로 넣고 빼며 최종적으로는 테마 형태로 디자인들을 추가하여 다양한 솔루션형태로 판매하였습니다. 또한, 사용자들이 소수점 단위의 구입, 구축, 전송 등의 다양한 계산을 해야 하므로 프론트에서 입력값에 따른 계산식을 개발하여 입력값에 즉시 출력되는 입력 제한 또는 계산 결과, 가이드 멘트 등을 개발했습니다. 당시 모든 타 거래소는 PC와 휴대기기 버전을 따로 개발했으나 완전 반응형으로 작업해온 특이점이 있습니다.\"},{\"id\":1,\"keyword\":\"# Subcontract\",\"title\":\"각종 기업의 소개/운영 사이트 개발\",\"date\":\"2016.02 ~ 2017.12\",\"summary\":[\"쇼핑몰 웹 사이트 (일반기업 솔루션 기반)\",\"이사센터 웹 사이트 (Back개발자에게 퍼블리싱 파일 제공)\",\"소규모 소개 웹 사이트 2개 (Wordpress 기반)\",\"일식 요리학원 웹 사이트 (XEboard, Gnuboard 기반)\",\"쇼핑몰 웹 사이트 (Firstmall 기반)\",\"종이액자기업 웹 사이트 (Wordpress 기반)\",\"쇼핑몰 웹 사이트. (Gnuboard 기반)\",\"제약, 바이오 화학분야 기업 소개 웹 사이트 (Wordpress 기반)\",\"플라스마 기술 기업 소개 웹 사이트. (Wordpress 기반)\",\"흥신소 소개 웹 사이트 (Wordpress 기반)\"],\"text\":\"독학으로 퍼블리싱을 공부하며 지인들과 함께 팀을 꾸려 다양한 외주작업을 했습니다. Back 개발자가 따로 없었으므로 WordPress, Gnuboard 등 다양한 프레임워크를 통해 업무를 진행하였습니다.\"}]}");
+module.exports = JSON.parse("{\"project\":[{\"id\":8,\"keyword\":\"# Project\",\"title\":\"삼성SDS 차세대 Knox Portal 개발(현장관리자)\",\"date\":\"2021.05.26 ~ 2021.12.31\",\"summary\":[\"React 개발\",\"Storybook 개발\",\"공통 컴포넌트 및 모듈 개발\",\"개발팀 현장관리자 (PL)\"],\"text\":\"삼성의 전 직원이 사용하는 기존 Knox Portal을 React를 사용하여 새롭게 개발하는 프로젝트입니다.\\nMaterial-UI를 지향하는 Knox 전용 공통 컴포넌트들과 해당 컴포넌트로 이루어진 일부 모듈들을 개발하였습니다.\\n기존의 삼성SDS의 Knox Portal 팀은 React 및 컴포넌트 형식의 디자인/개발 경험이 전혀 없었기 때문에 현장관리자로서 UX와 개발 방향을 짚어드리며 작업하였습니다.\"},{\"id\":7,\"keyword\":\"# Project\",\"title\":\"개인 포트폴리오 개발\",\"date\":\"2020.10 ~ 2021.04 (476시간)\",\"summary\":[\"React 개발\",\"반응형 사이트\",\"Parcel 사용\",\"GSAP로 동적효과 구현\",\"Video to canvas 구현\",\"다양한 애니메이션 구현\"],\"text\":\"React 개발 경험이 많지 않아 좀 더 익숙해질 겸 지루하지 않고, 다양한 표현방식을 가진 포트폴리오를 만들고 싶었습니다. 일부 이미지 파일과 SVG 아이콘 등을 제외하고 구성 및 UX 기획부터 디자인, 개발까지 모두 직접 하였습니다. 최초 기획에는 다국어 번역, 메일 발송 기능과 FHD 이상의 화면에서 추가 애니메이션 등도 포함되었지만, 이미 육아와 가사를 병행하다 보니 애초 완성보다 많이 지체되어 우선 마무리(추후 계속 개발 예정)하게 되었습니다. 개발 기간 자체는 꽤 길지만 매번 작업 시 작성한 개발 시간은 476시간으로 주 40시간 근로제 기준으로 59.5일 (약 두달 보름)입니다.\"},{\"id\":6,\"keyword\":\"# Project\",\"title\":\"커스터디 서비스 기획 및 개발\",\"date\":\"2019.12 ~ 2020.04\",\"summary\":[\"React 개발\",\"반응형 사이트\",\"Material-UI 사용\",\"기간별 자산 변동량 Chart 개발\",\"보유 자산 비율 Chart 개발\",\"사이트 번역 및 개발\",\"이메일 폼 퍼블리싱 작업\"],\"text\":\"Online과 Offline의 분리가 명확하고 다양한 권한 관리와 보안정책이 도입된 암호화폐 관리 서비스입니다. 프로젝트 초기에는 디자이너 없이 Material-UI 기능과 디자인을 그대로 사용하여 개발되었으나, 제가 계약된 당시에는 디자이너가 와서 디자인을 적용해야 했습니다. 기존에 작성된 코드는 이미 대부분 Material-UI에서 제공되는 컴포넌트들로 구성되어 있었기 때문에 해당 컴포넌트들에서 디자인 요소를 제거한 뒤 새로 스타일을 입히거나 오버라이드 하여 작업하였습니다.\"},{\"id\":5,\"keyword\":\"# Project\",\"title\":\"암호화폐 웹 레그/전산관리 솔루션 기획 및 개발\",\"date\":\"2019.06 ~ 2019.10\",\"summary\":[\"해당 기간에 동일 서비스 3개 개발\",\"Bootstrap 기반 반응형 레이아웃\",\"JQuery로 개발\",\"회원 조직도 출력 및 검색 기능 개발\",\"기간 지정 달력 기능 도입\",\"세밀하고 다양한 계산식 개발\"],\"text\":\"클라이언트의 요청으로 회원 및 보유 암호화폐를 관리하는 웹 사이트를 개발하였습니다. 회원 간의 조직도를 웹상에서 표현하기 위해 OrgChart 기능을 도입하였고 조직도가 상당한 분량의 데이터를 표현해야 하므로 Zoom In/Out 기능과 Drag 기능을 추가로 개발했습니다.\"},{\"id\":4,\"keyword\":\"# Project\",\"title\":\"회사 소개 홈페이지 및 데모 웹 지갑 기획\",\"date\":\"2019.06 ~ 2019.10\",\"summary\":[\"사이트 구조 및 UX 기획\",\"사이트 내부 컨텐츠 기획\"],\"text\":\"설립되고 몇 년이나 흘렀지만 회사를 소개하는 웹 사이트가 없었습니다. 대표와 상의하여 다양한 문구를 직접 작성하고 메인화면부터 페이지 구성, 자잘한 동적 효과 등을 기획하였습니다. 당시 솔루션 개발을 동시에 하고 있었으므로 개발 자체는 직접 하지 않았습니다.\"},{\"id\":3,\"keyword\":\"# Project\",\"title\":\"암호화폐 웹 소개/웹 판매 사이트 기획 및 개발\",\"date\":\"2019.03 ~ 2019.06\",\"summary\":[\"웹 소개 사이트 2개 / 웹 판매 사이트 2개\",\"Bootstrap 기반 반응형 레이아웃\",\"JQuery로 개발\",\"GSAP로 동적효과 구현\",\"타이머 및 프로그레스 바 기능 도입\"],\"text\":\"클라이언트의 요청으로 ICO(Initial Coin Offering), IEO(Initial Exchange Offering) 기능의 웹 사이트를 개발하였습니다. 매끄러운 Parallax 효과를 위해 GSAP를 사용하였고 작은 기기에서도 테이블 형태의 정보를 쉽게 편하게 확인하기 위해 이중 스크롤 레이아웃으로 개발한 특이점이 있습니다.\"},{\"id\":2,\"keyword\":\"# Project\",\"title\":\"암호화폐 웹 거래소/지갑 기획 및 개발\",\"date\":\"2017 ~ 2019.03\",\"summary\":[\"웹 거래소 9개 / 웹 지갑 6개\",\"Bootstrap 기반 반응형 레이아웃\",\"JQuery로 개발\",\"Google reCaptcha 기능 도입\",\"암호화폐 시간/기간별 시세 Chart 개발\",\"사이트 번역 및 개발\",\"웹 QR Code Generator 개발\",\"웹 QR Code Scanner 개발\",\"세밀하고 다양한 계산식 개발\"],\"text\":\"오픈소스 기반의 암호화폐 웹 지갑과 거래소 소스를 지속적으로 개선하여 다양한 기업에 판매하였습니다. 처음에는 프랑스어 주석만 가득하고 기본 거래 기능만 있던 소스를 CodeIgniter로 옮겨와서 Front 단과 Back 단으로 구분하여 개선했습니다. 이후 차트와 새로운 코인 연동, 성능 개선 등을 반복하고, 고객 요청에 따라 다양한 추가 기능을 개발하다 보니 해당 기능들을 옵션 형태로 넣고 빼며 최종적으로는 테마 형태로 디자인들을 추가하여 다양한 솔루션형태로 판매하였습니다. 또한, 사용자들이 소수점 단위의 구입, 구축, 전송 등의 다양한 계산을 해야 하므로 프론트에서 입력값에 따른 계산식을 개발하여 입력값에 즉시 출력되는 입력 제한 또는 계산 결과, 가이드 멘트 등을 개발했습니다. 당시 모든 타 거래소는 PC와 휴대기기 버전을 따로 개발했으나 완전 반응형으로 작업해온 특이점이 있습니다.\"},{\"id\":1,\"keyword\":\"# Subcontract\",\"title\":\"각종 기업의 소개/운영 사이트 개발\",\"date\":\"2016.02 ~ 2017.12\",\"summary\":[\"쇼핑몰 웹 사이트 (일반기업 솔루션 기반)\",\"이사센터 웹 사이트 (Back개발자에게 퍼블리싱 파일 제공)\",\"소규모 소개 웹 사이트 2개 (Wordpress 기반)\",\"일식 요리학원 웹 사이트 (XEboard, Gnuboard 기반)\",\"쇼핑몰 웹 사이트 (Firstmall 기반)\",\"종이액자기업 웹 사이트 (Wordpress 기반)\",\"쇼핑몰 웹 사이트. (Gnuboard 기반)\",\"제약, 바이오 화학분야 기업 소개 웹 사이트 (Wordpress 기반)\",\"플라스마 기술 기업 소개 웹 사이트. (Wordpress 기반)\",\"흥신소 소개 웹 사이트 (Wordpress 기반)\"],\"text\":\"독학으로 퍼블리싱을 공부하며 지인들과 함께 팀을 꾸려 다양한 외주작업을 했습니다. Back 개발자가 따로 없었으므로 WordPress, Gnuboard 등 다양한 프레임워크를 통해 업무를 진행하였습니다.\"}]}");
 
 },{}],"dCcgx":[function() {},{}],"iXKG4":[function() {},{}],"bghXC":[function() {},{}],"awB7C":[function() {},{}],"9FhdL":[function() {},{}],"4B1Gh":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -55525,7 +55523,7 @@ const ScrollValueAnimation = ()=>{
     _reactDefault.default.useEffect(()=>{
         // 화면 로드 시 스크롤 퍼센트 계산.
         const scrollPercentCalc = (+currentScrollValue / +currentScrollLimit * 100).toFixed(0);
-        setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === Infinity ? 0 : scrollPercentCalc);
+        setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === 'Infinity' ? 0 : scrollPercentCalc);
     }, [
         currentScrollLimit,
         currentScrollValue,

@@ -20,7 +20,7 @@ const ScrollValueAnimation = () => {
   React.useEffect(() => {
     // 화면 로드 시 스크롤 퍼센트 계산.
     const scrollPercentCalc: any = ((+currentScrollValue / +currentScrollLimit) * 100).toFixed(0);
-    setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === Infinity ? 0 : scrollPercentCalc);
+    setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === 'Infinity' ? 0 : scrollPercentCalc);
   }, [currentScrollLimit, currentScrollValue, setpercentCalc]);
 
   React.useEffect(() => {

@@ -55,8 +55,13 @@ const ContentText = ({
           <div className='line'></div>
           {summarys}
         </li>
-        {text && <p>{text}</p>}
+        <li>
+          {text && text.split('\n').map((item, idx) => {
+            return <p key={idx}>{item}<br /></p>
+          })}
+        </li>
       </ul>
+
     </div>
   );
 };

@@ -52,10 +52,23 @@
 
     .list-frame {
       transform-style: preserve-3d;
-      perspective: 50rem;
+      perspective: 60rem;
 
       .list {
         z-index: 0;
+        transform: translate3d(0, 0, 0) rotateY(-30deg);
+        transform-origin: right center;
+        transition: transform $transition, background-color $transition;
+
+        &:hover {
+          transform: translate3d(0, 0, 0) rotateY(0deg);
+          background-color: $p-m;
+
+          .link-button {
+            color: $wh;
+            letter-spacing: 0rem;
+          }
+        }
 
         .link-button {
           position: relative;
@@ -66,9 +79,7 @@
           font-family: 'NEXON Lv2 Gothic';
           @include f-b(10rem, $ls: -0.5rem);
           white-space: nowrap;
-          transform: translate3d(0, 0, 0) rotateY(-30deg);
-          transform-origin: right center;
-          transition: transform $transition, color $transition, font-size $transition-slow, background-color $transition, letter-spacing $transition;
+          transition: color $transition, font-size $transition-slow, letter-spacing $transition;
           z-index: 4;
 
           @media (max-width: $bp-m) {
@@ -83,13 +94,6 @@
 
           &.delay {
             pointer-events: none;
-          }
-
-          &:hover {
-              transform: translate3d(0, 0, 0) rotateY(0deg);
-              background-color: $p-m;
-              color: $wh;
-              letter-spacing: 0rem;
           }
         }
       }

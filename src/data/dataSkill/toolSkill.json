@@ -5,63 +5,63 @@
       "id": "git",
       "name": "Git",
       "workmanship": 4,
-      "summary": "개발자에게는 필수이고 당연히, 또 오랜 시간 사용하고 있지만 터미널에서 cli로 써본 적은 별로 없는 것 같습니다."
+      "summary": "각 프로젝트에 맞는 브렌치 분기 방식을 따라가는 편이며, rebase 활용 및 conflict 해결 등 관리도 어느 정도 할 수 있습니다."
     },
     {
       "number": 2,
       "id": "github",
       "name": "Github",
       "workmanship": 4,
-      "summary": "대표적인 서비스지만 공개적인 형태라는 점에서 사용빈도가 낮았습니다. 이번 포트폴리오 프로젝트부터는 Github를 사용하려고 합니다."
+      "summary": "사용에 문제는 없지만, sourcetree를 주로 사용하고 있습니다."
     },
     {
       "number": 3,
       "id": "bitbucket",
       "name": "Bitbucket",
       "workmanship": 4,
-      "summary": "대부분의 Git 관련 프로젝트들이 직장과 관계되어 있고 소규모 팀에서 무료 Private 프로젝트를 만들 수 있었으므로 가장 많이 사용했습니다."
+      "summary": "private git이 필요한 소규모 프로젝트의 경우에 쓰일 일이 많습니다.\n생성, 권한, 프로젝트 관리 등 다양하게 사용해왔습니다."
     },
     {
       "number": 4,
       "id": "sourcetree",
       "name": "Sourcetree",
       "workmanship": 3,
-      "summary": "GUI가 한눈에 들어오기도 하고 Bitbucket을 오래 사용하였기에 지금까지 사용하고 있는 Git 형상관리 툴입니다. 기능이 많지만 느리고 버그가 좀 잦다는 단점이 있습니다."
+      "summary": "gitHub에 비해 확실히 느리다는 단점은 있지만 GUI 더 직관적이고 다양한 기능을 지원해서 오랫동안 사용하고 있습니다."
     },
     {
       "number": 5,
       "id": "jira",
       "name": "Jira",
       "workmanship": 4,
-      "summary": "처음부터 끝까지 세팅해본적은 없지만, 멤버로서 사용에는 아주 익숙합니다. 삼성에서 PL의 역할로써 사용해보기도 했습니다."
+      "summary": "처음 설정 단계부터 다뤄보지는 못했지만, 사용자로서 중간 관리자로서는 자주 사용했습니다."
     },
     {
       "number": 6,
       "id": "figma",
       "name": "Figma",
       "workmanship": 4,
-      "summary": "예전 초기 프로젝트에서 PSD나 AI를 받아서 작업할 때를 제외하고 대부분은 Figma로 디자인을 전달받아 작업하였습니다. "
+      "summary": "퍼블리셔로서, 개발자로서는 충분할 만큼 사용했습니다.\n잘못되거나 불편한 가이드가 보이면 담당자에게 잘 전달하는 편입니다."
     },
     {
       "number": 7,
       "id": "zeplin",
       "name": "Zeplin",
       "workmanship": 4,
-      "summary": "예전 초기 프로젝트에서 PSD나 AI를 받아서 작업할 때와 삼성 Knox포털 작업 시 기획서의 대용으로 사용하였습니다."
+      "summary": "PSD로 된 디자인을 받게 되는 경우 사용합니다."
     },
     {
       "number": 8,
       "id": "netlify",
       "name": "Netlify",
       "workmanship": 3,
-      "summary": "이번 포트폴리오를 올리면서 사용하였는데, Netlify 사이트의 자체 빌드는 에러가 많아, 빌드는 local에서 진행하고 올렸습니다. 그래도 간편하고 성능도 좋은 것 같습니다."
+      "summary": "현재 포트폴리오를 배포하며 사용했습니다.\n소규모 프로젝트나 테스트 용도로 많이 사용합니다."
     },
     {
       "number": 9,
       "id": "lighthouse",
       "name": "Lighthouse",
       "workmanship": 3,
-      "summary": "이번 포트폴리오를 개발하며 성능 개선을 위해 사용하였습니다. 이해하기 쉽고 가이드가 자세하게 나와서 사용이 편했습니다."
+      "summary": "사이트의 성능 개선을 위해 많이 참고하고 있습니다."
     }
   ]
 }

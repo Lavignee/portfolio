@@ -1,7 +1,6 @@
 const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE' as const;
 const CONTACT_STATE = 'CONTACT_STATE' as const;
 const CONTACT_STATE_FALSE = 'CONTACT_STATE_FALSE' as const;
-const CONTACT_BUTTON_DELAY = 'BUTTON_DELAY2' as const;
 const BUTTON_DELAY = 'BUTTON_DELAY' as const;
 const GNB_STATE = 'GNB_STATE' as const;
 const SWITCH_ANIMATION = 'SWITCH_ANIMATION' as const;
@@ -24,10 +23,6 @@ export const changeContactState = (currentContactState: boolean) => ({
 export const changeContactStateFalse = (currentContactState: boolean) => ({
   type: CONTACT_STATE_FALSE,
   currentContactState
-});
-export const changeContactButtonDelay = (currentContactButtonDelay: boolean) => ({
-  type: CONTACT_BUTTON_DELAY,
-  currentContactButtonDelay
 });
 export const changeButtonDelay = (currentButtonDelay: boolean) => ({
   type: BUTTON_DELAY,
@@ -75,7 +70,6 @@ type CommonAction =
   | ReturnType<typeof changeLanguage>
   | ReturnType<typeof changeContactState>
   | ReturnType<typeof changeContactStateFalse>
-  | ReturnType<typeof changeContactButtonDelay>
   | ReturnType<typeof changeButtonDelay>
   | ReturnType<typeof changeGnbState>
   | ReturnType<typeof changeSwitchAnimation>
@@ -89,29 +83,35 @@ type CommonAction =
 
 // state들의 interface 정의.
 interface CommonState {
+  // language: 언어 변경에 따라 텍스트 변경에 참조.
   language: string;
+  // currentContactState: contact의 활성화 여부.
   currentContactState: boolean;
-  currentContactButtonDelay: boolean;
   // currentButtonDelay: 버튼 연속 클릭 방지를 위한 딜레이.
   currentButtonDelay: boolean;
+  // currentGnbState: gnb의 활성화 여부.
   currentGnbState: boolean;
   // currentSwitchAnimation: 스크린 커버 애니메이션.
   currentSwitchAnimation: boolean;
+  // currentFilmState: 추가 필름의 활성화 여부.
   currentFilmState: boolean;
+  // currentSmoothTopState: Top으로 이동 여부.
   currentSmoothTopState: boolean;
+  // makeScrollState: 스크롤 재생성이 여부.
   makeScrollState: boolean;
   // currentScrollValue: 스크롤 퍼센트 계산을 위한 현재 값.
   currentScrollValue: number;
   // currentScrollLimit: 스크롤 퍼센트 계산을 위한 max 값.
   currentScrollLimit: number;
+  // currentGsapState: 스크롤이 gsap와 연계 되었는지 여부.
   currentGsapState: boolean;
+  // currentSplitText: 현재 화면에서 동작할 splitText 트리거.
   currentSplitText: string;
 }
 
 const initialState: CommonState = {
   language: 'ko',
   currentContactState: false,
-  currentContactButtonDelay: false,
   currentButtonDelay: false,
   currentGnbState: false,
   currentSwitchAnimation: false,
@@ -140,11 +140,6 @@ const CommonValue = (state: CommonState = initialState, action: CommonAction) =>
       return {
         ...state,
         currentContactState: action.currentContactState
-      };
-    case CONTACT_BUTTON_DELAY:
-      return {
-        ...state,
-        currentContactButtonDelay: action.currentContactButtonDelay
       };
     case BUTTON_DELAY:
       return {
