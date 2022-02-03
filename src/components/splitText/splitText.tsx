@@ -11,8 +11,9 @@ interface SplitTextProps {
   index: string;
   animation: string;
   setTime: number;
-  depth: boolean;
-  noContainer: boolean;
+  delay?: number | null;
+  depth?: boolean | null;
+  noContainer?: boolean | null;
 }
 
 const SplitText = ({
@@ -21,6 +22,7 @@ const SplitText = ({
   index,
   animation,
   setTime,
+  delay,
   depth,
   noContainer,
 }: SplitTextProps) => {
@@ -32,6 +34,7 @@ const SplitText = ({
   // const [happen, setHappen] = React.useState<string[]>([]);
   const [split, setSplit] = React.useState<JSX.Element[]>([]);
   const splittingTimer = React.useRef<any>(null);
+  const delayTimer = React.useRef<any>(null);
 
   // children으로 들어온 string을 각각 DOM으로 감싸서 배열에 입력.
   const Splitting = React.useCallback(() => {
@@ -68,6 +71,7 @@ const SplitText = ({
   // 화면 벗어날 시 타이머 삭제.
   React.useEffect(() => {
     return () => {
+      clearTimeout(delayTimer.current);
       clearTimeout(splittingTimer.current);
       setWillChange(false);
     };
@@ -76,9 +80,16 @@ const SplitText = ({
   // currentSplitText가 prop으로 들어온 param과 일치하거나 all(항상)인 경우 split 동작.
   React.useEffect(() => {
     if (currentSplitText === scroll || scroll === 'all') {
-      Splitting();
+      if (delay) {
+        delayTimer.current = setTimeout(() => {
+          Splitting();
+          clearTimeout(delayTimer.current);
+        }, delay)
+      } else {
+        Splitting();
+      }
     }
-  }, [Splitting, currentSplitText, scroll]);
+  }, [Splitting, currentSplitText, delay, scroll]);
 
   return (
     <div className='split-frame'>
@@ -97,11 +108,5 @@ const SplitText = ({
     </div>
   );
 };
-
-SplitText.defaultProps = {
-  setTime: null,
-  depth: true,
-  noContainer: false
-}
 
 export default SplitText;

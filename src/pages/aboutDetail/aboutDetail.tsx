@@ -325,6 +325,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
         i++;
       }
     });
+
     return combineContent
   }
 
@@ -409,14 +410,20 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                     </h2>
                     {/* 본문 SplitText. */}
                     <div className='type-p'>
-                      <SplitText
-                        animation={'up'}
-                        scroll={textCondition.scroll}
-                        setTime={15}
-                        index={textCondition.index2}
-                      >
-                        {hashtag.hashtagFirst[idx].text}
-                      </SplitText>
+                      {hashtag.hashtagFirst[idx].text.split('\n').map((item, idx) => {
+                        return (
+                          <SplitText
+                            key={idx}
+                            animation={'up'}
+                            scroll={textCondition.scroll}
+                            setTime={15}
+                            index={textCondition.index2}
+                            delay={idx !== 0 ? 500 * idx : null}
+                          >
+                            {item}
+                          </SplitText>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
@@ -436,7 +443,11 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                     <h2 className='about-tag'>
                       {hashtag.hashtagSecond[idx].title}
                     </h2>
-                    <div className='type-p'>{hashtag.hashtagSecond[idx].text}</div>
+                    <div className='type-p'>
+                      {hashtag.hashtagSecond[idx].text.split('\n').map((item, idx) => {
+                        return <span key={idx}>{item}<br /></span>
+                      })}
+                    </div>
                   </div>
                 </div>
                 <div className={`back-keyword-second ${textCondition2.align}`}>
@@ -489,7 +500,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                   alt='childhood'
                 />
               )}
-              <h3>학생시절</h3>
+              <h3>~ 2010</h3>
               <p>
                 {introduceContent(firstIntroContent, TooltipContent(firstTooltipContent))}
               </p>
@@ -498,7 +509,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
             <div className='background-story-frame second-image-trigger'>
               {width < 768 &&
                 growBackgroundImageSlider(growBackgroundImage2, 'shop')}
-              <h3>전역 후</h3>
+              <h3>2012 ~ 2016</h3>
               <p>
                 {introduceContent(secondIntroContent, TooltipContent(secondTooltipContent))}
               </p>
@@ -507,7 +518,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
             <div className='background-story-frame third-image-trigger'>
               {width < 768 &&
                 growBackgroundImageSlider(growBackgroundImage3, 'current')}
-              <h3>웹 개발자 ~ 현재</h3>
+              <h3>2016 ~</h3>
               <p>
                 {introduceContent(thirdIntroContent, TooltipContent(thirdTooltipContent))}
               </p>

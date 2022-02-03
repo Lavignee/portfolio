@@ -412,9 +412,10 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
               {gnbMenu(() => listClick('/footprint'), 'FOOTPRINT')}
             </ul>
 
-            <ul className='last-content'>
+            {/* 헤드헌터의 잦은 요구로 연락처 관련 내용 숨김. */}
+            {/* <ul className='last-content'>
               {gnbMenu(() => gnbContact(), 'CONTACT')}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
