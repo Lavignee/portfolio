@@ -31,7 +31,7 @@ const Home = ({ _onHover, _onClick, _onLeave }: HomeProps) => {
   return (
     <div className='home-area'>
       <Main _onHover={_onHover} _onLeave={_onLeave} />
-      <About _onHover={_onHover} _onClick={_onClick} _onLeaves={_onLeave} />
+      <About _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} />
       <Skill _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} />
       <Footprint _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} />
     </div>

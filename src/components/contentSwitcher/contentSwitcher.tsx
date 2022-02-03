@@ -21,10 +21,9 @@ interface ContentSwitcherProps {
   _onHover: (hoverCursor: string, hoverText?: string | null) => void;
   _onClick: (path: string, hoverText?: string | null) => void;
   _onLeave: (hoverText?: string | null) => void;
-  pageTimer: (path: string, timer: number) => void;
 }
 
-const ContentSwitcher = ({ _onHover, _onClick, _onLeave, pageTimer }: ContentSwitcherProps) => {
+const ContentSwitcher = ({ _onHover, _onClick, _onLeave }: ContentSwitcherProps) => {
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       <Routes>

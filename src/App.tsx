@@ -97,7 +97,6 @@ const App = () => {
           _onHover={_onHover}
           _onClick={_onClick}
           _onLeave={_onLeave}
-          pageTimer={pageTimer}
         />
       </SmoothScroll>
       {/* 스크롤 퍼센트 */}
