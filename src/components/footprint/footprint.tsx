@@ -39,13 +39,13 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
       <section
         id='footprint'
         className='container-fluid footprint-section'
-        onMouseEnter={() => setClipPathReady(true)}
-        onMouseMove={(e) => footprintMoveCircle(e)}
-        onMouseLeave={() => setClipPathReady(false)}>
+        onMouseEnter={isDesktop ? () => setClipPathReady(true) : undefined}
+        onMouseMove={isDesktop ? (e) => footprintMoveCircle(e) : undefined}
+        onMouseLeave={isDesktop ? () => setClipPathReady(false) : undefined}>
         <div
           className={`footprint-image-mask${clipPathReady ? ' will-change' : ''}`}
           ref={footprintCursorRef}>
-          <img src={footprint} alt='footprint' />
+          {isDesktop && <img src={footprint} alt='footprint' />}
         </div>
 
         <div className='container footprint-title-area'>
