@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { makeSmoothScroll, changeGsapState } from '../../Modules/commonValue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -18,6 +19,11 @@ interface SkillProps {
 }
 
 const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
+  // redux dispatch 정의.
+  const dispatch = useDispatch();
+  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  const gsapReady = React.useCallback((value: boolean) => dispatch(changeGsapState(value)), [dispatch]);
+
   // redux useSelector 정의.
   const [currentGsapState, currentButtonDelay] = useSelector((state: RootState) => [state.CommonValue.currentGsapState, state.CommonValue.currentButtonDelay,], shallowEqual);
 
@@ -53,19 +59,21 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
         },
       }
     );
-  };
+  }; void
 
-  // gsap가 준비된 후 애니메이션 동작.
-  React.useEffect(() => {
-    currentGsapState && skillComponentGSAP();
+    // gsap가 준비된 후 애니메이션 동작.
+    React.useEffect(() => {
+      gsapReady(false);
+      makeScroll(true);
+      currentGsapState && skillComponentGSAP();
 
-    return () => {
-      let triggers = ScrollTrigger.getAll();
-      triggers.forEach((trigger) => {
-        trigger.kill();
-      });
-    };
-  }, [currentGsapState]);
+      return () => {
+        let triggers = ScrollTrigger.getAll();
+        triggers.forEach((trigger) => {
+          trigger.kill();
+        });
+      };
+    }, [currentGsapState, gsapReady, makeScroll]);
 
   // Props로 받는 이벤트들에 대한 interface 정의.
   interface SkillListTemplateProps {

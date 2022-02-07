@@ -157,7 +157,6 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
     makeScroll(true);
     setVideoReady(true);
     videoReady && mainComponentGSAP();
-    // gsapReady(true);
 
     return () => {
       onScrollIntro('');

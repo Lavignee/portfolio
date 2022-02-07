@@ -1,11 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  makeSmoothScroll,
-  changeGsapState,
-  splitTextStart,
-  changeFilmState,
-} from '../../Modules/commonValue';
+import { makeSmoothScroll, changeGsapState, splitTextStart, changeFilmState } from '../../Modules/commonValue';
 import { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
@@ -111,42 +106,6 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
   const { width } = useWindowSize();
-
-  // 이미지 슬라이드 템플릿.
-  const growBackgroundImageSlider = (target: any[], kind: string) => {
-    return (
-      <Swiper
-        modules={[Navigation, Pagination, EffectFade]}
-        className={`${kind === 'shop' ? 'second-images' : 'third-images'}`}
-        slidesPerView={1}
-        effect='fade'
-        resizeObserver
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
-        pagination={{ clickable: false }}>
-        {target.map((target, idx) => (
-          <SwiperSlide key={idx}>
-            <img
-              width='70%'
-              height='auto'
-              src={target}
-              alt={`${kind} ${idx + 1}`}
-            />
-          </SwiperSlide>
-        ))}
-        <div
-          className='swiper-button-next'
-          onMouseEnter={() => _onHover(' bl-cursor', 'next')}
-          onMouseLeave={() => _onLeave()}></div>
-        <div
-          className='swiper-button-prev'
-          onMouseEnter={() => _onHover(' bl-cursor', 'prev')}
-          onMouseLeave={() => _onLeave()}></div>
-      </Swiper>
-    );
-  };
 
   // 스크롤 트리거 설정.
   const aboutDetailGsap = () => {
@@ -299,6 +258,42 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
     });
   };
 
+  // 이미지 슬라이드 템플릿.
+  const growBackgroundImageSlider = (target: any[], kind: string) => {
+    return (
+      <Swiper
+        modules={[Navigation, Pagination, EffectFade]}
+        className={`${kind === 'shop' ? 'second-images' : 'third-images'}`}
+        slidesPerView={1}
+        effect='fade'
+        resizeObserver
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }}
+        pagination={{ clickable: false }}>
+        {target.map((target, idx) => (
+          <SwiperSlide key={idx}>
+            <img
+              width='70%'
+              height='auto'
+              src={target}
+              alt={`${kind} ${idx + 1}`}
+            />
+          </SwiperSlide>
+        ))}
+        <div
+          className='swiper-button-next'
+          onMouseEnter={() => _onHover(' bl-cursor', 'next')}
+          onMouseLeave={() => _onLeave()}></div>
+        <div
+          className='swiper-button-prev'
+          onMouseEnter={() => _onHover(' bl-cursor', 'prev')}
+          onMouseLeave={() => _onLeave()}></div>
+      </Swiper>
+    );
+  };
+
   // 툴팁 템플릿.
   const TooltipContent = (targetInfo: { info: string, text: string }[]) => {
     let result = targetInfo.map((item: { info: string, text: string }, idx) => {
@@ -340,6 +335,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
     // 화면 벗어날 시 스크롤 트리거, 커서, 추가 필름, splitText 초기화.
     return () => {
+      ScrollTrigger.clearMatchMedia();
       let triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill();
@@ -378,11 +374,6 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
       onScrollAbout('');
     };
   }, [currentFilmState, currentGsapState, onScrollAbout]);
-
-  // splitText에 시간 차 동작 설정.
-  React.useEffect(() => {
-
-  }, [onScrollAbout]);
 
   // 반복되는 Text 정의.
   const subTitleText = 'GROWTH\r\rBACKGROUND';

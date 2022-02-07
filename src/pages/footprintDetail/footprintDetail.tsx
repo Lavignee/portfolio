@@ -195,33 +195,22 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
     });
   };
 
-  // 화면 진입 시,
+  // 스무스 스크롤 생성 이후 스크롤 트리거 연동.
   React.useEffect(() => {
     // 현재 컨텐츠를 기준으로 스크롤 재생성.
     makeScroll(true);
+    currentGsapState && FootprintDetailGsap();
 
-    // 화면 벗어날 시 스크롤 트리거 및 커서 초기화.
     return () => {
+      ScrollTrigger.clearMatchMedia();
       let triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
-        trigger.kill();
+        trigger.kill(true);
       });
 
       _onLeave();
     };
-  }, [makeScroll, _onLeave]);
-
-  // 스무스 스크롤 생성 이후 스크롤 트리거 연동.
-  React.useEffect(() => {
-    currentGsapState && FootprintDetailGsap();
-
-    return () => {
-      let triggers = ScrollTrigger.getAll();
-      triggers.forEach((trigger) => {
-        trigger.kill();
-      });
-    };
-  }, [currentGsapState]);
+  }, [_onLeave, currentGsapState, makeScroll]);
 
   return (
     <div className='footprint-detail'>

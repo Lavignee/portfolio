@@ -3,15 +3,8 @@ import 'regenerator-runtime/runtime';
 import './style/index.scss';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {
-  changeSwitchAnimation,
-  changeButtonDelay,
-} from './Modules/commonValue';
-import {
-  changeFirstClassName,
-  changeSecondClassName,
-  changeText,
-} from './Modules/cursor';
+import { changeSwitchAnimation, changeButtonDelay } from './Modules/commonValue';
+import { changeFirstClassName, changeSecondClassName, changeText } from './Modules/cursor';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CustomCursor from './components/customCursor';

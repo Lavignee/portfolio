@@ -98,11 +98,7 @@ const SplitText = ({
       ) : (
         <>
           <div className='origin-size-container'>{children}</div>
-          <div
-            className={`animation-container${willChange ? ' will-change' : ''
-              }`}>
-            {split}
-          </div>
+          <div className={`animation-container${willChange ? ' will-change' : ''}`}>{split}</div>
         </>
       )}
     </div>

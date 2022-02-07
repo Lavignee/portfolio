@@ -329,6 +329,7 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
     currentGsapState && aboutComponentGSAP();
 
     return () => {
+      ScrollTrigger.clearMatchMedia();
       let triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill();
