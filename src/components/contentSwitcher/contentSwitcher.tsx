@@ -3,18 +3,18 @@ import { Routes, Route } from 'react-router-dom';
 
 import './contentSwitcher.scss';
 
-// import Home from '../../pages/home';
-// import AboutDetail from '../../pages/aboutDetail';
-// import SkillDetail from '../../pages/skillDetail';
-// import FootprintDetail from '../../pages/footprintDetail';
-// import NotFound from '../../pages/notFound';
+import Home from '../../pages/home';
+import AboutDetail from '../../pages/aboutDetail';
+import SkillDetail from '../../pages/skillDetail';
+import FootprintDetail from '../../pages/footprintDetail';
+import NotFound from '../../pages/notFound';
 
 // TODO: 추후 스켈레톤 작업하기.
-const Home = React.lazy(() => import('../../pages/home'));
-const AboutDetail = React.lazy(() => import('../../pages/aboutDetail'));
-const SkillDetail = React.lazy(() => import('../../pages/skillDetail'));
-const FootprintDetail = React.lazy(() => import('../../pages/footprintDetail'));
-const NotFound = React.lazy(() => import('../../pages/notFound'));
+// const Home = React.lazy(() => import('../../pages/home'));
+// const AboutDetail = React.lazy(() => import('../../pages/aboutDetail'));
+// const SkillDetail = React.lazy(() => import('../../pages/skillDetail'));
+// const FootprintDetail = React.lazy(() => import('../../pages/footprintDetail'));
+// const NotFound = React.lazy(() => import('../../pages/notFound'));
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface ContentSwitcherProps {

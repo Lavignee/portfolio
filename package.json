@@ -53,6 +53,7 @@
     "@babel/core": "^7.13.10",
     "@babel/preset-react": "^7.12.13",
     "@parcel/config-default": "^2.1.0",
+    "@parcel/source-map": "^2.0.2",
     "@parcel/transformer-raw": "^2.1.0",
     "@parcel/transformer-sass": "^2.1.0",
     "@parcel/transformer-svg-react": "^2.2.1",
