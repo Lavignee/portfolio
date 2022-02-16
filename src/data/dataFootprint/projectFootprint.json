@@ -1,11 +1,28 @@
 {
   "project": [
     {
+      "id": 9,
+      "keyword": "# Project",
+      "title": "포스코ICT Smart 구매 프로젝트",
+      "date": "2022.02.16 ~ 참여중",
+      "summary": ["React 개발", "MobX 사용"],
+      "text": ""
+    },
+    {
       "id": 8,
       "keyword": "# Project",
       "title": "삼성SDS 차세대 Knox Portal 개발 (현장관리자)",
       "date": "2021.05.26 ~ 2021.12.31",
-      "summary": ["React 개발", "부분 반응형 웹", "화면 내 Iframe 다수", "Storybook 개발", "공통 컴포넌트 및 모듈 기획/개발", "개발팀 현장관리자 (PL)"],
+      "summary": [
+        "React 개발",
+        "Context 사용",
+        "Rollup 빌드",
+        "부분 반응형 웹",
+        "화면 내 Iframe 다수",
+        "Storybook 개발",
+        "공통 컴포넌트 및 모듈 기획/개발",
+        "개발팀 현장관리자 (PL)"
+      ],
       "text": "삼성의 전 직원이 사용하는 기존 Knox Portal을 React를 사용하여 새롭게 개발하는 프로젝트입니다.\nMaterial-UI를 지향하는 Knox 전용 공통 컴포넌트들과 해당 컴포넌트로 이루어진 일부 모듈들을 개발하였습니다.\n기존의 삼성SDS의 Knox Portal 팀은 React 및 컴포넌트 형식의 디자인/개발 경험이 전혀 없었기 때문에 UX와 개발 방향을 제안드리며 작업하였습니다."
     },
     {
@@ -15,8 +32,9 @@
       "date": "2020.10 ~ 2021.04 (476시간)",
       "summary": [
         "React 개발",
+        "Redux 사용",
+        "Parcel 빌드",
         "반응형 웹",
-        "Parcel 사용",
         "GSAP로 동적효과 구현",
         "Video to canvas 구현",
         "다양한 애니메이션 구현",
@@ -33,6 +51,8 @@
       "date": "2019.12 ~ 2020.04",
       "summary": [
         "React 개발",
+        "MobX 사용",
+        "Webpack 빌드",
         "반응형 웹",
         "Material-UI 커스텀",
         "기간별 자산 변동량 Chart 개발",
@@ -49,6 +69,7 @@
       "date": "2019.06 ~ 2019.10",
       "summary": [
         "해당 기간에 동일 서비스 3개 개발",
+        "Webpack 빌드",
         "반응형 웹",
         "JQuery 개발",
         "회원 조직도 출력 및 검색 기능 개발",
@@ -70,7 +91,14 @@
       "keyword": "# Project",
       "title": "암호화폐 ICO/IEO 사이트 기획, 퍼블리싱, 개발",
       "date": "2019.03 ~ 2019.06",
-      "summary": ["ICO 사이트 2개 / IEO 사이트 2개", "반응형 웹", "JQuery로 개발", "GSAP 기능 도입", "타이머 및 프로그레스 바 기능 도입"],
+      "summary": [
+        "ICO 사이트 2개 / IEO 사이트 2개",
+        "JQuery 개발",
+        "Webpack 빌드",
+        "반응형 웹",
+        "GSAP 사용",
+        "타이머 및 프로그레스 바 기능 도입"
+      ],
       "text": "클라이언트의 요청으로 ICO(Initial Coin Offering), IEO(Initial Exchange Offering) 기능의 웹 사이트를 개발하였습니다.\n매끄러운 Parallax 효과를 위해 GSAP를 사용하였고 작은 기기에서도 테이블 형태의 정보를 쉽게 편하게 확인하기 위해 이중 스크롤 레이아웃으로 개발한 특이점이 있습니다."
     },
     {
@@ -80,8 +108,8 @@
       "date": "2017 ~ 2019.03",
       "summary": [
         "웹 거래소 9개 / 웹 지갑 6개",
-        "반응형 웹",
         "JQuery 개발",
+        "반응형 웹",
         "Google reCaptcha 기능 도입",
         "암호화폐 시간/기간별 시세 Chart 개발",
         "사이트 번역 및 개발",
@@ -106,7 +134,9 @@
         "종이액자기업 웹 사이트 (Wordpress)",
         "제약, 바이오 화학분야 기업 웹 사이트 (Wordpress)",
         "플라스마 기술 기업 웹 사이트. (Wordpress)",
-        "흥신소 소개 웹 사이트 (Wordpress)"
+        "흥신소 소개 웹 사이트 (Wordpress)",
+        "JQuery 개발",
+        "반응형 웹"
       ],
       "text": "독학으로 퍼블리싱을 공부하며 지인들과 함께 팀을 꾸려 다양한 외주작업을 했습니다.\n팀에 Backend 개발자가 따로 없었던 기간이라 WordPress, Gnuboard 등 다양한 프레임워크를 통해 업무를 진행하였습니다."
     }
