@@ -2,17 +2,17 @@
   "tool": [
     {
       "number": 1,
-      "id": "git",
-      "name": "Git",
+      "id": "vscode",
+      "name": "VSCode",
       "workmanship": 4,
-      "summary": "각 프로젝트에 맞는 브렌치 분기 방식을 따라가는 편이며, rebase 활용 및 conflict 해결 등 관리도 어느 정도 할 수 있습니다."
+      "summary": "Dreamweaver, Atom 등을 사용해왔고 최근에는 VSCode에 정착하여 Sublime Text 등을 보조로 사용하고 있습니다."
     },
     {
       "number": 2,
-      "id": "github",
-      "name": "Github",
+      "id": "git",
+      "name": "Git",
       "workmanship": 4,
-      "summary": "사용에 문제는 없지만, sourcetree를 주로 사용하고 있습니다."
+      "summary": "각 프로젝트 환경에 최대한 맞춰서 사용하며, conflict 관리도 어느 정도 할 수 있습니다."
     },
     {
       "number": 3,

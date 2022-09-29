@@ -413,9 +413,9 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
             </ul>
 
             {/* 헤드헌터의 잦은 요구로 연락처 관련 내용 숨김. */}
-            {/* <ul className='last-content'>
+            <ul className='last-content'>
               {gnbMenu(() => gnbContact(), 'CONTACT')}
-            </ul> */}
+            </ul>
           </div>
         </div>
       </div>

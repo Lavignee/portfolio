@@ -5,49 +5,35 @@
       "id": "graphql",
       "name": "GraphQL",
       "workmanship": 2,
-      "summary": "개념과 기본 사용법은 익혀두었지만, 실무에서 사용해보진 못했습니다."
+      "summary": "개념과 기본 사용법은 익혀두었지만, 실무에서 사용해 볼 기회가 좀처럼 없습니다.."
     },
     {
       "number": 2,
-      "id": "mobx",
-      "name": "MobX",
-      "workmanship": 1,
-      "summary": "이미 적용된 프로젝트에서 잠시 사용해 보았지만, 직접 세팅해보지는 않았습니다."
-    },
-    {
-      "number": 3,
-      "id": "nextjs",
-      "name": "Next.js",
-      "workmanship": 1,
-      "summary": "아쉽게도 서버/통신 관련 경험이 아직 없습니다. 지금까지 실무 환경에서는 백엔드 포지션에서 맡아주셨습니다."
-    },
-    {
-      "number": 4,
       "id": "express",
       "name": "Express.js",
       "workmanship": 1,
-      "summary": "아쉽게도 서버/통신 관련 경험이 아직 없습니다. 지금까지 실무 환경에서는 백엔드 포지션에서 맡아주셨습니다."
+      "summary": "필요한 상황이 되면 적극적으로 배우려고 합니다."
     },
     {
-      "number": 5,
+      "number": 3,
       "id": "nginx",
       "name": "Nginx",
       "workmanship": 1,
-      "summary": "아쉽게도 서버/통신 관련 경험이 아직 없습니다. 지금까지 실무 환경에서는 백엔드 포지션에서 맡아주셨습니다."
+      "summary": "필요한 상황이 되면 적극적으로 배우려고 합니다."
     },
     {
-      "number": 6,
+      "number": 4,
       "id": "webgl",
       "name": "WebGL",
       "workmanship": 1,
-      "summary": "간단한 작업을 바닐라 자바스크립트로 작성해 본 적이 있습니다."
+      "summary": "무료 강의를 들어볼 기회가 있어서 간단한 예제 등을 작성해 본 경험이 있습니다."
     },
     {
-      "number": 7,
+      "number": 5,
       "id": "analytics",
       "name": "Google Analytics",
       "workmanship": 1,
-      "summary": "나중에 꼭 다뤄보고 싶은 생각이 있습니다."
+      "summary": "필요한 상황이 되면 적극적으로 배우려고 합니다."
     }
   ]
 }
