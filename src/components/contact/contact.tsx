@@ -154,7 +154,7 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
                       <span>
                         <img width='100%' height='100%' src={mailIcon} alt='letter icon' />
                       </span>
-                      doyoung9243@naver.com
+                      ldy9243@gmail.com
                     </div>
 
                     <div className='link'>
