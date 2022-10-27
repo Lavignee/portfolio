@@ -50,14 +50,16 @@ const ContentText = ({
       <ul className='content'>
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
-        <li className='date'>{date}</li>
+        <li className='date'>{date && date.split('\n').map((item, idx) => {
+          return <p key={idx}>{item}<br /></p>
+        })}</li>
         <li className='summarys division'>
           <div className='line'></div>
           {summarys}
         </li>
         <li>
           {text && text.split('\n').map((item, idx) => {
-            return <p key={idx}>{item}<br /></p>
+            return <React.Fragment key={idx}>{item}<br /></React.Fragment>
           })}
         </li>
       </ul>
