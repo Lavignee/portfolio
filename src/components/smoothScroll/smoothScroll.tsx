@@ -49,7 +49,7 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
     if (isDesktop) {
       scrollDamping = 0.03;
     } else {
-      scrollDamping = 0.1;
+      scrollDamping = 0.05;
     }
     smoothScrollTarget.current = Scrollbar.init(smoothScroller.current, {
       damping: scrollDamping,
