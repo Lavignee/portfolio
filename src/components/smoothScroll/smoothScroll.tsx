@@ -45,14 +45,10 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
 
   // 스무스 스크롤 생성
   const makeSmoothScrollbar = React.useCallback(() => {
-    let scrollDamping;
-    if (isDesktop) {
-      scrollDamping = 0.03;
-    } else {
-      scrollDamping = 0.05;
-    }
     smoothScrollTarget.current = Scrollbar.init(smoothScroller.current, {
-      damping: scrollDamping,
+      damping: isDesktop ? 0.03 : 0.03,
+      renderByPixels: isDesktop ? true : false,
+      continuousScrolling: isDesktop ? true : false,
       alwaysShowTracks: true,
     });
 
