@@ -2,24 +2,24 @@
   "interest": [
     {
       "number": 1,
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "workmanship": 3,
+      "summary": "최근에는 구글보다 거의 마이크로소프트 Bing의 채팅 시스템 그리고 vscode의 easyCode만 가지고도 훨씬 빠르게 작업을 하고 있습니다. 알지만 기억이 잘 안나는 것들은 당연하고, 새로운 지식에 대한 학습도 다음 학습 목표에 대한 가이드까지 포함되므로 너무 편리하게 사용해보고 있습니다."
+    },
+    {
+      "number": 2,
+      "id": "svelte",
+      "name": "Svelte",
+      "workmanship": 1,
+      "summary": "운영진의 기업화 또는 스벨트 생태계가 널리 퍼지길 기다려보고 있습니다. 성능에 비해 러닝커브는 정말 없는 수준으로 보여서 매우 기대가 큽니다."
+    },
+    {
+      "number": 3,
       "id": "graphql",
       "name": "GraphQL",
       "workmanship": 2,
       "summary": "개념과 기본 사용법은 익혀두었지만, 실무에서 사용해 볼 기회가 좀처럼 없습니다.."
-    },
-    {
-      "number": 2,
-      "id": "express",
-      "name": "Express.js",
-      "workmanship": 1,
-      "summary": "필요한 상황이 되면 적극적으로 배우려고 합니다."
-    },
-    {
-      "number": 3,
-      "id": "nginx",
-      "name": "Nginx",
-      "workmanship": 1,
-      "summary": "필요한 상황이 되면 적극적으로 배우려고 합니다."
     },
     {
       "number": 4,
