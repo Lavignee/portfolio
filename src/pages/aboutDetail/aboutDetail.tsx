@@ -1,6 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { makeSmoothScroll, changeGsapState, splitTextStart, changeFilmState } from '../../Modules/commonValue';
+import {
+  makeSmoothScroll,
+  changeGsapState,
+  splitTextStart,
+  changeFilmState,
+} from '../../Modules/commonValue';
 import { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
@@ -83,6 +88,8 @@ const secondIntroContent = introduce.introduce.second;
 const secondTooltipContent = introduce.tooltipInfo.second;
 const thirdIntroContent = introduce.introduce.third;
 const thirdTooltipContent = introduce.tooltipInfo.third;
+const fourthIntroContent = introduce.introduce.fourth;
+const fourthTooltipContent = introduce.tooltipInfo.fourth;
 
 // 사용 될 이미지 배열로 정의.
 const growBackgroundImage2: any[] = [shop1, shop2, shop3, shop4];
@@ -97,12 +104,30 @@ interface AboutDetailProps {
 const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const onScrollAbout = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
-  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  const filmReady = React.useCallback((value) => dispatch(changeFilmState(value)), [dispatch]);
-  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
+  const onScrollAbout = React.useCallback(
+    (value) => dispatch(splitTextStart(value)),
+    [dispatch]
+  );
+  const makeScroll = React.useCallback(
+    (value) => dispatch(makeSmoothScroll(value)),
+    [dispatch]
+  );
+  const filmReady = React.useCallback(
+    (value) => dispatch(changeFilmState(value)),
+    [dispatch]
+  );
+  const gsapReady = React.useCallback(
+    (value) => dispatch(changeGsapState(value)),
+    [dispatch]
+  );
   // redux useSelector 정의.
-  const [currentGsapState, currentFilmState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState, state.CommonValue.currentFilmState], shallowEqual);
+  const [currentGsapState, currentFilmState] = useSelector(
+    (state: RootState) => [
+      state.CommonValue.currentGsapState,
+      state.CommonValue.currentFilmState,
+    ],
+    shallowEqual
+  );
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
   const { width } = useWindowSize();
@@ -250,7 +275,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
             trigger: '.third-image-trigger',
             start: 'top+=72 center',
             toggleClass: { targets: '.third-images', className: 'view' },
-            end: 'bottom+=72 center',
+            // end: 'bottom+=72 center',
             scrub: true,
           },
         });
@@ -271,7 +296,8 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }}
-        pagination={{ clickable: false }}>
+        pagination={{ clickable: false }}
+      >
         {target.map((target, idx) => (
           <SwiperSlide key={idx}>
             <img
@@ -285,30 +311,33 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
         <div
           className='swiper-button-next'
           onMouseEnter={() => _onHover(' bl-cursor', 'next')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
         <div
           className='swiper-button-prev'
           onMouseEnter={() => _onHover(' bl-cursor', 'prev')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
       </Swiper>
     );
   };
 
   // 툴팁 템플릿.
-  const TooltipContent = (targetInfo: { info: string, text: string }[]) => {
-    let result = targetInfo.map((item: { info: string, text: string }, idx) => {
+  const TooltipContent = (targetInfo: { info: string; text: string }[]) => {
+    let result = targetInfo.map((item: { info: string; text: string }, idx) => {
       return (
         <Tooltip
           key={item.text + idx}
           _onHover={_onHover}
           _onLeave={_onLeave}
-          info={item.info}>
+          info={item.info}
+        >
           {item.text}
         </Tooltip>
-      )
-    })
+      );
+    });
     return result;
-  }
+  };
 
   // json string 데이터와 툴팁 템플릿 결합하여 컨텐츠 생성.
   const introduceContent = (target: string, element: JSX.Element[]) => {
@@ -321,8 +350,8 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
       }
     });
 
-    return combineContent
-  }
+    return combineContent;
+  };
 
   // 화면 진입 후 DOM 랜더 시,
   React.useEffect(() => {
@@ -401,20 +430,22 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                     </h2>
                     {/* 본문 SplitText. */}
                     <div className='type-p'>
-                      {hashtag.hashtagFirst[idx].text.split('\n').map((item, idx) => {
-                        return (
-                          <SplitText
-                            key={idx}
-                            animation={'up'}
-                            scroll={textCondition.scroll}
-                            setTime={15}
-                            index={textCondition.index2}
-                            delay={idx !== 0 ? 500 * idx : null}
-                          >
-                            {item}
-                          </SplitText>
-                        )
-                      })}
+                      {hashtag.hashtagFirst[idx].text
+                        .split('\n')
+                        .map((item, idx) => {
+                          return (
+                            <SplitText
+                              key={idx}
+                              animation={'up'}
+                              scroll={textCondition.scroll}
+                              setTime={15}
+                              index={textCondition.index2}
+                              delay={idx !== 0 ? 500 * idx : null}
+                            >
+                              {item}
+                            </SplitText>
+                          );
+                        })}
                     </div>
                   </div>
                 </div>
@@ -435,9 +466,16 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                       {hashtag.hashtagSecond[idx].title}
                     </h2>
                     <div className='type-p'>
-                      {hashtag.hashtagSecond[idx].text.split('\n').map((item, idx) => {
-                        return <span key={idx}>{item}<br /></span>
-                      })}
+                      {hashtag.hashtagSecond[idx].text
+                        .split('\n')
+                        .map((item, idx) => {
+                          return (
+                            <span key={idx}>
+                              {item}
+                              <br />
+                            </span>
+                          );
+                        })}
                     </div>
                   </div>
                 </div>
@@ -455,12 +493,8 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
         <div className='container relative pl-pr-none'>
           <div className='background-title-frame'>
             <div className='col-12 col-m-7 off-m-5'>
-              <h2>
-                {subTitleText}
-              </h2>
-              <h2 className='fill-black'>
-                {subTitleText}
-              </h2>
+              <h2>{subTitleText}</h2>
+              <h2 className='fill-black'>{subTitleText}</h2>
             </div>
           </div>
 
@@ -493,7 +527,10 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
               )}
               <h3>~ 2010</h3>
               <p>
-                {introduceContent(firstIntroContent, TooltipContent(firstTooltipContent))}
+                {introduceContent(
+                  firstIntroContent,
+                  TooltipContent(firstTooltipContent)
+                )}
               </p>
             </div>
 
@@ -502,16 +539,34 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                 growBackgroundImageSlider(growBackgroundImage2, 'shop')}
               <h3>2012 ~ 2016</h3>
               <p>
-                {introduceContent(secondIntroContent, TooltipContent(secondTooltipContent))}
+                {introduceContent(
+                  secondIntroContent,
+                  TooltipContent(secondTooltipContent)
+                )}
               </p>
             </div>
 
             <div className='background-story-frame third-image-trigger'>
               {width < 768 &&
                 growBackgroundImageSlider(growBackgroundImage3, 'current')}
-              <h3>2016 ~</h3>
+              <h3>2016 ~ 2020</h3>
               <p>
-                {introduceContent(thirdIntroContent, TooltipContent(thirdTooltipContent))}
+                {introduceContent(
+                  thirdIntroContent,
+                  TooltipContent(thirdTooltipContent)
+                )}
+              </p>
+            </div>
+
+            <div className='background-story-frame'>
+              {width < 768 &&
+                growBackgroundImageSlider(growBackgroundImage3, 'current')}
+              <h3>2021 ~</h3>
+              <p>
+                {introduceContent(
+                  fourthIntroContent,
+                  TooltipContent(fourthTooltipContent)
+                )}
               </p>
             </div>
           </div>
