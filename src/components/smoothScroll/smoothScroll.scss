@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .smooth-scroll-frame {
   height: 100vh;
 

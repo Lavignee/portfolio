@@ -1,15 +1,16 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../Modules';
+// import './switchAnimation.scss'; // 나중에 globals.scss로 이동 예정
 
-import './switchAnimation.scss';
+import { useCommonValueStore } from '@/stores/commonValue';
 
-const SwitchAnimation = () => {
-  const [currentSwitchAnimation] = useSelector((state: RootState) => [state.CommonValue.currentSwitchAnimation], shallowEqual);
+const SwitchAnimation: React.FC = () => {
+  const currentSwitchAnimation = useCommonValueStore(
+    (state) => state.currentSwitchAnimation
+  );
 
   return (
-    <div className={`screen-cover${currentSwitchAnimation ? ' active' : ''}`}></div>
-  )
-}
+    <div className={`screen-cover${currentSwitchAnimation ? ' active' : ''}`} />
+  );
+};
 
 export default SwitchAnimation;

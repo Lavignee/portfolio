@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .text-slider-frame {
   position: fixed;
   top: 0;
@@ -8,7 +7,7 @@
   @media (max-width: $bp-l) {
     height: 100vh;
   }
-  
+
   .rotate-frame {
     width: 100%;
     height: 200vh;
@@ -24,7 +23,7 @@
       position: relative;
       width: 100%;
       height: 13rem;
-  
+
       .text-content-frame {
         position: absolute;
         height: 100%;
@@ -35,7 +34,7 @@
         @media (max-width: $bp-l) {
           opacity: 0.2;
         }
-  
+
         .content {
           @include center-align;
           font-family: 'Syncopate' !important;
@@ -68,18 +67,18 @@
       .text-slider {
         left: -71.3rem;
         min-width: 160rem;
-  
+
         @media (max-width: $bp-l) {
           left: calc(-71.3rem * 0.75);
         }
-  
+
         .text-content-frame {
           width: 22%;
         }
-  
+
         &.second-line {
           left: -88.9rem;
-          
+
           @media (max-width: $bp-l) {
             left: calc(-88.9rem * 0.75);
           }

@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .footprint-section {
   position: absolute;
   bottom: 0;
@@ -17,17 +16,17 @@
     opacity: 0;
     transition: opacity $transition-slow;
     clip-path: circle(0% at 0px 0px);
-    
+
     &.will-change {
       will-change: clip-path;
     }
-    
+
     img {
       position: absolute;
       width: 100%;
       height: 100%;
       opacity: 0.3;
-      filter: grayscale(1)
+      filter: grayscale(1);
     }
   }
 
@@ -40,7 +39,7 @@
   .footprint-title-area {
     padding-left: 33.33333333%;
     padding-top: 6rem;
-      
+
     @media (max-width: $bp-l) {
       padding-top: 8rem;
     }
@@ -60,7 +59,7 @@
       .footprint-circle-area {
         position: absolute;
         display: inline-block;
-        
+
         img {
           position: relative;
           width: 100%;

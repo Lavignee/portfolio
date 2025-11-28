@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .tooltip-area {
   position: relative;
   padding: 0.7rem 0.7rem 0.5rem 0.7rem;
@@ -11,13 +10,13 @@
     background-color: $p-d;
     border-radius: 0.5rem;
   }
-  
+
   .tooltip-frame {
     @include horizontal-align;
     bottom: 100%;
     padding-bottom: 1rem;
     z-index: 1;
-    
+
     span {
       display: block;
       white-space: nowrap;
@@ -34,13 +33,14 @@
       @media (max-width: $bp-xl) {
         white-space: initial;
       }
-  
-      &:after, &:before {
+
+      &:after,
+      &:before {
         margin-top: -1.2rem;
         top: 100%;
         left: 50%;
         border: solid transparent;
-        content: "";
+        content: '';
         height: 0;
         width: 0;
         position: absolute;
@@ -50,7 +50,7 @@
           margin-top: -1.3rem;
         }
       }
-      
+
       &:after {
         border-top-color: $wh;
         border-width: 0.5rem;

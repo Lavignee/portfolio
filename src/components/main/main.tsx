@@ -1,17 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart, changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
+import { useCommonValueStore } from '@/stores/commonValue';
 // import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import './main.scss';
+// import './main.scss';
 
 import VideoToCanvas from '../videoToCanvas';
 import SplitText from '../splitText';
-import { RootState } from '../../Modules';
+// import { useTranslation } from 'react-i18next';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface MainProps {
@@ -20,29 +21,45 @@ interface MainProps {
 }
 
 const Main = ({ _onHover, _onLeave }: MainProps) => {
+  // const { t } = useTranslation();
   // 배경에 사용 될 영상 파일.
-  const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
-
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onScrollIntro = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
-  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
-  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
-
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual
+  const src640 = new URL(
+    '../../../public/videos/video640.mp4',
+    import.meta.url
   );
+
+  const setGsapState = useCommonValueStore((s) => s.setGsapState);
+  const setSplitText = useCommonValueStore((s) => s.setSplitText);
+  const setMakeScrollState = useCommonValueStore((s) => s.setMakeScrollState);
+
+  const onScrollIntro = React.useCallback(
+    (value: string) => setSplitText(value),
+    [setSplitText]
+  );
+
+  const gsapReady = React.useCallback(
+    (value: boolean) => setGsapState(value),
+    [setGsapState]
+  );
+
+  const makeScroll = React.useCallback(
+    (value: boolean) => setMakeScrollState(value),
+    [setMakeScrollState]
+  );
+
+  const currentGsapState = useCommonValueStore((s) => s.currentGsapState);
   const [videoReady, setVideoReady] = React.useState(false);
   const [canvasReady, setCanvasReady] = React.useState(true);
 
-  // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
-  const delaySplit = React.useCallback((target: string) => {
-    const timeOut = setTimeout(() => {
-      target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
-      clearTimeout(timeOut);
-    }, 0);
-  }, [onScrollIntro]);
+  const delaySplit = React.useCallback(
+    (target: string) => {
+      const timeOut = setTimeout(() => {
+        target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
+        clearTimeout(timeOut);
+      }, 0);
+    },
+    [onScrollIntro]
+  );
 
   // 스크롤 트리거 설정.
   const mainComponentGSAP = React.useCallback(() => {
@@ -165,10 +182,18 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         trigger.kill();
       });
     };
-  }, [videoReady, gsapReady, mainComponentGSAP, onScrollIntro, makeScroll, currentGsapState]);
+  }, [
+    videoReady,
+    gsapReady,
+    mainComponentGSAP,
+    onScrollIntro,
+    makeScroll,
+    currentGsapState,
+  ]);
 
   return (
     <section id='main' className='container main-section'>
+      {/* <h1>{t('home_title')}</h1> */}
       <div className='main-background'>
         <div className='background'></div>
         {/* Canvas 영역. */}
@@ -188,7 +213,8 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
           <div
             className='main-text'
             onMouseEnter={() => _onHover(' reverse-cursor')}
-            onMouseLeave={() => _onLeave()}>
+            onMouseLeave={() => _onLeave()}
+          >
             <span>FRONT - END DEVELOPER</span>
             <p>Doyoung Lee</p>
           </div>

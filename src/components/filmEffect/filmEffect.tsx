@@ -1,18 +1,17 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../Modules';
-import './filmEffect.scss';
+// import './filmEffect.scss'; // 나중에 globals.scss로 이동
 
-const FilmEffect = () => {
-  // redux useSelector 정의.
-  const [currentFilmState] = useSelector((state: RootState) => [state.CommonValue.currentFilmState], shallowEqual);
+import { useCommonValueStore } from '@/stores/commonValue';
+
+const FilmEffect: React.FC = () => {
+  const currentFilmState = useCommonValueStore((s) => s.currentFilmState);
 
   return (
     <>
-      {currentFilmState && <div className='film-frame'></div>}
-      <div className='noise-frame'></div>
+      {currentFilmState && <div className='film-frame' />}
+      <div className='noise-frame' />
     </>
-  )
-}
+  );
+};
 
 export default FilmEffect;

@@ -1,4 +1,4 @@
-@import '../../style/util_mixins';
+@use '../../styles/util_mixins' as *;
 
 .about-section {
   position: relative;
@@ -52,7 +52,8 @@
         position: relative;
         overflow: hidden;
 
-        &:before, &:after {
+        &:before,
+        &:after {
           content: '';
           position: absolute;
           left: 10rem;
@@ -64,8 +65,9 @@
         }
 
         &:hover {
-          &:before, &:after {
-            transform: translateX(0)
+          &:before,
+          &:after {
+            transform: translateX(0);
           }
         }
       }
@@ -87,13 +89,14 @@
       }
 
       .one {
-        &:before, &:after {
+        &:before,
+        &:after {
           background: center / cover url(#{$img-url}about-one-opacity.png);
         }
         &:before {
           transform: translateX(-11%);
         }
-        
+
         &:after {
           transform: translateX(8%);
         }
@@ -117,7 +120,8 @@
       }
 
       .three {
-        &:before, &:after {
+        &:before,
+        &:after {
           background: center / cover url(#{$img-url}about-three-opacity.png);
         }
         &:before {
@@ -133,7 +137,7 @@
     .text-animation-frame {
       margin-top: 10rem;
       padding-bottom: 5rem;
-      
+
       > div {
         padding-top: 4rem;
         padding-bottom: 4rem;
@@ -143,7 +147,7 @@
             will-change: transform, opacity;
           }
         }
-        
+
         > div {
           display: inline-block;
           font-family: 'Syncopate';
@@ -179,20 +183,23 @@
           }
         }
       }
-      
+
       .first-line {
         &.desktop {
           &.first {
             div {
               transform: translateX(-100%);
-              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
-  
+              animation: moving-right 3s cubic-bezier(0, 0.39, 1, 0.53) 1
+                forwards;
+
               span {
                 @media (min-width: $bp-m-min) {
-                  animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                  animation: shadow-moving-right 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1 forwards;
                 }
                 @media (max-width: $bp-m) {
-                  animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                  animation: shadow-moving-right-mobile 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1 forwards;
                 }
               }
             }
@@ -201,14 +208,17 @@
             text-align: right;
             div {
               transform: translateX(100%);
-              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
-  
+              animation: moving-left 3s cubic-bezier(0, 0.39, 1, 0.53) 1
+                forwards;
+
               span {
                 @media (min-width: $bp-m-min) {
-                animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                  animation: shadow-moving-left 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1 forwards;
                 }
                 @media (max-width: $bp-m) {
-                  animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+                  animation: shadow-moving-left-mobile 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1 forwards;
                 }
               }
             }
@@ -219,14 +229,16 @@
           &.first {
             div {
               transform: translateX(-100%);
-              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+              animation: moving-right 3s cubic-bezier(0, 0.39, 1, 0.53) 1
+                forwards;
             }
           }
           &.second {
             text-align: right;
             div {
               transform: translateX(100%);
-              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1 forwards;
+              animation: moving-left 3s cubic-bezier(0, 0.39, 1, 0.53) 1
+                forwards;
             }
           }
         }
@@ -237,14 +249,17 @@
           &.first {
             div {
               transform: translateX(-100%);
-              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
-  
+              animation: moving-right 3s cubic-bezier(0, 0.39, 1, 0.53) 1s 1
+                forwards;
+
               span {
                 @media (min-width: $bp-m-min) {
-                animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                  animation: shadow-moving-right 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1s 1 forwards;
                 }
                 @media (max-width: $bp-m) {
-                  animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                  animation: shadow-moving-right-mobile 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1s 1 forwards;
                 }
               }
             }
@@ -253,14 +268,17 @@
             text-align: right;
             div {
               transform: translateX(100%);
-              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
-  
+              animation: moving-left 3s cubic-bezier(0, 0.39, 1, 0.53) 1s 1
+                forwards;
+
               span {
                 @media (min-width: $bp-m-min) {
-                animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                  animation: shadow-moving-left 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1s 1 forwards;
                 }
                 @media (max-width: $bp-m) {
-                  animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+                  animation: shadow-moving-left-mobile 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 1s 1 forwards;
                 }
               }
             }
@@ -271,14 +289,16 @@
           &.first {
             div {
               transform: translateX(-100%);
-              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+              animation: moving-right 3s cubic-bezier(0, 0.39, 1, 0.53) 1s 1
+                forwards;
             }
           }
           &.second {
             text-align: right;
             div {
               transform: translateX(100%);
-              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 1s 1 forwards;
+              animation: moving-left 3s cubic-bezier(0, 0.39, 1, 0.53) 1s 1
+                forwards;
             }
           }
         }
@@ -289,14 +309,17 @@
           &.first {
             div {
               transform: translateX(-100%);
-              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
-  
+              animation: moving-right 3s cubic-bezier(0, 0.39, 1, 0.53) 2s 1
+                forwards;
+
               span {
                 @media (min-width: $bp-m-min) {
-                animation: shadow-moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                  animation: shadow-moving-right 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 2s 1 forwards;
                 }
                 @media (max-width: $bp-m) {
-                  animation: shadow-moving-right-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                  animation: shadow-moving-right-mobile 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 2s 1 forwards;
                 }
               }
             }
@@ -305,14 +328,17 @@
             text-align: right;
             div {
               transform: translateX(100%);
-              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
-  
+              animation: moving-left 3s cubic-bezier(0, 0.39, 1, 0.53) 2s 1
+                forwards;
+
               span {
                 @media (min-width: $bp-m-min) {
-                animation: shadow-moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                  animation: shadow-moving-left 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 2s 1 forwards;
                 }
                 @media (max-width: $bp-m) {
-                  animation: shadow-moving-left-mobile 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+                  animation: shadow-moving-left-mobile 3s
+                    cubic-bezier(0, 0.39, 1, 0.53) 2s 1 forwards;
                 }
               }
             }
@@ -323,20 +349,24 @@
           &.first {
             div {
               transform: translateX(-100%);
-              animation: moving-right 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+              animation: moving-right 3s cubic-bezier(0, 0.39, 1, 0.53) 2s 1
+                forwards;
             }
           }
           &.second {
             text-align: right;
             div {
               transform: translateX(100%);
-              animation: moving-left 3s cubic-bezier(0,.39,1,.53) 2s 1 forwards;
+              animation: moving-left 3s cubic-bezier(0, 0.39, 1, 0.53) 2s 1
+                forwards;
             }
           }
         }
       }
 
-      .first-line, .second-line, .third-line {
+      .first-line,
+      .second-line,
+      .third-line {
         &.mobile {
           &.first {
             div {
@@ -380,7 +410,7 @@
         border-radius: 5rem;
         transition: font-size $transition-slow, color $transition;
         z-index: 2;
-        
+
         @media (max-width: $bp-m) {
           font-size: 4rem;
         }
@@ -408,7 +438,8 @@
           height: 6.4rem;
           right: calc(100% - 9.4rem);
           border-radius: 100%;
-          background: left / 80% url(#{$img-url}footprint-arrow.svg) no-repeat, $p-d;
+          background: left / 80% url(#{$img-url}footprint-arrow.svg) no-repeat,
+            $p-d;
           transition: opacity $transition, width $transition, height $transition;
           z-index: 1;
 
@@ -434,7 +465,8 @@
           right: calc(100% - 9.4rem);
           border-radius: 100%;
           background-color: $p-d;
-          transition: border-radius $transition, right $transition, width $transition, height $transition;
+          transition: border-radius $transition, right $transition,
+            width $transition, height $transition;
           mix-blend-mode: difference;
           z-index: -1;
 
@@ -451,7 +483,7 @@
             height: 4.9rem;
           }
         }
-        
+
         &:hover {
           color: $wh;
           // animation: neon 1.5s ease-in-out infinite alternate;
@@ -464,7 +496,12 @@
           }
         }
 
-        .shadow-inset, .shadow, .shadow-inset-deep, .shadow-deep, .shadow-inset-deep2, .shadow-deep2 {
+        .shadow-inset,
+        .shadow,
+        .shadow-inset-deep,
+        .shadow-deep,
+        .shadow-inset-deep2,
+        .shadow-deep2 {
           display: block;
           width: 100%;
           height: 100%;
@@ -476,14 +513,14 @@
 
         &.mobile {
           color: $wh;
-          
+
           &:before {
             width: 100%;
             height: 100%;
             right: calc(0%);
             border-radius: 5rem;
           }
-      }
+        }
       }
     }
   }

@@ -1,45 +1,50 @@
 import React from 'react';
-import './scrollValueAnimation.scss';
-import { useLocation } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../Modules';
-import { isMobile } from 'react-device-detect';
+// import './scrollValueAnimation.scss'; // Next에서는 나중에 globals.scss로 합칠 예정
 
-const ScrollValueAnimation = () => {
-  // redux useSelector 정의.
-  const [currentScrollValue, currentScrollLimit] = useSelector((state: RootState) => [state.CommonValue.currentScrollValue, state.CommonValue.currentScrollLimit], shallowEqual);
+import { useRouter } from 'next/router';
+import { useCommonValueStore } from '@/stores/commonValue';
 
-  // react-router-dom으로 url 확인.
-  let location = useLocation();
+const ScrollValueAnimation: React.FC = () => {
+  const router = useRouter();
 
-  // 스크롤 퍼센트의 랜더 여부.
-  const [percentView, setPercentView] = React.useState(false);
-  // 스크롤 퍼센트 계산값을 담기 위한 로컬 변수 용도.
-  const [percentCalc, setpercentCalc] = React.useState<number>(0);
+  const currentScrollValue = useCommonValueStore((s) => s.currentScrollValue);
+  const currentScrollLimit = useCommonValueStore((s) => s.currentScrollLimit);
 
+  // 실제 표시할 % 값
+  const [percent, setPercent] = React.useState(0);
+  // 이 컴포넌트 자체를 보여줄지 여부
+  const [visible, setVisible] = React.useState(false);
+
+  // 스크롤 값/한계값이 바뀔 때마다 퍼센트 계산
   React.useEffect(() => {
-    // 화면 로드 시 스크롤 퍼센트 계산.
-    const scrollPercentCalc: any = ((+currentScrollValue / +currentScrollLimit) * 100).toFixed(0);
-    setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === 'Infinity' ? 0 : scrollPercentCalc);
-  }, [currentScrollLimit, currentScrollValue, setpercentCalc]);
-
-  React.useEffect(() => {
-    // 화면 로드 시 url에 따라 스크롤 퍼센트의 랜더 여부 변경.
-    if (location.pathname === '/' || location.pathname === '/about' || (location.pathname === '/footprint' && isMobile)) {
-      setPercentView(true);
-    } else {
-      setPercentView(false);
+    if (!currentScrollLimit) {
+      setPercent(0);
+      return;
     }
 
-    // 화면 벗어날 시 퍼센트 초기화.
-    return () => {
-      setpercentCalc(0);
-    }
-  }, [location]);
+    const raw = (currentScrollValue / currentScrollLimit) * 100;
+    const clamped = Math.max(0, Math.min(100, Math.round(raw)));
 
-  return (
-    percentView ? <div className='scroll-percent'>{percentCalc}%</div> : null
-  );
+    setPercent(clamped);
+  }, [currentScrollValue, currentScrollLimit]);
+
+  // 어떤 페이지에서 퍼센트 표기를 보여줄지 결정
+  React.useEffect(() => {
+    const path = router.pathname;
+
+    // 필요에 따라 조건 더 추가해도 됨
+    const showOnPage =
+      path === '/about' ||
+      path.startsWith('/skill') ||
+      path === '/footprint' ||
+      path === '/';
+
+    setVisible(showOnPage);
+  }, [router.pathname]);
+
+  if (!visible) return null;
+
+  return <div className='scroll-percent'>{percent}%</div>;
 };
 
 export default ScrollValueAnimation;

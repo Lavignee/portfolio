@@ -1,16 +1,11 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
 
-import footprintCircle from '../../static/images/footprint-circle.svg';
-import footprintArrow from '../../static/images/footprint-arrow.svg';
-import footprint from '../../static/images/footprint.jpg';
-
-import './footprint.scss';
+// import './footprint.scss';
 
 import Footer from '../footer';
-import { RootState } from '../../Modules';
+import { useCommonValueStore } from '@/stores/commonValue';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface FootprintProps {
@@ -20,17 +15,24 @@ interface FootprintProps {
 }
 
 const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
-  // redux useSelector 정의.
-  const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useSelector((state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentScrollLimit, state.CommonValue.currentScrollValue], shallowEqual);
+  const currentButtonDelay = useCommonValueStore((s) => s.currentButtonDelay);
+  const currentScrollLimit = useCommonValueStore((s) => s.currentScrollLimit);
+  const currentScrollValue = useCommonValueStore((s) => s.currentScrollValue);
 
   const footprintCursorRef = React.useRef(null);
   const [clipPathReady, setClipPathReady] = React.useState(false);
 
   // 클립패스 위치 계산.
   const footprintMoveCircle = (e: React.MouseEvent) => {
+    if (typeof window === 'undefined') return null;
     gsap.to(footprintCursorRef.current, {
       duration: 0.3,
-      css: { clipPath: `circle(20% at ${e.pageX}px ${e.pageY - (window.innerHeight / 2 + (+currentScrollLimit - +currentScrollValue))}px)` },
+      css: {
+        clipPath: `circle(20% at ${e.pageX}px ${
+          e.pageY -
+          (window.innerHeight / 2 + (+currentScrollLimit - +currentScrollValue))
+        }px)`,
+      },
     });
   };
 
@@ -41,11 +43,15 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
         className='container-fluid footprint-section'
         onMouseEnter={isDesktop ? () => setClipPathReady(true) : undefined}
         onMouseMove={isDesktop ? (e) => footprintMoveCircle(e) : undefined}
-        onMouseLeave={isDesktop ? () => setClipPathReady(false) : undefined}>
+        onMouseLeave={isDesktop ? () => setClipPathReady(false) : undefined}
+      >
         <div
-          className={`footprint-image-mask${clipPathReady ? ' will-change' : ''}`}
-          ref={footprintCursorRef}>
-          {isDesktop && <img src={footprint} alt='footprint' />}
+          className={`footprint-image-mask${
+            clipPathReady ? ' will-change' : ''
+          }`}
+          ref={footprintCursorRef}
+        >
+          {isDesktop && <img src={'/images/footprint.jpg'} alt='footprint' />}
         </div>
 
         <div className='container footprint-title-area'>
@@ -55,7 +61,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
                 <img
                   width='100%'
                   height='auto'
-                  src={footprintCircle}
+                  src={'/images/footprint-circle.svg'}
                   alt='footprint design circle'
                 />
               )}
@@ -67,7 +73,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
               <img
                 width='100%'
                 height='100%'
-                src={footprintArrow}
+                src={'/images/footprint-arrow.svg'}
                 alt='footprint design arrow'
               />
             </div>
@@ -77,7 +83,8 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
             className={`link-button${currentButtonDelay ? ' delay' : ''}`}
             onMouseEnter={() => _onHover(' go-cursor')}
             onMouseLeave={() => _onLeave()}
-            onClick={() => _onClick('/footprint')}></div>
+            onClick={() => _onClick('/footprint')}
+          ></div>
         </div>
 
         <div className='footprint-back-text'>FOOTPRINT</div>

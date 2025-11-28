@@ -1,24 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { makeSmoothScroll } from '../../Modules/commonValue';
-import { EffectFade, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { useCommonValueStore } from '@/stores/commonValue';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import career from '../../data/dataFootprint/careerFootprint.json'
-import project from '../../data/dataFootprint/projectFootprint.json'
-
-import './footprintDetail.scss';
-import 'swiper/swiper.scss';
-import 'swiper/modules/navigation/navigation.scss';
-import 'swiper/modules/pagination/pagination.scss';
-import 'swiper/modules/effect-fade/effect-fade.scss';
+import career from '../../data/dataFootprint/careerFootprint.json';
+import project from '../../data/dataFootprint/projectFootprint.json';
 
 import TextSlider from '../../components/textSlider';
-import { RootState } from '../../Modules';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Props로 받는 값에 대한 interface 정의.
 interface ContentTextProp {
@@ -50,20 +44,33 @@ const ContentText = ({
       <ul className='content'>
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
-        <li className='date'>{date && date.split('\n').map((item, idx) => {
-          return <React.Fragment key={idx}>{item}<br /></React.Fragment>
-        })}</li>
+        <li className='date'>
+          {date &&
+            date.split('\n').map((item, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  {item}
+                  <br />
+                </React.Fragment>
+              );
+            })}
+        </li>
         <li className='summarys division'>
           <div className='line'></div>
           {summarys}
         </li>
         <li>
-          {text && text.split('\n').map((item, idx) => {
-            return <p key={idx}>{item}<br /></p>
-          })}
+          {text &&
+            text.split('\n').map((item, idx) => {
+              return (
+                <p key={idx}>
+                  {item}
+                  <br />
+                </p>
+              );
+            })}
         </li>
       </ul>
-
     </div>
   );
 };
@@ -75,22 +82,27 @@ interface FootprintDetailProps {
 }
 
 const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  const setMakeScrollState = useCommonValueStore((s) => s.setMakeScrollState);
+  const currentGsapState = useCommonValueStore((s) => s.currentGsapState);
 
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
-
+  const makeScroll = React.useCallback(
+    (value: boolean) => {
+      setMakeScrollState(value);
+    },
+    [setMakeScrollState]
+  );
   // 슬라이더 템플릿.
-  const sliderContent = (content: {
-    id: number;
-    keyword: string;
-    title: string;
-    date: string;
-    summary: string[];
-    text: string
-  }[], kind: string) => {
+  const sliderContent = (
+    content: {
+      id: number;
+      keyword: string;
+      title: string;
+      date: string;
+      summary: string[];
+      text: string;
+    }[],
+    kind: 'left' | 'right'
+  ) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
@@ -102,39 +114,50 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }}
-        pagination={{ clickable: true, el: '.swiper-pagination' }}>
-        {content.map(content => (
-          <SwiperSlide key={content.id}>
+        pagination={{
+          clickable: true,
+          el: '.swiper-pagination', // 아래 div.swiper-pagination에 붙일 것
+        }}
+      >
+        {content.map((item) => (
+          <SwiperSlide key={item.id}>
             {({ isActive }) => (
               <ContentText
                 isActive={isActive}
-                idx={content.id}
-                keyword={content.keyword}
-                title={content.title}
-                date={content.date}
-                summary={content.summary}
-                text={content.text}
+                idx={item.id}
+                keyword={item.keyword}
+                title={item.title}
+                date={item.date}
+                summary={item.summary}
+                text={item.text}
               />
             )}
           </SwiperSlide>
         ))}
+
+        {/* 커스텀 페이지네이션 영역 (SCSS에서 .left-pagination / .right-pagination 스타일링) */}
         <div
           className={`swiper-pagination ${kind}-pagination`}
           onMouseEnter={() => _onHover(' pagination-cursor')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
+
+        {/* 좌우 네비게이션 영역 (커스텀 커서 past/recent 텍스트 표시) */}
         <div
           className='swiper-button-next'
           onMouseEnter={() => _onHover(' bl-cursor', 'past')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
         <div
           className='swiper-button-prev'
           onMouseEnter={() => _onHover(' bl-cursor', 'recent')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
       </Swiper>
     );
   };
 
-  // 폭이 좁은 화면에서 스크롤 트리거 동작. 
+  // 폭이 좁은 화면에서 스크롤 트리거 동작.
   const FootprintDetailGsap = () => {
     ScrollTrigger.matchMedia({
       '(min-width: 985px)': () => {

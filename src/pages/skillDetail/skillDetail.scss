@@ -1,10 +1,9 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .skill-detail {
   position: relative;
   padding-top: $headerHeight;
 
-  >.container {
+  > .container {
     position: relative;
   }
 
@@ -30,12 +29,13 @@
       display: inline-block;
       position: relative;
 
-      a, button {
+      a,
+      button {
         display: inline-block;
         padding: 1.6rem 3rem;
         @include f-r(1.6rem, $p-m);
         transition: background-color $transition;
-  
+
         @media (max-width: $bp-l) {
           padding: 1.6rem 2.7rem;
         }
@@ -52,7 +52,7 @@
         &:hover {
           @include f-b(1.6rem, $p-d);
         }
-        
+
         &.active {
           background-color: $s-l;
           @include f-b(1.6rem, $p-d);
@@ -118,16 +118,17 @@
         &::-webkit-scrollbar-track {
           opacity: 0;
         }
-        
+
         .scroll-content {
           height: 100%;
         }
 
-        .default-list, .list {
+        .default-list,
+        .list {
           position: relative;
           height: 33.33333333%;
           transition: background-color $transition;
-          
+
           &:before {
             content: '';
             width: 100%;
@@ -137,14 +138,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: $s-l;
-            transition: background-color $transition, height $transition, border-radius $transition, top $transition, bottom $transition, transform $transition;
+            transition: background-color $transition, height $transition,
+              border-radius $transition, top $transition, bottom $transition,
+              transform $transition;
           }
 
           .inner {
             height: 100%;
             position: relative;
 
-            &:before, &:after {
+            &:before,
+            &:after {
               content: '';
               width: 100%;
               height: 0%;
@@ -152,7 +156,9 @@
               left: 50%;
               transform: translateX(-50%);
               background-color: $s-l;
-              transition: background-color $transition, height $transition, border-radius $transition, top $transition, bottom $transition, transform $transition;
+              transition: background-color $transition, height $transition,
+                border-radius $transition, top $transition, bottom $transition,
+                transform $transition;
             }
 
             div {
@@ -170,22 +176,23 @@
                 transition: opacity $transition;
 
                 @media (max-width: $bp-l) {
-                  transform: scale(0.9)
+                  transform: scale(0.9);
                 }
                 @media (max-width: $bp-m) {
-                  transform: scale(0.8)
+                  transform: scale(0.8);
                 }
                 @media (max-width: $bp-s) {
-                  transform: scale(0.7)
+                  transform: scale(0.7);
                 }
                 @media (max-width: $bp-xs) {
-                  transform: scale(0.6)
+                  transform: scale(0.6);
                 }
               }
             }
           }
 
-          &.prev, &.next {
+          &.prev,
+          &.next {
             z-index: 1;
           }
 
@@ -200,7 +207,7 @@
           //     &:after {
           //       bottom: 0;
           //     }
-              
+
           //     &.top {
           //       &:after {
           //         border-top-left-radius: 35%;
@@ -210,7 +217,7 @@
           //     }
           //   }
           // }
-          
+
           // &.next {
           //   &:before {
           //     top:0;
@@ -236,7 +243,7 @@
               background-color: $s-l;
               height: 100%;
             }
-            
+
             .inner {
               &:before {
                 bottom: 100%;
@@ -244,7 +251,7 @@
               &:after {
                 top: 100%;
               }
-              
+
               &.top {
                 &:before {
                   border-top-left-radius: 35%;
@@ -260,17 +267,16 @@
                   height: 30%;
                 }
               }
-              
+
               svg {
                 opacity: 1;
               }
             }
-
           }
         }
       }
     }
-    
+
     .skill-detail-content-frame {
       position: absolute;
       height: calc(100% - 5.2rem);
@@ -290,12 +296,12 @@
           @include vertical-align;
           left: 1.2rem;
           font-family: 'Syncopate';
-            @include f-b(2rem, $wh);
+          @include f-b(2rem, $wh);
 
-            span {
-              display: inline-block;
-              min-width: 3rem;
-            }
+          span {
+            display: inline-block;
+            min-width: 3rem;
+          }
         }
 
         .content {
@@ -303,7 +309,7 @@
           width: 50%;
           height: 100%;
           z-index: 1;
-          
+
           @media (max-width: $bp-l) {
             width: 60%;
           }
@@ -316,15 +322,15 @@
           @media (max-width: $bp-xs) {
             width: 90%;
           }
-          
+
           > div {
             height: 53%;
             display: flex;
             flex-direction: column-reverse;
-            
+
             h2 {
               position: relative;
-              bottom:0;
+              bottom: 0;
               font-family: 'Syncopate';
               @include f-b(4rem, $wh);
               opacity: 0;
@@ -332,15 +338,15 @@
               @media (max-width: $bp-xs) {
                 font-size: 3rem;
               }
-              
+
               &.opacity {
                 animation: show 0.3s linear forwards;
-              };
+              }
             }
-    
+
             .levels {
               position: relative;
-              bottom:0;
+              bottom: 0;
               padding-top: 4rem;
               padding-bottom: 7rem;
 
@@ -360,21 +366,25 @@
               span {
                 display: inline-block;
                 width: 4rem;
-                height: .8rem;
+                height: 0.8rem;
                 background-color: $p-m;
-    
+
                 &:not(:last-child) {
                   margin-right: 1.8rem;
                 }
               }
-    
+
               &.opacity {
-                &.level-1, &.level-2, &.level-3, &.level-4, &.level-5 {
+                &.level-1,
+                &.level-2,
+                &.level-3,
+                &.level-4,
+                &.level-5 {
                   span {
                     @for $i from 1 through 5 {
                       &:nth-child(#{$i}) {
                         transition: background-color $transition-fast;
-                        transition-delay: #{$i*0.1s};
+                        transition-delay: #{$i * 0.1s};
                       }
                     }
                   }
@@ -385,24 +395,30 @@
                       background-color: $wh;
                     }
                   }
-                  }
+                }
                 &.level-2 {
                   span {
-                    &:first-child, &:nth-child(2)  {
+                    &:first-child,
+                    &:nth-child(2) {
                       background-color: $wh;
                     }
                   }
-                  }
+                }
                 &.level-3 {
                   span {
-                    &:first-child,&:nth-child(2),&:nth-child(3) {
+                    &:first-child,
+                    &:nth-child(2),
+                    &:nth-child(3) {
                       background-color: $wh;
                     }
                   }
                 }
                 &.level-4 {
                   span {
-                    &:first-child,&:nth-child(2),&:nth-child(3),&:nth-child(4) {
+                    &:first-child,
+                    &:nth-child(2),
+                    &:nth-child(3),
+                    &:nth-child(4) {
                       background-color: $wh;
                     }
                   }
@@ -415,7 +431,7 @@
               }
             }
           }
-  
+
           p {
             height: 47%;
             margin: 0 auto;
@@ -425,13 +441,12 @@
 
             @for $i from 1 through 5 {
               &.opacity#{$i} {
-                animation-delay: #{$i*0.1+0.1s};
+                animation-delay: #{$i * 0.1+0.1s};
                 animation-duration: 0.3s;
                 animation-name: show;
                 animation-fill-mode: forwards;
-              };
+              }
             }
-            
           }
         }
 

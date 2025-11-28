@@ -1,40 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  makeSmoothScroll,
-  changeGsapState,
-  splitTextStart,
-  changeFilmState,
-} from '../../Modules/commonValue';
-import { EffectFade, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { useCommonValueStore } from '@/stores/commonValue';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import hashtag from '../../data/dataAbout/hashtagAbout.json';
 import introduce from '../../data/dataAbout/introduceAbout.json';
 
-import child from '../../static/images/child.jpg';
-import shop1 from '../../static/images/shop1.jpg';
-import shop2 from '../../static/images/shop2.jpg';
-import shop3 from '../../static/images/shop3.jpg';
-import shop4 from '../../static/images/shop4.jpg';
-import current1 from '../../static/images/current1.jpg';
-import current2 from '../../static/images/current2.jpg';
-import current3 from '../../static/images/current3.jpg';
+import useWindowSize from '@/utils/useWindowSize';
+import SplitText from '@/components/splitText';
+import Tooltip from '@/components/tooltip';
 
-import './aboutDetail.scss';
-import 'swiper/swiper.scss';
-import 'swiper/modules/navigation/navigation.scss';
-import 'swiper/modules/pagination/pagination.scss';
-import 'swiper/modules/effect-fade/effect-fade.scss';
-
-import useWindowSize from '../../utils/useWindowSize';
-import SplitText from '../../components/splitText';
-import Tooltip from '../../components/tooltip';
-import { RootState } from '../../Modules';
-
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // 반복적인 dom구조에서 다른 부분만 배열로 정의.
 const textCondition = [
@@ -92,8 +72,17 @@ const fourthIntroContent = introduce.introduce.fourth;
 const fourthTooltipContent = introduce.tooltipInfo.fourth;
 
 // 사용 될 이미지 배열로 정의.
-const growBackgroundImage2: any[] = [shop1, shop2, shop3, shop4];
-const growBackgroundImage3: any[] = [current1, current2, current3];
+const growBackgroundImage2: any[] = [
+  '/images/shop1.jpg',
+  '/images/shop2.jpg',
+  '/images/shop3.jpg',
+  '/images/shop4.jpg',
+];
+const growBackgroundImage3: any[] = [
+  '/images/current1.jpg',
+  '/images/current2.jpg',
+  '/images/current3.jpg',
+];
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface AboutDetailProps {
@@ -102,32 +91,33 @@ interface AboutDetailProps {
 }
 
 const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
+  const setGsapState = useCommonValueStore((s) => s.setGsapState);
+  const setFilmState = useCommonValueStore((s) => s.setFilmState);
+  const setSplitText = useCommonValueStore((s) => s.setSplitText);
+  const setMakeScrollState = useCommonValueStore((s) => s.setMakeScrollState);
+
   const onScrollAbout = React.useCallback(
-    (value) => dispatch(splitTextStart(value)),
-    [dispatch]
+    (value: string) => setSplitText(value),
+    [setSplitText]
   );
+
   const makeScroll = React.useCallback(
-    (value) => dispatch(makeSmoothScroll(value)),
-    [dispatch]
+    (value: boolean) => setMakeScrollState(value),
+    [setMakeScrollState]
   );
-  const filmReady = React.useCallback(
-    (value) => dispatch(changeFilmState(value)),
-    [dispatch]
-  );
+
   const gsapReady = React.useCallback(
-    (value) => dispatch(changeGsapState(value)),
-    [dispatch]
+    (value: boolean) => setGsapState(value),
+    [setGsapState]
   );
-  // redux useSelector 정의.
-  const [currentGsapState, currentFilmState] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentGsapState,
-      state.CommonValue.currentFilmState,
-    ],
-    shallowEqual
+
+  const filmReady = React.useCallback(
+    (value: boolean) => setFilmState(value),
+    [setFilmState]
   );
+
+  const currentFilmState = useCommonValueStore((s) => s.currentFilmState);
+  const currentGsapState = useCommonValueStore((s) => s.currentGsapState);
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
   const { width } = useWindowSize();
@@ -284,11 +274,14 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   };
 
   // 이미지 슬라이드 템플릿.
-  const growBackgroundImageSlider = (target: any[], kind: string) => {
+  const growBackgroundImageSlider = (
+    target: string[],
+    kind: 'shop' | 'current'
+  ) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
-        className={`${kind === 'shop' ? 'second-images' : 'third-images'}`}
+        className={kind === 'shop' ? 'second-images' : 'third-images'}
         slidesPerView={1}
         effect='fade'
         resizeObserver
@@ -298,26 +291,28 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
         }}
         pagination={{ clickable: false }}
       >
-        {target.map((target, idx) => (
-          <SwiperSlide key={idx}>
+        {target.map((src, idx) => (
+          <SwiperSlide key={`${kind}-${idx}`}>
             <img
               width='70%'
               height='auto'
-              src={target}
+              src={src}
               alt={`${kind} ${idx + 1}`}
             />
           </SwiperSlide>
         ))}
+
+        {/* 네비게이션 버튼 (커스텀 커서 연동) */}
         <div
           className='swiper-button-next'
           onMouseEnter={() => _onHover(' bl-cursor', 'next')}
           onMouseLeave={() => _onLeave()}
-        ></div>
+        />
         <div
           className='swiper-button-prev'
           onMouseEnter={() => _onHover(' bl-cursor', 'prev')}
           onMouseLeave={() => _onLeave()}
-        ></div>
+        />
       </Swiper>
     );
   };
@@ -504,7 +499,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
               width='70%'
               height='auto'
               className='first-image'
-              src={child}
+              src={'/images/child.jpg'}
               alt='childhood'
             />
             <div>
@@ -521,7 +516,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                   width='50%'
                   height='auto'
                   className='first-image'
-                  src={child}
+                  src={'/images/child.jpg'}
                   alt='childhood'
                 />
               )}

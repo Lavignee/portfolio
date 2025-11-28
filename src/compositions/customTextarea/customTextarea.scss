@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .textarea-frame {
   width: 100%;
   margin-top: 1rem;

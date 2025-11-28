@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 header {
   position: fixed;
   z-index: 100;
@@ -177,7 +176,8 @@ header {
             left: 0;
             font-family: 'Syncopate';
             @include f-b(7.2rem, $wh);
-            transition: transform $transition, letter-spacing $transition, opacity $transition;
+            transition: transform $transition, letter-spacing $transition,
+              opacity $transition;
 
             @media (max-width: $bp-m) {
               font-size: 6.2rem;

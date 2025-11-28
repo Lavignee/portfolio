@@ -1,11 +1,9 @@
 import React from 'react';
-import { changeLanguage } from '../../Modules/commonValue';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useCommonValueStore } from '@/stores/commonValue';
 
-import './languageSelectors.scss';
+// import './languageSelectors.scss';
 
-import i18n from 'i18next';
-import { RootState } from '../../Modules';
+import i18n from '@/lib/i18n';
 
 const languages = [
   {
@@ -21,12 +19,12 @@ const languages = [
 ];
 
 const LanguageSelectors = () => {
-  const dispatch = useDispatch();
-  const onChangeLanguage = React.useCallback((lang) => dispatch(changeLanguage(lang)), []);
-  const [language] = useSelector(
-    (state: RootState) => [state.CommonValue.language],
-    shallowEqual
-  );
+  const setLanguage = useCommonValueStore((s) => s.setLanguage);
+  const onChangeLanguage = (nextLanguage: string) => {
+    setLanguage(nextLanguage); // + Zustand도 업데이트
+  };
+
+  const language = useCommonValueStore((s) => s.language);
 
   const [currentLang, setCurrentLang] = React.useState('');
   const [LangList, setLangList] = React.useState(false);
@@ -66,7 +64,8 @@ const LanguageSelectors = () => {
                   key={languages.id}
                   className={language === languages.data ? 'hide' : ''}
                   onClick={changeLanguages}
-                  data-lang={languages.data}>
+                  data-lang={languages.data}
+                >
                   {languages.text}
                 </button>
               ))}

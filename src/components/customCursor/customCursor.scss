@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 %default {
   @include center-align;
   top: 0;
@@ -24,7 +23,9 @@
     height: 5rem;
     @include border-a($bl, 0.1rem);
     will-change: left, top;
-    transition: opacity $transition-slow, width $transition-fast, height $transition-fast, background-color $transition, transform $transition-fast;
+    transition: opacity $transition-slow, width $transition-fast,
+      height $transition-fast, background-color $transition,
+      transform $transition-fast;
     text-align: center;
 
     &.down-cursor {
@@ -32,7 +33,7 @@
     }
 
     &:before {
-      content:'';
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -44,15 +45,17 @@
       @include border-a($wh, 0.1rem);
     }
 
-    &.bl-cursor, &.wh-cursor {
+    &.bl-cursor,
+    &.wh-cursor {
       mix-blend-mode: inherit;
-      
+
       &:before {
         opacity: 0;
       }
     }
 
-    &.bl-cursor, &.wh-cursor {
+    &.bl-cursor,
+    &.wh-cursor {
       width: 10.5rem;
       height: 10.5rem;
       border-color: transparent;
@@ -60,15 +63,15 @@
 
     &.bl-cursor {
       background-color: $bl-8;
-      
+
       &.down-cursor {
         background-color: $bl;
       }
     }
-    
+
     &.wh-cursor {
       background-color: $wh-8;
-      
+
       &.down-cursor {
         background-color: $wh;
       }
@@ -90,7 +93,7 @@
       opacity: 0;
     }
   }
-  
+
   .custom-cursor-info {
     @extend %default;
     z-index: 1000;
@@ -101,7 +104,7 @@
     will-change: left, top;
 
     &:before {
-      content:'';
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -121,7 +124,8 @@
       transition: font-size $transition, color $transition;
     }
 
-    &.bl-cursor, &.wh-cursor {
+    &.bl-cursor,
+    &.wh-cursor {
       mix-blend-mode: inherit;
 
       &:before {
@@ -129,7 +133,8 @@
       }
     }
 
-    &.bl-cursor, &.wh-cursor {
+    &.bl-cursor,
+    &.wh-cursor {
       background-color: transparent;
     }
 

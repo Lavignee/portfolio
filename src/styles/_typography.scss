@@ -1,0 +1,41 @@
+// 'NEXON Lv2 Gothic'
+@font-face {
+  font-family: 'NEXON Lv2 Gothic Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('NEXON Lv2 Gothic Light'),
+    url('/fonts/NEXON-Lv2-Gothic-Light.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NEXON Lv2 Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: local('NEXON Lv2 Gothic'),
+    url('/fonts/NEXON-Lv2-Gothic.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NEXON Lv2 Gothic Bold';
+  font-style: normal;
+  font-weight: 700;
+  src: local('NEXON Lv2 Gothic Bold'),
+    url('/fonts/NEXON-Lv2-Gothic-Bold.woff') format('woff');
+  font-display: swap;
+}
+
+// Syncopate
+@font-face {
+  font-family: 'Syncopate';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Syncopate'), url('/fonts/Syncopate-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Syncopate';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Syncopate'), url('/fonts/Syncopate-Bold.woff2') format('woff2');
+  font-display: swap;
+}

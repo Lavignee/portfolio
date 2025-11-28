@@ -1,5 +1,4 @@
-@import '../../style/util_mixins';
-
+@use '../../styles/util_mixins' as *;
 .contact-area {
   .contact-button {
     // @include vertical-align(fixed);
@@ -17,7 +16,8 @@
     font-family: 'Syncopate';
     @include f-b(1.8rem);
     background-color: $wh;
-    transition: background-color $transition-slow, color $transition-slow, font-size $transition-slow;
+    transition: background-color $transition-slow, color $transition-slow,
+      font-size $transition-slow;
 
     @media (max-width: $bp-m) {
       padding: 1.4rem 0.9rem;

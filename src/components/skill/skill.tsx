@@ -1,15 +1,15 @@
 import React from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { makeSmoothScroll, changeGsapState } from '../../Modules/commonValue';
+import { useCommonValueStore } from '@/stores/commonValue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import './skill.scss';
+// import './skill.scss';
 
 import IconSlider from '../iconSlider';
-import { RootState } from '../../Modules';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface SkillProps {
@@ -19,13 +19,21 @@ interface SkillProps {
 }
 
 const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  const gsapReady = React.useCallback((value: boolean) => dispatch(changeGsapState(value)), [dispatch]);
+  const setGsapState = useCommonValueStore((s) => s.setGsapState);
+  const setMakeScrollState = useCommonValueStore((s) => s.setMakeScrollState);
 
-  // redux useSelector 정의.
-  const [currentGsapState, currentButtonDelay] = useSelector((state: RootState) => [state.CommonValue.currentGsapState, state.CommonValue.currentButtonDelay,], shallowEqual);
+  const gsapReady = React.useCallback(
+    (value: boolean) => setGsapState(value),
+    [setGsapState]
+  );
+
+  const makeScroll = React.useCallback(
+    (value: boolean) => setMakeScrollState(value),
+    [setMakeScrollState]
+  );
+
+  const currentButtonDelay = useCommonValueStore((s) => s.currentButtonDelay);
+  const currentGsapState = useCommonValueStore((s) => s.currentGsapState);
 
   const [sliderTrigger, setliderTrigger] = React.useState(false);
 
@@ -59,8 +67,8 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
         },
       }
     );
-  }; void
-
+  };
+  void (
     // gsap가 준비된 후 애니메이션 동작.
     React.useEffect(() => {
       gsapReady(false);
@@ -73,7 +81,8 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
           trigger.kill();
         });
       };
-    }, [currentGsapState, gsapReady, makeScroll]);
+    }, [currentGsapState, gsapReady, makeScroll])
+  );
 
   // Props로 받는 이벤트들에 대한 interface 정의.
   interface SkillListTemplateProps {
@@ -90,13 +99,18 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
           className={`link-button${currentButtonDelay ? ' delay' : ''}`}
           onMouseEnter={() => _onHover(' go-cursor')}
           onMouseLeave={() => _onLeave()}
-          onClick={() => _onClick(path)}>
+          onClick={() => _onClick(path)}
+        >
           {text}
-          {text2 && (<><br /> {text2}</>)}
+          {text2 && (
+            <>
+              <br /> {text2}
+            </>
+          )}
         </button>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <section id='skill'>
@@ -106,7 +120,11 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
           <h1 className='title-text skill-title'>Skill</h1>
           <div className='row list-frame'>
             <SkillListTemplate path='/skill/language' text='언어' />
-            <SkillListTemplate path='/skill/lib' text='프레임워크&' text2='라이브러리' />
+            <SkillListTemplate
+              path='/skill/lib'
+              text='프레임워크&'
+              text2='라이브러리'
+            />
             <SkillListTemplate path='/skill/tool' text='개발 도구' />
             <SkillListTemplate path='/skill/interest' text='최근 관심 기술' />
           </div>

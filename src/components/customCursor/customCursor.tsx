@@ -1,74 +1,79 @@
+// src/components/customCursor/customCursor.tsx
 import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeSecondClassName } from '../../Modules/cursor';
 import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
 
-import './customCursor.scss';
-import { RootState } from '../../Modules';
+import { useCursorStore } from '@/stores/cursor';
+import { useCommonValueStore } from '@/stores/commonValue';
+// import './customCursor.scss'; // 스타일은 나중에 globals에서 붙일 예정
 
-const CustomCursor = ({ children }: { children: any }) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const cursorSecondClass = React.useCallback((secondClassName) => dispatch(changeSecondClassName(secondClassName)), [dispatch]);
+interface CustomCursorProps {
+  children: React.ReactNode;
+}
 
-  // redux useSelector 정의.
-  const [firstClassName, secondClassName, text, language] = useSelector((state: RootState) => [state.Cursor.firstClassName, state.Cursor.secondClassName, state.Cursor.text, state.CommonValue.language], shallowEqual);
+const CustomCursor: React.FC<CustomCursorProps> = ({ children }) => {
+  // ✅ 각 필드를 개별 selector로 읽기 (객체 리턴 X)
+  const firstClassName = useCursorStore((state) => state.firstClassName);
+  const secondClassName = useCursorStore((state) => state.secondClassName);
+  const text = useCursorStore((state) => state.text);
+
+  const language = useCommonValueStore((state) => state.language);
 
   const cursorRef = React.useRef<HTMLDivElement | null>(null);
   const cursorInfoRef = React.useRef<HTMLDivElement | null>(null);
 
-  // gsap로 마우스 애니메이션 동작.
-  const moveCircle = (e: React.MouseEvent) => {
-    if (isDesktop) {
-      gsap.to(cursorRef?.current, {
-        duration: 0,
-        css: {
-          left: e.pageX,
-          top: e.pageY,
-        },
-      });
+  const moveCircle = React.useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!isDesktop) return;
 
-      gsap.to(cursorInfoRef?.current, {
-        duration: 0.3,
-        css: {
-          left: e.pageX,
-          top: e.pageY,
-        },
-      });
-    }
-  };
+      const { clientX, clientY } = e;
 
-  // 마우스 다운 시 커서 형태 변경.
-  const onMouseDown = () => {
-    cursorSecondClass(' down-cursor');
-  };
+      if (cursorRef.current) {
+        gsap.to(cursorRef.current, {
+          duration: 0.2,
+          x: clientX,
+          y: clientY,
+          ease: 'power2.out',
+        });
+      }
+      if (cursorInfoRef.current) {
+        gsap.to(cursorInfoRef.current, {
+          duration: 0.25,
+          x: clientX,
+          y: clientY,
+          ease: 'power2.out',
+        });
+      }
+    },
+    []
+  );
 
-  // 마우스 업 시 커서 형태 초기화.
-  const onMouseUp = () => {
-    cursorSecondClass('');
-  };
+  const onMouseDown = React.useCallback(() => {
+    // 필요하면 로컬 클릭 이펙트만 여기서 처리 (지금은 비워둠)
+  }, []);
+
+  const onMouseUp = React.useCallback(() => {
+    // same
+  }, []);
 
   return (
     <div
       className={language}
-      onMouseMove={(e) => moveCircle(e)}
+      onMouseMove={moveCircle}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-
-      {/* 내부 컨텐츠 영역 */}
       {children}
-
-      {/* 마우스 DOM */}
       {isDesktop && (
         <div className='cursor-area'>
           <div
             className={`custom-cursor-back${firstClassName}${secondClassName}`}
-            ref={cursorInfoRef}></div>
+            ref={cursorInfoRef}
+          />
           <div
             className={`custom-cursor-info${firstClassName}${secondClassName}`}
-            ref={cursorRef}>
+            ref={cursorRef}
+          >
             <span>{text}</span>
           </div>
         </div>

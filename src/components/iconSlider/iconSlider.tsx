@@ -1,9 +1,9 @@
 import React from 'react';
 import { gsap } from 'gsap';
 
-import svg from '../../static/images/icon-svg.json';
+import svg from '../../../public/images/icon-svg.json';
 
-import './iconSlider.scss';
+// import './iconSlider.scss';
 
 const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   const [willChange, setWillChange] = React.useState(sliderTrigger);
@@ -26,18 +26,30 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
         }
       }
       return result;
-    }
+    };
 
-    let template = <div className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
-      {randomNumber().map((item, idx) => {
-        return (
-          <div key={line + idx} className={`icon-content-frame${willChange ? ' will-change' : ''}`}><div className='content' dangerouslySetInnerHTML={{ __html: svgs[item] }}></div></div>
-        )
-      })}
-    </div>
+    let template = (
+      <div className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
+        {randomNumber().map((item, idx) => {
+          return (
+            <div
+              key={line + idx}
+              className={`icon-content-frame${
+                willChange ? ' will-change' : ''
+              }`}
+            >
+              <div
+                className='content'
+                dangerouslySetInnerHTML={{ __html: svgs[item] }}
+              ></div>
+            </div>
+          );
+        })}
+      </div>
+    );
 
     return template;
-  }
+  };
 
   // 애니메이션 생성
   const startAnimation = React.useCallback((willChange: boolean) => {
@@ -62,7 +74,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     } else {
       SliderRef.current.pause();
     }
-  }, [])
+  }, []);
 
   // 높이값이 특정 구간에 들어올 시 슬라이더의 크기 및 간격을 조정.
   const autoHeightContent = React.useCallback(() => {
@@ -89,7 +101,6 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     startAnimation(willChange);
   }, [row, startAnimation, willChange]);
 
-
   // 아이콘 슬라이더가 화면에 보이는지 여부에 따라 애니메이션 동작 변경.
   React.useEffect(() => {
     if (sliderTrigger) {
@@ -111,7 +122,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     return () => {
       SliderRef.current?.kill();
       window.removeEventListener('resize', autoHeightContent);
-    }
+    };
   }, [autoHeightContent, startAnimation, startAnimation, willChange]);
 
   return (
