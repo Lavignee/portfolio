@@ -230,7 +230,6 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
 
   // skill 세부 목록 및 컨텐츠 템플릿.
   const contents = (contentKind: string) => {
-    let content;
     // svg json을 읽어와서 키와 값으로 할당.
     const svgs = Object.entries(svg);
     const svgContent = new Map();
@@ -239,17 +238,16 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     });
 
     // url에 따라 출력할 json 데이터를 매치.
-    if (currentUrl === 'language') {
-      content = language.language;
-    } else if (currentUrl === 'lib') {
-      content = lib.lib;
-    } else if (currentUrl === 'tool') {
-      content = tool.tool;
-    } else if (currentUrl === 'interest') {
-      content = interest.interest;
-    } else {
-      content = [{ number: 0, id: '', name: '', workmanship: 0, summary: '' }];
-    }
+    const content =
+      currentUrl === 'language'
+        ? language.language
+        : currentUrl === 'lib'
+          ? lib.lib
+          : currentUrl === 'tool'
+            ? tool.tool
+            : currentUrl === 'interest'
+              ? interest.interest
+              : [{ number: 0, id: '', name: '', workmanship: 0, summary: '' }];
 
     // skill 세부 목록 템플릿
     return contentKind === 'list' ? (

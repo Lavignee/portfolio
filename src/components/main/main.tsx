@@ -23,11 +23,8 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
 
   // 전역 스토어 액션.
   const onScrollIntro = useStore((s) => s.splitTextStart);
-  const gsapReady = useStore((s) => s.changeGsapState);
   const makeScroll = useStore((s) => s.makeSmoothScroll);
 
-  // 전역 스토어 구독.
-  const currentGsapState = useStore((s) => s.currentGsapState);
   const [videoReady, setVideoReady] = React.useState(false);
   const [canvasReady, setCanvasReady] = React.useState(true);
 

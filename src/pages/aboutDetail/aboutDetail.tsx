@@ -306,7 +306,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   const introduceContent = (target: string, element: React.JSX.Element[]) => {
     const combineContent: (string | React.JSX.Element)[] = target.split('$$');
     let i = 0;
-    combineContent.forEach((item, idx) => {
+    combineContent.forEach((_item, idx) => {
       if (idx % 2 !== 0) {
         combineContent.splice(idx, 1, element[i]);
         i++;

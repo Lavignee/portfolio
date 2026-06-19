@@ -13,7 +13,7 @@ const TextSlider = ({ text, type }: TextSliderProps) => {
   const textSliderSetting = (text: string, align: string) => {
     let setting: JSX.Element[] = [];
     let settingFrame: JSX.Element[] = [];
-    let l;
+    let l = 0;
     if (type === 'left') {
       l = 5;
     } else {
