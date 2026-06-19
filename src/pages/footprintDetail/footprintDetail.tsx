@@ -1,12 +1,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import career from '../../data/dataFootprint/careerFootprint.json';
 import project from '../../data/dataFootprint/projectFootprint.json';
-import { makeSmoothScroll } from '../../Modules/commonValue';
 
 import './footprintDetail.scss';
 import 'swiper/swiper.scss';
@@ -15,7 +13,7 @@ import 'swiper/modules/pagination/pagination.scss';
 import 'swiper/modules/effect-fade/effect-fade.scss';
 
 import TextSlider from '../../components/textSlider';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,18 +75,11 @@ interface FootprintDetailProps {
 }
 
 const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const makeScroll = React.useCallback(
-    (value: boolean) => dispatch(makeSmoothScroll(value)),
-    [dispatch]
-  );
+  // 전역 스토어 액션.
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
 
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentGsapState],
-    shallowEqual
-  );
+  // 전역 스토어 구독.
+  const currentGsapState = useStore((s) => s.currentGsapState);
 
   // 슬라이더 템플릿.
   const sliderContent = (

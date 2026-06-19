@@ -1,6 +1,5 @@
 import React from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 import './splitText.scss';
 
@@ -10,7 +9,7 @@ interface SplitTextProps {
   scroll: string;
   index: string;
   animation: string;
-  setTime: number;
+  setTime?: number;
   delay?: number | null;
   depth?: boolean | null;
   noContainer?: boolean | null;
@@ -26,11 +25,8 @@ const SplitText = ({
   depth,
   noContainer,
 }: SplitTextProps) => {
-  // redux useSelector 정의.
-  const [currentSplitText] = useSelector(
-    (state: RootState) => [state.CommonValue.currentSplitText],
-    shallowEqual
-  );
+  // 전역 스토어 구독.
+  const currentSplitText = useStore((s) => s.currentSplitText);
 
   let childrenLength = 0;
   const [willChange, setWillChange] = React.useState(true);

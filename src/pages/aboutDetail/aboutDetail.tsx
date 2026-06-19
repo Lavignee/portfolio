@@ -1,17 +1,11 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { shallow } from 'zustand/shallow';
 import hashtag from '../../data/dataAbout/hashtagAbout.json';
 import introduce from '../../data/dataAbout/introduceAbout.json';
-import {
-  changeFilmState,
-  changeGsapState,
-  makeSmoothScroll,
-  splitTextStart,
-} from '../../Modules/commonValue';
 
 import child from '../../static/images/child.jpg';
 import current1 from '../../static/images/current1.jpg';
@@ -30,7 +24,7 @@ import 'swiper/modules/effect-fade/effect-fade.scss';
 
 import SplitText from '../../components/splitText';
 import Tooltip from '../../components/tooltip';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 import useWindowSize from '../../utils/useWindowSize';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -97,16 +91,16 @@ interface AboutDetailProps {
 }
 
 const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onScrollAbout = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
-  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  const filmReady = React.useCallback((value) => dispatch(changeFilmState(value)), [dispatch]);
-  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
-  // redux useSelector 정의.
-  const [currentGsapState, currentFilmState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentGsapState, state.CommonValue.currentFilmState],
-    shallowEqual
+  // 전역 스토어 액션.
+  const onScrollAbout = useStore((s) => s.splitTextStart);
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
+  const filmReady = useStore((s) => s.changeFilmState);
+  const gsapReady = useStore((s) => s.changeGsapState);
+
+  // 전역 스토어 구독.
+  const [currentGsapState, currentFilmState] = useStore(
+    (s) => [s.currentGsapState, s.currentFilmState],
+    shallow
   );
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.

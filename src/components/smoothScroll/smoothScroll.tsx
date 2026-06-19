@@ -2,20 +2,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {
-  changeGsapState,
-  checkScrollLimit,
-  checkScrollValue,
-  makeSmoothScroll,
-  smoothTop,
-} from '../../Modules/commonValue';
+import { shallow } from 'zustand/shallow';
 
 import './smoothScroll.scss';
 
 import Scrollbar from 'smooth-scrollbar';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,33 +21,17 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
   // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
   const location = useLocation();
 
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const gsapReady = React.useCallback(
-    (value: boolean) => dispatch(changeGsapState(value)),
-    [dispatch]
-  );
-  const makeScroll = React.useCallback(
-    (value: boolean) => dispatch(makeSmoothScroll(value)),
-    [dispatch]
-  );
-  const checkScroll = React.useCallback(
-    (value: number) => dispatch(checkScrollValue(value)),
-    [dispatch]
-  );
-  const checkLimit = React.useCallback(
-    (value: number) => dispatch(checkScrollLimit(value)),
-    [dispatch]
-  );
-  const onSmoothTop = React.useCallback((value: boolean) => dispatch(smoothTop(value)), [dispatch]);
+  // 전역 스토어 액션 (zustand 액션은 참조가 안정적이라 의존성 배열에 안전하게 사용 가능).
+  const gsapReady = useStore((s) => s.changeGsapState);
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
+  const checkScroll = useStore((s) => s.checkScrollValue);
+  const checkLimit = useStore((s) => s.checkScrollLimit);
+  const onSmoothTop = useStore((s) => s.smoothTop);
 
-  // redux useSelector 정의.
-  const [currentSmoothTopState, makeScrollState] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentSmoothTopState,
-      state.CommonValue.makeScrollState,
-    ],
-    shallowEqual
+  // 전역 스토어 구독.
+  const [currentSmoothTopState, makeScrollState] = useStore(
+    (s) => [s.currentSmoothTopState, s.makeScrollState],
+    shallow
   );
 
   const smoothScroller = React.useRef<HTMLDivElement>(null);

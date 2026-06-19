@@ -1,11 +1,9 @@
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { changeLanguage } from '../../Modules/commonValue';
 
 import './languageSelectors.scss';
 
 import i18n from 'i18next';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 const languages = [
   {
@@ -21,9 +19,8 @@ const languages = [
 ];
 
 const LanguageSelectors = () => {
-  const dispatch = useDispatch();
-  const onChangeLanguage = React.useCallback((lang) => dispatch(changeLanguage(lang)), []);
-  const [language] = useSelector((state: RootState) => [state.CommonValue.language], shallowEqual);
+  const onChangeLanguage = useStore((s) => s.changeLanguage);
+  const language = useStore((s) => s.language);
 
   const [currentLang, setCurrentLang] = React.useState('');
   const [LangList, setLangList] = React.useState(false);

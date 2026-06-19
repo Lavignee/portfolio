@@ -6,7 +6,7 @@
 
 - **UI**: React 17 + TypeScript
 - **번들러**: Parcel 2
-- **상태 관리**: Redux + react-redux
+- **상태 관리**: Zustand
 - **라우팅**: react-router-dom v6
 - **애니메이션**: GSAP (ScrollTrigger), smooth-scrollbar, Swiper
 - **다국어**: i18next + react-i18next
@@ -51,7 +51,7 @@ yarn build
 │   ├── App.tsx           # 루트 컴포넌트 (전역 커서/전환 이벤트 정의)
 │   ├── components/       # 재사용 컴포넌트 (header, customCursor, smoothScroll 등)
 │   ├── pages/            # 라우트 단위 페이지 (home, aboutDetail, skillDetail 등)
-│   ├── Modules/          # Redux 리듀서/액션 (cursor, commonValue)
+│   ├── store/            # Zustand 전역 스토어 (useStore)
 │   ├── style/            # 전역 Sass (reset, typography 등)
 │   └── static/           # 폰트/이미지/영상/언어 리소스
 └── dist/                 # 빌드 산출물

@@ -1,29 +1,19 @@
 import { gsap } from 'gsap';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { changeSecondClassName } from '../../Modules/cursor';
+import { shallow } from 'zustand/shallow';
 
 import './customCursor.scss';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 const CustomCursor = ({ children }: { children: any }) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const cursorSecondClass = React.useCallback(
-    (secondClassName) => dispatch(changeSecondClassName(secondClassName)),
-    [dispatch]
-  );
+  // 전역 스토어 액션.
+  const cursorSecondClass = useStore((s) => s.changeSecondClassName);
 
-  // redux useSelector 정의.
-  const [firstClassName, secondClassName, text, language] = useSelector(
-    (state: RootState) => [
-      state.Cursor.firstClassName,
-      state.Cursor.secondClassName,
-      state.Cursor.text,
-      state.CommonValue.language,
-    ],
-    shallowEqual
+  // 전역 스토어 구독.
+  const [firstClassName, secondClassName, text, language] = useStore(
+    (s) => [s.firstClassName, s.secondClassName, s.text, s.language],
+    shallow
   );
 
   const cursorRef = React.useRef<HTMLDivElement | null>(null);

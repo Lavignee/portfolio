@@ -1,8 +1,5 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { splitTextStart } from '../../Modules/commonValue';
-
 import kakaoIcon from '../../static/images/kakao-icon.svg';
 import mailIcon from '../../static/images/mail-icon.svg';
 import mobileIcon from '../../static/images/mobile-icon.svg';
@@ -12,7 +9,7 @@ import './contact.scss';
 // import CustomInput from 'compositions/customInput';
 // import CustomTextarea from 'compositions/customTextarea';
 // import CustomButton from 'compositions/customButton';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 import SplitText from '../splitText';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
@@ -22,15 +19,11 @@ interface ContactProps {
 }
 
 const Contact = ({ _onHover, _onLeave }: ContactProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onContactText = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
+  // 전역 스토어 액션.
+  const onContactText = useStore((s) => s.splitTextStart);
 
-  // redux useSelector 정의.
-  const [currentContactState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentContactState],
-    shallowEqual
-  );
+  // 전역 스토어 구독.
+  const currentContactState = useStore((s) => s.currentContactState);
 
   // splittext 호출 순서를 리랜더를 위해 state에 작성.
   const [qnumber, setQnumber] = React.useState(1);

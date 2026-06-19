@@ -2,14 +2,14 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop, isMobile } from 'react-device-detect';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallow } from 'zustand/shallow';
 
 import aboutOne from '../../static/images/about-one.jpg';
 import aboutThree from '../../static/images/about-three.jpg';
 import aboutTwo from '../../static/images/about-two.jpg';
 
 import './about.scss';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,13 +21,10 @@ interface AboutProps {
 }
 
 const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
-  // redux useSelector 정의.
-  const [currentGsapState, currentButtonDelay] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentGsapState,
-      state.CommonValue.currentButtonDelay,
-    ],
-    shallowEqual
+  // 전역 스토어 구독.
+  const [currentGsapState, currentButtonDelay] = useStore(
+    (s) => [s.currentGsapState, s.currentButtonDelay],
+    shallow
   );
 
   const [nextText, setNextText] = React.useState(true);

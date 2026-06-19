@@ -1,18 +1,12 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {
-  changeContactState,
-  changeContactStateFalse,
-  changeGnbState,
-  smoothTop,
-} from '../../Modules/commonValue';
+import { shallow } from 'zustand/shallow';
 
 import './header.scss';
 
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface HeaderProps {
@@ -25,23 +19,22 @@ interface HeaderProps {
 gsap.registerPlugin(ScrollTrigger);
 
 const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onSmoothTop = (value: boolean) => dispatch(smoothTop(value));
-  const onChangeContactState = () => dispatch(changeContactState(false));
-  const onChangeContactStateFalse = () => dispatch(changeContactStateFalse(false));
-  const onChangeGnbState = () => dispatch(changeGnbState(false));
+  // 전역 스토어 액션.
+  const onSmoothTop = useStore((s) => s.smoothTop);
+  const onChangeContactState = useStore((s) => s.changeContactState);
+  const onChangeContactStateFalse = useStore((s) => s.changeContactStateFalse);
+  const onChangeGnbState = useStore((s) => s.changeGnbState);
 
-  // redux useSelector 정의.
+  // 전역 스토어 구독.
   const [currentButtonDelay, currentSmoothTopState, currentContactState, currentGnbState] =
-    useSelector(
-      (state: RootState) => [
-        state.CommonValue.currentButtonDelay,
-        state.CommonValue.currentSmoothTopState,
-        state.CommonValue.currentContactState,
-        state.CommonValue.currentGnbState,
+    useStore(
+      (s) => [
+        s.currentButtonDelay,
+        s.currentSmoothTopState,
+        s.currentContactState,
+        s.currentGnbState,
       ],
-      shallowEqual
+      shallow
     );
 
   // react-router-dom으로 url 확인.

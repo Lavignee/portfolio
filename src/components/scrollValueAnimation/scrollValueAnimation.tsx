@@ -1,18 +1,15 @@
 import React from 'react';
 import './scrollValueAnimation.scss';
 import { isMobile } from 'react-device-detect';
-import { shallowEqual, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import type { RootState } from '../../Modules';
+import { shallow } from 'zustand/shallow';
+import useStore from '../../store/useStore';
 
 const ScrollValueAnimation = () => {
-  // redux useSelector 정의.
-  const [currentScrollValue, currentScrollLimit] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentScrollValue,
-      state.CommonValue.currentScrollLimit,
-    ],
-    shallowEqual
+  // 전역 스토어 구독.
+  const [currentScrollValue, currentScrollLimit] = useStore(
+    (s) => [s.currentScrollValue, s.currentScrollLimit],
+    shallow
   );
 
   // react-router-dom으로 url 확인.

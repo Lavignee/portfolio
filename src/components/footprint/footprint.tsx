@@ -1,14 +1,14 @@
 import { gsap } from 'gsap';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallow } from 'zustand/shallow';
 import footprint from '../../static/images/footprint.jpg';
 import footprintArrow from '../../static/images/footprint-arrow.svg';
 import footprintCircle from '../../static/images/footprint-circle.svg';
 
 import './footprint.scss';
 
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 import Footer from '../footer';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
@@ -19,14 +19,10 @@ interface FootprintProps {
 }
 
 const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
-  // redux useSelector 정의.
-  const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentButtonDelay,
-      state.CommonValue.currentScrollLimit,
-      state.CommonValue.currentScrollValue,
-    ],
-    shallowEqual
+  // 전역 스토어 구독.
+  const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useStore(
+    (s) => [s.currentButtonDelay, s.currentScrollLimit, s.currentScrollValue],
+    shallow
   );
 
   const footprintCursorRef = React.useRef(null);

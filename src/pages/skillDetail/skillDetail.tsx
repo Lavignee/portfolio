@@ -2,20 +2,18 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import interest from '../../data/dataSkill/interestSkill.json';
 
 import language from '../../data/dataSkill/languageSkill.json';
 import lib from '../../data/dataSkill/libSkill.json';
 import tool from '../../data/dataSkill/toolSkill.json';
-import { changeGsapState } from '../../Modules/commonValue';
 import svg from '../../static/images/icon-svg.json';
 
 import './skillDetail.scss';
 
 import Scrollbar from 'smooth-scrollbar';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,18 +24,11 @@ interface SkillDetailProps {
 }
 
 const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const gsapReady = React.useCallback(
-    (value: boolean) => dispatch(changeGsapState(value)),
-    [dispatch]
-  );
+  // 전역 스토어 액션.
+  const gsapReady = useStore((s) => s.changeGsapState);
 
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentGsapState],
-    shallowEqual
-  );
+  // 전역 스토어 구독.
+  const currentGsapState = useStore((s) => s.currentGsapState);
 
   // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
   const location = useLocation();

@@ -1,13 +1,9 @@
-import { shallowEqual, useSelector } from 'react-redux';
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 import './filmEffect.scss';
 
 const FilmEffect = () => {
-  // redux useSelector 정의.
-  const [currentFilmState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentFilmState],
-    shallowEqual
-  );
+  // 전역 스토어 구독.
+  const currentFilmState = useStore((s) => s.currentFilmState);
 
   return (
     <>

@@ -1,12 +1,11 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
+import { shallow } from 'zustand/shallow';
 
 import './skill.scss';
 
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 import IconSlider from '../iconSlider';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,24 +18,14 @@ interface SkillProps {
 }
 
 const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const makeScroll = React.useCallback(
-    (value: boolean) => dispatch(makeSmoothScroll(value)),
-    [dispatch]
-  );
-  const gsapReady = React.useCallback(
-    (value: boolean) => dispatch(changeGsapState(value)),
-    [dispatch]
-  );
+  // 전역 스토어 액션.
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
+  const gsapReady = useStore((s) => s.changeGsapState);
 
-  // redux useSelector 정의.
-  const [currentGsapState, currentButtonDelay] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentGsapState,
-      state.CommonValue.currentButtonDelay,
-    ],
-    shallowEqual
+  // 전역 스토어 구독.
+  const [currentGsapState, currentButtonDelay] = useStore(
+    (s) => [s.currentGsapState, s.currentButtonDelay],
+    shallow
   );
 
   const [sliderTrigger, setliderTrigger] = React.useState(false);

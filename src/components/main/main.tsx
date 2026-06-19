@@ -2,12 +2,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { changeGsapState, makeSmoothScroll, splitTextStart } from '../../Modules/commonValue';
 
 import './main.scss';
 
-import type { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 import SplitText from '../splitText';
 import VideoToCanvas from '../videoToCanvas';
 
@@ -23,18 +21,13 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   // 배경에 사용 될 영상 파일.
   const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
 
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onScrollIntro = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
-  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
-  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
+  // 전역 스토어 액션.
+  const onScrollIntro = useStore((s) => s.splitTextStart);
+  const gsapReady = useStore((s) => s.changeGsapState);
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
 
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector(
-    (state: RootState) => [state.CommonValue.currentGsapState],
-    shallowEqual
-  );
+  // 전역 스토어 구독.
+  const currentGsapState = useStore((s) => s.currentGsapState);
   const [videoReady, setVideoReady] = React.useState(false);
   const [canvasReady, setCanvasReady] = React.useState(true);
 

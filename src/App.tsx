@@ -2,7 +2,6 @@ import 'regenerator-runtime/runtime';
 import './style/index.scss';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Contact from './components/contact';
 import ContentSwitcher from './components/contentSwitcher';
@@ -12,19 +11,17 @@ import Header from './components/header';
 import ScrollValueAnimation from './components/scrollValueAnimation';
 import SmoothScroll from './components/smoothScroll';
 import SwitchAnimation from './components/switchAnimation';
-import { changeButtonDelay, changeSwitchAnimation } from './Modules/commonValue';
-import { changeFirstClassName, changeSecondClassName, changeText } from './Modules/cursor';
+import useStore from './store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const cursorClass = (value: string) => dispatch(changeFirstClassName(value));
-  const cursorSecondClass = (value: string) => dispatch(changeSecondClassName(value));
-  const cursorText = (value: string) => dispatch(changeText(value));
-  const screenCover = (value: boolean) => dispatch(changeSwitchAnimation(value));
-  const onChangeButtonDelay = (value: boolean) => dispatch(changeButtonDelay(value));
+  // 전역 스토어 액션 정의.
+  const cursorClass = useStore((s) => s.changeFirstClassName);
+  const cursorSecondClass = useStore((s) => s.changeSecondClassName);
+  const cursorText = useStore((s) => s.changeText);
+  const screenCover = useStore((s) => s.changeSwitchAnimation);
+  const onChangeButtonDelay = useStore((s) => s.changeButtonDelay);
 
   // react-router-dom으로 화면 호출.
   const navigate = useNavigate();
