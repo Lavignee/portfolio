@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { EffectFade, Navigation, Pagination } from 'swiper';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useShallow } from 'zustand/react/shallow';
 import hashtag from '../../data/dataAbout/hashtagAbout.json';
@@ -17,10 +17,10 @@ import shop3 from '../../static/images/shop3.jpg';
 import shop4 from '../../static/images/shop4.jpg';
 
 import './aboutDetail.scss';
-import 'swiper/scss';
-import 'swiper/scss/navigation';
-import 'swiper/scss/pagination';
-import 'swiper/scss/effect-fade';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 import SplitText from '../../components/splitText';
 import Tooltip from '../../components/tooltip';

@@ -1,16 +1,16 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { EffectFade, Navigation, Pagination } from 'swiper';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import career from '../../data/dataFootprint/careerFootprint.json';
 import project from '../../data/dataFootprint/projectFootprint.json';
 
 import './footprintDetail.scss';
-import 'swiper/scss';
-import 'swiper/scss/navigation';
-import 'swiper/scss/pagination';
-import 'swiper/scss/effect-fade';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 import TextSlider from '../../components/textSlider';
 import useStore from '../../store/useStore';
