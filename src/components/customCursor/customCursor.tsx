@@ -50,6 +50,7 @@ const CustomCursor = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: 커스텀 커서 추적을 위한 마우스 레이어로 키보드 상호작용 대상이 아님.
     <div
       className={language}
       onMouseMove={(e) => moveCircle(e)}

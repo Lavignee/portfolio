@@ -39,6 +39,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
 
   return (
     <>
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: 데스크톱 클립패스 시각 효과용 마우스 핸들러로 키보드 상호작용 대상이 아님. */}
       <section
         id='footprint'
         className='container-fluid footprint-section'
@@ -75,9 +76,18 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
 
           <div
             className={`link-button${currentButtonDelay ? ' delay' : ''}`}
+            role='button'
+            tabIndex={0}
+            aria-label='footprint'
             onMouseEnter={() => _onHover(' go-cursor')}
             onMouseLeave={() => _onLeave()}
             onClick={() => _onClick('/footprint')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                _onClick('/footprint');
+              }
+            }}
           ></div>
         </div>
 

@@ -254,15 +254,21 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     // skill 세부 목록 템플릿
     return contentKind === 'list' ? (
       content.map((content) => (
-        <li
-          key={content.number}
-          className='list col-4 col-l-3 pl-pr-none'
-          ref={addToRefs}
-          onClick={() => clickList(content)}
-          onMouseEnter={() => listHover(content.number)}
-          onMouseLeave={onListLeave}
-        >
-          <div className={`inner ${listHoverMotion}`}>
+        <li key={content.number} className='list col-4 col-l-3 pl-pr-none' ref={addToRefs}>
+          <div
+            className={`inner ${listHoverMotion}`}
+            role='button'
+            tabIndex={0}
+            onClick={() => clickList(content)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                clickList(content);
+              }
+            }}
+            onMouseEnter={() => listHover(content.number)}
+            onMouseLeave={onListLeave}
+          >
             {svgContent.has(content.id) === false ? (
               <div>{content.name}</div>
             ) : (

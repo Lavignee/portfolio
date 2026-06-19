@@ -53,7 +53,20 @@ const LanguageSelectors = () => {
   return (
     <div className='language-selectors-frame'>
       <div className='language-selectors'>
-        <div className='default-lang' onClick={listView}>
+        <div
+          className='default-lang'
+          role='button'
+          tabIndex={0}
+          aria-haspopup='listbox'
+          aria-expanded={LangList}
+          onClick={listView}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              listView();
+            }
+          }}
+        >
           {currentLang}
           {LangList && (
             <div className='lang-list'>

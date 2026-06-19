@@ -84,13 +84,21 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
   };
 
   // gnb 버튼 클릭 시,
-  const onGnbButtonClick = (cursor: string, text: string) => (e: React.MouseEvent) => {
+  const onGnbButtonClick = (cursor: string, text: string) => () => {
     // contact가 열려 있었다면 닫기.
     currentContactState && onChangeContactStateFalse();
     // gnb 메뉴를 닫거나 열기.
     onChangeGnbState();
     // 마우스 오버시 커서 형태 및 텍스트 변경.
     _onHover(cursor, text);
+  };
+
+  // Enter/Space 키로 클릭 동작을 수행하기 위한 헬퍼.
+  const onActivateKey = (action: () => void) => (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
   };
 
   const onGnbListClick = () => {
@@ -141,13 +149,18 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
           {/* 로고 영역 */}
           <div
             className={`link-button${currentButtonDelay ? ' delay' : ''}`}
+            role='button'
+            tabIndex={0}
+            aria-label='home'
             onClick={logoClick}
+            onKeyDown={onActivateKey(logoClick)}
             onMouseEnter={onlogoHover}
             onMouseLeave={onHeaderLeave}
           >
             {/* TODO: "@parcel/transformer-svg-react" Bug로 인해 svg 수동 호출. 추후 수정 필요. */}
             <svg
               className='header-logo'
+              aria-hidden='true'
               width='58'
               height='36'
               viewBox='0 0 58 36'
@@ -174,13 +187,18 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
           <div className='right-area'>
             <div
               className='gnb-button'
+              role='button'
+              tabIndex={0}
+              aria-label='open menu'
               onClick={onGnbButtonClick(' wh-cursor', 'Close?')}
+              onKeyDown={onActivateKey(onGnbButtonClick(' wh-cursor', 'Close?'))}
               onMouseEnter={gnbButtonHover}
               onMouseLeave={onHeaderLeave}
             >
               {/* TODO: "@parcel/transformer-svg-react" Bug로 인해 svg 수동 호출. 추후 수정 필요. */}
               <svg
                 className='menu-img'
+                aria-hidden='true'
                 width='133'
                 height='132'
                 viewBox='0 0 133 132'
@@ -283,13 +301,18 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
             <div className='right-area'>
               <div
                 className='gnb-close-button'
+                role='button'
+                tabIndex={0}
+                aria-label='close menu'
                 onClick={onGnbButtonClick(' bl-cursor', 'Open?')}
+                onKeyDown={onActivateKey(onGnbButtonClick(' bl-cursor', 'Open?'))}
                 onMouseEnter={gnbButtonHover}
                 onMouseLeave={onHeaderLeave}
               >
                 {/* TODO: "@parcel/transformer-svg-react" Bug로 인해 svg 수동 호출. 추후 수정 필요. */}
                 <svg
                   className={`close-img${currentContactState ? ' invert' : ''}`}
+                  aria-hidden='true'
                   width='133'
                   height='132'
                   viewBox='0 0 133 132'
