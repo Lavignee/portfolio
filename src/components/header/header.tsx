@@ -122,6 +122,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
     return (
       <li className={`${blur}${currentGnbState ? ' line-up' : ''}`}>
         <button
+          type='button'
           className='link-button'
           onClick={_onClick}
           onMouseEnter={gnbListHover}

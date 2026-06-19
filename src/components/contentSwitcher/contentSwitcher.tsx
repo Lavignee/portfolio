@@ -3,18 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 
 import './contentSwitcher.scss';
 
-import AboutDetail from '../../pages/aboutDetail';
-import FootprintDetail from '../../pages/footprintDetail';
+// 랜딩(Home)은 초기 로드 시 fallback 깜빡임을 막기 위해 즉시 로드,
+// 네비게이션으로 진입하는 상세 페이지는 코드 스플리팅으로 지연 로드.
 import Home from '../../pages/home';
-import NotFound from '../../pages/notFound';
-import SkillDetail from '../../pages/skillDetail';
 
-// TODO: 추후 스켈레톤 작업하기.
-// const Home = React.lazy(() => import('../../pages/home'));
-// const AboutDetail = React.lazy(() => import('../../pages/aboutDetail'));
-// const SkillDetail = React.lazy(() => import('../../pages/skillDetail'));
-// const FootprintDetail = React.lazy(() => import('../../pages/footprintDetail'));
-// const NotFound = React.lazy(() => import('../../pages/notFound'));
+const AboutDetail = React.lazy(() => import('../../pages/aboutDetail'));
+const SkillDetail = React.lazy(() => import('../../pages/skillDetail'));
+const FootprintDetail = React.lazy(() => import('../../pages/footprintDetail'));
+const NotFound = React.lazy(() => import('../../pages/notFound'));
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface ContentSwitcherProps {

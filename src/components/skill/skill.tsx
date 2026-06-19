@@ -89,6 +89,7 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
     return (
       <div className='off-m-2 col-m-10 off-xl-4 col-xl-8 off-w-6 col-w-6 list'>
         <button
+          type='button'
           className={`link-button${currentButtonDelay ? ' delay' : ''}`}
           onMouseEnter={() => _onHover(' go-cursor')}
           onMouseLeave={() => _onLeave()}

@@ -515,6 +515,7 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
         {/* 모어 버튼 영역 */}
         <div className='about-detail-button'>
           <button
+            type='button'
             className={`${isDesktop && aboutAnimationReady ? 'will-change' : ''}${isMobile ? ' mobile' : ''}${currentButtonDelay ? ' delay' : ''}`}
             onMouseEnter={() => _onHover(' go-cursor')}
             onMouseLeave={() => _onLeave()}

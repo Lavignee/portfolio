@@ -25,7 +25,9 @@ const NotFound = () => {
         </h3>
         <br />
         <br />
-        <button onClick={() => navigate(-1)}>go back</button>
+        <button type='button' onClick={() => navigate(-1)}>
+          go back
+        </button>
       </div>
     </div>
   );

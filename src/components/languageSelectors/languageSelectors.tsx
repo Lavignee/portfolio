@@ -59,6 +59,7 @@ const LanguageSelectors = () => {
             <div className='lang-list'>
               {languages.map((languages) => (
                 <button
+                  type='button'
                   key={languages.id}
                   className={language === languages.data ? 'hide' : ''}
                   onClick={changeLanguages}

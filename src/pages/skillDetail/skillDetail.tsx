@@ -215,6 +215,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     return (
       <li>
         <button
+          type='button'
           className={currentUrl === targetUrl ? 'active' : ''}
           onClick={(e) => changeList(e)}
           onMouseEnter={() => _onHover(' focus-cursor')}
