@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 import './header.scss';
 
@@ -28,13 +28,12 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
   // 전역 스토어 구독.
   const [currentButtonDelay, currentSmoothTopState, currentContactState, currentGnbState] =
     useStore(
-      (s) => [
+      useShallow((s) => [
         s.currentButtonDelay,
         s.currentSmoothTopState,
         s.currentContactState,
         s.currentGnbState,
-      ],
-      shallow
+      ])
     );
 
   // react-router-dom으로 url 확인.

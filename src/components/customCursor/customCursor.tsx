@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 import './customCursor.scss';
 import useStore from '../../store/useStore';
@@ -12,8 +12,7 @@ const CustomCursor = ({ children }: { children: React.ReactNode }) => {
 
   // 전역 스토어 구독.
   const [firstClassName, secondClassName, text, language] = useStore(
-    (s) => [s.firstClassName, s.secondClassName, s.text, s.language],
-    shallow
+    useShallow((s) => [s.firstClassName, s.secondClassName, s.text, s.language])
   );
 
   const cursorRef = React.useRef<HTMLDivElement | null>(null);

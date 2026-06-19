@@ -2,14 +2,13 @@ import React from 'react';
 import './scrollValueAnimation.scss';
 import { isMobile } from 'react-device-detect';
 import { useLocation } from 'react-router-dom';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 import useStore from '../../store/useStore';
 
 const ScrollValueAnimation = () => {
   // 전역 스토어 구독.
   const [currentScrollValue, currentScrollLimit] = useStore(
-    (s) => [s.currentScrollValue, s.currentScrollLimit],
-    shallow
+    useShallow((s) => [s.currentScrollValue, s.currentScrollLimit])
   );
 
   // react-router-dom으로 url 확인.

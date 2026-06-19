@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { useEffect } from 'react';
+import { type JSX, useEffect } from 'react';
 
 import './textSlider.scss';
 

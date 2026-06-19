@@ -224,7 +224,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
 
   // canvas 템플릿.
   const canvasContent = (
-    content: { position: string; targetRef: React.RefObject<HTMLCanvasElement> }[]
+    content: { position: string; targetRef: React.RefObject<HTMLCanvasElement | null> }[]
   ) => {
     const canvas = content.map((item, idx) => {
       return (

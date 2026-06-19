@@ -4,7 +4,7 @@
 
 ## 기술 스택
 
-- **UI**: React 17 + TypeScript
+- **UI**: React 19 + TypeScript
 - **번들러**: Parcel 2
 - **상태 관리**: Zustand
 - **라우팅**: react-router-dom v6

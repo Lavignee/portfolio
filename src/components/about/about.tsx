@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop, isMobile } from 'react-device-detect';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 import aboutOne from '../../static/images/about-one.jpg';
 import aboutThree from '../../static/images/about-three.jpg';
@@ -23,13 +23,12 @@ interface AboutProps {
 const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
   // 전역 스토어 구독.
   const [currentGsapState, currentButtonDelay] = useStore(
-    (s) => [s.currentGsapState, s.currentButtonDelay],
-    shallow
+    useShallow((s) => [s.currentGsapState, s.currentButtonDelay])
   );
 
   const [nextText, setNextText] = React.useState(true);
   const [aboutAnimationReady, setAboutAnimationReady] = React.useState(false);
-  const savedChangeTarget = React.useRef<ReturnType<typeof setInterval>>();
+  const savedChangeTarget = React.useRef<ReturnType<typeof setInterval>>(undefined);
 
   // gasp 애니메이션 정의.
   const aboutComponentGSAP = () => {

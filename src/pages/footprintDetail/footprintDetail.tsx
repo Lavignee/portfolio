@@ -30,7 +30,7 @@ interface ContentTextProp {
 
 // 슬라이드로 출력할 컨텐츠 템플릿.
 const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: ContentTextProp) => {
-  const summarys: JSX.Element[] = [];
+  const summarys: React.JSX.Element[] = [];
   summary.forEach((item, i) => {
     summarys.push(<span key={item + i}>{item}</span>);
   });
@@ -108,7 +108,7 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
       >
         {content.map((content) => (
           <SwiperSlide key={content.id}>
-            {({ isActive }) => (
+            {({ isActive }: { isActive: boolean }) => (
               <ContentText
                 isActive={isActive}
                 idx={content.id}

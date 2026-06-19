@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
 import { useLocation } from 'react-router-dom';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 import './smoothScroll.scss';
 
@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface SmoothScrollProps {
-  children?: React.ReactChild | React.ReactChild[];
+  children?: React.ReactNode;
 }
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
@@ -30,8 +30,7 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
 
   // 전역 스토어 구독.
   const [currentSmoothTopState, makeScrollState] = useStore(
-    (s) => [s.currentSmoothTopState, s.makeScrollState],
-    shallow
+    useShallow((s) => [s.currentSmoothTopState, s.makeScrollState])
   );
 
   const smoothScroller = React.useRef<HTMLDivElement>(null);

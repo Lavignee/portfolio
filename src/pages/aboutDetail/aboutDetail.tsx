@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 import hashtag from '../../data/dataAbout/hashtagAbout.json';
 import introduce from '../../data/dataAbout/introduceAbout.json';
 
@@ -99,8 +99,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
   // 전역 스토어 구독.
   const [currentGsapState, currentFilmState] = useStore(
-    (s) => [s.currentGsapState, s.currentFilmState],
-    shallow
+    useShallow((s) => [s.currentGsapState, s.currentFilmState])
   );
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
@@ -304,8 +303,8 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   };
 
   // json string 데이터와 툴팁 템플릿 결합하여 컨텐츠 생성.
-  const introduceContent = (target: string, element: JSX.Element[]) => {
-    const combineContent: (string | JSX.Element)[] = target.split('$$');
+  const introduceContent = (target: string, element: React.JSX.Element[]) => {
+    const combineContent: (string | React.JSX.Element)[] = target.split('$$');
     let i = 0;
     combineContent.forEach((item, idx) => {
       if (idx % 2 !== 0) {

@@ -125,7 +125,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   }, [gsapReady, location.pathname, makeSmoothScrollbarforSkill]);
 
   //스크롤 트리거가 변경 된 경우.
-  const changeTarget = React.useCallback((id) => {
+  const changeTarget = React.useCallback((id: number) => {
     // 스크롤 트리거가 감지한 영역 ID로 content를 변경.
     setCurrentTarget(id);
     // content의 text를 숨김.

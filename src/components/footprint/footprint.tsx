@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 import footprint from '../../static/images/footprint.jpg';
 import footprintArrow from '../../static/images/footprint-arrow.svg';
 import footprintCircle from '../../static/images/footprint-circle.svg';
@@ -21,8 +21,7 @@ interface FootprintProps {
 const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
   // 전역 스토어 구독.
   const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useStore(
-    (s) => [s.currentButtonDelay, s.currentScrollLimit, s.currentScrollValue],
-    shallow
+    useShallow((s) => [s.currentButtonDelay, s.currentScrollLimit, s.currentScrollValue])
   );
 
   const footprintCursorRef = React.useRef(null);

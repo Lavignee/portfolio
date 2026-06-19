@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 import './skill.scss';
 
@@ -24,8 +24,7 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
 
   // 전역 스토어 구독.
   const [currentGsapState, currentButtonDelay] = useStore(
-    (s) => [s.currentGsapState, s.currentButtonDelay],
-    shallow
+    useShallow((s) => [s.currentGsapState, s.currentButtonDelay])
   );
 
   const [sliderTrigger, setliderTrigger] = React.useState(false);

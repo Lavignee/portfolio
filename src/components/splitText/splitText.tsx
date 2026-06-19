@@ -31,9 +31,9 @@ const SplitText = ({
   let childrenLength = 0;
   const [willChange, setWillChange] = React.useState(true);
   // const [happen, setHappen] = React.useState<string[]>([]);
-  const [split, setSplit] = React.useState<JSX.Element[]>([]);
-  const splittingTimer = React.useRef<ReturnType<typeof setTimeout>>();
-  const delayTimer = React.useRef<ReturnType<typeof setTimeout>>();
+  const [split, setSplit] = React.useState<React.JSX.Element[]>([]);
+  const splittingTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
+  const delayTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // children으로 들어온 string을 각각 DOM으로 감싸서 배열에 입력.
   const Splitting = React.useCallback(() => {
@@ -95,7 +95,7 @@ const SplitText = ({
   return (
     <div className='split-frame'>
       {noContainer ? (
-        { split }
+        split
       ) : (
         <>
           <div className='origin-size-container'>{children}</div>
