@@ -1,4 +1,3 @@
-// import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
@@ -189,5 +188,4 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   );
 };
 
-// export default memo(withTranslation('translations')(Main));
 export default React.memo(Main);

@@ -2,7 +2,6 @@ import React from 'react';
 
 import './languageSelectors.scss';
 
-import i18n from 'i18next';
 import useStore from '../../store/useStore';
 
 const languages = [
@@ -27,7 +26,6 @@ const LanguageSelectors = () => {
   const changeLanguages = (e: React.MouseEvent<HTMLButtonElement>) => {
     const lang = e.currentTarget.dataset.lang;
     if (!lang) return;
-    i18n.changeLanguage(lang);
     onChangeLanguage(lang);
   };
 
