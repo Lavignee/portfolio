@@ -1,15 +1,14 @@
 # Portfolio
 
-개인 포트폴리오 웹사이트. 커스텀 커서, 스무스 스크롤, 스크롤 기반 애니메이션, 영상→캔버스 변환, 다국어(한국어/영어) 등 인터랙션 중심으로 구성되어 있습니다.
+개인 포트폴리오 웹사이트. 커스텀 커서, 스무스 스크롤, 스크롤 기반 애니메이션, 영상→캔버스 변환 등 인터랙션 중심으로 구성되어 있습니다.
 
 ## 기술 스택
 
-- **UI**: React 19 + TypeScript
+- **UI**: React 19 + TypeScript 5
 - **번들러**: Vite 8 (Rolldown)
 - **상태 관리**: Zustand
 - **라우팅**: react-router-dom v7
-- **애니메이션**: GSAP (ScrollTrigger), smooth-scrollbar, Swiper
-- **다국어**: i18next + react-i18next
+- **애니메이션**: GSAP (ScrollTrigger), smooth-scrollbar, Swiper 12
 - **스타일**: Sass
 - **린트/포맷**: Biome
 - **배포**: Netlify
