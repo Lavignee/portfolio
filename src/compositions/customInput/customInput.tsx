@@ -1,4 +1,3 @@
-import React from 'react';
 import './customInput.scss';
 
 // Props로 받는 타입 및 문자열 interface 정의.
@@ -16,7 +15,7 @@ const CustomInput = ({ type, placeholder, label, design }: CustomInputProps) => 
       <input type={type} placeholder={placeholder} defaultValue={label} />
       {/* <span className='info-text'>test</span> */}
     </div>
-  )
-}
+  );
+};
 
 export default CustomInput;

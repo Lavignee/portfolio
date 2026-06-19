@@ -4,15 +4,15 @@ const CHANGE_SECOND_CLASS_NAME = 'CHANGE_SECOND_CLASS_NAME' as const;
 
 export const changeText = (text: string) => ({
   type: CHANGE_TEXT,
-  text
+  text,
 });
 export const changeFirstClassName = (firstClassName: string) => ({
   type: CHANGE_FIRST_CLASS_NAME,
-  firstClassName
+  firstClassName,
 });
 export const changeSecondClassName = (secondClassName: string) => ({
   type: CHANGE_SECOND_CLASS_NAME,
-  secondClassName
+  secondClassName,
 });
 
 // ReturnType으로 interface 중복없이 작성.
@@ -34,7 +34,7 @@ interface CursorState {
 const initialState: CursorState = {
   text: '',
   firstClassName: '',
-  secondClassName: ''
+  secondClassName: '',
 };
 
 const Cursor = (state: CursorState = initialState, action: CursorAction) => {
@@ -42,21 +42,21 @@ const Cursor = (state: CursorState = initialState, action: CursorAction) => {
     case CHANGE_TEXT:
       return {
         ...state,
-        text: action.text
+        text: action.text,
       };
     case CHANGE_FIRST_CLASS_NAME:
       return {
         ...state,
-        firstClassName: action.firstClassName
+        firstClassName: action.firstClassName,
       };
     case CHANGE_SECOND_CLASS_NAME:
       return {
         ...state,
-        secondClassName: action.secondClassName
+        secondClassName: action.secondClassName,
       };
     default:
       return state;
   }
-}
+};
 
-export default Cursor
+export default Cursor;

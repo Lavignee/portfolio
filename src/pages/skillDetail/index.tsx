@@ -1,1 +1,1 @@
-export { default } from './skillDetail'
+export { default } from './skillDetail';

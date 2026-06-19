@@ -1,5 +1,5 @@
-import React from 'react';
 import './footer.scss';
+
 // import LanguageSelectors from 'components/languageSelectors';
 
 const Footer = () => {
@@ -11,6 +11,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

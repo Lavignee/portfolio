@@ -1,1 +1,1 @@
-export { default } from './scrollValueAnimation'
+export { default } from './scrollValueAnimation';

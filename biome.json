@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!dist/**", "!src/static/**"]
+    "includes": ["**", "!dist", "!src/static"]
   },
   "formatter": {
     "enabled": true,
@@ -33,6 +33,15 @@
       },
       "security": {
         "noDangerouslySetInnerHtml": "warn"
+      },
+      "a11y": {
+        "useButtonType": "warn",
+        "noStaticElementInteractions": "warn",
+        "useKeyWithClickEvents": "warn",
+        "noSvgWithoutTitle": "warn",
+        "useSemanticElements": "warn",
+        "useValidAnchor": "warn",
+        "noLabelWithoutControl": "warn"
       }
     }
   },

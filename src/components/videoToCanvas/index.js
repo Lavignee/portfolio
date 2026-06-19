@@ -1,1 +1,1 @@
-export { default } from './videoToCanvas'
+export { default } from './videoToCanvas';

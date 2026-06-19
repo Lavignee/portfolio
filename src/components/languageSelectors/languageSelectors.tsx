@@ -1,11 +1,11 @@
 import React from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { changeLanguage } from '../../Modules/commonValue';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import './languageSelectors.scss';
 
 import i18n from 'i18next';
-import { RootState } from '../../Modules';
+import type { RootState } from '../../Modules';
 
 const languages = [
   {
@@ -23,10 +23,7 @@ const languages = [
 const LanguageSelectors = () => {
   const dispatch = useDispatch();
   const onChangeLanguage = React.useCallback((lang) => dispatch(changeLanguage(lang)), []);
-  const [language] = useSelector(
-    (state: RootState) => [state.CommonValue.language],
-    shallowEqual
-  );
+  const [language] = useSelector((state: RootState) => [state.CommonValue.language], shallowEqual);
 
   const [currentLang, setCurrentLang] = React.useState('');
   const [LangList, setLangList] = React.useState(false);
@@ -66,7 +63,8 @@ const LanguageSelectors = () => {
                   key={languages.id}
                   className={language === languages.data ? 'hide' : ''}
                   onClick={changeLanguages}
-                  data-lang={languages.data}>
+                  data-lang={languages.data}
+                >
                   {languages.text}
                 </button>
               ))}

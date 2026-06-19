@@ -1,21 +1,21 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { changeGsapState } from '../../Modules/commonValue';
-import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { isDesktop } from 'react-device-detect';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import interest from '../../data/dataSkill/interestSkill.json';
 
-import language from '../../data/dataSkill/languageSkill.json'
-import lib from '../../data/dataSkill/libSkill.json'
-import tool from '../../data/dataSkill/toolSkill.json'
-import interest from '../../data/dataSkill/interestSkill.json'
+import language from '../../data/dataSkill/languageSkill.json';
+import lib from '../../data/dataSkill/libSkill.json';
+import tool from '../../data/dataSkill/toolSkill.json';
+import { changeGsapState } from '../../Modules/commonValue';
 import svg from '../../static/images/icon-svg.json';
 
 import './skillDetail.scss';
 
 import Scrollbar from 'smooth-scrollbar';
-import { RootState } from '../../Modules';
+import type { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,14 +28,20 @@ interface SkillDetailProps {
 const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const gsapReady = React.useCallback((value: boolean) => dispatch(changeGsapState(value)), [dispatch]);
+  const gsapReady = React.useCallback(
+    (value: boolean) => dispatch(changeGsapState(value)),
+    [dispatch]
+  );
 
   // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
+  const [currentGsapState] = useSelector(
+    (state: RootState) => [state.CommonValue.currentGsapState],
+    shallowEqual
+  );
 
   // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
-  let location = useLocation();
-  let navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const lists = React.useRef<string[]>([]);
   const scrollPosition = React.useRef<any>(null);
@@ -109,7 +115,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     // 클릭 된 목록이 현재 목록인지 체크하여,
     if (e.target.dataset.list !== currentUrl) {
       // 다른 경우 해당 url로 화면 다시 호출.
-      navigate('/skill/' + e.target.dataset.list);
+      navigate(`/skill/${e.target.dataset.list}`);
     } else {
       // 같은 경우 해당 목록의 최상단으로 이동.
       currentSkillScroller.scrollTo(0, 0, 600);
@@ -133,21 +139,18 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   }, [gsapReady, location.pathname, makeSmoothScrollbarforSkill]);
 
   //스크롤 트리거가 변경 된 경우.
-  const changeTarget = React.useCallback(
-    (id) => {
-      // 스크롤 트리거가 감지한 영역 ID로 content를 변경.
-      setCurrentTarget(id);
-      // content의 text를 숨김.
-      setOpacity('');
+  const changeTarget = React.useCallback((id) => {
+    // 스크롤 트리거가 감지한 영역 ID로 content를 변경.
+    setCurrentTarget(id);
+    // content의 text를 숨김.
+    setOpacity('');
 
-      // 시간차를 두고 텍스트 출력.
-      const opacityTimer = setTimeout(() => {
-        setOpacity('opacity');
-        clearTimeout(opacityTimer);
-      }, 100);
-    },
-    []
-  );
+    // 시간차를 두고 텍스트 출력.
+    const opacityTimer = setTimeout(() => {
+      setOpacity('opacity');
+      clearTimeout(opacityTimer);
+    }, 100);
+  }, []);
 
   const addToRefs = (el: any) => {
     if (el && !lists.current.includes(el) && currentGsapState) {
@@ -178,7 +181,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
 
   // 스크롤 트리거와 연동된 skew 애니메이션 적용.
   const scrollSkew = () => {
-    let proxy = { skew: 0 },
+    const proxy = { skew: 0 },
       skewSetter = gsap.quickSetter('.list', 'skewY', 'deg'),
       clamp = gsap.utils.clamp(-20, 20);
 
@@ -186,7 +189,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
       scroller: '.skill-list',
 
       onUpdate: (self) => {
-        let skew = clamp(self.getVelocity() / -200);
+        const skew = clamp(self.getVelocity() / -200);
         if (Math.abs(skew) > Math.abs(proxy.skew)) {
           proxy.skew = skew;
           gsap.to(proxy, {
@@ -202,7 +205,13 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   };
 
   // skill 세부 목록을 클릭 시,
-  const clickList = (target: { number: number; id: string; name: string; workmanship: number; summary: string; }) => {
+  const clickList = (target: {
+    number: number;
+    id: string;
+    name: string;
+    workmanship: number;
+    summary: string;
+  }) => {
     // skill 세부 목록의 중앙 영역을 계산.
     const listHeight = scrollPosition.current.clientHeight / 3;
     // skill 세부 목록의 중앙 영역으로 스크롤 이동.
@@ -224,21 +233,22 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
           onClick={(e) => changeList(e)}
           onMouseEnter={() => _onHover(' focus-cursor')}
           onMouseLeave={onListLeave}
-          data-list={targetUrl}>
+          data-list={targetUrl}
+        >
           {text}
         </button>
       </li>
-    )
-  }
+    );
+  };
 
   // skill 세부 목록 및 컨텐츠 템플릿.
   const contents = (contentKind: string) => {
     let content;
     // svg json을 읽어와서 키와 값으로 할당.
-    let svgs = Object.entries(svg)
-    let svgContent = new Map();
-    svgs.forEach(item => {
-      svgContent.set(item[0], item[1])
+    const svgs = Object.entries(svg);
+    const svgContent = new Map();
+    svgs.forEach((item) => {
+      svgContent.set(item[0], item[1]);
     });
 
     // url에 따라 출력할 json 데이터를 매치.
@@ -263,7 +273,8 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
           ref={addToRefs}
           onClick={() => clickList(content)}
           onMouseEnter={() => listHover(content.number)}
-          onMouseLeave={onListLeave}>
+          onMouseLeave={onListLeave}
+        >
           <div className={`inner ${listHoverMotion}`}>
             {svgContent.has(content.id) === false ? (
               <div>{content.name}</div>
@@ -292,13 +303,16 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
           </div>
           <p className={`${opacity}${content[currentTarget].workmanship}`}>
             {content[currentTarget].summary.split('\n').map((item, idx) => {
-              return <span key={idx}>{item}<br /></span>
+              return (
+                <span key={idx}>
+                  {item}
+                  <br />
+                </span>
+              );
             })}
           </p>
         </div>
-        <span className={`back-text ${opacity}`}>
-          {content[currentTarget].name}
-        </span>
+        <span className={`back-text ${opacity}`}>{content[currentTarget].name}</span>
       </>
     );
   };
@@ -314,7 +328,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
 
     // 화면 벗어날 시 스크롤 트리거 및 커서 초기화.
     return () => {
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((item) => {
         item.kill();
       });
@@ -359,9 +373,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
           </div>
 
           <div className='col-8 off-4 col-l-9 off-l-3 pl-pr-none skill-detail-content-frame'>
-            <div className='skill-detail-content'>
-              {contents('detail')}
-            </div>
+            <div className='skill-detail-content'>{contents('detail')}</div>
           </div>
         </div>
       </div>

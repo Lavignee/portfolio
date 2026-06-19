@@ -14,55 +14,55 @@ const SPLIT_TEXT_START = 'SPLIT_TEXT_START' as const;
 
 export const changeLanguage = (language: string) => ({
   type: CHANGE_LANGUAGE,
-  language
+  language,
 });
 export const changeContactState = (currentContactState: boolean) => ({
   type: CONTACT_STATE,
-  currentContactState
+  currentContactState,
 });
 export const changeContactStateFalse = (currentContactState: boolean) => ({
   type: CONTACT_STATE_FALSE,
-  currentContactState
+  currentContactState,
 });
 export const changeButtonDelay = (currentButtonDelay: boolean) => ({
   type: BUTTON_DELAY,
-  currentButtonDelay
+  currentButtonDelay,
 });
 export const changeGnbState = (currentGnbState: boolean) => ({
   type: GNB_STATE,
-  currentGnbState
+  currentGnbState,
 });
 export const changeSwitchAnimation = (currentSwitchAnimation: boolean) => ({
   type: SWITCH_ANIMATION,
-  currentSwitchAnimation
+  currentSwitchAnimation,
 });
 export const changeFilmState = (currentFilmState: boolean) => ({
   type: FIRM_STATE,
-  currentFilmState
+  currentFilmState,
 });
 export const smoothTop = (currentSmoothTopState: boolean) => ({
   type: SMOOTH_TOP,
-  currentSmoothTopState
+  currentSmoothTopState,
 });
 export const makeSmoothScroll = (makeScrollState: boolean) => ({
   type: MAKE_SCROLL_STATE,
-  makeScrollState
+  makeScrollState,
 });
 export const checkScrollValue = (currentScrollValue: number) => ({
   type: CURRENT_SCROLL_VALUE,
-  currentScrollValue
+  currentScrollValue,
 });
 export const checkScrollLimit = (currentScrollLimit: number) => ({
   type: CURRENT_SCROLL_LIMIT,
-  currentScrollLimit
+  currentScrollLimit,
 });
 export const changeGsapState = (currentGsapState: boolean) => ({
   type: GSAP_READY,
-  currentGsapState
+  currentGsapState,
 });
 export const splitTextStart = (currentSplitText: string) => ({
   type: SPLIT_TEXT_START,
-  currentSplitText
+  currentSplitText,
 });
 
 // ReturnType으로 interface 중복없이 작성.
@@ -121,7 +121,7 @@ const initialState: CommonState = {
   currentScrollValue: 0,
   currentScrollLimit: 0,
   currentGsapState: false,
-  currentSplitText: ''
+  currentSplitText: '',
 };
 
 const CommonValue = (state: CommonState = initialState, action: CommonAction) => {
@@ -129,71 +129,71 @@ const CommonValue = (state: CommonState = initialState, action: CommonAction) =>
     case CHANGE_LANGUAGE:
       return {
         ...state,
-        language: action.language
+        language: action.language,
       };
     case CONTACT_STATE:
       return {
         ...state,
-        currentContactState: !state.currentContactState
+        currentContactState: !state.currentContactState,
       };
     case CONTACT_STATE_FALSE:
       return {
         ...state,
-        currentContactState: action.currentContactState
+        currentContactState: action.currentContactState,
       };
     case BUTTON_DELAY:
       return {
         ...state,
-        currentButtonDelay: action.currentButtonDelay
+        currentButtonDelay: action.currentButtonDelay,
       };
     case GNB_STATE:
       return {
         ...state,
-        currentGnbState: !state.currentGnbState
+        currentGnbState: !state.currentGnbState,
       };
     case SWITCH_ANIMATION:
       return {
         ...state,
-        currentSwitchAnimation: action.currentSwitchAnimation
+        currentSwitchAnimation: action.currentSwitchAnimation,
       };
     case FIRM_STATE:
       return {
         ...state,
-        currentFilmState: action.currentFilmState
+        currentFilmState: action.currentFilmState,
       };
     case SMOOTH_TOP:
       return {
         ...state,
-        currentSmoothTopState: action.currentSmoothTopState
+        currentSmoothTopState: action.currentSmoothTopState,
       };
     case MAKE_SCROLL_STATE:
       return {
         ...state,
-        makeScrollState: action.makeScrollState
+        makeScrollState: action.makeScrollState,
       };
     case CURRENT_SCROLL_VALUE:
       return {
         ...state,
-        currentScrollValue: action.currentScrollValue
+        currentScrollValue: action.currentScrollValue,
       };
     case CURRENT_SCROLL_LIMIT:
       return {
         ...state,
-        currentScrollLimit: action.currentScrollLimit
+        currentScrollLimit: action.currentScrollLimit,
       };
     case GSAP_READY:
       return {
         ...state,
-        currentGsapState: action.currentGsapState
+        currentGsapState: action.currentGsapState,
       };
     case SPLIT_TEXT_START:
       return {
         ...state,
-        currentSplitText: action.currentSplitText
+        currentSplitText: action.currentSplitText,
       };
     default:
       return state;
   }
-}
+};
 
-export default CommonValue
+export default CommonValue;

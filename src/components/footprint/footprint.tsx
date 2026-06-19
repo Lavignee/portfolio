@@ -1,16 +1,15 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
-
-import footprintCircle from '../../static/images/footprint-circle.svg';
-import footprintArrow from '../../static/images/footprint-arrow.svg';
+import React from 'react';
+import { isDesktop } from 'react-device-detect';
+import { shallowEqual, useSelector } from 'react-redux';
 import footprint from '../../static/images/footprint.jpg';
+import footprintArrow from '../../static/images/footprint-arrow.svg';
+import footprintCircle from '../../static/images/footprint-circle.svg';
 
 import './footprint.scss';
 
+import type { RootState } from '../../Modules';
 import Footer from '../footer';
-import { RootState } from '../../Modules';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface FootprintProps {
@@ -21,7 +20,14 @@ interface FootprintProps {
 
 const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
   // redux useSelector 정의.
-  const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useSelector((state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentScrollLimit, state.CommonValue.currentScrollValue], shallowEqual);
+  const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useSelector(
+    (state: RootState) => [
+      state.CommonValue.currentButtonDelay,
+      state.CommonValue.currentScrollLimit,
+      state.CommonValue.currentScrollValue,
+    ],
+    shallowEqual
+  );
 
   const footprintCursorRef = React.useRef(null);
   const [clipPathReady, setClipPathReady] = React.useState(false);
@@ -30,7 +36,9 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
   const footprintMoveCircle = (e: React.MouseEvent) => {
     gsap.to(footprintCursorRef.current, {
       duration: 0.3,
-      css: { clipPath: `circle(20% at ${e.pageX}px ${e.pageY - (window.innerHeight / 2 + (+currentScrollLimit - +currentScrollValue))}px)` },
+      css: {
+        clipPath: `circle(20% at ${e.pageX}px ${e.pageY - (window.innerHeight / 2 + (+currentScrollLimit - +currentScrollValue))}px)`,
+      },
     });
   };
 
@@ -41,10 +49,12 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
         className='container-fluid footprint-section'
         onMouseEnter={isDesktop ? () => setClipPathReady(true) : undefined}
         onMouseMove={isDesktop ? (e) => footprintMoveCircle(e) : undefined}
-        onMouseLeave={isDesktop ? () => setClipPathReady(false) : undefined}>
+        onMouseLeave={isDesktop ? () => setClipPathReady(false) : undefined}
+      >
         <div
           className={`footprint-image-mask${clipPathReady ? ' will-change' : ''}`}
-          ref={footprintCursorRef}>
+          ref={footprintCursorRef}
+        >
           {isDesktop && <img src={footprint} alt='footprint' />}
         </div>
 
@@ -64,12 +74,7 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
             <h2>Footprint</h2>
             <span>프로젝트 / 경력사항 / 외부수주</span>
             <div className='footprint-arrow-area'>
-              <img
-                width='100%'
-                height='100%'
-                src={footprintArrow}
-                alt='footprint design arrow'
-              />
+              <img width='100%' height='100%' src={footprintArrow} alt='footprint design arrow' />
             </div>
           </div>
 
@@ -77,7 +82,8 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
             className={`link-button${currentButtonDelay ? ' delay' : ''}`}
             onMouseEnter={() => _onHover(' go-cursor')}
             onMouseLeave={() => _onLeave()}
-            onClick={() => _onClick('/footprint')}></div>
+            onClick={() => _onClick('/footprint')}
+          ></div>
         </div>
 
         <div className='footprint-back-text'>FOOTPRINT</div>

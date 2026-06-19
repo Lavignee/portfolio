@@ -11,21 +11,25 @@ interface TooltipProps {
 }
 
 const Tooltip = ({ _onHover, _onLeave, children, info }: TooltipProps) => {
-  const [tooltipState, setTooltipState] = React.useState(false)
+  const [tooltipState, setTooltipState] = React.useState(false);
   const hoverTooltip = () => {
-    _onHover(' pagination-cursor')
+    _onHover(' pagination-cursor');
     setTooltipState(true);
-  }
+  };
   const leaveTooltip = () => {
     _onLeave();
     setTooltipState(false);
-  }
+  };
 
   return (
     <span className='tooltip-area' onMouseEnter={hoverTooltip} onMouseLeave={leaveTooltip}>
-      {tooltipState && <span className='tooltip-frame' onMouseEnter={hoverTooltip} ><span>{info}</span></span>}
+      {tooltipState && (
+        <span className='tooltip-frame' onMouseEnter={hoverTooltip}>
+          <span>{info}</span>
+        </span>
+      )}
       {children}
     </span>
-  )
-}
+  );
+};
 export default Tooltip;

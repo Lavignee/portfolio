@@ -1,18 +1,18 @@
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
-  smoothTop,
   changeContactState,
   changeContactStateFalse,
   changeGnbState,
+  smoothTop,
 } from '../../Modules/commonValue';
-import { useLocation } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import './header.scss';
 
-import { RootState } from '../../Modules';
+import type { RootState } from '../../Modules';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface HeaderProps {
@@ -33,19 +33,26 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
   const onChangeGnbState = () => dispatch(changeGnbState(false));
 
   // redux useSelector 정의.
-  const [currentButtonDelay, currentSmoothTopState, currentContactState, currentGnbState] = useSelector((state: RootState) => [state.CommonValue.currentButtonDelay, state.CommonValue.currentSmoothTopState, state.CommonValue.currentContactState, state.CommonValue.currentGnbState], shallowEqual);
+  const [currentButtonDelay, currentSmoothTopState, currentContactState, currentGnbState] =
+    useSelector(
+      (state: RootState) => [
+        state.CommonValue.currentButtonDelay,
+        state.CommonValue.currentSmoothTopState,
+        state.CommonValue.currentContactState,
+        state.CommonValue.currentGnbState,
+      ],
+      shallowEqual
+    );
 
   // react-router-dom으로 url 확인.
-  let location = useLocation();
+  const location = useLocation();
 
   const [blur, setBlur] = React.useState('');
 
   // 로고 마우스 오버 시,
   const onlogoHover = () => {
     // home 화면에서는 top text 출력 이외 화면에서는 home text 출력.
-    location.pathname === '/'
-      ? _onHover(' bl-cursor', 'top?')
-      : _onHover(' bl-cursor', 'Home?');
+    location.pathname === '/' ? _onHover(' bl-cursor', 'top?') : _onHover(' bl-cursor', 'Home?');
   };
 
   // 로고 클릭 시,
@@ -103,7 +110,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
     _onLeave('');
   };
 
-  // gnb 메뉴 목록에서 contact 클릭 시, 
+  // gnb 메뉴 목록에서 contact 클릭 시,
   const gnbContact = () => {
     // contact 화면 호출.
     onChangeContactState();
@@ -113,7 +120,6 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
 
   // gnb 메뉴 목록들의 애니메이션은 리랜더 영향을 피하기 위해 함수 리턴으로 정의.
   const gnbMenu = (_onClick: (e: React.MouseEvent) => void, text: string) => {
-
     // gnb 메뉴 목록에 마우스 오버 시 커서 변경.
     const gnbListHover = () => {
       _onHover(' go-cursor');
@@ -126,12 +132,14 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
           className='link-button'
           onClick={_onClick}
           onMouseEnter={gnbListHover}
-          onMouseLeave={onHeaderLeave}>
-          {text}<span>{text}</span>
+          onMouseLeave={onHeaderLeave}
+        >
+          {text}
+          <span>{text}</span>
         </button>
       </li>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -151,7 +159,8 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
               height='36'
               viewBox='0 0 58 36'
               fill='none'
-              xmlns='http://www.w3.org/2000/svg'>
+              xmlns='http://www.w3.org/2000/svg'
+            >
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
@@ -183,7 +192,8 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
                 height='132'
                 viewBox='0 0 133 132'
                 fill='none'
-                xmlns='http://www.w3.org/2000/svg'>
+                xmlns='http://www.w3.org/2000/svg'
+              >
                 <path
                   d='M61.1004 17.3L59.7004 10.9L57.7004 18.1L55.3004 18.6L50.5004 12.9L51.9004 19.3L49.4004 19.8L47.4004 10.6L50.7004 9.99998L55.9004 16.1L58.1004 8.29998L61.5004 7.59998L63.5004 16.8L61.1004 17.3Z'
                   fill='#1b1b1b'
@@ -200,10 +210,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
                   d='M101.099 28.2C100.699 28.4 100.199 28.5 99.5994 28.5C98.9994 28.5 98.3994 28.3 97.7994 28.1C97.0994 27.8 96.3994 27.4 95.6994 26.9C94.9994 26.4 94.2994 25.8 93.8994 25.2C93.3994 24.6 93.0994 24.1 92.8994 23.6C92.6994 23.1 92.5994 22.6 92.6994 22.1C92.7994 21.6 92.8994 21.2 93.1994 20.8L96.8994 15.8L98.8994 17.3L95.7994 21.6C95.5994 21.9 95.4994 22.1 95.3994 22.4C95.2994 22.7 95.2994 23 95.2994 23.3C95.3994 23.6 95.4994 23.9 95.7994 24.3C95.9994 24.6 96.3994 25 96.8994 25.4C97.3994 25.8 97.8994 26 98.2994 26.2C98.6994 26.3 98.9994 26.4 99.2994 26.3C99.5994 26.2 99.8994 26.2 100.099 26C100.299 25.8 100.499 25.6 100.699 25.3L103.799 21L105.799 22.5L102.099 27.5C101.899 27.7 101.599 28 101.099 28.2Z'
                   fill='#1b1b1b'
                 />
-                <path
-                  d='M108 33.5L110 32L111.6 34.1L109.6 35.6L108 33.5Z'
-                  fill='#1b1b1b'
-                />
+                <path d='M108 33.5L110 32L111.6 34.1L109.6 35.6L108 33.5Z' fill='#1b1b1b' />
                 <path
                   d='M114.8 55.2L121.1 53.1L113.7 51.8L112.9 49.5L118.1 44.1L111.8 46.2L111 43.8L119.9 40.9L121 44.2L115.4 50L123.3 51.4L124.4 54.7L115.5 57.6L114.8 55.2Z'
                   fill='#1b1b1b'
@@ -285,7 +292,8 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
                 className='gnb-close-button'
                 onClick={onGnbButtonClick(' bl-cursor', 'Open?')}
                 onMouseEnter={gnbButtonHover}
-                onMouseLeave={onHeaderLeave}>
+                onMouseLeave={onHeaderLeave}
+              >
                 {/* TODO: "@parcel/transformer-svg-react" Bug로 인해 svg 수동 호출. 추후 수정 필요. */}
                 <svg
                   className={`close-img${currentContactState ? ' invert' : ''}`}
@@ -293,7 +301,8 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
                   height='132'
                   viewBox='0 0 133 132'
                   fill='none'
-                  xmlns='http://www.w3.org/2000/svg'>
+                  xmlns='http://www.w3.org/2000/svg'
+                >
                   <path
                     d='M58.5001 17.4C58.2001 17.6 57.9001 17.8 57.6001 17.9C57.3001 18.1 56.9001 18.2 56.6001 18.4C56.2001 18.5 55.8001 18.7 55.4001 18.8C54.5001 19 53.6001 19.2 52.8001 19.2C52.0001 19.2 51.2001 19.1 50.6001 18.8C49.9001 18.6 49.4001 18.2 48.9001 17.7C48.4001 17.2 48.1001 16.5 47.9001 15.7C47.7001 14.9 47.7001 14.2 47.8001 13.5C47.9001 12.8 48.3001 12.2 48.7001 11.7C49.2001 11.2 49.7001 10.7 50.5001 10.3C51.2001 9.89996 52.0001 9.59996 53.0001 9.29996C53.2001 9.19996 53.6001 9.09996 54.0001 8.99996C54.4001 8.89996 54.8001 8.89996 55.1001 8.89996C55.5001 8.89996 55.8001 8.89996 56.2001 8.89996C56.5001 8.89996 56.9001 8.99996 57.3001 8.99996L57.9001 11.2C57.6001 11.2 57.3001 11.1 57.0001 11C56.7001 10.9 56.3001 10.9 56.0001 10.9C55.7001 10.9 55.2001 10.9 54.8001 10.9C54.4001 10.9 53.9001 11 53.4001 11.2C52.6001 11.4 52.0001 11.7 51.5001 12C51.0001 12.3 50.7001 12.6 50.5001 13C50.3001 13.3 50.1001 13.7 50.1001 14.1C50.1001 14.5 50.1001 14.8 50.2001 15.2C50.3001 15.4 50.4001 15.7 50.5001 15.9C50.6001 16.1 50.8001 16.3 50.9001 16.5C51.1001 16.7 51.3001 16.8 51.5001 16.9C51.7001 17 52.0001 17.1 52.4001 17.2C52.7001 17.2 53.1001 17.3 53.5001 17.2C53.9001 17.2 54.4001 17.1 54.9001 16.9C55.4001 16.8 55.8001 16.6 56.2001 16.4C56.6001 16.2 56.9001 16 57.2001 15.8C57.5001 15.6 57.8001 15.4 58.0001 15.2C58.2001 15 58.5001 14.8 58.7001 14.6L59.3001 16.8C59.1001 17 58.8001 17.3 58.5001 17.4Z'
                     fill='#efefef'
@@ -402,9 +411,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
 
         <div className={`menu-frame${currentGnbState ? ' view' : ''}`}>
           <div className='menu-content'>
-            <ul className='first-content'>
-              {gnbMenu(() => listClick('/'), 'HOME')}
-            </ul>
+            <ul className='first-content'>{gnbMenu(() => listClick('/'), 'HOME')}</ul>
 
             <ul className='center-content'>
               {gnbMenu(() => listClick('/about'), 'ABOUT')}
@@ -413,9 +420,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
             </ul>
 
             {/* 헤드헌터의 잦은 요구로 연락처 관련 내용 숨김. */}
-            <ul className='last-content'>
-              {gnbMenu(() => gnbContact(), 'CONTACT')}
-            </ul>
+            <ul className='last-content'>{gnbMenu(() => gnbContact(), 'CONTACT')}</ul>
           </div>
         </div>
       </div>

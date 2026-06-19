@@ -1,1 +1,1 @@
-export { default } from './textSlider'
+export { default } from './textSlider';

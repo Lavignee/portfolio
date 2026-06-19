@@ -1,15 +1,15 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart, changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
 // import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { changeGsapState, makeSmoothScroll, splitTextStart } from '../../Modules/commonValue';
 
 import './main.scss';
 
-import VideoToCanvas from '../videoToCanvas';
+import type { RootState } from '../../Modules';
 import SplitText from '../splitText';
-import { RootState } from '../../Modules';
+import VideoToCanvas from '../videoToCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,18 +31,23 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
 
   // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual
+  const [currentGsapState] = useSelector(
+    (state: RootState) => [state.CommonValue.currentGsapState],
+    shallowEqual
   );
   const [videoReady, setVideoReady] = React.useState(false);
   const [canvasReady, setCanvasReady] = React.useState(true);
 
   // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
-  const delaySplit = React.useCallback((target: string) => {
-    const timeOut = setTimeout(() => {
-      target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
-      clearTimeout(timeOut);
-    }, 0);
-  }, [onScrollIntro]);
+  const delaySplit = React.useCallback(
+    (target: string) => {
+      const timeOut = setTimeout(() => {
+        target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
+        clearTimeout(timeOut);
+      }, 0);
+    },
+    [onScrollIntro]
+  );
 
   // 스크롤 트리거 설정.
   const mainComponentGSAP = React.useCallback(() => {
@@ -62,9 +67,9 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         y: -300,
         modifiers: {
           y: (y) => {
-            y = parseInt(y);
+            y = parseInt(y, 10);
             var newY = y.toFixed(0);
-            return newY + 'px';
+            return `${newY}px`;
           },
         },
         scrollTrigger: canvasTrigger,
@@ -76,9 +81,9 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         x: -50,
         modifiers: {
           x: (x) => {
-            x = parseInt(x);
+            x = parseInt(x, 10);
             var newX = x.toFixed(0);
-            return newX + 'px';
+            return `${newX}px`;
           },
         },
         scrollTrigger: canvasTrigger,
@@ -90,9 +95,9 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         x: 50,
         modifiers: {
           x: (x) => {
-            x = parseInt(x);
+            x = parseInt(x, 10);
             var newX = x.toFixed(0);
-            return newX + 'px';
+            return `${newX}px`;
           },
         },
         scrollTrigger: canvasTrigger,
@@ -160,7 +165,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
 
     return () => {
       onScrollIntro('');
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill();
       });
@@ -172,12 +177,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       <div className='main-background'>
         <div className='background'></div>
         {/* Canvas 영역. */}
-        <VideoToCanvas
-          src={src640}
-          resolX={640}
-          resolY={360}
-          canvasReady={canvasReady}
-        />
+        <VideoToCanvas src={src640} resolX={640} resolY={360} canvasReady={canvasReady} />
       </div>
 
       <div className='main-content-frame'>
@@ -188,7 +188,8 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
           <div
             className='main-text'
             onMouseEnter={() => _onHover(' reverse-cursor')}
-            onMouseLeave={() => _onLeave()}>
+            onMouseLeave={() => _onLeave()}
+          >
             <span>FRONT - END DEVELOPER</span>
             <p>Doyoung Lee</p>
           </div>
@@ -198,21 +199,11 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitText
-                animation={'up'}
-                setTime={5}
-                scroll={'intro'}
-                index={'int'}
-              >
+              <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'}>
                 I've been a front developer for 4 years.
               </SplitText>
 
-              <SplitText
-                animation={'up'}
-                setTime={5}
-                scroll={'intro2'}
-                index={'intT'}
-              >
+              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'intT'}>
                 This is the portfolio that introduces me for the first time.
               </SplitText>
             </div>

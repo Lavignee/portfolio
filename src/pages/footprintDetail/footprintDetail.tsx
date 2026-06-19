@@ -1,13 +1,12 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { makeSmoothScroll } from '../../Modules/commonValue';
-import { EffectFade, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import career from '../../data/dataFootprint/careerFootprint.json'
-import project from '../../data/dataFootprint/projectFootprint.json'
+import React from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { EffectFade, Navigation, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import career from '../../data/dataFootprint/careerFootprint.json';
+import project from '../../data/dataFootprint/projectFootprint.json';
+import { makeSmoothScroll } from '../../Modules/commonValue';
 
 import './footprintDetail.scss';
 import 'swiper/swiper.scss';
@@ -16,7 +15,7 @@ import 'swiper/modules/pagination/pagination.scss';
 import 'swiper/modules/effect-fade/effect-fade.scss';
 
 import TextSlider from '../../components/textSlider';
-import { RootState } from '../../Modules';
+import type { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,38 +31,41 @@ interface ContentTextProp {
 }
 
 // 슬라이드로 출력할 컨텐츠 템플릿.
-const ContentText = ({
-  isActive,
-  idx,
-  keyword,
-  title,
-  date,
-  summary,
-  text,
-}: ContentTextProp) => {
+const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: ContentTextProp) => {
   const summarys: JSX.Element[] = [];
-  summary.forEach((item, i) =>
-    summarys.push(<span key={item + i}>{item}</span>)
-  );
+  summary.forEach((item, i) => {
+    summarys.push(<span key={item + i}>{item}</span>);
+  });
   return (
     <div key={idx} className={`content-frame${isActive ? ' active' : ''}`}>
       <ul className='content'>
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
-        <li className='date'>{date && date.split('\n').map((item, idx) => {
-          return <React.Fragment key={idx}>{item}<br /></React.Fragment>
-        })}</li>
+        <li className='date'>
+          {date?.split('\n').map((item, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                {item}
+                <br />
+              </React.Fragment>
+            );
+          })}
+        </li>
         <li className='summarys division'>
           <div className='line'></div>
           {summarys}
         </li>
         <li>
-          {text && text.split('\n').map((item, idx) => {
-            return <p key={idx}>{item}<br /></p>
+          {text?.split('\n').map((item, idx) => {
+            return (
+              <p key={idx}>
+                {item}
+                <br />
+              </p>
+            );
           })}
         </li>
       </ul>
-
     </div>
   );
 };
@@ -77,20 +79,29 @@ interface FootprintDetailProps {
 const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  const makeScroll = React.useCallback(
+    (value: boolean) => dispatch(makeSmoothScroll(value)),
+    [dispatch]
+  );
 
   // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
+  const [currentGsapState] = useSelector(
+    (state: RootState) => [state.CommonValue.currentGsapState],
+    shallowEqual
+  );
 
   // 슬라이더 템플릿.
-  const sliderContent = (content: {
-    id: number;
-    keyword: string;
-    title: string;
-    date: string;
-    summary: string[];
-    text: string
-  }[], kind: string) => {
+  const sliderContent = (
+    content: {
+      id: number;
+      keyword: string;
+      title: string;
+      date: string;
+      summary: string[];
+      text: string;
+    }[],
+    kind: string
+  ) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
@@ -102,8 +113,9 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }}
-        pagination={{ clickable: true, el: '.swiper-pagination' }}>
-        {content.map(content => (
+        pagination={{ clickable: true, el: '.swiper-pagination' }}
+      >
+        {content.map((content) => (
           <SwiperSlide key={content.id}>
             {({ isActive }) => (
               <ContentText
@@ -121,20 +133,23 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
         <div
           className={`swiper-pagination ${kind}-pagination`}
           onMouseEnter={() => _onHover(' pagination-cursor')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
         <div
           className='swiper-button-next'
           onMouseEnter={() => _onHover(' bl-cursor', 'past')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
         <div
           className='swiper-button-prev'
           onMouseEnter={() => _onHover(' bl-cursor', 'recent')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
       </Swiper>
     );
   };
 
-  // 폭이 좁은 화면에서 스크롤 트리거 동작. 
+  // 폭이 좁은 화면에서 스크롤 트리거 동작.
   const FootprintDetailGsap = () => {
     ScrollTrigger.matchMedia({
       '(min-width: 985px)': () => {
@@ -205,7 +220,7 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
 
     return () => {
       ScrollTrigger.clearMatchMedia();
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill(true);
       });

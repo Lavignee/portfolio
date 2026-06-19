@@ -1,13 +1,13 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import './contentSwitcher.scss';
 
-import Home from '../../pages/home';
 import AboutDetail from '../../pages/aboutDetail';
-import SkillDetail from '../../pages/skillDetail';
 import FootprintDetail from '../../pages/footprintDetail';
+import Home from '../../pages/home';
 import NotFound from '../../pages/notFound';
+import SkillDetail from '../../pages/skillDetail';
 
 // TODO: 추후 스켈레톤 작업하기.
 // const Home = React.lazy(() => import('../../pages/home'));
@@ -31,10 +31,7 @@ const ContentSwitcher = ({ _onHover, _onClick, _onLeave }: ContentSwitcherProps)
           path='/'
           element={<Home _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} />}
         />
-        <Route
-          path='/about'
-          element={<AboutDetail _onHover={_onHover} _onLeave={_onLeave} />}
-        />
+        <Route path='/about' element={<AboutDetail _onHover={_onHover} _onLeave={_onLeave} />} />
         <Route
           path='/skill/:list'
           element={<SkillDetail _onHover={_onHover} _onLeave={_onLeave} />}

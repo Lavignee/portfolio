@@ -1,43 +1,61 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  changeGsapState,
-  smoothTop,
-  makeSmoothScroll,
-  checkScrollValue,
-  checkScrollLimit,
-} from '../../Modules/commonValue';
-import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { isDesktop } from 'react-device-detect';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import {
+  changeGsapState,
+  checkScrollLimit,
+  checkScrollValue,
+  makeSmoothScroll,
+  smoothTop,
+} from '../../Modules/commonValue';
 
 import './smoothScroll.scss';
 
 import Scrollbar from 'smooth-scrollbar';
-import { RootState } from '../../Modules';
+import type { RootState } from '../../Modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface SmoothScrollProps {
-  children?: | React.ReactChild | React.ReactChild[];
+  children?: React.ReactChild | React.ReactChild[];
 }
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
   // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
-  let location = useLocation();
+  const location = useLocation();
 
   // redux dispatch 정의.
   const dispatch = useDispatch();
-  const gsapReady = React.useCallback((value: boolean) => dispatch(changeGsapState(value)), [dispatch]);
-  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  const checkScroll = React.useCallback((value: number) => dispatch(checkScrollValue(value)), [dispatch]);
-  const checkLimit = React.useCallback((value: number) => dispatch(checkScrollLimit(value)), [dispatch]);
+  const gsapReady = React.useCallback(
+    (value: boolean) => dispatch(changeGsapState(value)),
+    [dispatch]
+  );
+  const makeScroll = React.useCallback(
+    (value: boolean) => dispatch(makeSmoothScroll(value)),
+    [dispatch]
+  );
+  const checkScroll = React.useCallback(
+    (value: number) => dispatch(checkScrollValue(value)),
+    [dispatch]
+  );
+  const checkLimit = React.useCallback(
+    (value: number) => dispatch(checkScrollLimit(value)),
+    [dispatch]
+  );
   const onSmoothTop = React.useCallback((value: boolean) => dispatch(smoothTop(value)), [dispatch]);
 
   // redux useSelector 정의.
-  const [currentSmoothTopState, makeScrollState] = useSelector((state: RootState) => [state.CommonValue.currentSmoothTopState, state.CommonValue.makeScrollState], shallowEqual);
+  const [currentSmoothTopState, makeScrollState] = useSelector(
+    (state: RootState) => [
+      state.CommonValue.currentSmoothTopState,
+      state.CommonValue.makeScrollState,
+    ],
+    shallowEqual
+  );
 
   const smoothScroller = React.useRef<HTMLDivElement>(null);
   const smoothScrollTarget = React.useRef<Scrollbar | null>(null);
@@ -104,7 +122,10 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
   }, [currentScroller, currentSmoothTopState, onSmoothTop]);
 
   return (
-    <div className={`smooth-scroll-frame${location.pathname === '/footprint' ? ' opacity-none' : ''}`} ref={smoothScroller}>
+    <div
+      className={`smooth-scroll-frame${location.pathname === '/footprint' ? ' opacity-none' : ''}`}
+      ref={smoothScroller}
+    >
       <div>{children}</div>
     </div>
   );
