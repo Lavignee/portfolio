@@ -1,10 +1,9 @@
-import React from 'react';
 import './home.scss';
 
-import Main from '../../components/main';
 import About from '../../components/about';
-import Skill from '../../components/skill';
 import Footprint from '../../components/footprint';
+import Main from '../../components/main';
+import Skill from '../../components/skill';
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface HomeProps {

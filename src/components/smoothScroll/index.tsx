@@ -1,1 +1,1 @@
-export { default } from './smoothScroll'
+export { default } from './smoothScroll';

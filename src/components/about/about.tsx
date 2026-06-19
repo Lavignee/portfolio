@@ -1,15 +1,15 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { isDesktop, isMobile } from 'react-device-detect';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { isDesktop, isMobile } from 'react-device-detect';
+import { useShallow } from 'zustand/react/shallow';
 
 import aboutOne from '../../static/images/about-one.jpg';
-import aboutTwo from '../../static/images/about-two.jpg';
 import aboutThree from '../../static/images/about-three.jpg';
+import aboutTwo from '../../static/images/about-two.jpg';
 
 import './about.scss';
-import { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,12 +21,14 @@ interface AboutProps {
 }
 
 const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
-  // redux useSelector 정의.
-  const [currentGsapState, currentButtonDelay] = useSelector((state: RootState) => [state.CommonValue.currentGsapState, state.CommonValue.currentButtonDelay], shallowEqual);
+  // 전역 스토어 구독.
+  const [currentGsapState, currentButtonDelay] = useStore(
+    useShallow((s) => [s.currentGsapState, s.currentButtonDelay])
+  );
 
   const [nextText, setNextText] = React.useState(true);
   const [aboutAnimationReady, setAboutAnimationReady] = React.useState(false);
-  const savedChangeTarget = React.useRef<any>(null);
+  const savedChangeTarget = React.useRef<ReturnType<typeof setInterval>>(undefined);
 
   // gasp 애니메이션 정의.
   const aboutComponentGSAP = () => {
@@ -77,58 +79,68 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
 
     // 슬라이드 텍스트 그림자 설정.
     const changeTextParseIntModifiers = {
-      y: (y: any) => {
-        y = parseInt(y);
-        var newY = y.toFixed(0);
-        return newY + 'px';
+      y: (y: string) => {
+        const newY = parseInt(y, 10).toFixed(0);
+        return `${newY}px`;
       },
     };
 
     // 어바웃 타이틀 그림자 설정.
     const yPercentParseIntModifiers = {
-      y: (y: any) => {
-        y = parseInt(y);
-        var newY = y.toFixed(0);
-        return newY + '%';
+      y: (y: string) => {
+        const newY = parseInt(y, 10).toFixed(0);
+        return `${newY}%`;
       },
     };
 
     // 어바웃 이미지 설정.
-    gsap.fromTo('.two', {
-      opacity: 0,
-    }, {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: '.two',
-        start: 'top+=30% bottom',
-        end: 'bottom bottom',
-        scrub: 1,
+    gsap.fromTo(
+      '.two',
+      {
+        opacity: 0,
       },
-    });
+      {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: '.two',
+          start: 'top+=30% bottom',
+          end: 'bottom bottom',
+          scrub: 1,
+        },
+      }
+    );
 
-    gsap.fromTo('.about-side-image', {
-      opacity: 0,
-    }, {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: '.about-side-image',
-        start: 'top+=80% bottom',
-        end: 'bottom+=80% bottom',
-        scrub: 1,
+    gsap.fromTo(
+      '.about-side-image',
+      {
+        opacity: 0,
       },
-    });
+      {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: '.about-side-image',
+          start: 'top+=80% bottom',
+          end: 'bottom+=80% bottom',
+          scrub: 1,
+        },
+      }
+    );
 
-    gsap.fromTo('.two img', {
-      yPercent: 5,
-    }, {
-      yPercent: -5,
-      scrollTrigger: {
-        trigger: '.about-image-frame',
-        start: 'top center',
-        end: 'bottom center',
-        scrub: 1,
+    gsap.fromTo(
+      '.two img',
+      {
+        yPercent: 5,
       },
-    });
+      {
+        yPercent: -5,
+        scrollTrigger: {
+          trigger: '.about-image-frame',
+          start: 'top center',
+          end: 'bottom center',
+          scrub: 1,
+        },
+      }
+    );
 
     // 슬라이드 텍스트 애니메이션 동작 여부.
     gsap.to('.text-animation-frame', {
@@ -145,164 +157,244 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
 
     // 모어 버튼 그림자 설정.
     if (isDesktop) {
-      gsap.fromTo('.shadow-inset', {
-        boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
-      }, {
-        boxShadow: 'inset 0 -1.5rem 0.7rem rgba(0, 0, 0, 0.1)',
-        scrollTrigger: aboutDetailButtonBottomTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-inset',
+        {
+          boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
+        },
+        {
+          boxShadow: 'inset 0 -1.5rem 0.7rem rgba(0, 0, 0, 0.1)',
+          scrollTrigger: aboutDetailButtonBottomTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-inset-deep', {
-        boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
-      }, {
-        boxShadow: 'inset 0 -1rem 0.5rem rgba(0, 0, 0, 0.3)',
-        scrollTrigger: aboutDetailButtonBottomTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-inset-deep',
+        {
+          boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
+        },
+        {
+          boxShadow: 'inset 0 -1rem 0.5rem rgba(0, 0, 0, 0.3)',
+          scrollTrigger: aboutDetailButtonBottomTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-inset-deep2', {
-        boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
-      }, {
-        boxShadow: 'inset 0 -0.3rem 0.3rem rgba(0, 0, 0, 0.5)',
-        scrollTrigger: aboutDetailButtonBottomTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-inset-deep2',
+        {
+          boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
+        },
+        {
+          boxShadow: 'inset 0 -0.3rem 0.3rem rgba(0, 0, 0, 0.5)',
+          scrollTrigger: aboutDetailButtonBottomTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-inset', {
-        boxShadow: 'inset 0 1.5rem 0.7rem rgba(0, 0, 0, 0.1)',
-      }, {
-        boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
-        scrollTrigger: aboutDetailButtonTopTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-inset',
+        {
+          boxShadow: 'inset 0 1.5rem 0.7rem rgba(0, 0, 0, 0.1)',
+        },
+        {
+          boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
+          scrollTrigger: aboutDetailButtonTopTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-inset-deep', {
-        boxShadow: 'inset 0 1rem 0.5rem rgba(0, 0, 0, 0.3)',
-      }, {
-        boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
-        scrollTrigger: aboutDetailButtonTopTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-inset-deep',
+        {
+          boxShadow: 'inset 0 1rem 0.5rem rgba(0, 0, 0, 0.3)',
+        },
+        {
+          boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
+          scrollTrigger: aboutDetailButtonTopTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-inset-deep2', {
-        boxShadow: 'inset 0 0.3rem 0.3rem rgba(0, 0, 0, 0.5)',
-      }, {
-        boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
-        scrollTrigger: aboutDetailButtonTopTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-inset-deep2',
+        {
+          boxShadow: 'inset 0 0.3rem 0.3rem rgba(0, 0, 0, 0.5)',
+        },
+        {
+          boxShadow: 'inset 0 0rem 0rem rgba(0, 0, 0, 0)',
+          scrollTrigger: aboutDetailButtonTopTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow', {
-        boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
-      }, {
-        boxShadow: '0 -1rem 0.5rem rgba(0, 0, 0, 0.1)',
-        scrollTrigger: aboutDetailButtonBottomTrigger,
-      });
+      gsap.fromTo(
+        '.shadow',
+        {
+          boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
+        },
+        {
+          boxShadow: '0 -1rem 0.5rem rgba(0, 0, 0, 0.1)',
+          scrollTrigger: aboutDetailButtonBottomTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-deep', {
-        boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
-      }, {
-        boxShadow: '0 -0.5rem 0.3rem rgba(0, 0, 0, 0.3)',
-        scrollTrigger: aboutDetailButtonBottomTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-deep',
+        {
+          boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
+        },
+        {
+          boxShadow: '0 -0.5rem 0.3rem rgba(0, 0, 0, 0.3)',
+          scrollTrigger: aboutDetailButtonBottomTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-deep2', {
-        boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
-      }, {
-        boxShadow: '0 -0.25rem 0.1rem rgba(0, 0, 0, 0.5)',
-        scrollTrigger: aboutDetailButtonBottomTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-deep2',
+        {
+          boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
+        },
+        {
+          boxShadow: '0 -0.25rem 0.1rem rgba(0, 0, 0, 0.5)',
+          scrollTrigger: aboutDetailButtonBottomTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow', {
-        boxShadow: '0 1rem 0.5rem rgba(0, 0, 0, 0.1)',
-      }, {
-        boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
-        scrollTrigger: aboutDetailButtonTopTrigger,
-      });
+      gsap.fromTo(
+        '.shadow',
+        {
+          boxShadow: '0 1rem 0.5rem rgba(0, 0, 0, 0.1)',
+        },
+        {
+          boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
+          scrollTrigger: aboutDetailButtonTopTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-deep', {
-        boxShadow: '0 0.5rem 0.3rem rgba(0, 0, 0, 0.3)',
-      }, {
-        boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
-        scrollTrigger: aboutDetailButtonTopTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-deep',
+        {
+          boxShadow: '0 0.5rem 0.3rem rgba(0, 0, 0, 0.3)',
+        },
+        {
+          boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
+          scrollTrigger: aboutDetailButtonTopTrigger,
+        }
+      );
 
-      gsap.fromTo('.shadow-deep2', {
-        boxShadow: '0 0.25rem 0.1rem rgba(0, 0, 0, 0.5)',
-      }, {
-        boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
-        scrollTrigger: aboutDetailButtonTopTrigger,
-      });
+      gsap.fromTo(
+        '.shadow-deep2',
+        {
+          boxShadow: '0 0.25rem 0.1rem rgba(0, 0, 0, 0.5)',
+        },
+        {
+          boxShadow: '0 0rem 0rem rgba(0, 0, 0, 0)',
+          scrollTrigger: aboutDetailButtonTopTrigger,
+        }
+      );
     }
 
     // 뷰포트에 따라 위치값 조정.
     ScrollTrigger.matchMedia({
       '(min-width: 769px)': () => {
-        gsap.fromTo('.about-title', {
-          yPercent: -250,
-          textShadow: '0 5rem 1rem rgba(0,0,0,0.3)',
-        }, {
-          yPercent: 50,
-          modifiers: yPercentParseIntModifiers,
-          textShadow: '0 3rem 1rem rgba(0,0,0,0.3)',
-          scrollTrigger: aboutTitleTrigger,
-        });
+        gsap.fromTo(
+          '.about-title',
+          {
+            yPercent: -250,
+            textShadow: '0 5rem 1rem rgba(0,0,0,0.3)',
+          },
+          {
+            yPercent: 50,
+            modifiers: yPercentParseIntModifiers,
+            textShadow: '0 3rem 1rem rgba(0,0,0,0.3)',
+            scrollTrigger: aboutTitleTrigger,
+          }
+        );
 
-        gsap.fromTo('.first-span', {
-          y: -30,
-        }, {
-          y: 30,
-          modifiers: changeTextParseIntModifiers,
-          scrollTrigger: firstChangeTextTrigger,
-        });
+        gsap.fromTo(
+          '.first-span',
+          {
+            y: -30,
+          },
+          {
+            y: 30,
+            modifiers: changeTextParseIntModifiers,
+            scrollTrigger: firstChangeTextTrigger,
+          }
+        );
 
-        gsap.fromTo('.second-span', {
-          y: -30,
-        }, {
-          y: 30,
-          modifiers: changeTextParseIntModifiers,
-          scrollTrigger: secondChangeTextTrigger,
-        });
+        gsap.fromTo(
+          '.second-span',
+          {
+            y: -30,
+          },
+          {
+            y: 30,
+            modifiers: changeTextParseIntModifiers,
+            scrollTrigger: secondChangeTextTrigger,
+          }
+        );
 
-        gsap.fromTo('.third-span', {
-          y: -30,
-        }, {
-          y: 30,
-          modifiers: changeTextParseIntModifiers,
-          scrollTrigger: thirdChangeTextTrigger,
-        });
+        gsap.fromTo(
+          '.third-span',
+          {
+            y: -30,
+          },
+          {
+            y: 30,
+            modifiers: changeTextParseIntModifiers,
+            scrollTrigger: thirdChangeTextTrigger,
+          }
+        );
       },
 
       '(max-width: 768px)': () => {
-        gsap.fromTo('.about-title', {
-          yPercent: -350,
-          textShadow: '0 2.5rem 1rem rgba(0,0,0,0.3)',
-        }, {
-          yPercent: 0,
-          modifiers: yPercentParseIntModifiers,
-          textShadow: '0 1.5rem 1rem rgba(0,0,0,0.3)',
-          scrollTrigger: aboutTitleTrigger,
-        });
+        gsap.fromTo(
+          '.about-title',
+          {
+            yPercent: -350,
+            textShadow: '0 2.5rem 1rem rgba(0,0,0,0.3)',
+          },
+          {
+            yPercent: 0,
+            modifiers: yPercentParseIntModifiers,
+            textShadow: '0 1.5rem 1rem rgba(0,0,0,0.3)',
+            scrollTrigger: aboutTitleTrigger,
+          }
+        );
 
         if (isDesktop) {
-          gsap.fromTo('.first-span', {
-            y: -10,
-          }, {
-            y: 10,
-            modifiers: changeTextParseIntModifiers,
-            scrollTrigger: firstChangeTextTrigger,
-          });
+          gsap.fromTo(
+            '.first-span',
+            {
+              y: -10,
+            },
+            {
+              y: 10,
+              modifiers: changeTextParseIntModifiers,
+              scrollTrigger: firstChangeTextTrigger,
+            }
+          );
 
-          gsap.fromTo('.second-span', {
-            y: -10,
-          }, {
-            y: 10,
-            modifiers: changeTextParseIntModifiers,
-            scrollTrigger: secondChangeTextTrigger,
-          });
+          gsap.fromTo(
+            '.second-span',
+            {
+              y: -10,
+            },
+            {
+              y: 10,
+              modifiers: changeTextParseIntModifiers,
+              scrollTrigger: secondChangeTextTrigger,
+            }
+          );
 
-          gsap.fromTo('.third-span', {
-            y: -10,
-          }, {
-            y: 10,
-            modifiers: changeTextParseIntModifiers,
-            scrollTrigger: thirdChangeTextTrigger,
-          });
+          gsap.fromTo(
+            '.third-span',
+            {
+              y: -10,
+            },
+            {
+              y: 10,
+              modifiers: changeTextParseIntModifiers,
+              scrollTrigger: thirdChangeTextTrigger,
+            }
+          );
         }
       },
     });
@@ -325,12 +417,13 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
   }, [aboutAnimationReady, autoChangeText]);
 
   // gasp가 준비된 경우 트리거 및 설정 진행.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 currentGsapState 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     currentGsapState && aboutComponentGSAP();
 
     return () => {
       ScrollTrigger.clearMatchMedia();
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill();
       });
@@ -371,8 +464,10 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
         {/* 슬라이드 애니메이션 영역 */}
         <div className='text-animation-frame'>
           <div
-            className={`first-line${isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
-              }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}>
+            className={`first-line${
+              isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
+            }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
+          >
             {nextText ? (
               <div>
                 Idea<span className='first-span'>Idea</span>
@@ -385,8 +480,10 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
           </div>
 
           <div
-            className={`second-line${isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
-              }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}>
+            className={`second-line${
+              isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
+            }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
+          >
             {nextText ? (
               <div>
                 Premeditated<span className='second-span'>Premeditated</span>
@@ -399,8 +496,10 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
           </div>
 
           <div
-            className={`third-line${isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
-              }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}>
+            className={`third-line${
+              isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
+            }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
+          >
             {nextText ? (
               <div>
                 Meticulous<span className='third-span'>Meticulous</span>
@@ -416,6 +515,7 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
         {/* 모어 버튼 영역 */}
         <div className='about-detail-button'>
           <button
+            type='button'
             className={`${isDesktop && aboutAnimationReady ? 'will-change' : ''}${isMobile ? ' mobile' : ''}${currentButtonDelay ? ' delay' : ''}`}
             onMouseEnter={() => _onHover(' go-cursor')}
             onMouseLeave={() => _onLeave()}

@@ -11,7 +11,7 @@
       "static/*": ["./static/*"],
       "style/*": ["./style/*"],
       "modules/*": ["./modules/*"],
-      "utils/*": ["./utils/*"],
+      "utils/*": ["./utils/*"]
     }
   },
   "include": ["src/**/*"],

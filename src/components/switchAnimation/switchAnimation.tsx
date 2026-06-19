@@ -1,15 +1,11 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 import './switchAnimation.scss';
 
 const SwitchAnimation = () => {
-  const [currentSwitchAnimation] = useSelector((state: RootState) => [state.CommonValue.currentSwitchAnimation], shallowEqual);
+  const currentSwitchAnimation = useStore((s) => s.currentSwitchAnimation);
 
-  return (
-    <div className={`screen-cover${currentSwitchAnimation ? ' active' : ''}`}></div>
-  )
-}
+  return <div className={`screen-cover${currentSwitchAnimation ? ' active' : ''}`}></div>;
+};
 
 export default SwitchAnimation;

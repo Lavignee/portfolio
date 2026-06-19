@@ -1,1 +1,1 @@
-export { default } from './splitText'
+export { default } from './splitText';

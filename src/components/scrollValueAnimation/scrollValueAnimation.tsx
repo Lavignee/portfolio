@@ -1,16 +1,18 @@
 import React from 'react';
 import './scrollValueAnimation.scss';
-import { useLocation } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../Modules';
 import { isMobile } from 'react-device-detect';
+import { useLocation } from 'react-router-dom';
+import { useShallow } from 'zustand/react/shallow';
+import useStore from '../../store/useStore';
 
 const ScrollValueAnimation = () => {
-  // redux useSelector 정의.
-  const [currentScrollValue, currentScrollLimit] = useSelector((state: RootState) => [state.CommonValue.currentScrollValue, state.CommonValue.currentScrollLimit], shallowEqual);
+  // 전역 스토어 구독.
+  const [currentScrollValue, currentScrollLimit] = useStore(
+    useShallow((s) => [s.currentScrollValue, s.currentScrollLimit])
+  );
 
   // react-router-dom으로 url 확인.
-  let location = useLocation();
+  const location = useLocation();
 
   // 스크롤 퍼센트의 랜더 여부.
   const [percentView, setPercentView] = React.useState(false);
@@ -18,14 +20,18 @@ const ScrollValueAnimation = () => {
   const [percentCalc, setpercentCalc] = React.useState<number>(0);
 
   React.useEffect(() => {
-    // 화면 로드 시 스크롤 퍼센트 계산.
-    const scrollPercentCalc: any = ((+currentScrollValue / +currentScrollLimit) * 100).toFixed(0);
-    setpercentCalc(!Number(scrollPercentCalc) || scrollPercentCalc === 'Infinity' ? 0 : scrollPercentCalc);
-  }, [currentScrollLimit, currentScrollValue, setpercentCalc]);
+    // 화면 로드 시 스크롤 퍼센트 계산. (0으로 나눠 NaN/Infinity가 되는 경우 0 처리)
+    const scrollPercentCalc = Math.round((+currentScrollValue / +currentScrollLimit) * 100);
+    setpercentCalc(Number.isFinite(scrollPercentCalc) ? scrollPercentCalc : 0);
+  }, [currentScrollLimit, currentScrollValue]);
 
   React.useEffect(() => {
     // 화면 로드 시 url에 따라 스크롤 퍼센트의 랜더 여부 변경.
-    if (location.pathname === '/' || location.pathname === '/about' || (location.pathname === '/footprint' && isMobile)) {
+    if (
+      location.pathname === '/' ||
+      location.pathname === '/about' ||
+      (location.pathname === '/footprint' && isMobile)
+    ) {
       setPercentView(true);
     } else {
       setPercentView(false);
@@ -34,12 +40,10 @@ const ScrollValueAnimation = () => {
     // 화면 벗어날 시 퍼센트 초기화.
     return () => {
       setpercentCalc(0);
-    }
+    };
   }, [location]);
 
-  return (
-    percentView ? <div className='scroll-percent'>{percentCalc}%</div> : null
-  );
+  return percentView ? <div className='scroll-percent'>{percentCalc}%</div> : null;
 };
 
 export default ScrollValueAnimation;

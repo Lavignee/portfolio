@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './notFound.scss';
 
 const NotFound = () => {
   // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
-  let navigate = useNavigate();
-  let location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className='not-found-section'>
@@ -25,7 +25,9 @@ const NotFound = () => {
         </h3>
         <br />
         <br />
-        <button onClick={() => navigate(-1)}>go back</button>
+        <button type='button' onClick={() => navigate(-1)}>
+          go back
+        </button>
       </div>
     </div>
   );

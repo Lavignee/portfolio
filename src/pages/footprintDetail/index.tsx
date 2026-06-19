@@ -1,1 +1,1 @@
-export { default } from './footprintDetail'
+export { default } from './footprintDetail';

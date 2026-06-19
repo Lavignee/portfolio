@@ -1,35 +1,31 @@
-import React from 'react';
-import 'regenerator-runtime/runtime';
 import './style/index.scss';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { changeSwitchAnimation, changeButtonDelay } from './Modules/commonValue';
-import { changeFirstClassName, changeSecondClassName, changeText } from './Modules/cursor';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import CustomCursor from './components/customCursor';
-import Header from './components/header';
-import SmoothScroll from './components/smoothScroll';
-import ContentSwitcher from './components/contentSwitcher';
+import { useNavigate } from 'react-router-dom';
 import Contact from './components/contact';
-import SwitchAnimation from './components/switchAnimation';
-import ScrollValueAnimation from './components/scrollValueAnimation';
+import ContentSwitcher from './components/contentSwitcher';
+import CustomCursor from './components/customCursor';
 import FilmEffect from './components/filmEffect';
+import Header from './components/header';
+import ScrollValueAnimation from './components/scrollValueAnimation';
+import SmoothScroll from './components/smoothScroll';
+import SwitchAnimation from './components/switchAnimation';
+import useStore from './store/useStore';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const cursorClass = (value: string) => dispatch(changeFirstClassName(value));
-  const cursorSecondClass = (value: string) => dispatch(changeSecondClassName(value));
-  const cursorText = (value: string) => dispatch(changeText(value));
-  const screenCover = (value: boolean) => dispatch(changeSwitchAnimation(value));
-  const onChangeButtonDelay = (value: boolean) => dispatch(changeButtonDelay(value));
+  // 전역 스토어 액션 정의.
+  const cursorClass = useStore((s) => s.changeFirstClassName);
+  const cursorSecondClass = useStore((s) => s.changeSecondClassName);
+  const cursorText = useStore((s) => s.changeText);
+  const screenCover = useStore((s) => s.changeSwitchAnimation);
+  const onChangeButtonDelay = useStore((s) => s.changeButtonDelay);
 
   // react-router-dom으로 화면 호출.
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // 마우스 오버 시 
+  // 마우스 오버 시
   const _onHover = (hoverCursor: string, hoverText?: string | null) => {
     // 커서 형태 변경.
     cursorClass(hoverCursor);
@@ -77,20 +73,11 @@ const App = () => {
     // 커서 돔.
     <CustomCursor>
       {/* 헤더 */}
-      <Header
-        _onHover={_onHover}
-        _onClick={_onClick}
-        _onLeave={_onLeave}
-        pageTimer={pageTimer}
-      />
+      <Header _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} pageTimer={pageTimer} />
       {/* 스크롤 영역 */}
       <SmoothScroll>
         {/* 컨텐츠 */}
-        <ContentSwitcher
-          _onHover={_onHover}
-          _onClick={_onClick}
-          _onLeave={_onLeave}
-        />
+        <ContentSwitcher _onHover={_onHover} _onClick={_onClick} _onLeave={_onLeave} />
       </SmoothScroll>
       {/* 스크롤 퍼센트 */}
       <ScrollValueAnimation />

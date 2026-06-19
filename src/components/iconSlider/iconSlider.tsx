@@ -1,5 +1,5 @@
-import React from 'react';
 import { gsap } from 'gsap';
+import React from 'react';
 
 import svg from '../../static/images/icon-svg.json';
 
@@ -8,41 +8,48 @@ import './iconSlider.scss';
 const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   const [willChange, setWillChange] = React.useState(sliderTrigger);
   const [row, setRow] = React.useState('');
-  const SliderRef = React.useRef<any | null>(null);
+  const SliderRef = React.useRef<gsap.core.Tween | null>(null);
 
-  let svgs = Object.values(svg);
+  const svgs = Object.values(svg);
 
   // 아이콘 슬라이더 생성.
   const SiliderTemplate = ({ line }: { line: number }) => {
     // 중복된 아이콘은 제외한 랜덤 배열 생성.
     const randomNumber = () => {
-      let result: number[] = [];
+      const result: number[] = [];
       while (result.length < 10) {
         const min = Math.ceil(0);
         const max = Math.floor(svgs.length);
-        let number = Math.floor(Math.random() * (max - min)) + min;
+        const number = Math.floor(Math.random() * (max - min)) + min;
         if (!result.includes(number)) {
           result.push(number);
         }
       }
       return result;
-    }
+    };
 
-    let template = <div className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
-      {randomNumber().map((item, idx) => {
-        return (
-          <div key={line + idx} className={`icon-content-frame${willChange ? ' will-change' : ''}`}><div className='content' dangerouslySetInnerHTML={{ __html: svgs[item] }}></div></div>
-        )
-      })}
-    </div>
+    const template = (
+      <div className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
+        {randomNumber().map((item) => {
+          return (
+            <div
+              key={`${line}-${item}`}
+              className={`icon-content-frame${willChange ? ' will-change' : ''}`}
+            >
+              <div className='content' dangerouslySetInnerHTML={{ __html: svgs[item] }}></div>
+            </div>
+          );
+        })}
+      </div>
+    );
 
     return template;
-  }
+  };
 
   // 애니메이션 생성
   const startAnimation = React.useCallback((willChange: boolean) => {
     gsap.set('.icon-content-frame', {
-      x: (i) => i * 100 + '%',
+      x: (i) => `${i * 100}%`,
     });
 
     SliderRef.current = gsap.to('.icon-content-frame', {
@@ -62,7 +69,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     } else {
       SliderRef.current.pause();
     }
-  }, [])
+  }, []);
 
   // 높이값이 특정 구간에 들어올 시 슬라이더의 크기 및 간격을 조정.
   const autoHeightContent = React.useCallback(() => {
@@ -87,8 +94,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   React.useEffect(() => {
     SliderRef.current?.kill();
     startAnimation(willChange);
-  }, [row, startAnimation, willChange]);
-
+  }, [startAnimation, willChange]);
 
   // 아이콘 슬라이더가 화면에 보이는지 여부에 따라 애니메이션 동작 변경.
   React.useEffect(() => {
@@ -111,8 +117,8 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     return () => {
       SliderRef.current?.kill();
       window.removeEventListener('resize', autoHeightContent);
-    }
-  }, [autoHeightContent, startAnimation, startAnimation, willChange]);
+    };
+  }, [autoHeightContent]);
 
   return (
     <>

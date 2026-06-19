@@ -1,22 +1,19 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { makeSmoothScroll } from '../../Modules/commonValue';
-import { EffectFade, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import career from '../../data/dataFootprint/careerFootprint.json'
-import project from '../../data/dataFootprint/projectFootprint.json'
+import React from 'react';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import career from '../../data/dataFootprint/careerFootprint.json';
+import project from '../../data/dataFootprint/projectFootprint.json';
 
 import './footprintDetail.scss';
-import 'swiper/swiper.scss';
-import 'swiper/modules/navigation/navigation.scss';
-import 'swiper/modules/pagination/pagination.scss';
-import 'swiper/modules/effect-fade/effect-fade.scss';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 import TextSlider from '../../components/textSlider';
-import { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,38 +29,41 @@ interface ContentTextProp {
 }
 
 // 슬라이드로 출력할 컨텐츠 템플릿.
-const ContentText = ({
-  isActive,
-  idx,
-  keyword,
-  title,
-  date,
-  summary,
-  text,
-}: ContentTextProp) => {
-  const summarys: JSX.Element[] = [];
-  summary.forEach((item, i) =>
-    summarys.push(<span key={item + i}>{item}</span>)
-  );
+const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: ContentTextProp) => {
+  const summarys: React.JSX.Element[] = [];
+  summary.forEach((item) => {
+    summarys.push(<span key={item}>{item}</span>);
+  });
   return (
     <div key={idx} className={`content-frame${isActive ? ' active' : ''}`}>
       <ul className='content'>
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
-        <li className='date'>{date && date.split('\n').map((item, idx) => {
-          return <React.Fragment key={idx}>{item}<br /></React.Fragment>
-        })}</li>
+        <li className='date'>
+          {date?.split('\n').map((item) => {
+            return (
+              <React.Fragment key={item}>
+                {item}
+                <br />
+              </React.Fragment>
+            );
+          })}
+        </li>
         <li className='summarys division'>
           <div className='line'></div>
           {summarys}
         </li>
         <li>
-          {text && text.split('\n').map((item, idx) => {
-            return <p key={idx}>{item}<br /></p>
+          {text?.split('\n').map((item) => {
+            return (
+              <p key={item}>
+                {item}
+                <br />
+              </p>
+            );
           })}
         </li>
       </ul>
-
     </div>
   );
 };
@@ -75,22 +75,24 @@ interface FootprintDetailProps {
 }
 
 const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const makeScroll = React.useCallback((value: boolean) => dispatch(makeSmoothScroll(value)), [dispatch]);
+  // 전역 스토어 액션.
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
 
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual);
+  // 전역 스토어 구독.
+  const currentGsapState = useStore((s) => s.currentGsapState);
 
   // 슬라이더 템플릿.
-  const sliderContent = (content: {
-    id: number;
-    keyword: string;
-    title: string;
-    date: string;
-    summary: string[];
-    text: string
-  }[], kind: string) => {
+  const sliderContent = (
+    content: {
+      id: number;
+      keyword: string;
+      title: string;
+      date: string;
+      summary: string[];
+      text: string;
+    }[],
+    kind: string
+  ) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
@@ -102,10 +104,11 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }}
-        pagination={{ clickable: true, el: '.swiper-pagination' }}>
-        {content.map(content => (
+        pagination={{ clickable: true, el: '.swiper-pagination' }}
+      >
+        {content.map((content) => (
           <SwiperSlide key={content.id}>
-            {({ isActive }) => (
+            {({ isActive }: { isActive: boolean }) => (
               <ContentText
                 isActive={isActive}
                 idx={content.id}
@@ -121,20 +124,23 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
         <div
           className={`swiper-pagination ${kind}-pagination`}
           onMouseEnter={() => _onHover(' pagination-cursor')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
         <div
           className='swiper-button-next'
           onMouseEnter={() => _onHover(' bl-cursor', 'past')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
         <div
           className='swiper-button-prev'
           onMouseEnter={() => _onHover(' bl-cursor', 'recent')}
-          onMouseLeave={() => _onLeave()}></div>
+          onMouseLeave={() => _onLeave()}
+        ></div>
       </Swiper>
     );
   };
 
-  // 폭이 좁은 화면에서 스크롤 트리거 동작. 
+  // 폭이 좁은 화면에서 스크롤 트리거 동작.
   const FootprintDetailGsap = () => {
     ScrollTrigger.matchMedia({
       '(min-width: 985px)': () => {
@@ -198,6 +204,7 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
   };
 
   // 스무스 스크롤 생성 이후 스크롤 트리거 연동.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 currentGsapState 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     // 현재 컨텐츠를 기준으로 스크롤 재생성.
     makeScroll(true);
@@ -205,7 +212,7 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
 
     return () => {
       ScrollTrigger.clearMatchMedia();
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill(true);
       });

@@ -1,1 +1,1 @@
-export { default } from './filmEffect'
+export { default } from './filmEffect';

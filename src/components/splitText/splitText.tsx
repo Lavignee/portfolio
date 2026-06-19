@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
 import './splitText.scss';
 
@@ -10,7 +9,7 @@ interface SplitTextProps {
   scroll: string;
   index: string;
   animation: string;
-  setTime: number;
+  setTime?: number;
   delay?: number | null;
   depth?: boolean | null;
   noContainer?: boolean | null;
@@ -26,43 +25,45 @@ const SplitText = ({
   depth,
   noContainer,
 }: SplitTextProps) => {
-  // redux useSelector 정의.
-  const [currentSplitText] = useSelector((state: RootState) => [state.CommonValue.currentSplitText], shallowEqual);
+  // 전역 스토어 구독.
+  const currentSplitText = useStore((s) => s.currentSplitText);
 
   let childrenLength = 0;
   const [willChange, setWillChange] = React.useState(true);
   // const [happen, setHappen] = React.useState<string[]>([]);
-  const [split, setSplit] = React.useState<JSX.Element[]>([]);
-  const splittingTimer = React.useRef<any>(null);
-  const delayTimer = React.useRef<any>(null);
+  const [split, setSplit] = React.useState<React.JSX.Element[]>([]);
+  const splittingTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
+  const delayTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // children으로 들어온 string을 각각 DOM으로 감싸서 배열에 입력.
   const Splitting = React.useCallback(() => {
     if (childrenLength <= children.length) {
-      childrenLength++
-      setSplit((split) => [...split,
-      <div
-        key={index + (childrenLength - 1)}
-        className={`${depth ? 'split-depth-frame' : `split-target ${animation ? animation : 'default'}`}`}>
-        {depth ? (
-          <>
-            <span>
-              {children.substring(childrenLength - 1, childrenLength)}
-            </span>
-            <div
-              className={`split-target ${animation ? animation : 'default'}`}>
-              {children.substring(childrenLength - 1, childrenLength)}
-            </div>
-          </>
-        ) : (
-          children.substring(childrenLength - 1, childrenLength)
-        )}
-      </div>
-      ])
+      childrenLength++;
+      setSplit((split) => [
+        ...split,
+        <div
+          key={index + (childrenLength - 1)}
+          className={`${depth ? 'split-depth-frame' : `split-target ${animation ? animation : 'default'}`}`}
+        >
+          {depth ? (
+            <>
+              <span>{children.substring(childrenLength - 1, childrenLength)}</span>
+              <div className={`split-target ${animation ? animation : 'default'}`}>
+                {children.substring(childrenLength - 1, childrenLength)}
+              </div>
+            </>
+          ) : (
+            children.substring(childrenLength - 1, childrenLength)
+          )}
+        </div>,
+      ]);
 
-      splittingTimer.current = setTimeout(() => {
-        Splitting();
-      }, setTime ? setTime : 30);
+      splittingTimer.current = setTimeout(
+        () => {
+          Splitting();
+        },
+        setTime ? setTime : 30
+      );
     } else {
       setWillChange(false);
     }
@@ -84,7 +85,7 @@ const SplitText = ({
         delayTimer.current = setTimeout(() => {
           Splitting();
           clearTimeout(delayTimer.current);
-        }, delay)
+        }, delay);
       } else {
         Splitting();
       }
@@ -94,7 +95,7 @@ const SplitText = ({
   return (
     <div className='split-frame'>
       {noContainer ? (
-        { split }
+        split
       ) : (
         <>
           <div className='origin-size-container'>{children}</div>

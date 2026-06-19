@@ -1,19 +1,19 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeSecondClassName } from '../../Modules/cursor';
-import { isDesktop } from 'react-device-detect';
 import { gsap } from 'gsap';
+import React from 'react';
+import { isDesktop } from 'react-device-detect';
+import { useShallow } from 'zustand/react/shallow';
 
 import './customCursor.scss';
-import { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
 
-const CustomCursor = ({ children }: { children: any }) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const cursorSecondClass = React.useCallback((secondClassName) => dispatch(changeSecondClassName(secondClassName)), [dispatch]);
+const CustomCursor = ({ children }: { children: React.ReactNode }) => {
+  // 전역 스토어 액션.
+  const cursorSecondClass = useStore((s) => s.changeSecondClassName);
 
-  // redux useSelector 정의.
-  const [firstClassName, secondClassName, text, language] = useSelector((state: RootState) => [state.Cursor.firstClassName, state.Cursor.secondClassName, state.Cursor.text, state.CommonValue.language], shallowEqual);
+  // 전역 스토어 구독.
+  const [firstClassName, secondClassName, text, language] = useStore(
+    useShallow((s) => [s.firstClassName, s.secondClassName, s.text, s.language])
+  );
 
   const cursorRef = React.useRef<HTMLDivElement | null>(null);
   const cursorInfoRef = React.useRef<HTMLDivElement | null>(null);
@@ -50,13 +50,13 @@ const CustomCursor = ({ children }: { children: any }) => {
   };
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: 커스텀 커서 추적을 위한 마우스 레이어로 키보드 상호작용 대상이 아님.
     <div
       className={language}
       onMouseMove={(e) => moveCircle(e)}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-
       {/* 내부 컨텐츠 영역 */}
       {children}
 
@@ -65,10 +65,9 @@ const CustomCursor = ({ children }: { children: any }) => {
         <div className='cursor-area'>
           <div
             className={`custom-cursor-back${firstClassName}${secondClassName}`}
-            ref={cursorInfoRef}></div>
-          <div
-            className={`custom-cursor-info${firstClassName}${secondClassName}`}
-            ref={cursorRef}>
+            ref={cursorInfoRef}
+          ></div>
+          <div className={`custom-cursor-info${firstClassName}${secondClassName}`} ref={cursorRef}>
             <span>{text}</span>
           </div>
         </div>

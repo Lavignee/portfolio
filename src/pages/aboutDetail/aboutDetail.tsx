@@ -1,38 +1,31 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  makeSmoothScroll,
-  changeGsapState,
-  splitTextStart,
-  changeFilmState,
-} from '../../Modules/commonValue';
-import { EffectFade, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import React from 'react';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useShallow } from 'zustand/react/shallow';
 import hashtag from '../../data/dataAbout/hashtagAbout.json';
 import introduce from '../../data/dataAbout/introduceAbout.json';
 
 import child from '../../static/images/child.jpg';
+import current1 from '../../static/images/current1.jpg';
+import current2 from '../../static/images/current2.jpg';
+import current3 from '../../static/images/current3.jpg';
 import shop1 from '../../static/images/shop1.jpg';
 import shop2 from '../../static/images/shop2.jpg';
 import shop3 from '../../static/images/shop3.jpg';
 import shop4 from '../../static/images/shop4.jpg';
-import current1 from '../../static/images/current1.jpg';
-import current2 from '../../static/images/current2.jpg';
-import current3 from '../../static/images/current3.jpg';
 
 import './aboutDetail.scss';
-import 'swiper/swiper.scss';
-import 'swiper/modules/navigation/navigation.scss';
-import 'swiper/modules/pagination/pagination.scss';
-import 'swiper/modules/effect-fade/effect-fade.scss';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
-import useWindowSize from '../../utils/useWindowSize';
 import SplitText from '../../components/splitText';
 import Tooltip from '../../components/tooltip';
-import { RootState } from '../../Modules';
+import useStore from '../../store/useStore';
+import useWindowSize from '../../utils/useWindowSize';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,16 +39,14 @@ const textCondition = [
     align: 'left',
   },
   {
-    colInfo:
-      'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 about-second',
+    colInfo: 'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 about-second',
     scroll: 'aboutSecond',
     index1: 'abc1',
     index2: 'abc2',
     align: 'center',
   },
   {
-    colInfo:
-      'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
+    colInfo: 'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
     scroll: 'aboutThird',
     index1: 'abr1',
     index2: 'abr2',
@@ -66,13 +57,11 @@ const textCondition = [
 // 반복적인 dom구조에서 다른 부분만 배열로 정의.
 const textCondition2 = [
   {
-    colInfo:
-      'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
+    colInfo: 'col-12 col-xs-10 off-xs-2 col-s-8 off-s-4 col-m-6 off-m-6 about-third',
     align: 'left',
   },
   {
-    colInfo:
-      'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 about-second',
+    colInfo: 'col-12 col-xs-10 off-xs-1 col-s-8 off-s-2 col-m-6 off-m-3 about-second',
     align: 'center',
   },
   {
@@ -92,8 +81,8 @@ const fourthIntroContent = introduce.introduce.fourth;
 const fourthTooltipContent = introduce.tooltipInfo.fourth;
 
 // 사용 될 이미지 배열로 정의.
-const growBackgroundImage2: any[] = [shop1, shop2, shop3, shop4];
-const growBackgroundImage3: any[] = [current1, current2, current3];
+const growBackgroundImage2: string[] = [shop1, shop2, shop3, shop4];
+const growBackgroundImage3: string[] = [current1, current2, current3];
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface AboutDetailProps {
@@ -102,31 +91,15 @@ interface AboutDetailProps {
 }
 
 const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onScrollAbout = React.useCallback(
-    (value) => dispatch(splitTextStart(value)),
-    [dispatch]
-  );
-  const makeScroll = React.useCallback(
-    (value) => dispatch(makeSmoothScroll(value)),
-    [dispatch]
-  );
-  const filmReady = React.useCallback(
-    (value) => dispatch(changeFilmState(value)),
-    [dispatch]
-  );
-  const gsapReady = React.useCallback(
-    (value) => dispatch(changeGsapState(value)),
-    [dispatch]
-  );
-  // redux useSelector 정의.
-  const [currentGsapState, currentFilmState] = useSelector(
-    (state: RootState) => [
-      state.CommonValue.currentGsapState,
-      state.CommonValue.currentFilmState,
-    ],
-    shallowEqual
+  // 전역 스토어 액션.
+  const onScrollAbout = useStore((s) => s.splitTextStart);
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
+  const filmReady = useStore((s) => s.changeFilmState);
+  const gsapReady = useStore((s) => s.changeGsapState);
+
+  // 전역 스토어 구독.
+  const [currentGsapState, currentFilmState] = useStore(
+    useShallow((s) => [s.currentGsapState, s.currentFilmState])
   );
 
   // 윈도우 리사이즈 감지 및 해당 사이즈 반환 훅.
@@ -210,10 +183,10 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
     gsap.fromTo(
       '.fill-black',
       {
-        maxWidth: 0 + '%',
+        maxWidth: `${0}%`,
       },
       {
-        maxWidth: 100 + '%',
+        maxWidth: `${100}%`,
         scrollTrigger: {
           trigger: '.background-title-frame',
           start: 'top center',
@@ -284,7 +257,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   };
 
   // 이미지 슬라이드 템플릿.
-  const growBackgroundImageSlider = (target: any[], kind: string) => {
+  const growBackgroundImageSlider = (target: string[], kind: string) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
@@ -299,13 +272,8 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
         pagination={{ clickable: false }}
       >
         {target.map((target, idx) => (
-          <SwiperSlide key={idx}>
-            <img
-              width='70%'
-              height='auto'
-              src={target}
-              alt={`${kind} ${idx + 1}`}
-            />
+          <SwiperSlide key={target}>
+            <img width='70%' height='auto' src={target} alt={`${kind} ${idx + 1}`} />
           </SwiperSlide>
         ))}
         <div
@@ -324,14 +292,9 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
   // 툴팁 템플릿.
   const TooltipContent = (targetInfo: { info: string; text: string }[]) => {
-    let result = targetInfo.map((item: { info: string; text: string }, idx) => {
+    const result = targetInfo.map((item: { info: string; text: string }) => {
       return (
-        <Tooltip
-          key={item.text + idx}
-          _onHover={_onHover}
-          _onLeave={_onLeave}
-          info={item.info}
-        >
+        <Tooltip key={item.text} _onHover={_onHover} _onLeave={_onLeave} info={item.info}>
           {item.text}
         </Tooltip>
       );
@@ -340,10 +303,10 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   };
 
   // json string 데이터와 툴팁 템플릿 결합하여 컨텐츠 생성.
-  const introduceContent = (target: string, element: JSX.Element[]) => {
-    let combineContent: any[] = target.split('$$');
+  const introduceContent = (target: string, element: React.JSX.Element[]) => {
+    const combineContent: (string | React.JSX.Element)[] = target.split('$$');
     let i = 0;
-    combineContent.forEach((item, idx) => {
+    combineContent.forEach((_item, idx) => {
       if (idx % 2 !== 0) {
         combineContent.splice(idx, 1, element[i]);
         i++;
@@ -365,7 +328,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
     // 화면 벗어날 시 스크롤 트리거, 커서, 추가 필름, splitText 초기화.
     return () => {
       ScrollTrigger.clearMatchMedia();
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill();
       });
@@ -376,6 +339,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   }, [filmReady, gsapReady, makeScroll, _onLeave]);
 
   // gsap 및 추가 Film이 준비되면 스크롤트리거 생성 및 splitText 동작.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 준비 상태 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     let firstTimer: ReturnType<typeof setTimeout>;
     let secondTimer: ReturnType<typeof setTimeout>;
@@ -414,7 +378,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
           <div className='first-content-area'>
             {/* 상단 화면에 출력 될 keyword 컨텐츠. */}
             {textCondition.map((textCondition, idx) => (
-              <div className='row keyword-frame' key={idx}>
+              <div className='row keyword-frame' key={textCondition.scroll}>
                 <div className={textCondition.colInfo}>
                   <div className='position-frame'>
                     {/* 타이틀 SplitText. */}
@@ -430,22 +394,20 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                     </h2>
                     {/* 본문 SplitText. */}
                     <div className='type-p'>
-                      {hashtag.hashtagFirst[idx].text
-                        .split('\n')
-                        .map((item, idx) => {
-                          return (
-                            <SplitText
-                              key={idx}
-                              animation={'up'}
-                              scroll={textCondition.scroll}
-                              setTime={15}
-                              index={textCondition.index2}
-                              delay={idx !== 0 ? 500 * idx : null}
-                            >
-                              {item}
-                            </SplitText>
-                          );
-                        })}
+                      {hashtag.hashtagFirst[idx].text.split('\n').map((item, idx) => {
+                        return (
+                          <SplitText
+                            key={`${textCondition.index2}-${item}`}
+                            animation={'up'}
+                            scroll={textCondition.scroll}
+                            setTime={15}
+                            index={textCondition.index2}
+                            delay={idx !== 0 ? 500 * idx : null}
+                          >
+                            {item}
+                          </SplitText>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -459,23 +421,19 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
           {/* 중단 화면에 출력 될 keyword 컨텐츠. */}
           <div className='second-content-area'>
             {textCondition2.map((textCondition2, idx) => (
-              <div key={idx} className='row keyword-frame'>
+              <div key={textCondition2.align} className='row keyword-frame'>
                 <div className={textCondition2.colInfo}>
                   <div className='position-frame'>
-                    <h2 className='about-tag'>
-                      {hashtag.hashtagSecond[idx].title}
-                    </h2>
+                    <h2 className='about-tag'>{hashtag.hashtagSecond[idx].title}</h2>
                     <div className='type-p'>
-                      {hashtag.hashtagSecond[idx].text
-                        .split('\n')
-                        .map((item, idx) => {
-                          return (
-                            <span key={idx}>
-                              {item}
-                              <br />
-                            </span>
-                          );
-                        })}
+                      {hashtag.hashtagSecond[idx].text.split('\n').map((item) => {
+                        return (
+                          <span key={`${textCondition2.align}-${item}`}>
+                            {item}
+                            <br />
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -500,13 +458,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
           {/* 좌측 하단에 배치 될 이미지 영역. */}
           <div className='photo-area d-m-block d-xs-none'>
-            <img
-              width='70%'
-              height='auto'
-              className='first-image'
-              src={child}
-              alt='childhood'
-            />
+            <img width='70%' height='auto' className='first-image' src={child} alt='childhood' />
             <div>
               {growBackgroundImageSlider(growBackgroundImage2, 'shop')}
               {growBackgroundImageSlider(growBackgroundImage3, 'current')}
@@ -526,48 +478,25 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                 />
               )}
               <h3>~ 2010</h3>
-              <p>
-                {introduceContent(
-                  firstIntroContent,
-                  TooltipContent(firstTooltipContent)
-                )}
-              </p>
+              <p>{introduceContent(firstIntroContent, TooltipContent(firstTooltipContent))}</p>
             </div>
 
             <div className='background-story-frame second-image-trigger'>
-              {width < 768 &&
-                growBackgroundImageSlider(growBackgroundImage2, 'shop')}
+              {width < 768 && growBackgroundImageSlider(growBackgroundImage2, 'shop')}
               <h3>2012 ~ 2016</h3>
-              <p>
-                {introduceContent(
-                  secondIntroContent,
-                  TooltipContent(secondTooltipContent)
-                )}
-              </p>
+              <p>{introduceContent(secondIntroContent, TooltipContent(secondTooltipContent))}</p>
             </div>
 
             <div className='background-story-frame third-image-trigger'>
-              {width < 768 &&
-                growBackgroundImageSlider(growBackgroundImage3, 'current')}
+              {width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current')}
               <h3>2016 ~ 2020</h3>
-              <p>
-                {introduceContent(
-                  thirdIntroContent,
-                  TooltipContent(thirdTooltipContent)
-                )}
-              </p>
+              <p>{introduceContent(thirdIntroContent, TooltipContent(thirdTooltipContent))}</p>
             </div>
 
             <div className='background-story-frame'>
-              {width < 768 &&
-                growBackgroundImageSlider(growBackgroundImage3, 'current')}
+              {width < 768 && growBackgroundImageSlider(growBackgroundImage3, 'current')}
               <h3>2021 ~</h3>
-              <p>
-                {introduceContent(
-                  fourthIntroContent,
-                  TooltipContent(fourthTooltipContent)
-                )}
-              </p>
+              <p>{introduceContent(fourthIntroContent, TooltipContent(fourthTooltipContent))}</p>
             </div>
           </div>
         </div>

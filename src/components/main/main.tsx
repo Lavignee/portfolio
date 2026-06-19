@@ -1,15 +1,12 @@
-import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { splitTextStart, changeGsapState, makeSmoothScroll } from '../../Modules/commonValue';
-// import { Trans, withTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 
 import './main.scss';
 
-import VideoToCanvas from '../videoToCanvas';
+import useStore from '../../store/useStore';
 import SplitText from '../splitText';
-import { RootState } from '../../Modules';
+import VideoToCanvas from '../videoToCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,32 +20,18 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   // 배경에 사용 될 영상 파일.
   const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
 
-  // redux dispatch 정의.
-  const dispatch = useDispatch();
-  const onScrollIntro = React.useCallback((value) => dispatch(splitTextStart(value)), [dispatch]);
-  const gsapReady = React.useCallback((value) => dispatch(changeGsapState(value)), [dispatch]);
-  const makeScroll = React.useCallback((value) => dispatch(makeSmoothScroll(value)), [dispatch]);
-  // const [language] = useSelector(state => [state.CommonValue.language], shallowEqual);
+  // 전역 스토어 액션.
+  const onScrollIntro = useStore((s) => s.splitTextStart);
+  const makeScroll = useStore((s) => s.makeSmoothScroll);
 
-  // redux useSelector 정의.
-  const [currentGsapState] = useSelector((state: RootState) => [state.CommonValue.currentGsapState], shallowEqual
-  );
   const [videoReady, setVideoReady] = React.useState(false);
   const [canvasReady, setCanvasReady] = React.useState(true);
 
-  // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
-  const delaySplit = React.useCallback((target: string) => {
-    const timeOut = setTimeout(() => {
-      target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
-      clearTimeout(timeOut);
-    }, 0);
-  }, [onScrollIntro]);
-
   // 스크롤 트리거 설정.
   const mainComponentGSAP = React.useCallback(() => {
-    const canvasFrames = gsap.utils.toArray('.video-area .canvas-frame');
-    const targetToLefts = gsap.utils.toArray('.video-area .left');
-    const targetToRights = gsap.utils.toArray('.video-area .right');
+    const canvasFrames = gsap.utils.toArray<HTMLElement>('.video-area .canvas-frame');
+    const targetToLefts = gsap.utils.toArray<HTMLElement>('.video-area .left');
+    const targetToRights = gsap.utils.toArray<HTMLElement>('.video-area .right');
     const canvasTrigger = {
       trigger: '.main-text-frame',
       start: 'top',
@@ -56,43 +39,43 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       scrub: 1,
     };
 
-    canvasFrames.forEach((target: any) => {
+    canvasFrames.forEach((target) => {
       gsap.to(target, {
         scale: 0.8,
         y: -300,
         modifiers: {
           y: (y) => {
-            y = parseInt(y);
+            y = parseInt(y, 10);
             var newY = y.toFixed(0);
-            return newY + 'px';
+            return `${newY}px`;
           },
         },
         scrollTrigger: canvasTrigger,
       });
     });
 
-    targetToLefts.forEach((target: any) => {
+    targetToLefts.forEach((target) => {
       gsap.to(target, {
         x: -50,
         modifiers: {
           x: (x) => {
-            x = parseInt(x);
+            x = parseInt(x, 10);
             var newX = x.toFixed(0);
-            return newX + 'px';
+            return `${newX}px`;
           },
         },
         scrollTrigger: canvasTrigger,
       });
     });
 
-    targetToRights.forEach((target: any) => {
+    targetToRights.forEach((target) => {
       gsap.to(target, {
         x: 50,
         modifiers: {
           x: (x) => {
-            x = parseInt(x);
+            x = parseInt(x, 10);
             var newX = x.toFixed(0);
-            return newX + 'px';
+            return `${newX}px`;
           },
         },
         scrollTrigger: canvasTrigger,
@@ -103,9 +86,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       scrollTrigger: {
         trigger: '.intro-ment',
         start: 'top center',
-        onEnter: () => delaySplit('intro'),
-        // onEnter: () => onScrollIntro('intro'),
-        // onEnterBack: () => onScrollIntro('intro2'),
+        onEnter: () => onScrollIntro('intro'),
         end: 'bottom center',
       },
     });
@@ -114,9 +95,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       scrollTrigger: {
         trigger: '.intro-ment',
         start: 'top center-=400',
-        onEnter: () => delaySplit('intro2'),
-        // onEnter: () => onScrollIntro2('intro'),
-        // onEnterBack: () => onScrollIntro2('intro2'),
+        onEnter: () => onScrollIntro('intro2'),
         end: 'bottom center-=400',
       },
     });
@@ -150,7 +129,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         end: 'bottom top+=72',
       },
     });
-  }, [delaySplit]);
+  }, [onScrollIntro]);
 
   // gsap가 준비된 후 애니메이션 동작.
   React.useEffect(() => {
@@ -160,24 +139,19 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
 
     return () => {
       onScrollIntro('');
-      let triggers = ScrollTrigger.getAll();
+      const triggers = ScrollTrigger.getAll();
       triggers.forEach((trigger) => {
         trigger.kill();
       });
     };
-  }, [videoReady, gsapReady, mainComponentGSAP, onScrollIntro, makeScroll, currentGsapState]);
+  }, [videoReady, mainComponentGSAP, onScrollIntro, makeScroll]);
 
   return (
     <section id='main' className='container main-section'>
       <div className='main-background'>
         <div className='background'></div>
         {/* Canvas 영역. */}
-        <VideoToCanvas
-          src={src640}
-          resolX={640}
-          resolY={360}
-          canvasReady={canvasReady}
-        />
+        <VideoToCanvas src={src640} resolX={640} resolY={360} canvasReady={canvasReady} />
       </div>
 
       <div className='main-content-frame'>
@@ -188,7 +162,8 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
           <div
             className='main-text'
             onMouseEnter={() => _onHover(' reverse-cursor')}
-            onMouseLeave={() => _onLeave()}>
+            onMouseLeave={() => _onLeave()}
+          >
             <span>FRONT - END DEVELOPER</span>
             <p>Doyoung Lee</p>
           </div>
@@ -198,21 +173,11 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         <div className='into-ment-frame'>
           <div className='intro-ment'>
             <div className='type-p'>
-              <SplitText
-                animation={'up'}
-                setTime={5}
-                scroll={'intro'}
-                index={'int'}
-              >
+              <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'}>
                 I've been a front developer for 4 years.
               </SplitText>
 
-              <SplitText
-                animation={'up'}
-                setTime={5}
-                scroll={'intro2'}
-                index={'intT'}
-              >
+              <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'intT'}>
                 This is the portfolio that introduces me for the first time.
               </SplitText>
             </div>
@@ -223,5 +188,4 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   );
 };
 
-// export default memo(withTranslation('translations')(Main));
 export default React.memo(Main);
