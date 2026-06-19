@@ -94,7 +94,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   React.useEffect(() => {
     SliderRef.current?.kill();
     startAnimation(willChange);
-  }, [row, startAnimation, willChange]);
+  }, [startAnimation, willChange]);
 
   // 아이콘 슬라이더가 화면에 보이는지 여부에 따라 애니메이션 동작 변경.
   React.useEffect(() => {
@@ -118,7 +118,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
       SliderRef.current?.kill();
       window.removeEventListener('resize', autoHeightContent);
     };
-  }, [autoHeightContent, startAnimation, startAnimation, willChange]);
+  }, [autoHeightContent]);
 
   return (
     <>

@@ -158,7 +158,8 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     [draw]
   );
 
-  // 화면 진입 시 이벤트 리스너 등록.
+  // 화면 진입 시 이벤트 리스너 등록. 마운트 시 1회 등록, 언마운트 시 해제 (원래 의도 유지).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 마운트 시 1회만 실행. drawCanvas/canvasReady 변화는 아래 effect에서 처리.
   React.useEffect(() => {
     if (canvasReady) {
       drawCanvas(canvasRef1.current, timeOutRef1, 0, true);
@@ -178,11 +179,10 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
       drawCanvas(canvasRef5.current, timeOutRef5, 4, false);
       drawCanvas(canvasRef6.current, timeOutRef6, 5, false);
     };
-    // 마운트 시 1회 등록, 언마운트 시 해제 (원래 의도 유지).
-    // biome-ignore lint/correctness/useExhaustiveDependencies: 마운트 시 1회만 실행해야 한다.
   }, []);
 
   // canvasReady의 상태에 따라 video 일시정지 및 clearTimeout.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: canvasReady 변화에만 반응해야 함. drawCanvas는 안정적인 useCallback.
   React.useEffect(() => {
     if (canvasReady) {
       canvasPlay.current = true;
@@ -192,7 +192,6 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
       virtualVideo.current?.pause();
       drawCanvas(canvasRef1.current, timeOutRef1, 0, false);
     }
-    // biome-ignore lint/correctness/useExhaustiveDependencies: canvasReady 변화에만 반응해야 한다.
   }, [canvasReady]);
 
   const canvasInfo = [

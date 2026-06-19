@@ -331,6 +331,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   }, [gsapReady, makeSmoothScrollbarforSkill, _onLeave]);
 
   // gsap준비된 경우 스크롤 트리커 연결.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: scrollSkew는 1회성 셋업으로 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     if (currentGsapState) {
       listScroller();

@@ -163,7 +163,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         trigger.kill();
       });
     };
-  }, [videoReady, gsapReady, mainComponentGSAP, onScrollIntro, makeScroll, currentGsapState]);
+  }, [videoReady, mainComponentGSAP, onScrollIntro, makeScroll]);
 
   return (
     <section id='main' className='container main-section'>

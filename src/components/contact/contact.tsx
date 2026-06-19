@@ -34,14 +34,14 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
   // setTime을 저장하고 이후 초기화를 위한 ref.
   const setTime = React.useRef<ReturnType<typeof setInterval>>(undefined);
 
-  // 반복 될 호출 명령.
-  const contactAnimation = () => {
+  // 반복 될 호출 명령. (ref/setState만 사용하므로 안정 함수)
+  const contactAnimation = React.useCallback(() => {
     if (qnumberRef.current < 3) {
       setQnumber(qnumberRef.current + 1);
     } else {
       setQnumber(1);
     }
-  };
+  }, []);
 
   // 화면 진입 및 contact가 활성화 되어있을 시,
   React.useEffect(() => {
@@ -57,7 +57,7 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
       // splitText 트리거 초기화.
       onContactText('');
     };
-  }, [currentContactState, onContactText]);
+  }, [currentContactState, onContactText, contactAnimation]);
 
   return (
     <div className='contact-area'>

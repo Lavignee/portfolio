@@ -417,6 +417,7 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
   }, [aboutAnimationReady, autoChangeText]);
 
   // gasp가 준비된 경우 트리거 및 설정 진행.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 currentGsapState 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     currentGsapState && aboutComponentGSAP();
 

@@ -23,7 +23,7 @@ const ScrollValueAnimation = () => {
     // 화면 로드 시 스크롤 퍼센트 계산. (0으로 나눠 NaN/Infinity가 되는 경우 0 처리)
     const scrollPercentCalc = Math.round((+currentScrollValue / +currentScrollLimit) * 100);
     setpercentCalc(Number.isFinite(scrollPercentCalc) ? scrollPercentCalc : 0);
-  }, [currentScrollLimit, currentScrollValue, setpercentCalc]);
+  }, [currentScrollLimit, currentScrollValue]);
 
   React.useEffect(() => {
     // 화면 로드 시 url에 따라 스크롤 퍼센트의 랜더 여부 변경.

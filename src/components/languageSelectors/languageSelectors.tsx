@@ -35,7 +35,7 @@ const LanguageSelectors = () => {
     setLangList(!LangList);
   };
 
-  const currentLangCheck = (value: string) => {
+  const currentLangCheck = React.useCallback((value: string) => {
     switch (value) {
       case 'ko':
         return setCurrentLang('한국어');
@@ -44,11 +44,11 @@ const LanguageSelectors = () => {
       default:
         return setCurrentLang('한국어');
     }
-  };
+  }, []);
 
   React.useEffect(() => {
     currentLangCheck(language);
-  }, [language]);
+  }, [language, currentLangCheck]);
 
   return (
     <div className='language-selectors-frame'>

@@ -7,14 +7,14 @@ const useWindowSize = () => {
     height: isSSR ? window.innerHeight : 800,
   });
 
-  const changeWindowSize = () => {
+  const changeWindowSize = React.useCallback(() => {
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-  };
+  }, []);
 
   React.useEffect(() => {
     window.addEventListener('resize', changeWindowSize);
     return () => window.removeEventListener('resize', changeWindowSize);
-  }, []);
+  }, [changeWindowSize]);
 
   return windowSize;
 };

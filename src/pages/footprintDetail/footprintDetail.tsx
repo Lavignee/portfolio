@@ -204,6 +204,7 @@ const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
   };
 
   // 스무스 스크롤 생성 이후 스크롤 트리거 연동.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 currentGsapState 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     // 현재 컨텐츠를 기준으로 스크롤 재생성.
     makeScroll(true);

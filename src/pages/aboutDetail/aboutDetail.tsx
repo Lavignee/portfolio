@@ -339,6 +339,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   }, [filmReady, gsapReady, makeScroll, _onLeave]);
 
   // gsap 및 추가 Film이 준비되면 스크롤트리거 생성 및 splitText 동작.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 준비 상태 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
   React.useEffect(() => {
     let firstTimer: ReturnType<typeof setTimeout>;
     let secondTimer: ReturnType<typeof setTimeout>;
