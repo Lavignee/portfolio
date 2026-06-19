@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import './style/index.scss';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
