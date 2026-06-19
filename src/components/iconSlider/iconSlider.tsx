@@ -30,10 +30,10 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
 
     const template = (
       <div className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
-        {randomNumber().map((item, idx) => {
+        {randomNumber().map((item) => {
           return (
             <div
-              key={line + idx}
+              key={`${line}-${item}`}
               className={`icon-content-frame${willChange ? ' will-change' : ''}`}
             >
               <div className='content' dangerouslySetInnerHTML={{ __html: svgs[item] }}></div>

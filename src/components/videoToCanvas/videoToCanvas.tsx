@@ -197,26 +197,32 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
 
   const canvasInfo = [
     {
+      id: 'canvas-1',
       position: 'right',
       targetRef: canvasRef1,
     },
     {
+      id: 'canvas-2',
       position: 'right',
       targetRef: canvasRef2,
     },
     {
+      id: 'canvas-3',
       position: 'left',
       targetRef: canvasRef3,
     },
     {
+      id: 'canvas-4',
       position: 'left',
       targetRef: canvasRef4,
     },
     {
+      id: 'canvas-5',
       position: 'right',
       targetRef: canvasRef5,
     },
     {
+      id: 'canvas-6',
       position: 'left',
       targetRef: canvasRef6,
     },
@@ -224,12 +230,16 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
 
   // canvas 템플릿.
   const canvasContent = (
-    content: { position: string; targetRef: React.RefObject<HTMLCanvasElement | null> }[]
+    content: {
+      id: string;
+      position: string;
+      targetRef: React.RefObject<HTMLCanvasElement | null>;
+    }[]
   ) => {
     const canvas = content.map((item, idx) => {
       return (
         <div
-          key={idx}
+          key={item.id}
           className={`canvas-frame targets target${idx + 1} ${item.position}${canvasReady ? ' will-change' : ''}`}
         >
           <canvas

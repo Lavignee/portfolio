@@ -272,7 +272,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
         pagination={{ clickable: false }}
       >
         {target.map((target, idx) => (
-          <SwiperSlide key={idx}>
+          <SwiperSlide key={target}>
             <img width='70%' height='auto' src={target} alt={`${kind} ${idx + 1}`} />
           </SwiperSlide>
         ))}
@@ -292,9 +292,9 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
   // 툴팁 템플릿.
   const TooltipContent = (targetInfo: { info: string; text: string }[]) => {
-    const result = targetInfo.map((item: { info: string; text: string }, idx) => {
+    const result = targetInfo.map((item: { info: string; text: string }) => {
       return (
-        <Tooltip key={item.text + idx} _onHover={_onHover} _onLeave={_onLeave} info={item.info}>
+        <Tooltip key={item.text} _onHover={_onHover} _onLeave={_onLeave} info={item.info}>
           {item.text}
         </Tooltip>
       );
@@ -377,7 +377,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
           <div className='first-content-area'>
             {/* 상단 화면에 출력 될 keyword 컨텐츠. */}
             {textCondition.map((textCondition, idx) => (
-              <div className='row keyword-frame' key={idx}>
+              <div className='row keyword-frame' key={textCondition.scroll}>
                 <div className={textCondition.colInfo}>
                   <div className='position-frame'>
                     {/* 타이틀 SplitText. */}
@@ -396,7 +396,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
                       {hashtag.hashtagFirst[idx].text.split('\n').map((item, idx) => {
                         return (
                           <SplitText
-                            key={idx}
+                            key={`${textCondition.index2}-${item}`}
                             animation={'up'}
                             scroll={textCondition.scroll}
                             setTime={15}
@@ -420,14 +420,14 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
           {/* 중단 화면에 출력 될 keyword 컨텐츠. */}
           <div className='second-content-area'>
             {textCondition2.map((textCondition2, idx) => (
-              <div key={idx} className='row keyword-frame'>
+              <div key={textCondition2.align} className='row keyword-frame'>
                 <div className={textCondition2.colInfo}>
                   <div className='position-frame'>
                     <h2 className='about-tag'>{hashtag.hashtagSecond[idx].title}</h2>
                     <div className='type-p'>
-                      {hashtag.hashtagSecond[idx].text.split('\n').map((item, idx) => {
+                      {hashtag.hashtagSecond[idx].text.split('\n').map((item) => {
                         return (
-                          <span key={idx}>
+                          <span key={`${textCondition2.align}-${item}`}>
                             {item}
                             <br />
                           </span>

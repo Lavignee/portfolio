@@ -295,9 +295,9 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
             <h2 className={opacity}>{content[currentTarget].name}</h2>
           </div>
           <p className={`${opacity}${content[currentTarget].workmanship}`}>
-            {content[currentTarget].summary.split('\n').map((item, idx) => {
+            {content[currentTarget].summary.split('\n').map((item) => {
               return (
-                <span key={idx}>
+                <span key={item}>
                   {item}
                   <br />
                 </span>

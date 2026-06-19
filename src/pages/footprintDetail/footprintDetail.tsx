@@ -31,8 +31,8 @@ interface ContentTextProp {
 // 슬라이드로 출력할 컨텐츠 템플릿.
 const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: ContentTextProp) => {
   const summarys: React.JSX.Element[] = [];
-  summary.forEach((item, i) => {
-    summarys.push(<span key={item + i}>{item}</span>);
+  summary.forEach((item) => {
+    summarys.push(<span key={item}>{item}</span>);
   });
   return (
     <div key={idx} className={`content-frame${isActive ? ' active' : ''}`}>
@@ -40,9 +40,9 @@ const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: Con
         <li className='keyword'>{keyword}</li>
         <li className='title'>{title}</li>
         <li className='date'>
-          {date?.split('\n').map((item, idx) => {
+          {date?.split('\n').map((item) => {
             return (
-              <React.Fragment key={idx}>
+              <React.Fragment key={item}>
                 {item}
                 <br />
               </React.Fragment>
@@ -54,9 +54,9 @@ const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: Con
           {summarys}
         </li>
         <li>
-          {text?.split('\n').map((item, idx) => {
+          {text?.split('\n').map((item) => {
             return (
-              <p key={idx}>
+              <p key={item}>
                 {item}
                 <br />
               </p>
