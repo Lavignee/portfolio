@@ -134,7 +134,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
       drawCanvas(canvasRef6.current, timeOutRef6, 5, false);
     }
     // 마운트 시 1회 등록, 언마운트 시 해제 (원래 의도 유지).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // biome-ignore lint/correctness/useExhaustiveDependencies: 마운트 시 1회만 실행해야 한다.
   }, [])
 
   // canvasReady의 상태에 따라 video 일시정지 및 clearTimeout.
@@ -147,7 +147,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
       virtualVideo.current?.pause();
       drawCanvas(canvasRef1.current, timeOutRef1, 0, false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // biome-ignore lint/correctness/useExhaustiveDependencies: canvasReady 변화에만 반응해야 한다.
   }, [canvasReady]);
 
   const canvasInfo = [
