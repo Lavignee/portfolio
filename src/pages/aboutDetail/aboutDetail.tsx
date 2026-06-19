@@ -81,8 +81,8 @@ const fourthIntroContent = introduce.introduce.fourth;
 const fourthTooltipContent = introduce.tooltipInfo.fourth;
 
 // 사용 될 이미지 배열로 정의.
-const growBackgroundImage2: any[] = [shop1, shop2, shop3, shop4];
-const growBackgroundImage3: any[] = [current1, current2, current3];
+const growBackgroundImage2: string[] = [shop1, shop2, shop3, shop4];
+const growBackgroundImage3: string[] = [current1, current2, current3];
 
 // Props로 받는 이벤트들에 대한 interface 정의.
 interface AboutDetailProps {
@@ -258,7 +258,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
   };
 
   // 이미지 슬라이드 템플릿.
-  const growBackgroundImageSlider = (target: any[], kind: string) => {
+  const growBackgroundImageSlider = (target: string[], kind: string) => {
     return (
       <Swiper
         modules={[Navigation, Pagination, EffectFade]}
@@ -305,7 +305,7 @@ const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
 
   // json string 데이터와 툴팁 템플릿 결합하여 컨텐츠 생성.
   const introduceContent = (target: string, element: JSX.Element[]) => {
-    const combineContent: any[] = target.split('$$');
+    const combineContent: (string | JSX.Element)[] = target.split('$$');
     let i = 0;
     combineContent.forEach((item, idx) => {
       if (idx % 2 !== 0) {

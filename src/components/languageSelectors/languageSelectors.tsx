@@ -24,9 +24,11 @@ const LanguageSelectors = () => {
 
   const [currentLang, setCurrentLang] = React.useState('');
   const [LangList, setLangList] = React.useState(false);
-  const changeLanguages = (e: any) => {
-    i18n.changeLanguage(e.target.dataset.lang);
-    onChangeLanguage(e.target.dataset.lang);
+  const changeLanguages = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const lang = e.currentTarget.dataset.lang;
+    if (!lang) return;
+    i18n.changeLanguage(lang);
+    onChangeLanguage(lang);
   };
 
   const listView = () => {

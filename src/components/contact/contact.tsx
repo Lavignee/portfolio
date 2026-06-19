@@ -32,7 +32,7 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
   const qnumberRef = React.useRef(qnumber);
   qnumberRef.current = qnumber;
   // setTime을 저장하고 이후 초기화를 위한 ref.
-  const setTime = React.useRef<any>(null);
+  const setTime = React.useRef<ReturnType<typeof setInterval>>();
 
   // 반복 될 호출 명령.
   const contactAnimation = () => {

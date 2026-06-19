@@ -4,7 +4,7 @@ import './videoToCanvas.scss';
 
 // Props로 받는 값에 대한 interface 정의.
 interface VideoToCanvasProps {
-  src: any;
+  src: string | URL;
   resolX: number;
   resolY: number;
   canvasReady: boolean;
@@ -12,10 +12,10 @@ interface VideoToCanvasProps {
 
 const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps) => {
   // video 및 source tag를 생성하여 전달받은 영상을 연계.
-  const makeVirtualVideoElement = (src: any) => {
+  const makeVirtualVideoElement = (src: string | URL) => {
     const video = document.createElement('video');
     const source = document.createElement('source');
-    source.setAttribute('src', src);
+    source.setAttribute('src', String(src));
     video.appendChild(source);
     return video;
   };
@@ -223,7 +223,9 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
   ];
 
   // canvas 템플릿.
-  const canvasContent = (content: { position: string; targetRef: any }[]) => {
+  const canvasContent = (
+    content: { position: string; targetRef: React.RefObject<HTMLCanvasElement> }[]
+  ) => {
     const canvas = content.map((item, idx) => {
       return (
         <div

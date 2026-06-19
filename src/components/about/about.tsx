@@ -29,7 +29,7 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
 
   const [nextText, setNextText] = React.useState(true);
   const [aboutAnimationReady, setAboutAnimationReady] = React.useState(false);
-  const savedChangeTarget = React.useRef<any>(null);
+  const savedChangeTarget = React.useRef<ReturnType<typeof setInterval>>();
 
   // gasp 애니메이션 정의.
   const aboutComponentGSAP = () => {
@@ -80,18 +80,16 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
 
     // 슬라이드 텍스트 그림자 설정.
     const changeTextParseIntModifiers = {
-      y: (y: any) => {
-        y = parseInt(y, 10);
-        var newY = y.toFixed(0);
+      y: (y: string) => {
+        const newY = parseInt(y, 10).toFixed(0);
         return `${newY}px`;
       },
     };
 
     // 어바웃 타이틀 그림자 설정.
     const yPercentParseIntModifiers = {
-      y: (y: any) => {
-        y = parseInt(y, 10);
-        var newY = y.toFixed(0);
+      y: (y: string) => {
+        const newY = parseInt(y, 10).toFixed(0);
         return `${newY}%`;
       },
     };

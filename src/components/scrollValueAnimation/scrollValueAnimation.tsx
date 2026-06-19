@@ -21,11 +21,9 @@ const ScrollValueAnimation = () => {
   const [percentCalc, setpercentCalc] = React.useState<number>(0);
 
   React.useEffect(() => {
-    // 화면 로드 시 스크롤 퍼센트 계산.
-    const scrollPercentCalc: any = ((+currentScrollValue / +currentScrollLimit) * 100).toFixed(0);
-    setpercentCalc(
-      !Number(scrollPercentCalc) || scrollPercentCalc === 'Infinity' ? 0 : scrollPercentCalc
-    );
+    // 화면 로드 시 스크롤 퍼센트 계산. (0으로 나눠 NaN/Infinity가 되는 경우 0 처리)
+    const scrollPercentCalc = Math.round((+currentScrollValue / +currentScrollLimit) * 100);
+    setpercentCalc(Number.isFinite(scrollPercentCalc) ? scrollPercentCalc : 0);
   }, [currentScrollLimit, currentScrollValue, setpercentCalc]);
 
   React.useEffect(() => {

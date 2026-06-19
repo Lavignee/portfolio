@@ -44,9 +44,9 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
 
   // 스크롤 트리거 설정.
   const mainComponentGSAP = React.useCallback(() => {
-    const canvasFrames = gsap.utils.toArray('.video-area .canvas-frame');
-    const targetToLefts = gsap.utils.toArray('.video-area .left');
-    const targetToRights = gsap.utils.toArray('.video-area .right');
+    const canvasFrames = gsap.utils.toArray<HTMLElement>('.video-area .canvas-frame');
+    const targetToLefts = gsap.utils.toArray<HTMLElement>('.video-area .left');
+    const targetToRights = gsap.utils.toArray<HTMLElement>('.video-area .right');
     const canvasTrigger = {
       trigger: '.main-text-frame',
       start: 'top',
@@ -54,7 +54,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       scrub: 1,
     };
 
-    canvasFrames.forEach((target: any) => {
+    canvasFrames.forEach((target) => {
       gsap.to(target, {
         scale: 0.8,
         y: -300,
@@ -69,7 +69,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       });
     });
 
-    targetToLefts.forEach((target: any) => {
+    targetToLefts.forEach((target) => {
       gsap.to(target, {
         x: -50,
         modifiers: {
@@ -83,7 +83,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       });
     });
 
-    targetToRights.forEach((target: any) => {
+    targetToRights.forEach((target) => {
       gsap.to(target, {
         x: 50,
         modifiers: {

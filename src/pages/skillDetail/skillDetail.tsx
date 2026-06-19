@@ -34,10 +34,10 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const lists = React.useRef<string[]>([]);
-  const scrollPosition = React.useRef<any>(null);
+  const lists = React.useRef<HTMLElement[]>([]);
+  const scrollPosition = React.useRef<HTMLUListElement | null>(null);
 
-  const [currentSkillScroller, setCurrentSkillScroller] = React.useState<any>(null);
+  const [currentSkillScroller, setCurrentSkillScroller] = React.useState<Scrollbar | null>(null);
   const [currentUrl, setCurrentUrl] = React.useState(location.pathname.split('/skill/')[1]);
   const [listHoverMotion, setListHoverMotion] = React.useState('');
   const [currentTarget, setCurrentTarget] = React.useState(0);
@@ -45,33 +45,28 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
 
   // 스무스 스크롤 재생성.
   const makeSmoothScrollbarforSkill = React.useCallback(() => {
-    let skillScrollBar: any;
+    const container = scrollPosition.current;
+    if (!container) return;
+
     // 기기에 따라 다른 스크롤 딜레이 적용.
-    if (isDesktop) {
-      skillScrollBar = Scrollbar.init(scrollPosition.current, {
-        damping: 0.02,
-        alwaysShowTracks: true,
-      });
-    } else {
-      skillScrollBar = Scrollbar.init(scrollPosition.current, {
-        damping: 0.1,
-        alwaysShowTracks: true,
-      });
-    }
+    const skillScrollBar = Scrollbar.init(container, {
+      damping: isDesktop ? 0.02 : 0.1,
+      alwaysShowTracks: true,
+    });
 
     // 새로운 스크롤 생성 시 위치 초기화.(재랜더가 아니므로 이전 위치로 인한 오류 방지.)
     skillScrollBar.setPosition(0, 0);
 
     //GSAP 스크롤 트리거에 스무스 스크롤의 스크롤 값 동기화.
-    ScrollTrigger.scrollerProxy(scrollPosition.current, {
+    ScrollTrigger.scrollerProxy(container, {
       scrollTop(value) {
         if (arguments.length) {
-          skillScrollBar.scrollTop = value;
+          skillScrollBar.scrollTop = value as number;
         }
         return skillScrollBar.scrollTop;
       },
     });
-    ScrollTrigger.defaults({ scroller: scrollPosition.current });
+    ScrollTrigger.defaults({ scroller: container });
     skillScrollBar.addListener(ScrollTrigger.update);
 
     // 다른 함수에서도 스크롤 컨트롤을 위해 state에 지정.
@@ -102,14 +97,14 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
   }, [_onLeave]);
 
   // skill 목록에 클릭 시
-  const changeList = (e: any) => {
+  const changeList = (e: React.MouseEvent<HTMLButtonElement>) => {
     // 클릭 된 목록이 현재 목록인지 체크하여,
-    if (e.target.dataset.list !== currentUrl) {
+    if (e.currentTarget.dataset.list !== currentUrl) {
       // 다른 경우 해당 url로 화면 다시 호출.
-      navigate(`/skill/${e.target.dataset.list}`);
+      navigate(`/skill/${e.currentTarget.dataset.list}`);
     } else {
       // 같은 경우 해당 목록의 최상단으로 이동.
-      currentSkillScroller.scrollTo(0, 0, 600);
+      currentSkillScroller?.scrollTo(0, 0, 600);
     }
   };
 
@@ -143,7 +138,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     }, 100);
   }, []);
 
-  const addToRefs = (el: any) => {
+  const addToRefs = (el: HTMLElement | null) => {
     if (el && !lists.current.includes(el) && currentGsapState) {
       lists.current.push(el);
     }
@@ -204,9 +199,9 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     summary: string;
   }) => {
     // skill 세부 목록의 중앙 영역을 계산.
-    const listHeight = scrollPosition.current.clientHeight / 3;
+    const listHeight = (scrollPosition.current?.clientHeight ?? 0) / 3;
     // skill 세부 목록의 중앙 영역으로 스크롤 이동.
-    currentSkillScroller.scrollTo(0, listHeight * (+target.number - 1), 600);
+    currentSkillScroller?.scrollTo(0, listHeight * (+target.number - 1), 600);
   };
 
   // Props로 받는 값에 대한 interface 정의.

@@ -6,7 +6,7 @@ import { shallow } from 'zustand/shallow';
 import './customCursor.scss';
 import useStore from '../../store/useStore';
 
-const CustomCursor = ({ children }: { children: any }) => {
+const CustomCursor = ({ children }: { children: React.ReactNode }) => {
   // 전역 스토어 액션.
   const cursorSecondClass = useStore((s) => s.changeSecondClassName);
 

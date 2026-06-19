@@ -8,7 +8,7 @@ import './iconSlider.scss';
 const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   const [willChange, setWillChange] = React.useState(sliderTrigger);
   const [row, setRow] = React.useState('');
-  const SliderRef = React.useRef<any | null>(null);
+  const SliderRef = React.useRef<gsap.core.Tween | null>(null);
 
   const svgs = Object.values(svg);
 
