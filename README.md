@@ -5,9 +5,9 @@
 ## 기술 스택
 
 - **UI**: React 19 + TypeScript
-- **번들러**: Vite 5
+- **번들러**: Vite 8 (Rolldown)
 - **상태 관리**: Zustand
-- **라우팅**: react-router-dom v6
+- **라우팅**: react-router-dom v7
 - **애니메이션**: GSAP (ScrollTrigger), smooth-scrollbar, Swiper
 - **다국어**: i18next + react-i18next
 - **스타일**: Sass
@@ -27,7 +27,7 @@ yarn start
 yarn build
 ```
 
-> Node 버전은 `.node-version`(18.16.0)을 따릅니다.
+> Node 버전은 `.node-version`(20.19.0)을 따릅니다.
 
 ## 스크립트
 
