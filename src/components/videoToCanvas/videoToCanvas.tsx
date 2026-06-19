@@ -34,12 +34,18 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
   const canvasRef5 = React.useRef<HTMLCanvasElement | null>(null);
   const canvasRef6 = React.useRef<HTMLCanvasElement | null>(null);
 
-  const timeOutRef1 = React.useRef<any>(null);
-  const timeOutRef2 = React.useRef<any>(null);
-  const timeOutRef3 = React.useRef<any>(null);
-  const timeOutRef4 = React.useRef<any>(null);
-  const timeOutRef5 = React.useRef<any>(null);
-  const timeOutRef6 = React.useRef<any>(null);
+  const timeOutRef1 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeOutRef2 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeOutRef3 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeOutRef4 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeOutRef5 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeOutRef6 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // play/pause 리스너를 등록/해제 시 동일 참조로 제거하기 위해 핸들러 저장.
+  const handlerRefs = React.useRef<Array<(() => void) | null>>([]);
+
+  // 타입 정의.
+  type TimeOutRef = React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
 
   // 영상의 해상도에 따라 각각 크기와 위치를 다시 적용.
   const videoSet = React.useMemo(() => [
@@ -65,54 +71,70 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
 
 
   // drawCanvas 에서 전달 받은 조건에 따라 프레임에 맞도록 이미지 갱신 또는 종료.
-  const draw = React.useCallback((video, context, timeOutRef, numbers) => {
+  // timeOutRef는 ref 객체를 받아 .current에 타이머 id를 저장해야 clearTimeout이 정상 동작한다.
+  const draw = React.useCallback((video: HTMLVideoElement, context: CanvasRenderingContext2D, timeOutRef: TimeOutRef, numbers: number) => {
     if (canvasPlay.current) {
-      timeOutRef = setTimeout(() => {
+      timeOutRef.current = setTimeout(() => {
         context.drawImage(video, 0, 0, resolX, resolY, videoSet[numbers].maskX, videoSet[numbers].maskY, videoSet[numbers].sizeX, videoSet[numbers].sizeY)
         draw(video, context, timeOutRef, numbers)
-      }, 1000 / 30, video, context)
-    } else {
-      clearTimeout(timeOutRef);
-      timeOutRef = null;
+      }, 1000 / 30)
+    } else if (timeOutRef.current) {
+      clearTimeout(timeOutRef.current);
+      timeOutRef.current = null;
     }
   }, [resolX, resolY, videoSet])
 
   // video의 동작 여부에 따라 canvas에 draw 조건 변경해서 호출.
   const drawCanvas = React.useCallback(
-    (canvasRefs: HTMLCanvasElement | null, timeOutRef: any, numbers: number, set: boolean) => {
+    (canvasRefs: HTMLCanvasElement | null, timeOutRef: TimeOutRef, numbers: number, set: boolean) => {
       const context = canvasRefs?.getContext('2d');
+      if (!context) return;
+
       if (set) {
         virtualVideo.current.muted = true;
         virtualVideo.current.loop = true;
 
-        virtualVideo.current?.addEventListener('play', () => draw(virtualVideo.current, context, timeOutRef, numbers));
-        virtualVideo.current?.addEventListener('pause', () => draw(virtualVideo.current, context, timeOutRef, numbers));
+        // 등록/해제에 동일한 핸들러 참조를 사용한다.
+        const handler = () => draw(virtualVideo.current, context, timeOutRef, numbers);
+        handlerRefs.current[numbers] = handler;
+        virtualVideo.current.addEventListener('play', handler);
+        virtualVideo.current.addEventListener('pause', handler);
       } else {
-        virtualVideo.current?.removeEventListener('play', () => draw(virtualVideo.current, context, timeOutRef, numbers));
-        virtualVideo.current?.removeEventListener('pause', () => draw(virtualVideo.current, context, timeOutRef, numbers));
+        const handler = handlerRefs.current[numbers];
+        if (handler) {
+          virtualVideo.current.removeEventListener('play', handler);
+          virtualVideo.current.removeEventListener('pause', handler);
+          handlerRefs.current[numbers] = null;
+        }
+        if (timeOutRef.current) {
+          clearTimeout(timeOutRef.current);
+          timeOutRef.current = null;
+        }
       }
     }, [draw])
 
   // 화면 진입 시 이벤트 리스너 등록.
   React.useEffect(() => {
     if (canvasReady) {
-      drawCanvas(canvasRef1.current, timeOutRef1.current, 0, true);
-      drawCanvas(canvasRef2.current, timeOutRef2.current, 1, true);
-      drawCanvas(canvasRef3.current, timeOutRef3.current, 2, true);
-      drawCanvas(canvasRef4.current, timeOutRef4.current, 3, true);
-      drawCanvas(canvasRef5.current, timeOutRef5.current, 4, true);
-      drawCanvas(canvasRef6.current, timeOutRef6.current, 5, true);
+      drawCanvas(canvasRef1.current, timeOutRef1, 0, true);
+      drawCanvas(canvasRef2.current, timeOutRef2, 1, true);
+      drawCanvas(canvasRef3.current, timeOutRef3, 2, true);
+      drawCanvas(canvasRef4.current, timeOutRef4, 3, true);
+      drawCanvas(canvasRef5.current, timeOutRef5, 4, true);
+      drawCanvas(canvasRef6.current, timeOutRef6, 5, true);
     }
 
     // 화면 벗어날 시 이벤트 리스너 삭제.
     return () => {
-      drawCanvas(canvasRef1.current, timeOutRef1.current, 0, false);
-      drawCanvas(canvasRef2.current, timeOutRef2.current, 1, false);
-      drawCanvas(canvasRef3.current, timeOutRef3.current, 2, false);
-      drawCanvas(canvasRef4.current, timeOutRef4.current, 3, false);
-      drawCanvas(canvasRef5.current, timeOutRef5.current, 4, false);
-      drawCanvas(canvasRef6.current, timeOutRef6.current, 5, false);
+      drawCanvas(canvasRef1.current, timeOutRef1, 0, false);
+      drawCanvas(canvasRef2.current, timeOutRef2, 1, false);
+      drawCanvas(canvasRef3.current, timeOutRef3, 2, false);
+      drawCanvas(canvasRef4.current, timeOutRef4, 3, false);
+      drawCanvas(canvasRef5.current, timeOutRef5, 4, false);
+      drawCanvas(canvasRef6.current, timeOutRef6, 5, false);
     }
+    // 마운트 시 1회 등록, 언마운트 시 해제 (원래 의도 유지).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // canvasReady의 상태에 따라 video 일시정지 및 clearTimeout.
@@ -123,8 +145,9 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     } else {
       canvasPlay.current = false;
       virtualVideo.current?.pause();
-      drawCanvas(canvasRef1.current, timeOutRef1.current, 0, false);
+      drawCanvas(canvasRef1.current, timeOutRef1, 0, false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasReady]);
 
   const canvasInfo = [

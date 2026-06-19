@@ -43,7 +43,7 @@ const ContentSwitcher = ({ _onHover, _onClick, _onLeave }: ContentSwitcherProps)
           path='/footprint'
           element={<FootprintDetail _onHover={_onHover} _onLeave={_onLeave} />}
         />
-        <Route element={NotFound} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </React.Suspense>
   );
