@@ -28,17 +28,6 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   const [videoReady, setVideoReady] = React.useState(false);
   const [canvasReady, setCanvasReady] = React.useState(true);
 
-  // TODO: 추후 리덕스를 개선하여, 본 펑션은 삭제해야함.
-  const delaySplit = React.useCallback(
-    (target: string) => {
-      const timeOut = setTimeout(() => {
-        target === 'intro' ? onScrollIntro('intro') : onScrollIntro('intro2');
-        clearTimeout(timeOut);
-      }, 0);
-    },
-    [onScrollIntro]
-  );
-
   // 스크롤 트리거 설정.
   const mainComponentGSAP = React.useCallback(() => {
     const canvasFrames = gsap.utils.toArray<HTMLElement>('.video-area .canvas-frame');
@@ -98,9 +87,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       scrollTrigger: {
         trigger: '.intro-ment',
         start: 'top center',
-        onEnter: () => delaySplit('intro'),
-        // onEnter: () => onScrollIntro('intro'),
-        // onEnterBack: () => onScrollIntro('intro2'),
+        onEnter: () => onScrollIntro('intro'),
         end: 'bottom center',
       },
     });
@@ -109,9 +96,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
       scrollTrigger: {
         trigger: '.intro-ment',
         start: 'top center-=400',
-        onEnter: () => delaySplit('intro2'),
-        // onEnter: () => onScrollIntro2('intro'),
-        // onEnterBack: () => onScrollIntro2('intro2'),
+        onEnter: () => onScrollIntro('intro2'),
         end: 'bottom center-=400',
       },
     });
@@ -145,7 +130,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
         end: 'bottom top+=72',
       },
     });
-  }, [delaySplit]);
+  }, [onScrollIntro]);
 
   // gsap가 준비된 후 애니메이션 동작.
   React.useEffect(() => {

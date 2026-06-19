@@ -1,8 +1,10 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [react()],
+  // `*.svg?react` 임포트는 React 컴포넌트로, 일반 `*.svg`는 URL로 처리.
+  plugins: [svgr(), react()],
   server: {
     port: 1234,
   },
