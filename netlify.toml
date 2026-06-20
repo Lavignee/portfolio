@@ -1,6 +1,0 @@
-# Netlify 배포 설정.
-# Node 버전은 .node-version(20.19.0)을 단일 출처로 따름.
-# SPA 라우팅 폴백은 public/_redirects(/* -> /index.html 200)에서 처리.
-[build]
-  command = "yarn build"
-  publish = "dist"
