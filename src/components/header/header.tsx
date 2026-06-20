@@ -6,9 +6,9 @@ import { useShallow } from 'zustand/react/shallow';
 
 import './header.scss';
 
-import CloseIcon from '../../static/images/close-icon.svg?react';
-import HeaderLogo from '../../static/images/header-logo.svg?react';
-import MenuIcon from '../../static/images/menu-icon.svg?react';
+import CloseIcon from '@/assets/icons/close-icon.svg';
+import HeaderLogo from '@/assets/icons/header-logo.svg';
+import MenuIcon from '@/assets/icons/menu-icon.svg';
 import useStore from '../../store/useStore';
 
 // Props로 받는 이벤트들에 대한 interface 정의.

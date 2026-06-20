@@ -9,14 +9,14 @@ import { useShallow } from 'zustand/react/shallow';
 import hashtag from '../../data/dataAbout/hashtagAbout.json';
 import introduce from '../../data/dataAbout/introduceAbout.json';
 
-import child from '../../static/images/child.jpg';
-import current1 from '../../static/images/current1.jpg';
-import current2 from '../../static/images/current2.jpg';
-import current3 from '../../static/images/current3.jpg';
-import shop1 from '../../static/images/shop1.jpg';
-import shop2 from '../../static/images/shop2.jpg';
-import shop3 from '../../static/images/shop3.jpg';
-import shop4 from '../../static/images/shop4.jpg';
+const child = '/images/child.jpg';
+const current1 = '/images/current1.jpg';
+const current2 = '/images/current2.jpg';
+const current3 = '/images/current3.jpg';
+const shop1 = '/images/shop1.jpg';
+const shop2 = '/images/shop2.jpg';
+const shop3 = '/images/shop3.jpg';
+const shop4 = '/images/shop4.jpg';
 
 import './aboutDetail.scss';
 import 'swiper/css';

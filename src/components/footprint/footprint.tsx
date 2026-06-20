@@ -3,9 +3,9 @@ import React from 'react';
 import { isDesktop as isDesktopRaw } from 'react-device-detect';
 import useMounted from '@/hooks/useMounted';
 import { useShallow } from 'zustand/react/shallow';
-import footprint from '../../static/images/footprint.jpg';
-import footprintArrow from '../../static/images/footprint-arrow.svg';
-import footprintCircle from '../../static/images/footprint-circle.svg';
+const footprint = '/images/footprint.jpg';
+const footprintArrow = '/images/footprint-arrow.svg';
+const footprintCircle = '/images/footprint-circle.svg';
 
 import './footprint.scss';
 

@@ -5,9 +5,9 @@ import useMounted from '@/hooks/useMounted';
 import { isDesktop, isMobile } from 'react-device-detect';
 import { useShallow } from 'zustand/react/shallow';
 
-import aboutOne from '../../static/images/about-one.jpg';
-import aboutThree from '../../static/images/about-three.jpg';
-import aboutTwo from '../../static/images/about-two.jpg';
+const aboutOne = '/images/about-one.jpg';
+const aboutThree = '/images/about-three.jpg';
+const aboutTwo = '/images/about-two.jpg';
 
 import './about.scss';
 import useStore from '../../store/useStore';

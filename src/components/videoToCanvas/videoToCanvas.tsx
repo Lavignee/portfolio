@@ -24,7 +24,10 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
   const canvasPlay = React.useRef<boolean>(canvasReady);
 
   // video 및 source tag를 생성하여 저장할 ref.
-  const virtualVideo = React.useRef<HTMLVideoElement>(makeVirtualVideoElement(src));
+  // SSR/prerender 시 document가 없으므로 클라이언트에서만 생성한다.
+  const virtualVideo = React.useRef<HTMLVideoElement | null>(
+    typeof document === 'undefined' ? null : makeVirtualVideoElement(src)
+  );
 
   // 생성된 video 태그의 영상을 canvas에 프레임별로 최신화 할 ref.
   const canvasRef1 = React.useRef<HTMLCanvasElement | null>(null);
@@ -131,22 +134,23 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
       set: boolean
     ) => {
       const context = canvasRefs?.getContext('2d');
-      if (!context) return;
+      const video = virtualVideo.current;
+      if (!context || !video) return;
 
       if (set) {
-        virtualVideo.current.muted = true;
-        virtualVideo.current.loop = true;
+        video.muted = true;
+        video.loop = true;
 
         // 등록/해제에 동일한 핸들러 참조를 사용한다.
-        const handler = () => draw(virtualVideo.current, context, timeOutRef, numbers);
+        const handler = () => draw(video, context, timeOutRef, numbers);
         handlerRefs.current[numbers] = handler;
-        virtualVideo.current.addEventListener('play', handler);
-        virtualVideo.current.addEventListener('pause', handler);
+        video.addEventListener('play', handler);
+        video.addEventListener('pause', handler);
       } else {
         const handler = handlerRefs.current[numbers];
         if (handler) {
-          virtualVideo.current.removeEventListener('play', handler);
-          virtualVideo.current.removeEventListener('pause', handler);
+          video.removeEventListener('play', handler);
+          video.removeEventListener('pause', handler);
           handlerRefs.current[numbers] = null;
         }
         if (timeOutRef.current) {

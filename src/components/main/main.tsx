@@ -17,8 +17,8 @@ interface MainProps {
 }
 
 const Main = ({ _onHover, _onLeave }: MainProps) => {
-  // 배경에 사용 될 영상 파일.
-  const src640 = new URL('../../static/videos/video640.mp4', import.meta.url);
+  // 배경에 사용 될 영상 파일(public 웹루트 경로).
+  const src640 = '/videos/video640.mp4';
 
   // 전역 스토어 액션.
   const onScrollIntro = useStore((s) => s.splitTextStart);

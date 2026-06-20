@@ -10,7 +10,7 @@ import interest from '../../data/dataSkill/interestSkill.json';
 import language from '../../data/dataSkill/languageSkill.json';
 import lib from '../../data/dataSkill/libSkill.json';
 import tool from '../../data/dataSkill/toolSkill.json';
-import svg from '../../static/images/icon-svg.json';
+import svg from '@/data/icon-svg.json';
 
 import './skillDetail.scss';
 
