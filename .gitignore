@@ -10,3 +10,6 @@ package-lock.json
 /out/
 next-env.d.ts
 .vercel
+
+# Test/QA artifacts
+.playwright-mcp/
