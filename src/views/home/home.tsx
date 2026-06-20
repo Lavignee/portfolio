@@ -1,18 +1,17 @@
+'use client';
+
 import './home.scss';
 
 import About from '../../components/about';
 import Footprint from '../../components/footprint';
 import Main from '../../components/main';
 import Skill from '../../components/skill';
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 
-// Props로 받는 이벤트들에 대한 interface 정의.
-interface HomeProps {
-  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  _onClick: (path: string, hoverText?: string | null) => void;
-  _onLeave: (hoverText?: string | null) => void;
-}
+const Home = () => {
+  // App Router에서는 props 전달이 불가하므로 커서 핸들러를 훅에서 받는다.
+  const { onHover: _onHover, onClick: _onClick, onLeave: _onLeave } = useCursorHandlers();
 
-const Home = ({ _onHover, _onClick, _onLeave }: HomeProps) => {
   return (
     <div className='home-area'>
       <Main _onHover={_onHover} _onLeave={_onLeave} />

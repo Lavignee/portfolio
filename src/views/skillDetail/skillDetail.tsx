@@ -1,8 +1,10 @@
+'use client';
+
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import interest from '../../data/dataSkill/interestSkill.json';
 
 import language from '../../data/dataSkill/languageSkill.json';
@@ -14,31 +16,28 @@ import './skillDetail.scss';
 
 import Scrollbar from 'smooth-scrollbar';
 import useStore from '../../store/useStore';
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Props로 받는 이벤트들에 대한 interface 정의.
-interface SkillDetailProps {
-  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  _onLeave: (hoverText?: string | null) => void;
-}
-
-const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
+const SkillDetail = () => {
+  // App Router에서는 props 전달이 불가하므로 커서 핸들러를 훅에서 받는다.
+  const { onHover: _onHover, onLeave: _onLeave } = useCursorHandlers();
   // 전역 스토어 액션.
   const gsapReady = useStore((s) => s.changeGsapState);
 
   // 전역 스토어 구독.
   const currentGsapState = useStore((s) => s.currentGsapState);
 
-  // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
-  const location = useLocation();
-  const navigate = useNavigate();
+  // next/navigation으로 라우트 파라미터 확인 및 화면 이동.
+  const router = useRouter();
+  const params = useParams<{ list: string }>();
 
   const lists = React.useRef<HTMLElement[]>([]);
   const scrollPosition = React.useRef<HTMLUListElement | null>(null);
 
   const [currentSkillScroller, setCurrentSkillScroller] = React.useState<Scrollbar | null>(null);
-  const [currentUrl, setCurrentUrl] = React.useState(location.pathname.split('/skill/')[1]);
+  const [currentUrl, setCurrentUrl] = React.useState(params.list);
   const [listHoverMotion, setListHoverMotion] = React.useState('');
   const [currentTarget, setCurrentTarget] = React.useState(0);
   const [opacity, setOpacity] = React.useState('');
@@ -101,7 +100,7 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     // 클릭 된 목록이 현재 목록인지 체크하여,
     if (e.currentTarget.dataset.list !== currentUrl) {
       // 다른 경우 해당 url로 화면 다시 호출.
-      navigate(`/skill/${e.currentTarget.dataset.list}`);
+      router.push(`/skill/${e.currentTarget.dataset.list}`);
     } else {
       // 같은 경우 해당 목록의 최상단으로 이동.
       currentSkillScroller?.scrollTo(0, 0, 600);
@@ -119,10 +118,10 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
     // 활성화 된 skill content 초기화.
     setCurrentTarget(0);
     // 현재 url 정보를 활성화 목록에 재정의.
-    setCurrentUrl(location.pathname.split('/skill/')[1]);
+    setCurrentUrl(params.list);
     // 재정의된 내용으로 스크롤 다시 생성.
     makeSmoothScrollbarforSkill();
-  }, [gsapReady, location.pathname, makeSmoothScrollbarforSkill]);
+  }, [gsapReady, params.list, makeSmoothScrollbarforSkill]);
 
   //스크롤 트리거가 변경 된 경우.
   const changeTarget = React.useCallback((id: number) => {
@@ -339,11 +338,11 @@ const SkillDetail = ({ _onHover, _onLeave }: SkillDetailProps) => {
 
   // url 및 현재 데이터가 언매치 시,
   React.useEffect(() => {
-    if (location.pathname.split('/skill/')[1] !== currentUrl) {
+    if (params.list !== currentUrl) {
       // 스크롤 재생성 및 스크롤 트리거 재연동.
       changeHistoryList();
     }
-  }, [changeHistoryList, currentUrl, location.pathname]);
+  }, [changeHistoryList, currentUrl, params.list]);
 
   return (
     <div className='skill-detail'>

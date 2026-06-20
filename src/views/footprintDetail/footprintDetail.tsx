@@ -1,3 +1,5 @@
+'use client';
+
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
@@ -14,6 +16,7 @@ import 'swiper/css/effect-fade';
 
 import TextSlider from '../../components/textSlider';
 import useStore from '../../store/useStore';
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,13 +71,9 @@ const ContentText = ({ isActive, idx, keyword, title, date, summary, text }: Con
   );
 };
 
-// Props로 받는 이벤트들에 대한 interface 정의.
-interface FootprintDetailProps {
-  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  _onLeave: (hoverText?: string | null) => void;
-}
-
-const FootprintDetail = ({ _onHover, _onLeave }: FootprintDetailProps) => {
+const FootprintDetail = () => {
+  // App Router에서는 props 전달이 불가하므로 커서 핸들러를 훅에서 받는다.
+  const { onHover: _onHover, onLeave: _onLeave } = useCursorHandlers();
   // 전역 스토어 액션.
   const makeScroll = useStore((s) => s.makeSmoothScroll);
 

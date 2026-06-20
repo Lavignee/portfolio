@@ -1,11 +1,13 @@
+'use client';
+
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import './notFound.scss';
 
 const NotFound = () => {
-  // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
-  const navigate = useNavigate();
-  const location = useLocation();
+  // next/navigation으로 url 확인 및 화면 이동.
+  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <div className='not-found-section'>
@@ -13,7 +15,7 @@ const NotFound = () => {
         <h1>이 페이지는 존재하지 않습니다.</h1>
         <br />
         <br />
-        <h2>들어오신 경로: '{location.pathname}'</h2>
+        <h2>들어오신 경로: '{pathname}'</h2>
         <br />
         <br />
         <h3>
@@ -25,7 +27,7 @@ const NotFound = () => {
         </h3>
         <br />
         <br />
-        <button type='button' onClick={() => navigate(-1)}>
+        <button type='button' onClick={() => router.back()}>
           go back
         </button>
       </div>

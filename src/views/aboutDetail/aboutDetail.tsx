@@ -1,3 +1,5 @@
+'use client';
+
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
@@ -26,6 +28,7 @@ import SplitText from '../../components/splitText';
 import Tooltip from '../../components/tooltip';
 import useStore from '../../store/useStore';
 import useWindowSize from '../../utils/useWindowSize';
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,13 +87,9 @@ const fourthTooltipContent = introduce.tooltipInfo.fourth;
 const growBackgroundImage2: string[] = [shop1, shop2, shop3, shop4];
 const growBackgroundImage3: string[] = [current1, current2, current3];
 
-// Props로 받는 이벤트들에 대한 interface 정의.
-interface AboutDetailProps {
-  _onHover: (hoverCursor: string, hoverText?: string | null) => void;
-  _onLeave: (hoverText?: string | null) => void;
-}
-
-const AboutDetail = ({ _onHover, _onLeave }: AboutDetailProps) => {
+const AboutDetail = () => {
+  // App Router에서는 props 전달이 불가하므로 커서 핸들러를 훅에서 받는다.
+  const { onHover: _onHover, onLeave: _onLeave } = useCursorHandlers();
   // 전역 스토어 액션.
   const onScrollAbout = useStore((s) => s.splitTextStart);
   const makeScroll = useStore((s) => s.makeSmoothScroll);
