@@ -1,11 +1,13 @@
 import { gsap } from 'gsap';
 import React from 'react';
 
-import svg from '../../static/images/icon-svg.json';
+import svg from '@/data/icon-svg.json';
+import useMounted from '@/hooks/useMounted';
 
 import './iconSlider.scss';
 
 const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
+  const mounted = useMounted();
   const [willChange, setWillChange] = React.useState(sliderTrigger);
   const [row, setRow] = React.useState('');
   const SliderRef = React.useRef<gsap.core.Tween | null>(null);
@@ -92,9 +94,10 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
 
   // 높이값이 특정 구간에 들어올 시 기존 슬라이더들 제거 및 높이값에 맞는 슬라이드를 생성하여 동작.
   React.useEffect(() => {
+    if (!mounted) return;
     SliderRef.current?.kill();
     startAnimation(willChange);
-  }, [startAnimation, willChange]);
+  }, [mounted, startAnimation, willChange]);
 
   // 아이콘 슬라이더가 화면에 보이는지 여부에 따라 애니메이션 동작 변경.
   React.useEffect(() => {
@@ -119,6 +122,9 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
       window.removeEventListener('resize', autoHeightContent);
     };
   }, [autoHeightContent]);
+
+  // 슬라이더는 window.innerHeight/Math.random에 의존하므로 클라이언트 마운트 후에만 렌더.
+  if (!mounted) return null;
 
   return (
     <>

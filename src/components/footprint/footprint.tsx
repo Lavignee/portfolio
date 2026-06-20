@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import React from 'react';
-import { isDesktop } from 'react-device-detect';
+import { isDesktop as isDesktopRaw } from 'react-device-detect';
+import useMounted from '@/hooks/useMounted';
 import { useShallow } from 'zustand/react/shallow';
 import footprint from '../../static/images/footprint.jpg';
 import footprintArrow from '../../static/images/footprint-arrow.svg';
@@ -19,6 +20,10 @@ interface FootprintProps {
 }
 
 const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
+  // 렌더에서만 쓰는 디바이스 분기는 하이드레이션 불일치를 막기 위해 마운트 후 값으로 게이트.
+  const mounted = useMounted();
+  const isDesktop = mounted ? isDesktopRaw : false;
+
   // 전역 스토어 구독.
   const [currentButtonDelay, currentScrollLimit, currentScrollValue] = useStore(
     useShallow((s) => [s.currentButtonDelay, s.currentScrollLimit, s.currentScrollValue])

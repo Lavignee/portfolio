@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
+import useMounted from '@/hooks/useMounted';
 import { isDesktop, isMobile } from 'react-device-detect';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -21,6 +22,12 @@ interface AboutProps {
 }
 
 const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
+  // 렌더에서만 쓰는 디바이스 분기는 하이드레이션 불일치를 막기 위해 마운트 후 값으로 게이트.
+  // (effect 내부의 isDesktop은 마운트 후 실행되므로 raw 값을 그대로 사용)
+  const mounted = useMounted();
+  const isDesktopView = mounted && isDesktop;
+  const isMobileView = mounted && isMobile;
+
   // 전역 스토어 구독.
   const [currentGsapState, currentButtonDelay] = useStore(
     useShallow((s) => [s.currentGsapState, s.currentButtonDelay])
@@ -465,8 +472,8 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
         <div className='text-animation-frame'>
           <div
             className={`first-line${
-              isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
-            }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
+              isDesktopView && aboutAnimationReady ? ' desktop will-change' : ''
+            }${isMobileView ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
           >
             {nextText ? (
               <div>
@@ -481,8 +488,8 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
 
           <div
             className={`second-line${
-              isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
-            }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
+              isDesktopView && aboutAnimationReady ? ' desktop will-change' : ''
+            }${isMobileView ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
           >
             {nextText ? (
               <div>
@@ -497,8 +504,8 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
 
           <div
             className={`third-line${
-              isDesktop && aboutAnimationReady ? ' desktop will-change' : ''
-            }${isMobile ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
+              isDesktopView && aboutAnimationReady ? ' desktop will-change' : ''
+            }${isMobileView ? ' mobile' : ''}${nextText ? ' second' : ' first'}`}
           >
             {nextText ? (
               <div>
@@ -516,7 +523,7 @@ const About = ({ _onHover, _onClick, _onLeave }: AboutProps) => {
         <div className='about-detail-button'>
           <button
             type='button'
-            className={`${isDesktop && aboutAnimationReady ? 'will-change' : ''}${isMobile ? ' mobile' : ''}${currentButtonDelay ? ' delay' : ''}`}
+            className={`${isDesktopView && aboutAnimationReady ? 'will-change' : ''}${isMobileView ? ' mobile' : ''}${currentButtonDelay ? ' delay' : ''}`}
             onMouseEnter={() => _onHover(' go-cursor')}
             onMouseLeave={() => _onLeave()}
             onClick={() => _onClick('/about')}

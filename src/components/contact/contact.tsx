@@ -1,5 +1,6 @@
 import React from 'react';
-import { isMobile } from 'react-device-detect';
+import { isMobile as isMobileRaw } from 'react-device-detect';
+import useMounted from '@/hooks/useMounted';
 import kakaoIcon from '../../static/images/kakao-icon.svg';
 import mailIcon from '../../static/images/mail-icon.svg';
 import mobileIcon from '../../static/images/mobile-icon.svg';
@@ -19,6 +20,10 @@ interface ContactProps {
 }
 
 const Contact = ({ _onHover, _onLeave }: ContactProps) => {
+  // 렌더에서만 쓰는 디바이스 분기는 하이드레이션 불일치를 막기 위해 마운트 후 값으로 게이트.
+  const mounted = useMounted();
+  const isMobile = mounted ? isMobileRaw : false;
+
   // 전역 스토어 액션.
   const onContactText = useStore((s) => s.splitTextStart);
 
