@@ -24,11 +24,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 import SplitText from '../../components/splitText';
 import Tooltip from '../../components/tooltip';
 import useStore from '../../store/useStore';
 import useWindowSize from '../../utils/useWindowSize';
-import useCursorHandlers from '@/hooks/useCursorHandlers';
 
 gsap.registerPlugin(ScrollTrigger);
 

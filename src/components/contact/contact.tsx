@@ -1,6 +1,7 @@
 import React from 'react';
 import { isMobile as isMobileRaw } from 'react-device-detect';
 import useMounted from '@/hooks/useMounted';
+
 const kakaoIcon = '/images/kakao-icon.svg';
 const mailIcon = '/images/mail-icon.svg';
 const mobileIcon = '/images/mobile-icon.svg';

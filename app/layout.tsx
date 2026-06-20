@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <html lang="ko">
+    <html lang='ko'>
       <body>
         <AppShell>{children}</AppShell>
       </body>

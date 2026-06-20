@@ -14,9 +14,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 import TextSlider from '../../components/textSlider';
 import useStore from '../../store/useStore';
-import useCursorHandlers from '@/hooks/useCursorHandlers';
 
 gsap.registerPlugin(ScrollTrigger);
 

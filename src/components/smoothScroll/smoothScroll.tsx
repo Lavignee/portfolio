@@ -1,8 +1,8 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { usePathname } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 
 import './smoothScroll.scss';

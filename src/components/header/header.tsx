@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import React from 'react';
 import { usePathname } from 'next/navigation';
+import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import './header.scss';

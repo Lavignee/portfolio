@@ -2,21 +2,20 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { useParams, useRouter } from 'next/navigation';
+import svg from '@/data/icon-svg.json';
 import interest from '../../data/dataSkill/interestSkill.json';
-
 import language from '../../data/dataSkill/languageSkill.json';
 import lib from '../../data/dataSkill/libSkill.json';
 import tool from '../../data/dataSkill/toolSkill.json';
-import svg from '@/data/icon-svg.json';
 
 import './skillDetail.scss';
 
 import Scrollbar from 'smooth-scrollbar';
-import useStore from '../../store/useStore';
 import useCursorHandlers from '@/hooks/useCursorHandlers';
+import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 

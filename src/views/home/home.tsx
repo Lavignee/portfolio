@@ -2,11 +2,11 @@
 
 import './home.scss';
 
+import useCursorHandlers from '@/hooks/useCursorHandlers';
 import About from '../../components/about';
 import Footprint from '../../components/footprint';
 import Main from '../../components/main';
 import Skill from '../../components/skill';
-import useCursorHandlers from '@/hooks/useCursorHandlers';
 
 const Home = () => {
   // App Router에서는 props 전달이 불가하므로 커서 핸들러를 훅에서 받는다.

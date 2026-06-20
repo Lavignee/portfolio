@@ -1,7 +1,7 @@
 import React from 'react';
 import './scrollValueAnimation.scss';
-import { isMobile } from 'react-device-detect';
 import { usePathname } from 'next/navigation';
+import { isMobile } from 'react-device-detect';
 import { useShallow } from 'zustand/react/shallow';
 import useStore from '../../store/useStore';
 
@@ -27,11 +27,7 @@ const ScrollValueAnimation = () => {
 
   React.useEffect(() => {
     // 화면 로드 시 url에 따라 스크롤 퍼센트의 랜더 여부 변경.
-    if (
-      pathname === '/' ||
-      pathname === '/about' ||
-      (pathname === '/footprint' && isMobile)
-    ) {
+    if (pathname === '/' || pathname === '/about' || (pathname === '/footprint' && isMobile)) {
       setPercentView(true);
     } else {
       setPercentView(false);

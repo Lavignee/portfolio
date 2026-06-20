@@ -1,9 +1,9 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import useMounted from '@/hooks/useMounted';
 import { isDesktop, isMobile } from 'react-device-detect';
 import { useShallow } from 'zustand/react/shallow';
+import useMounted from '@/hooks/useMounted';
 
 const aboutOne = '/images/about-one.jpg';
 const aboutThree = '/images/about-three.jpg';
