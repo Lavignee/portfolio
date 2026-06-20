@@ -42,7 +42,9 @@ const SplitText = ({
       setSplit((split) => [
         ...split,
         <div
-          key={index + (childrenLength - 1)}
+          // key = index(인스턴스 식별자) + 누적 배열 길이. split.length는 append마다 단조 증가하므로
+          // 재발화로 Splitting이 다시 돌아도 충돌하지 않는다. 정상 1회 분해 시엔 (childrenLength-1)과 동일 값.
+          key={`${index}-${split.length}`}
           className={`${depth ? 'split-depth-frame' : `split-target ${animation ? animation : 'default'}`}`}
         >
           {depth ? (
