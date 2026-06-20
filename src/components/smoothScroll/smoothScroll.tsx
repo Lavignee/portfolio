@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 import { isDesktop } from 'react-device-detect';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 
 import './smoothScroll.scss';
@@ -18,8 +18,8 @@ interface SmoothScrollProps {
 }
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
-  // react-router-dom으로 url 확인 및 화면 이동 명령어 정의.
-  const location = useLocation();
+  // next/navigation으로 현재 경로 확인.
+  const pathname = usePathname();
 
   // 전역 스토어 액션 (zustand 액션은 참조가 안정적이라 의존성 배열에 안전하게 사용 가능).
   const gsapReady = useStore((s) => s.changeGsapState);
@@ -99,7 +99,7 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
 
   return (
     <div
-      className={`smooth-scroll-frame${location.pathname === '/footprint' ? ' opacity-none' : ''}`}
+      className={`smooth-scroll-frame${pathname === '/footprint' ? ' opacity-none' : ''}`}
       ref={smoothScroller}
     >
       <div>{children}</div>

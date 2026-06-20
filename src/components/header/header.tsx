@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 
 import './header.scss';
@@ -39,22 +39,22 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
       ])
     );
 
-  // react-router-dom으로 url 확인.
-  const location = useLocation();
+  // next/navigation으로 현재 경로 확인.
+  const pathname = usePathname();
 
   const [blur, setBlur] = React.useState('');
 
   // 로고 마우스 오버 시,
   const onlogoHover = () => {
     // home 화면에서는 top text 출력 이외 화면에서는 home text 출력.
-    location.pathname === '/' ? _onHover(' bl-cursor', 'top?') : _onHover(' bl-cursor', 'Home?');
+    pathname === '/' ? _onHover(' bl-cursor', 'top?') : _onHover(' bl-cursor', 'Home?');
   };
 
   // 로고 클릭 시,
   const logoClick = () => {
     if (!currentSmoothTopState) {
       // home 화면에서는 최상위로 이외 화면에서는 home으로 이동.
-      location.pathname === '/' ? onSmoothTop(true) : _onClick('/', 'top?');
+      pathname === '/' ? onSmoothTop(true) : _onClick('/', 'top?');
     } else {
       return false;
     }
@@ -66,7 +66,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
     onGnbListClick();
 
     // 클릭된 목록의 url과 현재 url이 다를 시,
-    if (location.pathname !== path) {
+    if (pathname !== path) {
       // 해당 url로 화면 변경.
       pageTimer(path, 100);
     } else {
