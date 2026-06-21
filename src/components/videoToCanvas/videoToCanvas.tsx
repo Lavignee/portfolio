@@ -31,7 +31,6 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     typeof document === 'undefined' ? null : makeVirtualVideoElement(src)
   );
 
-  const areaRef = React.useRef<HTMLDivElement | null>(null);
   const canvasRef1 = React.useRef<HTMLCanvasElement | null>(null);
   const canvasRef2 = React.useRef<HTMLCanvasElement | null>(null);
   const canvasRef3 = React.useRef<HTMLCanvasElement | null>(null);
@@ -45,7 +44,6 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
   const runningRef = React.useRef(false);
 
   // 보임/탭 가시성으로 그리기 게이팅.
-  const [inView, setInView] = React.useState(true);
   // 숨김 탭으로 로드된 경우 첫 포커스 전까지 디코더가 도는 것을 막기 위해 현재 가시성으로 초기화.
   const [pageVisible, setPageVisible] = React.useState(
     () => typeof document === 'undefined' || !document.hidden
@@ -114,17 +112,6 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     frameId.current = null;
   }, []);
 
-  // 화면 밖이면 정지(IntersectionObserver). canvasReady와 AND 조건으로 합쳐 '보이고 + 섹션 활성'일 때만.
-  React.useEffect(() => {
-    const el = areaRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver((entries) => setInView(entries[0].isIntersecting), {
-      rootMargin: '200px',
-    });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   // 탭 숨김 시 그리기/디코더까지 정지.
   React.useEffect(() => {
     const onVis = () => setPageVisible(!document.hidden);
@@ -132,14 +119,14 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     return () => document.removeEventListener('visibilitychange', onVis);
   }, []);
 
-  // canvasReady(스크롤로 main 활성) && 보임 && 탭 보임일 때만 비디오 재생 + 그리기.
+  // canvasReady(스크롤로 main 섹션 활성, off-screen 시 false) && 탭 보임일 때만 비디오 재생 + 그리기.
   React.useEffect(() => {
     const video = virtualVideo.current;
     if (!video) return;
     video.muted = true;
     video.loop = true;
 
-    const active = canvasReady && inView && pageVisible;
+    const active = canvasReady && pageVisible;
     if (active) {
       void video.play().catch(() => {});
       startLoop();
@@ -149,7 +136,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     }
 
     return () => stopLoop();
-  }, [canvasReady, inView, pageVisible, startLoop, stopLoop]);
+  }, [canvasReady, pageVisible, startLoop, stopLoop]);
 
   const canvasInfo = [
     { id: 'canvas-1', position: 'right', targetRef: canvasRef1 },
@@ -178,11 +165,7 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     ));
   };
 
-  return (
-    <div ref={areaRef} className='video-area'>
-      {canvasContent(canvasInfo)}
-    </div>
-  );
+  return <div className='video-area'>{canvasContent(canvasInfo)}</div>;
 };
 
 export default VideoToCanvas;
