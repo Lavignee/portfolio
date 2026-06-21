@@ -6,47 +6,43 @@ import useMounted from '@/hooks/useMounted';
 
 import './iconSlider.scss';
 
+// 정적 svg 목록 — 모듈 1회 평가.
+const svgs = Object.values(svg);
+
 const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   const mounted = useMounted();
   const [willChange, setWillChange] = React.useState(sliderTrigger);
   const [row, setRow] = React.useState('');
   const SliderRef = React.useRef<gsap.core.Tween | null>(null);
 
-  const svgs = Object.values(svg);
-
-  // 아이콘 슬라이더 생성.
-  const SiliderTemplate = ({ line }: { line: number }) => {
-    // 중복된 아이콘은 제외한 랜덤 배열 생성.
-    const randomNumber = () => {
+  // 각 라인(0~11)의 아이콘 인덱스 집합을 마운트 시 1회만 생성한다.
+  // 과거엔 렌더마다 새 랜덤 집합을 만들어, willChange 토글(스크롤 진입)마다 아이콘이 바뀌며 깜빡였다.
+  const lineIcons = React.useMemo(() => {
+    const pick = () => {
       const result: number[] = [];
       while (result.length < 10) {
-        const min = Math.ceil(0);
-        const max = Math.floor(svgs.length);
-        const number = Math.floor(Math.random() * (max - min)) + min;
-        if (!result.includes(number)) {
-          result.push(number);
-        }
+        const number = Math.floor(Math.random() * svgs.length);
+        if (!result.includes(number)) result.push(number);
       }
       return result;
     };
+    return Array.from({ length: 12 }, () => pick());
+  }, []);
 
-    const template = (
-      <div className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
-        {randomNumber().map((item) => {
-          return (
-            <div
-              key={`${line}-${item}`}
-              className={`icon-content-frame${willChange ? ' will-change' : ''}`}
-            >
-              <div className='content' dangerouslySetInnerHTML={{ __html: svgs[item] }}></div>
-            </div>
-          );
-        })}
-      </div>
-    );
-
-    return template;
-  };
+  // 아이콘 슬라이더 한 줄 생성. (컴포넌트가 아닌 일반 함수 — 인라인 JSX로 렌더해,
+  //  매 렌더마다 서브트리 전체가 리마운트되던 churn을 막는다.)
+  const renderLine = (line: number) => (
+    <div key={line} className={`icon-slider ${row}${line % 2 !== 0 ? ' reverse' : ''}`}>
+      {lineIcons[line].map((item) => (
+        <div
+          key={`${line}-${item}`}
+          className={`icon-content-frame${willChange ? ' will-change' : ''}`}
+        >
+          <div className='content' dangerouslySetInnerHTML={{ __html: svgs[item] }}></div>
+        </div>
+      ))}
+    </div>
+  );
 
   // 애니메이션 생성
   const startAnimation = React.useCallback((willChange: boolean) => {
@@ -126,22 +122,15 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
   // 슬라이더는 window.innerHeight/Math.random에 의존하므로 클라이언트 마운트 후에만 렌더.
   if (!mounted) return null;
 
-  return (
-    <>
-      {<SiliderTemplate line={0} />}
-      {<SiliderTemplate line={1} />}
-      {<SiliderTemplate line={2} />}
-      {<SiliderTemplate line={3} />}
-      {window.innerHeight > 739.2 && <SiliderTemplate line={4} />}
-      {window.innerHeight > 950.4 && <SiliderTemplate line={5} />}
-      {window.innerHeight > 1161.16 && <SiliderTemplate line={6} />}
-      {window.innerHeight > 1372.8 && <SiliderTemplate line={7} />}
-      {window.innerHeight > 1584 && <SiliderTemplate line={8} />}
-      {window.innerHeight > 1795.2 && <SiliderTemplate line={9} />}
-      {window.innerHeight > 2006.4 && <SiliderTemplate line={10} />}
-      {window.innerHeight > 2217.6 && <SiliderTemplate line={11} />}
-    </>
-  );
+  // 화면 높이에 따라 노출할 라인 결정.(기존 임계값 유지: line4 >739.2 ... line11 >2217.6)
+  const h = window.innerHeight;
+  const thresholds = [739.2, 950.4, 1161.16, 1372.8, 1584, 1795.2, 2006.4, 2217.6];
+  const visibleLines = [0, 1, 2, 3];
+  thresholds.forEach((t, idx) => {
+    if (h > t) visibleLines.push(idx + 4);
+  });
+
+  return <>{visibleLines.map((line) => renderLine(line))}</>;
 };
 
 export default IconSlider;

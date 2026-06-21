@@ -34,19 +34,13 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
   // splittext 호출 순서를 리랜더를 위해 state에 작성.
   const [qnumber, setQnumber] = React.useState(1);
 
-  // 리랜더 이후에도 기존의 값을 저장하기 위해 ref 사용.
-  const qnumberRef = React.useRef(qnumber);
-  qnumberRef.current = qnumber;
   // setTime을 저장하고 이후 초기화를 위한 ref.
   const setTime = React.useRef<ReturnType<typeof setInterval>>(undefined);
 
-  // 반복 될 호출 명령. (ref/setState만 사용하므로 안정 함수)
+  // 반복 될 호출 명령. (함수형 업데이트만 사용하므로 안정 함수)
+  // 렌더에서는 qnumber state를 직접 읽는다(ref를 렌더 중 읽으면 React Compiler가 추적하지 못해 화면이 멈출 수 있음).
   const contactAnimation = React.useCallback(() => {
-    if (qnumberRef.current < 3) {
-      setQnumber(qnumberRef.current + 1);
-    } else {
-      setQnumber(1);
-    }
+    setQnumber((prev) => (prev < 3 ? prev + 1 : 1));
   }, []);
 
   // 화면 진입 및 contact가 활성화 되어있을 시,
@@ -83,17 +77,17 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
         {/* 상단 splitText 영역. */}
         <div className='container'>
           <div className={`back-text${currentContactState ? ' open' : ' close'}`}>
-            {qnumberRef.current === 1 && (
+            {qnumber === 1 && (
               <SplitText animation={'up'} scroll={'all'} index={'con1'}>
                 What should I do for you?
               </SplitText>
             )}
-            {qnumberRef.current === 2 && (
+            {qnumber === 2 && (
               <SplitText animation={'up'} scroll={'all'} index={'con2'}>
                 Could you tell me about the project?
               </SplitText>
             )}
-            {qnumberRef.current === 3 && (
+            {qnumber === 3 && (
               <SplitText animation={'up'} scroll={'all'} index={'con3'}>
                 I will reply by email as soon as possible.
               </SplitText>

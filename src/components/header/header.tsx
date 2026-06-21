@@ -9,14 +9,16 @@ import './header.scss';
 import CloseIcon from '@/assets/icons/close-icon.svg';
 import HeaderLogo from '@/assets/icons/header-logo.svg';
 import MenuIcon from '@/assets/icons/menu-icon.svg';
+import type { CursorHandlers } from '@/hooks/useCursorHandlers';
 import useStore from '../../store/useStore';
 
-// Props로 받는 이벤트들에 대한 interface 정의.
+// 커서 핸들러 시그니처는 useCursorHandlers의 CursorHandlers를 단일 출처로 재사용한다.
+// (과거엔 _onHover의 1번째 인자를 path로 잘못 명명하고 _onClick의 hoverText를 필수로 선언해 실제 훅과 불일치했다.)
 interface HeaderProps {
-  _onHover: (path: string, hoverText?: string | null) => void;
-  _onClick: (path: string, hoverText: string) => void;
-  _onLeave: (hoverText?: string | null) => void;
-  pageTimer: (path: string, timer: number) => void;
+  _onHover: CursorHandlers['onHover'];
+  _onClick: CursorHandlers['onClick'];
+  _onLeave: CursorHandlers['onLeave'];
+  pageTimer: CursorHandlers['pageTimer'];
 }
 
 gsap.registerPlugin(ScrollTrigger);
