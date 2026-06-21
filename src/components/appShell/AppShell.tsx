@@ -2,7 +2,7 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { type ReactNode, useEffect } from 'react';
 
 import Contact from '@/components/contact';
@@ -34,6 +34,21 @@ const AppShell = ({ children }: { children: ReactNode }) => {
     closeGnb();
     closeContact();
   }, [pathname, closeGnb, closeContact]);
+
+  // 주요 라우트를 마운트 후 프리페치해 첫 내비게이션 체감 속도를 높인다.
+  const router = useRouter();
+  useEffect(() => {
+    for (const route of [
+      '/about',
+      '/footprint',
+      '/skill/language',
+      '/skill/lib',
+      '/skill/tool',
+      '/skill/interest',
+    ]) {
+      router.prefetch(route);
+    }
+  }, [router]);
 
   return (
     // 커서 돔.

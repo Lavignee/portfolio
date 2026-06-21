@@ -276,11 +276,29 @@ const AboutDetail = () => {
         ))}
         <div
           className='swiper-button-next'
+          role='button'
+          tabIndex={0}
+          aria-label='다음 슬라이드'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.currentTarget.click();
+            }
+          }}
           onMouseEnter={() => _onHover(' bl-cursor', 'next')}
           onMouseLeave={() => _onLeave()}
         ></div>
         <div
           className='swiper-button-prev'
+          role='button'
+          tabIndex={0}
+          aria-label='이전 슬라이드'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.currentTarget.click();
+            }
+          }}
           onMouseEnter={() => _onHover(' bl-cursor', 'prev')}
           onMouseLeave={() => _onLeave()}
         ></div>

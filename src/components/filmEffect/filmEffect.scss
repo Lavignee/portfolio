@@ -18,7 +18,7 @@
 .noise-frame {
   @extend %default;
   opacity: 0.05;
-  background: url(#{$img-url}noise.gif);
+  background: url(#{$img-url}noise.webp);
 
   @media (max-width: $bp-m) {
     opacity: 0.03;

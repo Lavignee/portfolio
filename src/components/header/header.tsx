@@ -172,6 +172,8 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
               role='button'
               tabIndex={0}
               aria-label='open menu'
+              aria-expanded={currentGnbState}
+              aria-controls='gnb-menu'
               onClick={onGnbButtonClick(' wh-cursor', 'Close?')}
               onKeyDown={onActivateKey(onGnbButtonClick(' wh-cursor', 'Close?'))}
               onMouseEnter={gnbButtonHover}
@@ -184,7 +186,7 @@ const Header = ({ _onHover, _onClick, _onLeave, pageTimer }: HeaderProps) => {
       </header>
 
       {/* Gnb 메뉴 화면 */}
-      <div className='gnb-area'>
+      <div className='gnb-area' id='gnb-menu'>
         <div className={`gnb-background${currentGnbState ? ' active' : ''}`}></div>
         <div className={`fixed-frame${currentGnbState ? ' view' : ''}`}>
           <div className='container relative gnb-container'>
