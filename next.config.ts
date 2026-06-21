@@ -14,7 +14,23 @@ const nextConfig: NextConfig = {
   turbopack: {
     rules: {
       '*.svg': {
-        loaders: ['@svgr/webpack'],
+        loaders: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              // SVGR 기본 SVGO는 removeViewBox로 viewBox를 제거해, SVG가 컨테이너 크기에 맞춰
+              // 스케일되지 않고 잘려 보인다(헤더 MENU/CLOSE/로고 깨짐). viewBox를 유지해 반응형 스케일 복구.
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'preset-default',
+                    params: { overrides: { removeViewBox: false } },
+                  },
+                ],
+              },
+            },
+          },
+        ],
         as: '*.js',
       },
     },

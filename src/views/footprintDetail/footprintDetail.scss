@@ -43,6 +43,16 @@
         position: absolute;
       }
 
+      // Swiper 12는 화살표를 폰트(::after)가 아닌 인라인 SVG(.swiper-navigation-icon)로 주입하는데,
+      // Swiper 기본 CSS가 이 SVG를 버튼 100%로 늘려 거대 버튼(width:50%·풀높이)을 꽉 채운다. 고정 크기로 제한.
+      .swiper-navigation-icon {
+        position: absolute;
+        top: 50%;
+        width: 4rem;
+        height: auto;
+        transform: translateY(-50%);
+      }
+
       &:hover {
         animation: focusing 0.5s linear;
       }
@@ -54,12 +64,20 @@
       &:after {
         left: 0;
       }
+
+      .swiper-navigation-icon {
+        left: 0;
+      }
     }
 
     .swiper-button-next {
       right: 0;
 
       &:after {
+        right: 0;
+      }
+
+      .swiper-navigation-icon {
         right: 0;
       }
     }

@@ -205,6 +205,15 @@
           position: absolute;
         }
 
+        // Swiper 12가 주입하는 인라인 SVG 화살표가 거대 버튼을 꽉 채우는 것 방지(고정 크기·세로 중앙).
+        .swiper-navigation-icon {
+          position: absolute;
+          top: 50%;
+          width: 4rem;
+          height: auto;
+          transform: translateY(-50%);
+        }
+
         &:hover {
           animation: focusing 0.5s linear;
         }
@@ -216,12 +225,20 @@
         &:after {
           left: 0;
         }
+
+        .swiper-navigation-icon {
+          left: 0;
+        }
       }
 
       .swiper-button-next {
         right: 0;
 
         &:after {
+          right: 0;
+        }
+
+        .swiper-navigation-icon {
           right: 0;
         }
       }

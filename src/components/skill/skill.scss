@@ -53,8 +53,12 @@
     .list-frame {
       transform-style: preserve-3d;
       perspective: 60rem;
+      // .list가 rotateY(-30deg)로 3D상 부모 평면보다 뒤로 기울어, 투명한 list-frame이 hit-test를
+      // 가로채 링크 hover/클릭이 막혔다. 레이아웃 컨테이너는 이벤트를 통과시키고 .list만 상호작용하게 한다.
+      pointer-events: none;
 
       .list {
+        pointer-events: auto;
         z-index: 0;
         transform: translate3d(0, 0, 0) rotateY(-30deg);
         transform-origin: right center;
