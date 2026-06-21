@@ -75,7 +75,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
       setRow('four');
     } else if (window.innerHeight < 950.4) {
       setRow('five');
-    } else if (window.innerHeight < 1161.16) {
+    } else if (window.innerHeight < 1161.6) {
       setRow('six');
     } else if (window.innerHeight < 1372.8) {
       setRow('seven');
@@ -124,7 +124,7 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
 
   // 화면 높이에 따라 노출할 라인 결정.(기존 임계값 유지: line4 >739.2 ... line11 >2217.6)
   const h = window.innerHeight;
-  const thresholds = [739.2, 950.4, 1161.16, 1372.8, 1584, 1795.2, 2006.4, 2217.6];
+  const thresholds = [739.2, 950.4, 1161.6, 1372.8, 1584, 1795.2, 2006.4, 2217.6];
   const visibleLines = [0, 1, 2, 3];
   thresholds.forEach((t, idx) => {
     if (h > t) visibleLines.push(idx + 4);

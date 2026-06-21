@@ -142,11 +142,12 @@ const Contact = ({ _onHover, _onLeave }: ContactProps) => {
 
                   <div className='link'>
                     <span>
-                      <img width='100%' height='100%' src={mailIcon} alt='github icon' />
+                      <img width='100%' height='100%' src={mailIcon} alt='' />
                     </span>
                     <a
                       href='https://github.com/Lavignee/portfolio'
-                      target='_black'
+                      target='_blank'
+                      rel='noopener noreferrer'
                       onMouseEnter={() => _onHover(' go-cursor')}
                       onMouseLeave={() => _onLeave()}
                     >

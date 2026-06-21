@@ -63,14 +63,8 @@ const Footprint = ({ _onHover, _onClick, _onLeave }: FootprintProps) => {
         <div className='container footprint-title-area'>
           <div className='footprint-content'>
             <div className='footprint-circle-area'>
-              {isDesktop && (
-                <img
-                  width='100%'
-                  height='auto'
-                  src={footprintCircle}
-                  alt='footprint design circle'
-                />
-              )}
+              {/* 회전 장식 — 모바일 반응형 CSS가 존재하므로 isDesktop 게이트 제거(모바일에서도 노출). */}
+              <img width='100%' height='auto' src={footprintCircle} alt='' />
             </div>
 
             <h2>Footprint</h2>

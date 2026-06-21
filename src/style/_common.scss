@@ -50,10 +50,32 @@ body {
   }
 }
 
-html,
-button,
-a {
-  cursor: none;
+// 커스텀 커서(cursor:none)는 실제 마우스 기기에서만 적용. 터치 기기에서 커서가 사라지는 UX 방지.
+@media (hover: hover) and (pointer: fine) {
+  html,
+  button,
+  a {
+    cursor: none;
+  }
+}
+
+// 키보드 포커스 가시화. 전역 outline:0(_reset)로 포커스가 안 보여 WCAG 2.4.7 위반이던 것 복구.
+// :focus-visible은 키보드 탐색에만 링을 그려 마우스 사용 감성은 유지.
+:focus-visible {
+  outline: 2px solid $p-m;
+  outline-offset: 2px;
+}
+
+// 모션 민감 사용자 대응(WCAG 2.3.3) — CSS 애니메이션/트랜지션 최소화.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 header {

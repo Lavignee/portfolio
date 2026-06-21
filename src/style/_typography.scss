@@ -86,26 +86,12 @@
 //    font-display: swap;
 // }
 
-// 'NEXON Lv2 Gothic'
-@font-face {
-  font-family: 'NEXON Lv2 Gothic Light';
-  font-style: normal;
-  font-weight: 300;
-  src: local('NEXON Lv2 Gothic Light'), url('/fonts/NEXON-Lv2-Gothic-Light.woff') format('woff');
-  font-display: swap;
-}
+// 'NEXON Lv2 Gothic' — Regular만 실제 사용(Light/Bold @font-face 및 폰트파일 제거, ~1.4MB 절감).
 @font-face {
   font-family: 'NEXON Lv2 Gothic';
   font-style: normal;
   font-weight: 400;
   src: local('NEXON Lv2 Gothic'), url('/fonts/NEXON-Lv2-Gothic.woff') format('woff');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'NEXON Lv2 Gothic Bold';
-  font-style: normal;
-  font-weight: 700;
-  src: local('NEXON Lv2 Gothic Bold'), url('/fonts/NEXON-Lv2-Gothic-Bold.woff') format('woff');
   font-display: swap;
 }
 

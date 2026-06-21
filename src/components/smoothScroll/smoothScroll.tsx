@@ -59,9 +59,9 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
 
     // 스크롤 트리거와 연계.
     ScrollTrigger.scrollerProxy(smoothScroller.current, {
-      scrollTop(value) {
-        if (arguments.length) {
-          scrollbar.scrollTop = value as number;
+      scrollTop(...args) {
+        if (args.length) {
+          scrollbar.scrollTop = args[0] as number;
         }
         return scrollbar.scrollTop;
       },

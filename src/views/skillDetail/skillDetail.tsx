@@ -19,6 +19,9 @@ import useStore from '../../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// svg 아이콘 맵 — 정적 데이터라 모듈 1회 평가(렌더마다 재생성 방지).
+const SVG_MAP = new Map(Object.entries(svg));
+
 const SkillDetail = () => {
   // App Router에서는 props 전달이 불가하므로 커서 핸들러를 훅에서 받는다.
   const { onHover: _onHover, onLeave: _onLeave } = useCursorHandlers();
@@ -62,9 +65,9 @@ const SkillDetail = () => {
 
     //GSAP 스크롤 트리거에 스무스 스크롤의 스크롤 값 동기화.
     ScrollTrigger.scrollerProxy(container, {
-      scrollTop(value) {
-        if (arguments.length) {
-          skillScrollBar.scrollTop = value as number;
+      scrollTop(...args) {
+        if (args.length) {
+          skillScrollBar.scrollTop = args[0] as number;
         }
         return skillScrollBar.scrollTop;
       },
@@ -218,6 +221,7 @@ const SkillDetail = () => {
         <button
           type='button'
           className={currentUrl === targetUrl ? 'active' : ''}
+          aria-current={currentUrl === targetUrl ? 'page' : undefined}
           onClick={(e) => changeList(e)}
           onMouseEnter={() => _onHover(' focus-cursor')}
           onMouseLeave={onListLeave}
@@ -231,13 +235,6 @@ const SkillDetail = () => {
 
   // skill 세부 목록 및 컨텐츠 템플릿.
   const contents = (contentKind: string) => {
-    // svg json을 읽어와서 키와 값으로 할당.
-    const svgs = Object.entries(svg);
-    const svgContent = new Map();
-    svgs.forEach((item) => {
-      svgContent.set(item[0], item[1]);
-    });
-
     // url에 따라 출력할 json 데이터를 매치.
     const content =
       currentUrl === 'language'
@@ -249,6 +246,9 @@ const SkillDetail = () => {
             : currentUrl === 'interest'
               ? interest.interest
               : [{ number: 0, id: '', name: '', workmanship: 0, summary: '' }];
+
+    // 목록 전환 타이밍에 currentTarget이 새 목록 길이를 벗어날 수 있어 안전 가드(undefined 접근→화이트스크린 방지).
+    const active = content[currentTarget] ?? content[0];
 
     // skill 세부 목록 템플릿
     return contentKind === 'list' ? (
@@ -268,10 +268,14 @@ const SkillDetail = () => {
             onMouseEnter={() => listHover(content.number)}
             onMouseLeave={onListLeave}
           >
-            {svgContent.has(content.id) === false ? (
+            {SVG_MAP.has(content.id) === false ? (
               <div>{content.name}</div>
             ) : (
-              <div dangerouslySetInnerHTML={{ __html: svgContent.get(content.id) }}></div>
+              <div
+                role='img'
+                aria-label={content.name}
+                dangerouslySetInnerHTML={{ __html: SVG_MAP.get(content.id) ?? '' }}
+              ></div>
             )}
           </div>
         </li>
@@ -284,17 +288,17 @@ const SkillDetail = () => {
         </div>
         <div className='content'>
           <div>
-            <div className={`levels level-${content[currentTarget].workmanship} ${opacity}`}>
+            <div className={`levels level-${active.workmanship} ${opacity}`}>
               <span></span>
               <span></span>
               <span></span>
               <span></span>
               <span></span>
             </div>
-            <h2 className={opacity}>{content[currentTarget].name}</h2>
+            <h2 className={opacity}>{active.name}</h2>
           </div>
-          <p className={`${opacity}${content[currentTarget].workmanship}`}>
-            {content[currentTarget].summary.split('\n').map((item) => {
+          <p className={`${opacity}${active.workmanship}`}>
+            {active.summary.split('\n').map((item) => {
               return (
                 <span key={item}>
                   {item}
@@ -304,7 +308,7 @@ const SkillDetail = () => {
             })}
           </p>
         </div>
-        <span className={`back-text ${opacity}`}>{content[currentTarget].name}</span>
+        <span className={`back-text ${opacity}`}>{active.name}</span>
       </>
     );
   };
