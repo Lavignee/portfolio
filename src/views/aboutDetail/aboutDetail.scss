@@ -211,7 +211,6 @@
           top: 50%;
           width: 4rem;
           height: auto;
-          transform: translateY(-50%);
         }
 
         &:hover {
@@ -226,8 +225,11 @@
           left: 0;
         }
 
+        // prev 화살표 — Swiper의 rotate(180) 좌향 반전이 세로중앙 transform과 충돌해 사라지면
+        // 화살표가 오른쪽을 가리킨다. 반전+세로중앙을 함께 명시하고 !important로 확실히 적용.
         .swiper-navigation-icon {
           left: 0;
+          transform: translateY(-50%) rotate(180deg) !important;
         }
       }
 
@@ -240,6 +242,7 @@
 
         .swiper-navigation-icon {
           right: 0;
+          transform: translateY(-50%) !important;
         }
       }
 
