@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import React from 'react';
-import { isDesktop } from 'react-device-detect';
+import { isDesktop } from '@/utils/device';
 import { useShallow } from 'zustand/react/shallow';
 
 import './customCursor.scss';

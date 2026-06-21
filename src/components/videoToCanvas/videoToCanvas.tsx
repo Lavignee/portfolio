@@ -10,6 +10,12 @@ interface VideoToCanvasProps {
   canvasReady: boolean;
 }
 
+// requestVideoFrameCallback 미지원 브라우저(구 Firefox 등) 폴백 판정을 위한 타입.
+type VideoWithRVFC = HTMLVideoElement & {
+  requestVideoFrameCallback?: (cb: () => void) => number;
+  cancelVideoFrameCallback?: (id: number) => void;
+};
+
 const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps) => {
   // video 및 source tag를 생성하여 전달받은 영상을 연계.
   const makeVirtualVideoElement = (src: string | URL) => {
@@ -20,16 +26,12 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
     return video;
   };
 
-  // setTimeout에서 최신화 값을 참조하기 위한 ref.
-  const canvasPlay = React.useRef<boolean>(canvasReady);
-
-  // video 및 source tag를 생성하여 저장할 ref.
-  // SSR/prerender 시 document가 없으므로 클라이언트에서만 생성한다.
+  // video 태그 ref. SSR/prerender 시 document가 없으므로 클라이언트에서만 생성.
   const virtualVideo = React.useRef<HTMLVideoElement | null>(
     typeof document === 'undefined' ? null : makeVirtualVideoElement(src)
   );
 
-  // 생성된 video 태그의 영상을 canvas에 프레임별로 최신화 할 ref.
+  const areaRef = React.useRef<HTMLDivElement | null>(null);
   const canvasRef1 = React.useRef<HTMLCanvasElement | null>(null);
   const canvasRef2 = React.useRef<HTMLCanvasElement | null>(null);
   const canvasRef3 = React.useRef<HTMLCanvasElement | null>(null);
@@ -37,198 +39,125 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
   const canvasRef5 = React.useRef<HTMLCanvasElement | null>(null);
   const canvasRef6 = React.useRef<HTMLCanvasElement | null>(null);
 
-  const timeOutRef1 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timeOutRef2 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timeOutRef3 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timeOutRef4 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timeOutRef5 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timeOutRef6 = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  // 단일 프레임 루프 id(rVFC 우선, 폴백 rAF).
+  const frameId = React.useRef<number | null>(null);
+  const usingRVFC = React.useRef(false);
+  const runningRef = React.useRef(false);
 
-  // play/pause 리스너를 등록/해제 시 동일 참조로 제거하기 위해 핸들러 저장.
-  const handlerRefs = React.useRef<Array<(() => void) | null>>([]);
-
-  // 타입 정의.
-  type TimeOutRef = React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
+  // 보임/탭 가시성으로 그리기 게이팅.
+  const [inView, setInView] = React.useState(true);
+  // 숨김 탭으로 로드된 경우 첫 포커스 전까지 디코더가 도는 것을 막기 위해 현재 가시성으로 초기화.
+  const [pageVisible, setPageVisible] = React.useState(
+    () => typeof document === 'undefined' || !document.hidden
+  );
 
   // 영상의 해상도에 따라 각각 크기와 위치를 다시 적용.
   const videoSet = React.useMemo(
     () => [
-      {
-        maskX: -(resolX / 2),
-        maskY: 0,
-        sizeX: resolX * 3,
-        sizeY: resolY * 3,
-      },
-      {
-        maskX: 0,
-        maskY: -(resolY / 3),
-        sizeX: resolX * 3,
-        sizeY: resolY * 3,
-      },
-      {
-        maskX: -(resolX * 1.7),
-        maskY: -(resolY * 0.4),
-        sizeX: resolX * 3.2,
-        sizeY: resolY * 3.2,
-      },
-      {
-        maskX: -(resolX * 1.2),
-        maskY: -(resolY / 0.8),
-        sizeX: resolX * 3,
-        sizeY: resolY * 3,
-      },
-      {
-        maskX: -(resolX / 4),
-        maskY: -(resolY / 1.5),
-        sizeX: resolX * 2,
-        sizeY: resolY * 2,
-      },
-      {
-        maskX: -(resolX * 0.5),
-        maskY: -resolY,
-        sizeX: resolX * 2,
-        sizeY: resolY * 2,
-      },
+      { maskX: -(resolX / 2), maskY: 0, sizeX: resolX * 3, sizeY: resolY * 3 },
+      { maskX: 0, maskY: -(resolY / 3), sizeX: resolX * 3, sizeY: resolY * 3 },
+      { maskX: -(resolX * 1.7), maskY: -(resolY * 0.4), sizeX: resolX * 3.2, sizeY: resolY * 3.2 },
+      { maskX: -(resolX * 1.2), maskY: -(resolY / 0.8), sizeX: resolX * 3, sizeY: resolY * 3 },
+      { maskX: -(resolX / 4), maskY: -(resolY / 1.5), sizeX: resolX * 2, sizeY: resolY * 2 },
+      { maskX: -(resolX * 0.5), maskY: -resolY, sizeX: resolX * 2, sizeY: resolY * 2 },
     ],
     [resolX, resolY]
   );
 
-  // drawCanvas 에서 전달 받은 조건에 따라 프레임에 맞도록 이미지 갱신 또는 종료.
-  // timeOutRef는 ref 객체를 받아 .current에 타이머 id를 저장해야 clearTimeout이 정상 동작한다.
-  const draw = React.useCallback(
-    (
-      video: HTMLVideoElement,
-      context: CanvasRenderingContext2D,
-      timeOutRef: TimeOutRef,
-      numbers: number
-    ) => {
-      if (canvasPlay.current) {
-        timeOutRef.current = setTimeout(() => {
-          context.drawImage(
-            video,
-            0,
-            0,
-            resolX,
-            resolY,
-            videoSet[numbers].maskX,
-            videoSet[numbers].maskY,
-            videoSet[numbers].sizeX,
-            videoSet[numbers].sizeY
-          );
-          draw(video, context, timeOutRef, numbers);
-        }, 1000 / 30);
-      } else if (timeOutRef.current) {
-        clearTimeout(timeOutRef.current);
-        timeOutRef.current = null;
-      }
-    },
-    [resolX, resolY, videoSet]
-  );
-
-  // video의 동작 여부에 따라 canvas에 draw 조건 변경해서 호출.
-  const drawCanvas = React.useCallback(
-    (
-      canvasRefs: HTMLCanvasElement | null,
-      timeOutRef: TimeOutRef,
-      numbers: number,
-      set: boolean
-    ) => {
-      const context = canvasRefs?.getContext('2d');
-      const video = virtualVideo.current;
-      if (!context || !video) return;
-
-      if (set) {
-        video.muted = true;
-        video.loop = true;
-
-        // 등록/해제에 동일한 핸들러 참조를 사용한다.
-        const handler = () => draw(video, context, timeOutRef, numbers);
-        handlerRefs.current[numbers] = handler;
-        video.addEventListener('play', handler);
-        video.addEventListener('pause', handler);
-      } else {
-        const handler = handlerRefs.current[numbers];
-        if (handler) {
-          video.removeEventListener('play', handler);
-          video.removeEventListener('pause', handler);
-          handlerRefs.current[numbers] = null;
-        }
-        if (timeOutRef.current) {
-          clearTimeout(timeOutRef.current);
-          timeOutRef.current = null;
-        }
-      }
-    },
-    [draw]
-  );
-
-  // 화면 진입 시 이벤트 리스너 등록. 마운트 시 1회 등록, 언마운트 시 해제 (원래 의도 유지).
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 마운트 시 1회만 실행. drawCanvas/canvasReady 변화는 아래 effect에서 처리.
-  React.useEffect(() => {
-    if (canvasReady) {
-      drawCanvas(canvasRef1.current, timeOutRef1, 0, true);
-      drawCanvas(canvasRef2.current, timeOutRef2, 1, true);
-      drawCanvas(canvasRef3.current, timeOutRef3, 2, true);
-      drawCanvas(canvasRef4.current, timeOutRef4, 3, true);
-      drawCanvas(canvasRef5.current, timeOutRef5, 4, true);
-      drawCanvas(canvasRef6.current, timeOutRef6, 5, true);
+  // 한 프레임에 6개 캔버스를 한 번에 그린다.(과거엔 캔버스마다 setTimeout 6개 루프가 독립 구동)
+  const drawAll = React.useCallback(() => {
+    const video = virtualVideo.current;
+    if (!video) return;
+    const canvases = [
+      canvasRef1.current,
+      canvasRef2.current,
+      canvasRef3.current,
+      canvasRef4.current,
+      canvasRef5.current,
+      canvasRef6.current,
+    ];
+    for (let i = 0; i < canvases.length; i++) {
+      const ctx = canvases[i]?.getContext('2d');
+      if (!ctx) continue;
+      const s = videoSet[i];
+      ctx.drawImage(video, 0, 0, resolX, resolY, s.maskX, s.maskY, s.sizeX, s.sizeY);
     }
+  }, [resolX, resolY, videoSet]);
 
-    // 화면 벗어날 시 이벤트 리스너 삭제.
-    return () => {
-      drawCanvas(canvasRef1.current, timeOutRef1, 0, false);
-      drawCanvas(canvasRef2.current, timeOutRef2, 1, false);
-      drawCanvas(canvasRef3.current, timeOutRef3, 2, false);
-      drawCanvas(canvasRef4.current, timeOutRef4, 3, false);
-      drawCanvas(canvasRef5.current, timeOutRef5, 4, false);
-      drawCanvas(canvasRef6.current, timeOutRef6, 5, false);
+  // 비디오 새 프레임마다(미지원 시 rAF) 단일 루프로 갱신. rVFC/rAF는 탭 숨김 시 자동 정지된다.
+  const startLoop = React.useCallback(() => {
+    if (runningRef.current) return;
+    runningRef.current = true;
+    const video = virtualVideo.current as VideoWithRVFC | null;
+    usingRVFC.current = !!video?.requestVideoFrameCallback;
+    const tick = () => {
+      if (!runningRef.current) return;
+      drawAll();
+      if (usingRVFC.current && video?.requestVideoFrameCallback) {
+        frameId.current = video.requestVideoFrameCallback(tick);
+      } else {
+        frameId.current = requestAnimationFrame(tick);
+      }
     };
+    tick();
+  }, [drawAll]);
+
+  const stopLoop = React.useCallback(() => {
+    runningRef.current = false;
+    if (frameId.current == null) return;
+    const video = virtualVideo.current as VideoWithRVFC | null;
+    if (usingRVFC.current && video?.cancelVideoFrameCallback) {
+      video.cancelVideoFrameCallback(frameId.current);
+    } else {
+      cancelAnimationFrame(frameId.current);
+    }
+    frameId.current = null;
   }, []);
 
-  // canvasReady의 상태에 따라 video 일시정지 및 clearTimeout.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: canvasReady 변화에만 반응해야 함. drawCanvas는 안정적인 useCallback.
+  // 화면 밖이면 정지(IntersectionObserver). canvasReady와 AND 조건으로 합쳐 '보이고 + 섹션 활성'일 때만.
   React.useEffect(() => {
-    if (canvasReady) {
-      canvasPlay.current = true;
-      virtualVideo.current?.play();
+    const el = areaRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => setInView(entries[0].isIntersecting), {
+      rootMargin: '200px',
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // 탭 숨김 시 그리기/디코더까지 정지.
+  React.useEffect(() => {
+    const onVis = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
+
+  // canvasReady(스크롤로 main 활성) && 보임 && 탭 보임일 때만 비디오 재생 + 그리기.
+  React.useEffect(() => {
+    const video = virtualVideo.current;
+    if (!video) return;
+    video.muted = true;
+    video.loop = true;
+
+    const active = canvasReady && inView && pageVisible;
+    if (active) {
+      void video.play().catch(() => {});
+      startLoop();
     } else {
-      canvasPlay.current = false;
-      virtualVideo.current?.pause();
-      drawCanvas(canvasRef1.current, timeOutRef1, 0, false);
+      stopLoop();
+      video.pause();
     }
-  }, [canvasReady]);
+
+    return () => stopLoop();
+  }, [canvasReady, inView, pageVisible, startLoop, stopLoop]);
 
   const canvasInfo = [
-    {
-      id: 'canvas-1',
-      position: 'right',
-      targetRef: canvasRef1,
-    },
-    {
-      id: 'canvas-2',
-      position: 'right',
-      targetRef: canvasRef2,
-    },
-    {
-      id: 'canvas-3',
-      position: 'left',
-      targetRef: canvasRef3,
-    },
-    {
-      id: 'canvas-4',
-      position: 'left',
-      targetRef: canvasRef4,
-    },
-    {
-      id: 'canvas-5',
-      position: 'right',
-      targetRef: canvasRef5,
-    },
-    {
-      id: 'canvas-6',
-      position: 'left',
-      targetRef: canvasRef6,
-    },
+    { id: 'canvas-1', position: 'right', targetRef: canvasRef1 },
+    { id: 'canvas-2', position: 'right', targetRef: canvasRef2 },
+    { id: 'canvas-3', position: 'left', targetRef: canvasRef3 },
+    { id: 'canvas-4', position: 'left', targetRef: canvasRef4 },
+    { id: 'canvas-5', position: 'right', targetRef: canvasRef5 },
+    { id: 'canvas-6', position: 'left', targetRef: canvasRef6 },
   ];
 
   // canvas 템플릿.
@@ -239,25 +168,21 @@ const VideoToCanvas = ({ src, resolX, resolY, canvasReady }: VideoToCanvasProps)
       targetRef: React.RefObject<HTMLCanvasElement | null>;
     }[]
   ) => {
-    const canvas = content.map((item, idx) => {
-      return (
-        <div
-          key={item.id}
-          className={`canvas-frame targets target${idx + 1} ${item.position}${canvasReady ? ' will-change' : ''}`}
-        >
-          <canvas
-            width={resolX}
-            height={resolY}
-            className='canvas-target'
-            ref={item.targetRef}
-          ></canvas>
-        </div>
-      );
-    });
-    return canvas;
+    return content.map((item, idx) => (
+      <div
+        key={item.id}
+        className={`canvas-frame targets target${idx + 1} ${item.position}${canvasReady ? ' will-change' : ''}`}
+      >
+        <canvas width={resolX} height={resolY} className='canvas-target' ref={item.targetRef}></canvas>
+      </div>
+    ));
   };
 
-  return <div className='video-area'>{canvasContent(canvasInfo)}</div>;
+  return (
+    <div ref={areaRef} className='video-area'>
+      {canvasContent(canvasInfo)}
+    </div>
+  );
 };
 
 export default VideoToCanvas;

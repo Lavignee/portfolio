@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 
 import AppShell from '@/components/appShell';
 import '@/style/index.scss';
-import 'swiper/css';
 
 const SITE_URL = 'https://ldy-fe.com';
 const SITE_NAME = "Do Young Lee's Portfolio";

@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import React from 'react';
-import { isDesktop as isDesktopRaw } from 'react-device-detect';
+import { isDesktop as isDesktopRaw } from '@/utils/device';
 import { useShallow } from 'zustand/react/shallow';
 import useMounted from '@/hooks/useMounted';
 

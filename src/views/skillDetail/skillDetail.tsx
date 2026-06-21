@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
-import { isDesktop } from 'react-device-detect';
+import { isDesktop } from '@/utils/device';
 import svg from '@/data/icon-svg.json';
 import interest from '../../data/dataSkill/interestSkill.json';
 import language from '../../data/dataSkill/languageSkill.json';

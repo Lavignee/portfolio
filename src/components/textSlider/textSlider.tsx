@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { type JSX, useEffect } from 'react';
+import { type JSX, useEffect, useRef } from 'react';
 
 import './textSlider.scss';
 
@@ -10,6 +10,9 @@ interface TextSliderProps {
 }
 
 const TextSlider = ({ text, type }: TextSliderProps) => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
+
   const textSliderSetting = (text: string, align: string) => {
     let setting: JSX.Element[] = [];
     let settingFrame: JSX.Element[] = [];
@@ -42,39 +45,48 @@ const TextSlider = ({ text, type }: TextSliderProps) => {
   };
 
   useEffect(() => {
-    const set = gsap.set('.text-content-frame', {
-      x: (i) => `${i * 100}%`,
-    });
+    if (!rootRef.current) return;
+    const isLeft = type === 'left';
 
-    const leftAnimation = gsap.to('.left-content', {
-      duration: 70,
-      ease: 'none',
-      x: '+=500' + '%',
-      modifiers: {
-        x: gsap.utils.unitize((x) => parseFloat(x) % 500),
-      },
-      repeat: -1,
-    });
+    // 셀렉터를 이 인스턴스 서브트리로 한정한다.
+    // 과거엔 전역 셀렉터(.left-content/.right-content)로 두 인스턴스가 서로의 노드에 중복 트윈을 생성했다.
+    const ctx = gsap.context(() => {
+      gsap.set('.text-content-frame', {
+        x: (i) => `${i * 100}%`,
+      });
+      tweenRef.current = gsap.to('.text-content-frame', {
+        duration: isLeft ? 70 : 130,
+        ease: 'none',
+        x: isLeft ? '+=500%' : '+=300%',
+        modifiers: {
+          x: gsap.utils.unitize((x) => parseFloat(x) % (isLeft ? 500 : 300)),
+        },
+        repeat: -1,
+        paused: true,
+      });
+    }, rootRef.current);
 
-    const rightAnimation = gsap.to('.right-content', {
-      duration: 130,
-      ease: 'none',
-      x: '+=300' + '%',
-      modifiers: {
-        x: gsap.utils.unitize((x) => parseFloat(x) % 300),
+    // 화면 밖이면 정지 — 보이지 않는 동안 무한 트윈 재계산/합성 비용 제거(ease:none이라 재개 시 점프 없음).
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          tweenRef.current?.play();
+        } else {
+          tweenRef.current?.pause();
+        }
       },
-      repeat: -1,
-    });
+      { rootMargin: '200px' }
+    );
+    io.observe(rootRef.current);
 
     return () => {
-      set.kill();
-      leftAnimation.kill();
-      rightAnimation.kill();
+      io.disconnect();
+      ctx.revert();
     };
-  }, []);
+  }, [type]);
 
   return (
-    <div className={`text-slider-frame ${type}`}>
+    <div ref={rootRef} className={`text-slider-frame ${type}`}>
       <div className='rotate-frame'>{textSliderSetting(text, type)}</div>
     </div>
   );

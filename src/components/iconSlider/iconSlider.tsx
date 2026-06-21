@@ -57,8 +57,8 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     </div>
   );
 
-  // 애니메이션 생성
-  const startAnimation = React.useCallback((play: boolean) => {
+  // 애니메이션을 1회 생성(paused). 과거엔 willChange 토글마다 kill→재생성해 스크롤 경계마다 히치+위치점프가 났다.
+  const startAnimation = React.useCallback(() => {
     gsap.set('.icon-content-frame', {
       x: (i) => `${i * 100}%`,
     });
@@ -72,14 +72,8 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
         x: gsap.utils.unitize((x) => parseFloat(x) % 1000),
       },
       repeat: -1,
+      paused: true,
     });
-
-    // state에 따라 동작 또는 정지.
-    if (play) {
-      SliderRef.current.play();
-    } else {
-      SliderRef.current.pause();
-    }
   }, []);
 
   // 높이값이 특정 구간에 들어올 시 슬라이더의 크기 및 간격을 조정.
@@ -101,13 +95,33 @@ const IconSlider = ({ sliderTrigger }: { sliderTrigger: boolean }) => {
     }
   }, []);
 
-  // 아이콘이 렌더된 뒤(svgs 로드 후) 애니메이션을 (재)생성한다.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: svgs.length로 로드 완료를 감지해 1회 셋업하고 willChange 변화 시 재생/정지.
+  // 셋업 effect가 deps 없이 현재 재생 상태를 참조하기 위한 ref.
+  const willChangeRef = React.useRef(willChange);
+  React.useEffect(() => {
+    willChangeRef.current = willChange;
+  }, [willChange]);
+
+  // 아이콘 렌더 준비(svgs 로드)·라인 구성(row) 변경 시에만 트윈을 (재)생성한다(노드 집합이 바뀔 때만).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 재생/정지는 별도 effect가 담당하므로 willChange는 셋업 deps에서 제외.
   React.useEffect(() => {
     if (!mounted || svgs.length === 0) return;
     SliderRef.current?.kill();
-    startAnimation(willChange);
-  }, [mounted, svgs.length, startAnimation, willChange]);
+    startAnimation();
+    // 재셋업(보이는 중 resize 등) 시 현재 재생 상태 반영.
+    if (willChangeRef.current) SliderRef.current?.play();
+    return () => {
+      SliderRef.current?.kill();
+    };
+  }, [mounted, svgs.length, row, startAnimation]);
+
+  // 가시성(willChange)에 따라 재생/정지만 — 트윈 재생성 없음(스크롤 경계 히치 제거).
+  React.useEffect(() => {
+    if (willChange) {
+      SliderRef.current?.play();
+    } else {
+      SliderRef.current?.pause();
+    }
+  }, [willChange]);
 
   // 아이콘 슬라이더가 화면에 보이는지 여부에 따라 애니메이션 동작 변경.
   React.useEffect(() => {

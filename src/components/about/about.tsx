@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
-import { isDesktop, isMobile } from 'react-device-detect';
+import { isDesktop, isMobile } from '@/utils/device';
 import { useShallow } from 'zustand/react/shallow';
 import useMounted from '@/hooks/useMounted';
 

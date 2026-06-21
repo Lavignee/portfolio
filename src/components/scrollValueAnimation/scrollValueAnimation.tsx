@@ -1,7 +1,7 @@
 import React from 'react';
 import './scrollValueAnimation.scss';
 import { usePathname } from 'next/navigation';
-import { isMobile } from 'react-device-detect';
+import { isMobile } from '@/utils/device';
 import { useShallow } from 'zustand/react/shallow';
 import useStore from '../../store/useStore';
 
