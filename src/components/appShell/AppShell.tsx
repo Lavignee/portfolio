@@ -2,7 +2,8 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import type { ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
+import { type ReactNode, useEffect } from 'react';
 
 import Contact from '@/components/contact';
 import CustomCursor from '@/components/customCursor';
@@ -12,6 +13,7 @@ import ScrollValueAnimation from '@/components/scrollValueAnimation';
 import SmoothScroll from '@/components/smoothScroll';
 import SwitchAnimation from '@/components/switchAnimation';
 import useCursorHandlers from '@/hooks/useCursorHandlers';
+import useStore from '@/store/useStore';
 
 // SSR(서버 렌더) 단계에서 window 접근을 피하기 위해 가드.
 if (typeof window !== 'undefined') {
@@ -21,6 +23,17 @@ if (typeof window !== 'undefined') {
 // 모든 라우트에 걸쳐 유지되는 영속 셸. 기존 App.tsx를 대체한다.
 const AppShell = ({ children }: { children: ReactNode }) => {
   const { onHover, onClick, onLeave, pageTimer } = useCursorHandlers();
+
+  // 라우트 변경 시 열려 있던 GNB/Contact 오버레이를 닫는다.
+  // 영속 셸이라 페이지만 교체되므로, 뒤로/앞으로·로고 이동 시 오버레이 상태가 다음 화면으로 새는 것을 방지.
+  const pathname = usePathname();
+  const closeGnb = useStore((s) => s.changeGnbStateFalse);
+  const closeContact = useStore((s) => s.changeContactStateFalse);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname은 effect 본문에서 참조하지 않지만 라우트 변경을 감지하는 트리거 의존성이다.
+  useEffect(() => {
+    closeGnb();
+    closeContact();
+  }, [pathname, closeGnb, closeContact]);
 
   return (
     // 커서 돔.

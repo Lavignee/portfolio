@@ -132,17 +132,20 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
   }, [onScrollIntro]);
 
   // gsap가 준비된 후 애니메이션 동작.
+  // gsap.context로 이 컴포넌트가 만든 트리거만 추적·정리한다.
+  // (과거 ScrollTrigger.getAll().kill()은 비디오 로드로 이 effect가 재실행될 때
+  //  형제 섹션 — 특히 skill의 pin — 트리거까지 전역으로 죽였다.)
+  const gsapCtx = React.useRef<ReturnType<typeof gsap.context> | null>(null);
   React.useEffect(() => {
     makeScroll(true);
     setVideoReady(true);
-    videoReady && mainComponentGSAP();
+    gsapCtx.current = gsap.context(() => {
+      videoReady && mainComponentGSAP();
+    });
 
     return () => {
       onScrollIntro('');
-      const triggers = ScrollTrigger.getAll();
-      triggers.forEach((trigger) => {
-        trigger.kill();
-      });
+      gsapCtx.current?.revert();
     };
   }, [videoReady, mainComponentGSAP, onScrollIntro, makeScroll]);
 

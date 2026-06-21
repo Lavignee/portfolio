@@ -52,6 +52,8 @@ interface StoreState {
   changeButtonDelay: (currentButtonDelay: boolean) => void;
   // gnb 활성화 여부 토글.
   changeGnbState: () => void;
+  // gnb를 비활성화.
+  changeGnbStateFalse: () => void;
   changeSwitchAnimation: (currentSwitchAnimation: boolean) => void;
   changeFilmState: (currentFilmState: boolean) => void;
   smoothTop: (currentSmoothTopState: boolean) => void;
@@ -94,6 +96,7 @@ const useStore = create<StoreState>()(
       changeContactStateFalse: () => set({ currentContactState: false }),
       changeButtonDelay: (currentButtonDelay) => set({ currentButtonDelay }),
       changeGnbState: () => set((state) => ({ currentGnbState: !state.currentGnbState })),
+      changeGnbStateFalse: () => set({ currentGnbState: false }),
       changeSwitchAnimation: (currentSwitchAnimation) => set({ currentSwitchAnimation }),
       changeFilmState: (currentFilmState) => set({ currentFilmState }),
       smoothTop: (currentSmoothTopState) => set({ currentSmoothTopState }),

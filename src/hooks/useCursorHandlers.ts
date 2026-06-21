@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
 import useStore from '@/store/useStore';
 
 export interface CursorHandlers {
@@ -26,41 +27,54 @@ export default function useCursorHandlers(): CursorHandlers {
   const router = useRouter();
 
   // 커서 형태 초기화, 텍스트 파람 존재 시 텍스트 변경.
-  const onLeave = (hoverText?: string | null) => {
-    cursorClass('');
-    cursorSecondClass('');
-    hoverText && cursorText(hoverText);
-  };
+  // useCallback으로 참조를 고정한다. 이 핸들러들을 effect 의존성에 넣는 뷰(skillDetail/aboutDetail)가
+  // 매 렌더마다 스크롤바/스크롤트리거를 파기·재생성하던 churn을 막기 위함.
+  const onLeave = useCallback(
+    (hoverText?: string | null) => {
+      cursorClass('');
+      cursorSecondClass('');
+      hoverText && cursorText(hoverText);
+    },
+    [cursorClass, cursorSecondClass, cursorText]
+  );
 
   // 마우스 오버 시 커서 형태 변경.
-  const onHover = (hoverCursor: string, hoverText?: string | null) => {
-    cursorClass(hoverCursor);
-    hoverText && cursorText(hoverText);
-  };
-
-  // 스크린 커버가 화면을 덮은 뒤 커버/버튼딜레이 해제.
-  const screenCoverTimer = () => {
-    setTimeout(() => {
-      screenCover(false);
-      onChangeButtonDelay(false);
-    }, 2000);
-  };
+  const onHover = useCallback(
+    (hoverCursor: string, hoverText?: string | null) => {
+      cursorClass(hoverCursor);
+      hoverText && cursorText(hoverText);
+    },
+    [cursorClass, cursorText]
+  );
 
   // 일정 시간 후 라우터 이동(기존 navigate -> router.push).
-  const pageTimer = (path: string, timer: number) => {
-    setTimeout(() => {
-      router.push(path);
-    }, timer);
-  };
+  const pageTimer = useCallback(
+    (path: string, timer: number) => {
+      setTimeout(() => {
+        router.push(path);
+      }, timer);
+    },
+    [router]
+  );
 
   // 좌클릭 시 스크린 커버 애니메이션 + 버튼 딜레이 후 페이지 전환.
-  const onClick = (path: string, hoverText?: string | null) => {
-    hoverText && onLeave(hoverText);
-    onChangeButtonDelay(true);
-    screenCover(true);
-    screenCoverTimer();
-    pageTimer(path, 1000);
-  };
+  const onClick = useCallback(
+    (path: string, hoverText?: string | null) => {
+      hoverText && onLeave(hoverText);
+      onChangeButtonDelay(true);
+      screenCover(true);
+      // 스크린 커버가 화면을 덮은 뒤 커버/버튼딜레이 해제.
+      setTimeout(() => {
+        screenCover(false);
+        onChangeButtonDelay(false);
+      }, 2000);
+      pageTimer(path, 1000);
+    },
+    [onLeave, onChangeButtonDelay, screenCover, pageTimer]
+  );
 
-  return { onHover, onClick, onLeave, pageTimer };
+  return useMemo(
+    () => ({ onHover, onClick, onLeave, pageTimer }),
+    [onHover, onClick, onLeave, pageTimer]
+  );
 }

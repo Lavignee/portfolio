@@ -94,7 +94,6 @@ const AboutDetail = () => {
   const onScrollAbout = useStore((s) => s.splitTextStart);
   const makeScroll = useStore((s) => s.makeSmoothScroll);
   const filmReady = useStore((s) => s.changeFilmState);
-  const gsapReady = useStore((s) => s.changeGsapState);
 
   // 전역 스토어 구독.
   const [currentGsapState, currentFilmState] = useStore(
@@ -317,8 +316,6 @@ const AboutDetail = () => {
 
   // 화면 진입 후 DOM 랜더 시,
   React.useEffect(() => {
-    // 스크롤 트리거 연결 해제.
-    gsapReady(false);
     // 해당 페이지에서만 사용될 별도 필름 추가 랜더.
     filmReady(true);
     // 현재 컨텐츠를 기준으로 스크롤 재생성.
@@ -335,7 +332,7 @@ const AboutDetail = () => {
       _onLeave();
       filmReady(false);
     };
-  }, [filmReady, gsapReady, makeScroll, _onLeave]);
+  }, [filmReady, makeScroll, _onLeave]);
 
   // gsap 및 추가 Film이 준비되면 스크롤트리거 생성 및 splitText 동작.
   // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 준비 상태 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.

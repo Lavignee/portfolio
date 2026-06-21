@@ -20,7 +20,6 @@ interface SkillProps {
 const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
   // 전역 스토어 액션.
   const makeScroll = useStore((s) => s.makeSmoothScroll);
-  const gsapReady = useStore((s) => s.changeGsapState);
 
   // 전역 스토어 구독.
   const [currentGsapState, currentButtonDelay] = useStore(
@@ -60,21 +59,21 @@ const Skill = ({ _onHover, _onClick, _onLeave }: SkillProps) => {
       }
     );
   };
+  // gsap.context로 이 컴포넌트가 만든 트리거만 추적·정리(형제 섹션 트리거 보호).
+  const gsapCtx = React.useRef<ReturnType<typeof gsap.context> | null>(null);
   void (
     // gsap가 준비된 후 애니메이션 동작.
     // biome-ignore lint/correctness/useExhaustiveDependencies: GSAP 셋업은 currentGsapState 변화 시 1회만 실행해야 하며, 셋업 함수를 의존성에 추가하면 매 렌더 재초기화됨.
     React.useEffect(() => {
-      gsapReady(false);
       makeScroll(true);
-      currentGsapState && skillComponentGSAP();
+      gsapCtx.current = gsap.context(() => {
+        currentGsapState && skillComponentGSAP();
+      });
 
       return () => {
-        const triggers = ScrollTrigger.getAll();
-        triggers.forEach((trigger) => {
-          trigger.kill();
-        });
+        gsapCtx.current?.revert();
       };
-    }, [currentGsapState, gsapReady, makeScroll])
+    }, [currentGsapState, makeScroll])
   );
 
   // Props로 받는 이벤트들에 대한 interface 정의.

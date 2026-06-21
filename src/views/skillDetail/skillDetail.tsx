@@ -46,6 +46,11 @@ const SkillDetail = () => {
     const container = scrollPosition.current;
     if (!container) return;
 
+    // 이 컨테이너(.skill-list)에 이미 붙은 스크롤바만 제거한다.
+    // 과거 Scrollbar.destroyAll()은 영속 셸의 전역 스크롤바까지 파기해, /skill 방문 후 사이트 전체 스크롤이 죽었다.
+    const existing = Scrollbar.get(container);
+    if (existing) existing.destroy();
+
     // 기기에 따라 다른 스크롤 딜레이 적용.
     const skillScrollBar = Scrollbar.init(container, {
       damping: isDesktop ? 0.02 : 0.1,
@@ -110,9 +115,7 @@ const SkillDetail = () => {
   const changeHistoryList = React.useCallback(async () => {
     // 기존의 skill 세부 목록을 초기화.
     lists.current = [];
-    // 기존의 스크롤 데이터 삭제.
-    Scrollbar.destroyAll();
-    // 스크롤과 동기화 된 gsap 관련 로직 비활성화.
+    // 스크롤과 동기화 된 gsap 관련 로직 비활성화.(스크롤바는 makeSmoothScrollbarforSkill가 자기 컨테이너만 재생성)
     await gsapReady(false);
     // 활성화 된 skill content 초기화.
     setCurrentTarget(0);
@@ -308,11 +311,9 @@ const SkillDetail = () => {
 
   // 화면 진입 또는 리랜더 시,
   React.useEffect(() => {
-    // 기존 스크롤바 제거.
-    Scrollbar.destroyAll();
     // 스크롤 트리거 비활성화.
     gsapReady(false);
-    // 현재 컨텐츠 데이터에 맞춰 스크롤 재생성 및 스크롤 트리거 연결.
+    // 현재 컨텐츠 데이터에 맞춰 스크롤 재생성 및 스크롤 트리거 연결.(자기 컨테이너 스크롤바만 재생성)
     makeSmoothScrollbarforSkill();
 
     // 화면 벗어날 시 스크롤 트리거 및 커서 초기화.
@@ -321,6 +322,9 @@ const SkillDetail = () => {
       triggers.forEach((item) => {
         item.kill();
       });
+      // skill 페이지가 ScrollTrigger 기본 scroller를 .skill-list로 덮어썼으므로,
+      // 화면을 벗어날 때 영속 스크롤바(.smooth-scroll-frame)로 복구한다.
+      ScrollTrigger.defaults({ scroller: '.smooth-scroll-frame' });
 
       _onLeave();
     };

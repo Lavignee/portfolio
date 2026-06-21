@@ -4,6 +4,7 @@ import { isDesktop } from 'react-device-detect';
 import { useShallow } from 'zustand/react/shallow';
 
 import './customCursor.scss';
+import useMounted from '../../hooks/useMounted';
 import useStore from '../../store/useStore';
 
 const CustomCursor = ({ children }: { children: React.ReactNode }) => {
@@ -17,6 +18,11 @@ const CustomCursor = ({ children }: { children: React.ReactNode }) => {
 
   const cursorRef = React.useRef<HTMLDivElement | null>(null);
   const cursorInfoRef = React.useRef<HTMLDivElement | null>(null);
+
+  // SSR에선 isDesktop이 false라 커서 DOM이 빠지지만, 클라이언트 첫 렌더에선 true가 되어
+  // 하이드레이션 불일치가 발생한다. 마운트 이후에만 isDesktop을 반영해 서버/클라 첫 렌더를 일치시킨다.
+  const mounted = useMounted();
+  const isDesktopMounted = mounted && isDesktop;
 
   // gsap로 마우스 애니메이션 동작.
   const moveCircle = (e: React.MouseEvent) => {
@@ -61,7 +67,7 @@ const CustomCursor = ({ children }: { children: React.ReactNode }) => {
       {children}
 
       {/* 마우스 DOM */}
-      {isDesktop && (
+      {isDesktopMounted && (
         <div className='cursor-area'>
           <div
             className={`custom-cursor-back${firstClassName}${secondClassName}`}
