@@ -177,7 +177,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
           <div className='intro-ment'>
             <div className='type-p'>
               <SplitText animation={'up'} setTime={5} scroll={'intro'} index={'int'}>
-                I've been a front developer for 4 years.
+                I've been a front developer for 10 years.
               </SplitText>
 
               <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'intT'}>
