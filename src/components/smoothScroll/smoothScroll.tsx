@@ -65,14 +65,40 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
         }
         return scrollbar.scrollTop;
       },
+      // pinType = .scroll-content가 transform:translate3d로 움직이는 커스텀 스크롤러라 핀 좌표계를 transform으로 고정.
+      pinType: 'transform',
     });
     ScrollTrigger.defaults({ scroller: smoothScroller.current });
     scrollbar.addListener(ScrollTrigger.update);
+
+    // 트리거 생성 후 폰트 swap·이미지 디코드·SplitText 분해·아이콘 동적로드로 콘텐츠 높이가 뒤늦게 자라면
+    // pin의 start/end·pin-spacer 좌표가 stale해져 위 섹션이 핀 영역을 침범한다(간헐적 섹션 겹침).
+    // 높이 변동이 멎으면 refresh로 전 트리거 좌표를 재계산한다. (update≠refresh: 라이브러리는 limit만 갱신)
+    let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+    const scheduleRefresh = () => {
+      clearTimeout(refreshTimer);
+      // 200ms trailing + rAF = SplitText처럼 5ms 간격으로 높이가 바뀌어도 멎은 뒤 1회만 refresh(폭주·점프 방지).
+      refreshTimer = setTimeout(() => {
+        requestAnimationFrame(() => {
+          if (!smoothScrollTarget.current) return; // 언마운트 후 호출 방지.
+          ScrollTrigger.refresh();
+        });
+      }, 200);
+    };
+    // 콘텐츠 높이 변동 감지(라이브러리의 scrollbar.update와 별개로 refresh만 예약).
+    const contentResizeObserver = new ResizeObserver(scheduleRefresh);
+    contentResizeObserver.observe(scrollbar.contentEl);
+    // 비동기 안정화 신호도 같은 디바운스로 합류(어느 순서로 끝나도 마지막에 수렴).
+    document.fonts?.ready.then(scheduleRefresh);
+    window.addEventListener('load', scheduleRefresh, { once: true });
 
     gsapReady(true);
     setCurrentScroller(scrollbar);
 
     return () => {
+      contentResizeObserver.disconnect();
+      clearTimeout(refreshTimer);
+      window.removeEventListener('load', scheduleRefresh);
       scrollbar.removeListener(onScrollUpdate);
       scrollbar.removeListener(ScrollTrigger.update);
       scrollbar.destroy();
