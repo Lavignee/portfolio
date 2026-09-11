@@ -4,15 +4,15 @@
       "number": 1,
       "id": "react",
       "name": "React",
-      "workmanship": 4,
-      "summary": "처음부터 Hook 기반의 개발을 주로 해왔고, 오히려 이후에 경험한 프로젝트에서 class 기반 개발을 해볼 기회가 있었습니다. 현재는 React와 관련된 이슈로 인해 작업에 딜레이 발생할 일은 없는 수준은 되는 것 같습니다."
+      "workmanship": 5,
+      "summary": "처음부터 Hook 기반으로 개발해 왔고, 포스코ICT에서는 class 기반 개발도 경험했습니다. 최근에는 React 19로 대규모 주문 웹을 구축했습니다."
     },
     {
       "number": 2,
       "id": "redux",
       "name": "Redux",
       "workmanship": 3,
-      "summary": "가장 베이스 형태의 작성 방식으로 현재 포트폴리오에서 사용했습니다.\n 이후 다양한 프로젝트에서 보일러플레이트 없이 더 다양하고 간편한 상태관리 라이브러리 위주로 사용하게되어 리덕스의 미들웨어 관련부분은 다뤄보지 못 했습니다."
+      "summary": "이 포트폴리오 첫 버전에서 기본 형태로 썼고, 최근 도미노 주문 웹에서는 전역 상태(Redux Toolkit)와 서버 상태(Tanstack-query)를 나눠 쓰는 구조로 다뤘습니다."
     },
     {
       "number": 3,
@@ -26,7 +26,7 @@
       "id": "parcel",
       "name": "Parcel",
       "workmanship": 4,
-      "summary": "지금의 포트폴리오 작업을 하면서 사용해 보았습니다.\n 초기 설정은 크게 손댈 일이 없었지만, 특수한 케이스에서 이슈를 처리하기 위한 사용자 정보가 당시에는 적은 게 아쉬웠습니다.\n 그래도 자체 러닝 커브가 적고 빌드 성능이 뛰어나서 좋았습니다."
+      "summary": "이 포트폴리오의 첫 버전을 Parcel로 만들었습니다. 러닝 커브가 적고 빌드가 빨랐지만 특수한 케이스의 정보가 당시엔 적었고, 이후 Vite를 거쳐 지금은 Next.js로 옮겼습니다."
     },
     {
       "number": 5,
@@ -102,8 +102,8 @@
       "number": 15,
       "id": "nextjs",
       "name": "Next.js",
-      "workmanship": 3,
-      "summary": "꽤 오랜시간 다루었지만 최근의 버전을 다룰 기회는 아직 없었습니다."
+      "workmanship": 4,
+      "summary": "그로로 프로젝트부터 오래 다뤄왔고, 최근에는 Next 16 App Router로 대규모 주문 웹을 구축했습니다. 서버 프리페치와 정적 생성, 번들 구조까지 실측하며 다룹니다. 이 포트폴리오도 Next 16으로 옮겨 운영하고 있습니다."
     },
     {
       "number": 16,
@@ -116,8 +116,64 @@
       "number": 17,
       "id": "reactquery",
       "name": "ReactQuery",
+      "workmanship": 4,
+      "summary": "LFmall 프로젝트부터 그로로, SK하이닉스, 도미노까지 주력으로 써왔습니다. 캐시 키 설계와 무효화 시점을 화면 흐름에 맞춰 다룹니다."
+    },
+    {
+      "number": 18,
+      "id": "zustand",
+      "name": "Zustand",
+      "workmanship": 4,
+      "summary": "SK하이닉스 마이그레이션과 이 포트폴리오의 전역 상태로 썼습니다. 필요한 조각만 구독하는 방식이라 보일러플레이트 없이 가볍습니다."
+    },
+    {
+      "number": 19,
+      "id": "vite",
+      "name": "Vite",
+      "workmanship": 4,
+      "summary": "SK하이닉스와 AlphetaX의 개발환경을 Vite로 구성했습니다."
+    },
+    {
+      "number": 20,
+      "id": "openlayers",
+      "name": "OpenLayers",
+      "workmanship": 4,
+      "summary": "SK하이닉스 웨이퍼 결함 맵과 도미노 매장 지도를 만들었습니다. 핀 렌더링을 HTML 오버레이에서 canvas로 옮겨 지도 이동 비용을 42% 줄였습니다."
+    },
+    {
+      "number": 21,
+      "id": "tailwind",
+      "name": "Tailwind",
       "workmanship": 3,
-      "summary": "이제 꽤 다양하게 사용해본 것 같습니다. 원하는데로 구현하는데 문제는 없어보입니다."
+      "summary": "도미노 주문 웹의 스타일 기반으로 썼습니다."
+    },
+    {
+      "number": 22,
+      "id": "konva",
+      "name": "Konva.js",
+      "workmanship": 3,
+      "summary": "AlphetaX 대시보드의 평면도 인터랙션을 직접 구현했습니다."
+    },
+    {
+      "number": 23,
+      "id": "chartjs",
+      "name": "Chart.js",
+      "workmanship": 3,
+      "summary": "SK하이닉스의 결함 종류별 점 차트를 만들었습니다."
+    },
+    {
+      "number": 24,
+      "id": "antd",
+      "name": "Ant Design",
+      "workmanship": 3,
+      "summary": "SK하이닉스 마이그레이션의 UI 기반으로 썼습니다."
+    },
+    {
+      "number": 25,
+      "id": "mantine",
+      "name": "Mantine",
+      "workmanship": 3,
+      "summary": "Cabal 관리자 재구축에서 UI 일관성을 잡는 데 썼습니다."
     }
   ]
 }

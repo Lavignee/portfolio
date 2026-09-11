@@ -25,8 +25,8 @@
       "number": 4,
       "id": "typescript",
       "name": "TypeScript",
-      "workmanship": 3,
-      "summary": "현재 포트폴리오에서 strict 모드까지 적용해 보았습니다.\n아직 실무에서 사용해볼 기회가 없어서 경험은 부족합니다."
+      "workmanship": 4,
+      "summary": "2025년 이후 모든 실무 프로젝트를 TypeScript로 진행했습니다. 도메인 타입 설계부터, 결제수단을 추가할 때 준비·승인 배선 중 한쪽이 빠지면 컴파일에서 걸리도록 구조를 잡는 수준까지 다룹니다."
     }
   ]
 }
