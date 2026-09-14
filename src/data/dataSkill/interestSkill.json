@@ -18,15 +18,15 @@
       "number": 3,
       "id": "webgl",
       "name": "WebGL",
-      "workmanship": 1,
-      "summary": "무료 강의를 들어볼 기회가 있어서 간단한 예제 등을 작성해 본 경험이 있습니다."
+      "workmanship": 3,
+      "summary": "무료 강의로 개념을 익힌 뒤, 사이드 프로젝트에 여러 형태로 적용해 봤습니다."
     },
     {
       "number": 4,
       "id": "analytics",
       "name": "Google Analytics",
-      "workmanship": 1,
-      "summary": "필요한 상황이 되면 적극적으로 배우려고 합니다."
+      "workmanship": 2,
+      "summary": "사이드 프로젝트에 적용해 대시보드로 지표를 보고 있습니다. 세세한 이벤트 설계나 분석까지는 아직 다뤄보지 않았습니다."
     }
   ]
 }
