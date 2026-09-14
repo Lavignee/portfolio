@@ -17,9 +17,9 @@
     {
       "number": 3,
       "id": "git",
-      "name": "Git",
+      "name": "Git / GitLab",
       "workmanship": 4,
-      "summary": "각 프로젝트 환경에 최대한 맞춰서 사용하며, conflict 관리도 어느 정도 할 수 있습니다."
+      "summary": "각 프로젝트 환경에 최대한 맞춰서 사용하며, conflict 해결도 무리 없이 처리합니다. AlphetaX 프로젝트에서는 GitLab 인스턴스를 직접 구성해 배포를 맡았고, GitLab Pages로 전시용 사이트를 운영했습니다."
     },
     {
       "number": 4,
@@ -62,6 +62,13 @@
       "name": "Lighthouse",
       "workmanship": 4,
       "summary": "사이트의 성능 개선을 위해 많이 참고하고 있습니다."
+    },
+    {
+      "number": 10,
+      "id": "vercel",
+      "name": "Vercel",
+      "workmanship": 3,
+      "summary": "이 포트폴리오를 Vercel로 배포해 운영하고 있습니다. Next.js 전환과 함께 Netlify에서 옮겼고, main 브랜치에 푸시하면 자동으로 배포되는 구성입니다."
     }
   ]
 }
