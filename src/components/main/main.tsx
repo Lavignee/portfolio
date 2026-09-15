@@ -181,7 +181,7 @@ const Main = ({ _onHover, _onLeave }: MainProps) => {
               </SplitText>
 
               <SplitText animation={'up'} setTime={5} scroll={'intro2'} index={'intT'}>
-                This is the portfolio that introduces me for the first time.
+                The concept hasn't changed since 2020. The work has.
               </SplitText>
             </div>
           </div>
