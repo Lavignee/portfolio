@@ -7,7 +7,7 @@ const Footer = () => {
     <footer>
       <div className='container between relative'>
         {/* <LanguageSelectors /> */}
-        <span>Copyright 2020 - 2026. doyoung Lee. All rights reserved.</span>
+        <span>Copyright 2020 - {new Date().getFullYear()}. doyoung Lee. All rights reserved.</span>
       </div>
     </footer>
   );
